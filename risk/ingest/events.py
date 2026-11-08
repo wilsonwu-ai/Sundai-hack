@@ -9,6 +9,10 @@ attributes (trace = session). A field may also sit on the resource, e.g.
 object in the schema but OTel attributes can't nest, so it travels as a JSON
 string. Spans without an `action` attribute (LLM calls, HTTP requests, a
 session's root span) are not actions and are skipped.
+
+The customer org (tenant) a deployment serves is the `tenant.id` attribute, on
+the span or, more usually, on the resource. It sits outside the log schema, so
+the same agent code can run for many orgs without changing the contract.
 """
 
 import json
@@ -17,6 +21,18 @@ from datetime import UTC, datetime
 from risk.ingest.load_logs import LogValidationError, load_schema, validate_event
 
 TS_FORMAT = "%Y-%m-%dT%H:%M:%S.%fZ"  # fixed width, so stored timestamps sort as text
+
+
+TENANT_KEYS = ("tenant.id", "tenant")  # the customer org, on the span or its resource
+
+
+def tenant_of(span: dict) -> str:
+    """The customer org a span's action was done for; "default" if it names none."""
+    for attrs in (span["attributes"], span["resource"]):
+        for k in TENANT_KEYS:
+            if isinstance(attrs.get(k), str) and attrs[k].strip():
+                return attrs[k].strip()
+    return "default"
 
 
 def from_span(span: dict) -> dict | None:

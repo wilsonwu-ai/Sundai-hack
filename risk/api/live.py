@@ -23,11 +23,11 @@ class LiveScorer:
         self.name = getattr(detector, "name", type(detector).__name__)
         self._pool = ThreadPoolExecutor(max_workers=workers, thread_name_prefix="live-score")
         self._lock = threading.Lock()
-        self._queued: set[tuple[str, str]] = set()
+        self._queued: set[tuple[str, str, str]] = set()
         self._futures: set[Future] = set()
 
     def submit(self, sessions) -> None:
-        """Queue (agent_id, session_id) pairs; one already queued is not queued twice."""
+        """Queue (tenant, agent_id, session_id) keys; one already queued is not queued twice."""
         with self._lock:
             for key in sessions:
                 if key in self._queued:
@@ -37,20 +37,25 @@ class LiveScorer:
                 self._futures.add(future)
                 future.add_done_callback(self._futures.discard)
 
-    def _score(self, key: tuple[str, str]) -> None:
+    def _score(self, key: tuple[str, str, str]) -> None:
         with self._lock:
             self._queued.discard(key)  # actions arriving from now on queue a fresh pass
-        agent_id, session_id = key
+        tenant, agent_id, session_id = key
         try:
-            events = self.store.events(agent_id=agent_id, session_id=session_id)
+            events = self.store.events(tenant=tenant, agent_id=agent_id, session_id=session_id)
             if events:
                 result = self.detector.score_session(events)
                 changed = self.store.save_scores(events, result["steps"], self.name)
+                # auto-pause: every step decided review or pause goes to the review
+                # queue (a step the gate already held keeps its hold)
+                for event, step in zip(events, result["steps"]):
+                    if step["decision"] in ("review", "pause"):
+                        self.store.hold(event, step, source="observed", tenant=tenant)
                 if changed and result["decision"] in ("review", "pause"):
                     top = max(result["steps"], key=lambda s: s["risk"])
-                    log.warning("%s %s step %s: %s", agent_id, session_id, top["step"], top["decision"])
+                    log.warning("%s %s %s step %s: %s", tenant, agent_id, session_id, top["step"], top["decision"])
         except Exception:
-            log.exception("scoring %s %s failed", agent_id, session_id)
+            log.exception("scoring %s %s %s failed", tenant, agent_id, session_id)
 
     def drain(self, timeout: float | None = 30) -> None:
         """Wait for queued scoring to finish (tests, shutdown)."""

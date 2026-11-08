@@ -32,6 +32,7 @@ from dataclasses import asdict, dataclass
 from risk.behaviorgpt.history import item_id
 from risk.behaviorgpt.ranker import Ranker
 from risk.ingest.load_logs import load_action_vocab
+from risk.scoring.categories import CATEGORY_IDS, categorize
 from risk.scoring.exposure import P_AT, add_dollars, agent_dollars
 from risk.scoring.roles import ROLES, role_flags
 from risk.scoring.severity import severity
@@ -126,6 +127,9 @@ class SurpriseSeverityDetector:
             for k, (e, r) in enumerate(zip(events, rankings))
         ]
         dollars = add_dollars(events, steps, self.thresholds)
+        for event, step in zip(events, steps):
+            step["categories"] = categorize(event, step)
+            step["customer_id"] = event["params"].get("customer_id")
         top = max(steps, key=lambda s: s["risk"])
         return {
             "risk": top["risk"],
@@ -134,6 +138,8 @@ class SurpriseSeverityDetector:
             "risk_without_flags": max(s["risk_without_flags"] for s in steps),
             "severity_only": max(s["severity"] for s in steps),
             "flags": sorted({f for s in steps for f in s["flags"]}),
+            "categories": [c for c in CATEGORY_IDS if any(c in s["categories"] for s in steps)],
+            "customers": list(dict.fromkeys(s["customer_id"] for s in steps if s["customer_id"])),
             **dollars,
             "steps": steps,
         }

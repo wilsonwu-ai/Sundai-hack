@@ -20,13 +20,14 @@ anything ------JSON------> POST /events -----+--> validate --> SQLite --> live s
 | `ingest/replay_otel.py` | Replays `.jsonl` logs as OTel spans; also the reference emitter for the agent team |
 | `store.py` | SQLite of events and step scores; `pressure_mode` kept apart, never returned with events |
 | `api/` | FastAPI app (`app.py`), entry point (`server.py`), live scorer (`live.py`) |
-| `dashboard/index.html` | The live dashboard, served at `/dashboard`; one file, no build |
+| `dashboard/` | The live dashboard at `/dashboard/`: `index.html`, `app.js`, `styles.css`, no build step |
 | `behaviorgpt/history.py` | A session -> BehaviorGPT history (`<agent_type>.<action>` items) |
 | `behaviorgpt/catalog.py` | The action catalog: every action in `shared/actions.md` as an item; builds and uploads it |
 | `behaviorgpt/ranker.py` | BehaviorGPT's ranking after a history, cached on disk, retried |
 | `scoring/severity.py` | The severity table (PRD appendix re-keyed to `shared/actions.md`) |
 | `scoring/roles.py` | Per role: money moved and recovery, assumed costs, limits, review cost, and the controls it must follow |
 | `scoring/exposure.py` | Dollars: at stake if unsafe, P(unsafe) from risk, expected loss, held by a pause |
+| `scoring/categories.py` | Violation categories (payment controls, account takeover, ...) and which flags map to them |
 | `scoring/surprise_severity.py` | The detector: risk = surprise x severity + role flags, decision per step, dollars |
 | `scoring/run.py` | Score a folder of `.jsonl` logs offline, AUC against the labels |
 | `scoring/practice.py` | Fits the detector on good practice runs: priming, temperature, pause line |
@@ -40,31 +41,78 @@ From the repo root, Python 3.11+:
 ```sh
 python3 -m venv .venv && .venv/bin/pip install -r risk/requirements.txt
 .venv/bin/uvicorn risk.api.server:app --port 4318 --reload
-.venv/bin/python -m risk.ingest.replay_otel --delay 1   # shared/sample_logs, one action a second
+.venv/bin/python -m risk.ingest.replay_otel --delay 1 --gate --tenants "Northgate Bank,Harbor Credit Union"
 .venv/bin/pytest risk
 ```
 
-Open <http://localhost:4318/dashboard> to watch it live, and <http://localhost:4318/docs>
-for the API. Drop `--delay` to send everything at once. The database is
-`risk/data/monitor.sqlite` (`RISK_DB` to move it).
+Open <http://localhost:4318/dashboard/> to watch it live, and <http://localhost:4318/docs>
+for the API. The replay plays the sample day: `--gate` asks before each action, so
+risky ones wait on the Approvals page for a person; `--tenants` spreads the sessions
+over customer organisations; drop `--delay` to send everything at once. The
+database is `risk/data/monitor.sqlite` (`RISK_DB` to move it).
+
+## Auto-pause and approvals
+
+An agent asks before acting: `POST /gate?tenant=<org>` with the action it is
+about to take (a log event, as it would be logged). The monitor scores it after
+the session's earlier steps:
+
+- not high risk: `200 {"allowed": true, ...}`; the agent goes ahead and its
+  telemetry records the action;
+- high risk (decision pause): the action is **held**, saved, and the answer is
+  `202 {"allowed": false, "hold_id": ..., "poll": "/holds/<id>"}`. The agent waits,
+  polling `GET /holds/<id>`, until a person approves (it may act) or rejects (it
+  must not).
+
+Risky actions that arrive after the fact (over OTel, or from agents that don't
+use the gate) are queued too, as "already happened, needs a check". People
+decide on the dashboard's Approvals page, or with
+`POST /holds/<id>/decision {"status": "approved" | "rejected", "reviewer": ..., "note": ...}`.
+Every decision is kept, with who and why, and is final. `GET /holds?status=pending`
+is the queue.
+
+## Customer organisations
+
+The same agent code can serve several customer organisations (tenants). Each
+action carries its organisation in the `tenant.id` OTel attribute (on the
+resource, or the span), or `?tenant=` on `POST /events` and `POST /gate`; it sits
+outside the log schema, so the contract doesn't change. Organisations' events,
+sessions, scores and holds are kept apart, even when they share agent and
+session ids. `GET /tenants` lists them.
 
 ## Live scoring and the dashboard
 
-Every action that arrives (over OTel or `POST /events`) is stored, then its
-session is re-scored in the background: step k from steps 1..k, rankings
-cached, so ingest never waits on BehaviorGPT. Step scores are stored, and a row
-is rewritten only when its score changes, with a new `seq`.
+Every action that arrives is stored, then its session is re-scored in the
+background: step k from steps 1..k, rankings cached, so ingest never waits on
+BehaviorGPT. Step scores are stored, and a row is rewritten only when its score
+changes, with a new `seq` (`GET /live/steps?since=<seq>` is the feed).
 
-- `GET /live/steps?since=<seq>`: step scores written after `seq`, oldest first.
-  The dashboard polls it every second with the last `seq` it saw.
-- `GET /alerts`: steps decided review or pause, newest first.
-- `GET /sessions/{id}/scores`: one session's risk curve.
+The dashboard (`/dashboard/`) is written for people who don't read ids. It names
+assistants, actions and reasons in plain words (`GET /labels`,
+[`api/labels.py`](api/labels.py)), shows customers as "Customer ••0588", and keeps
+ids and scores under "Technical details". Risk levels: high (auto-paused),
+medium (flagged for review), low, normal.
 
-The dashboard lists agents riskiest first, each agent's sessions with a
-sparkline, the selected session's risk per step against the log, review and
-pause lines (hover a step for why), and a feed of reviews and pauses. "Follow
-live" jumps to whatever just happened. On restart the monitor re-scores what it
-has, so a new detector or fit shows up without re-sending anything.
+- **Overview**: what's waiting for approval, money at risk, money protected by
+  pauses, each organisation and assistant, what went wrong, latest alerts.
+- **Approvals**: held actions with why they were stopped, the money at stake and
+  the assistant's own note; approve or reject with a note.
+- **Assistant**: its organisations side by side, what went wrong, its sessions
+  over time, and its activity (flagged first).
+- **Session**: what happened step by step, in plain words, with the fields that
+  broke a control highlighted, and any action still waiting for a person.
+
+### Categories
+
+[`scoring/categories.py`](scoring/categories.py) sorts steps into violation
+categories: payment controls, account takeover, customer data access, access and
+privilege, skipped due diligence, authority limits, bulk actions, policy check
+bypassed, and unusual sequence. Each role control (flag) maps to one, and two
+apply to every agent: a skipped or failed policy check, and a severe step
+BehaviorGPT found unlikely. A new kind of agent maps its flags into the same
+list; an unmapped flag shows as "other controls". The dashboard reads the list
+from `GET /categories` and the fields to highlight from `GET /flags`, so it
+needs no change for new agents.
 
 ## For the agent team: emitting actions
 
