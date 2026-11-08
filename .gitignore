@@ -1,7 +1,43 @@
+# --- Secrets: never commit keys ---
 .env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# --- Python ---
 .venv/
+venv/
 __pycache__/
 *.pyc
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.ipynb_checkpoints/
+
+# --- Node ---
 node_modules/
+
+# --- Local data: logs, the monitor's database, API caches ---
 logs/
+*.sqlite
+*.sqlite3
+*.sqlite-shm
+*.sqlite-wal
+*.db
+
+# --- Editors / OS ---
+.vscode/
+.idea/
+*.swp
 .DS_Store
+Thumbs.db
+
+# --- Claude Code local settings ---
+.claude/settings.local.json

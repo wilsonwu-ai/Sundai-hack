@@ -28,6 +28,15 @@ python risk/ingest/load_logs.py                 # reads shared/sample_logs by de
 python risk/ingest/load_logs.py path/to/logs    # or any folder of .jsonl files
 ```
 
+The live monitor (OTLP in on port 4318, API docs at `/docs`); details in [`risk/README.md`](risk/README.md):
+
+```bash
+python3 -m venv .venv && .venv/bin/pip install -r risk/requirements.txt
+.venv/bin/uvicorn risk.api.server:app --port 4318      # run from the repo root
+.venv/bin/python -m risk.ingest.replay_otel            # replay shared/sample_logs into it as OTel spans
+.venv/bin/pytest risk
+```
+
 ## Workflow rules
 
 1. **One branch per person**, prefixed by area: `bank/<name>-<topic>`, `web/<name>-<topic>` or `risk/<name>-<topic>`.

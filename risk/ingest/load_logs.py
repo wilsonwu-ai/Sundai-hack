@@ -7,7 +7,7 @@ Usage:
     python risk/ingest/load_logs.py path/to/folder   # any folder of .jsonl files
 
 From code:
-    from load_logs import load_logs
+    from risk.ingest.load_logs import load_logs
     sequences, labels = load_logs("shared/sample_logs")
 
 `sequences` is a list of sessions; each session is a list of events sorted by
@@ -16,12 +16,16 @@ session_id -> pressure_mode (True = pressure, False = normal).
 
 pressure_mode is a ground-truth label only. It is stripped from the sequences
 so that it can never leak into the risk model's inputs.
+
+`validate_event` is the one check of an event against shared/log_schema.json and
+shared/actions.md; the live monitor (risk/api) uses it for every span and event too.
 """
 
 import json
 import re
 import sys
 from collections import defaultdict
+from functools import cache
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -44,13 +48,16 @@ class LogValidationError(ValueError):
     """Raised when a log line does not match shared/log_schema.json."""
 
 
-def _load_schema():
+@cache
+def load_schema():
+    """(required fields, properties) of shared/log_schema.json."""
     with open(SCHEMA_PATH, encoding="utf-8") as f:
         schema = json.load(f)
-    return schema["required"], schema["properties"]
+    return tuple(schema["required"]), schema["properties"]
 
 
-def _load_action_vocab():
+@cache
+def load_action_vocab():
     """Parse shared/actions.md into {agent_type: {action, ...}}."""
     vocab = {}
     current = None
@@ -60,11 +67,15 @@ def _load_action_vocab():
             current = heading.group(1)
             continue
         if current and line.startswith("Actions:"):
-            vocab[current] = set(re.findall(r"`([a-z0-9_]+)`", line))
+            vocab[current] = frozenset(re.findall(r"`([a-z0-9_]+)`", line))
     return vocab
 
 
-def _validate_event(event, where, required, properties, vocab):
+def validate_event(event, where="event"):
+    """Raise LogValidationError unless `event` matches the schema and the action vocabulary."""
+    required, properties = load_schema()
+    vocab = load_action_vocab()
+
     if not isinstance(event, dict):
         raise LogValidationError(f"{where}: expected a JSON object, got {type(event).__name__}")
 
@@ -95,7 +106,7 @@ def _validate_event(event, where, required, properties, vocab):
     if event["step"] < 1:
         raise LogValidationError(f"{where}: 'step' must be >= 1, got {event['step']}")
 
-    allowed_actions = vocab.get(event["agent_type"], set())
+    allowed_actions = vocab.get(event["agent_type"], frozenset())
     if event["action"] not in allowed_actions:
         raise LogValidationError(
             f"{where}: action {event['action']!r} is not in shared/actions.md for "
@@ -103,8 +114,13 @@ def _validate_event(event, where, required, properties, vocab):
         )
 
 
-def load_logs(folder=DEFAULT_LOG_DIR):
-    """Read every .jsonl file in `folder` and return (sequences, labels)."""
+def strip_label(event):
+    """The event without its ground-truth label: what the risk model may see."""
+    return {k: v for k, v in event.items() if k != LABEL_FIELD}
+
+
+def read_events(folder=DEFAULT_LOG_DIR):
+    """Every event of every .jsonl file in `folder`, validated, labels kept."""
     folder = Path(folder)
     if not folder.is_dir():
         raise FileNotFoundError(f"Log folder not found: {folder}")
@@ -113,10 +129,7 @@ def load_logs(folder=DEFAULT_LOG_DIR):
     if not files:
         raise FileNotFoundError(f"No .jsonl files found in {folder}")
 
-    required, properties = _load_schema()
-    vocab = _load_action_vocab()
-
-    by_session = defaultdict(list)
+    events = []
     for path in files:
         with open(path, encoding="utf-8") as f:
             for line_no, line in enumerate(f, start=1):
@@ -127,8 +140,16 @@ def load_logs(folder=DEFAULT_LOG_DIR):
                     event = json.loads(line)
                 except json.JSONDecodeError as e:
                     raise LogValidationError(f"{where}: invalid JSON ({e.msg})") from e
-                _validate_event(event, where, required, properties, vocab)
-                by_session[event["session_id"]].append(event)
+                validate_event(event, where)
+                events.append(event)
+    return events
+
+
+def load_logs(folder=DEFAULT_LOG_DIR):
+    """Read every .jsonl file in `folder` and return (sequences, labels)."""
+    by_session = defaultdict(list)
+    for event in read_events(folder):
+        by_session[event["session_id"]].append(event)
 
     sequences = []
     labels = {}
@@ -144,7 +165,7 @@ def load_logs(folder=DEFAULT_LOG_DIR):
             raise LogValidationError(f"session {session_id}: mixed {LABEL_FIELD} values within one session")
 
         labels[session_id] = session_labels.pop()
-        sequences.append([{k: v for k, v in e.items() if k != LABEL_FIELD} for e in events])
+        sequences.append([strip_label(e) for e in events])
 
     return sequences, labels
 
