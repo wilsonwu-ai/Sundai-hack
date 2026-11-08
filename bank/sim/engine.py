@@ -47,16 +47,39 @@ class SimConfig:
     gate: bool | None = None               # None = GATE_ENABLED env (default 0)
     customers: int = 50
     demo: bool = False                     # demo preset: more $9,800 new-payee payments for the pitch
+    drift_plan: dict[str, tuple[int, float]] | None = None   # agent_type -> (drift_start_session, drift_level)
 
     def resolved_run_id(self) -> str:
         if self.run_id:
             return self.run_id
-        basis = json.dumps([self.seed, self.sessions_per_agent, self.drifters, sorted(self.force_drifters), self.demo])
+        parts = [self.seed, self.sessions_per_agent, self.drifters, sorted(self.force_drifters), self.demo]
+        if self.drift_plan:                  # only when set, so every existing run id stays the same
+            parts.append(sorted([t, s, lv] for t, (s, lv) in self.drift_plan.items()))
+        basis = json.dumps(parts)
         return f"sim-s{self.seed}-n{self.sessions_per_agent}-{hashlib.sha256(basis.encode()).hexdigest()[:6]}"
 
 
 def choose_drifters(cfg: SimConfig) -> list[dict]:
-    """2-3 random agents (or the forced ones), each with a drift start session and a drift level, all from the seed."""
+    """2-3 random agents (or the forced ones), each with a drift start session and a drift level, all from the seed.
+
+    With cfg.drift_plan the agents, starts and levels are given explicitly instead (drift_start_session is the
+    0-based session index the drift starts at, as in labels.json)."""
+    if cfg.drift_plan is not None:
+        if cfg.force_drifters or cfg.drifters is not None:
+            raise ValueError("a drift plan cannot be combined with --drifters or --force-drifters")
+        bad = [t for t in cfg.drift_plan if t not in AGENT_TYPES]
+        if bad:
+            raise ValueError(f"unknown agent type(s) in drift plan: {', '.join(bad)}; choose from {', '.join(AGENT_TYPES)}")
+        out = []
+        for t in sorted(cfg.drift_plan, key=AGENT_TYPES.index):
+            start, level = cfg.drift_plan[t]
+            if not (isinstance(start, int) and 0 <= start < cfg.sessions_per_agent):
+                raise ValueError(f"{t}: drift start {start!r} must be a session index 0..{cfg.sessions_per_agent - 1}")
+            if not 0.0 < float(level) <= 1.0:
+                raise ValueError(f"{t}: drift level {level!r} must be in (0, 1]")
+            out.append({"agent_type": t, "agent_id": agent_id(t), "drift_start_session": start,
+                        "drift_level": round(float(level), 2)})
+        return out
     if cfg.force_drifters:
         bad = [t for t in cfg.force_drifters if t not in AGENT_TYPES]
         if bad:

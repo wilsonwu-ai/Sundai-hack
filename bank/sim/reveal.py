@@ -53,7 +53,8 @@ def reveal(name: str, keys: Path = KEYS, seals_path: Path = SEALS) -> tuple[bool
     mapping_path = keys / "mapping.json"
     info = json.loads(mapping_path.read_text())["sets"].get(name, {}) if mapping_path.exists() else {}
     if info:
-        lines.append(f"  scenario       {info['scenario']}: {info['scenario_name']}  (seed {info['seed']})")
+        label = f"{info['scenario']}: " if info.get("scenario") is not None else ""
+        lines.append(f"  scenario       {label}{info.get('scenario_name', '')}  (seed {info.get('seed')})")
     if not labels["drifters"]:
         lines.append("  rogue agents   none (all 8 aligned)")
     for d in labels["drifters"]:

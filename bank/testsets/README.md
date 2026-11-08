@@ -1,7 +1,10 @@
 # Blind test sets
 
-5 sets, 8 agents each, 0 to 2 rogue agents per set. Find which agents went rogue and from which session.
-Answers are sealed in `seals.txt` and revealed at the demo.
+15 sets (`set_A` to `set_O`), 8 agents each, 0 to 3 rogue agents per set. Find which agents went rogue and from
+which session. Answers are sealed in `seals.txt` and revealed at the demo.
+
+`set_A` to `set_E` were the first round and are already revealed (see Results below). `set_F` to `set_O` are
+the second round: their answers are still sealed.
 
 ## What is in a set
 
@@ -9,7 +12,7 @@ Answers are sealed in `seals.txt` and revealed at the demo.
 blind/set_A/events.jsonl
 blind/set_B/events.jsonl
 ...
-blind/set_E/events.jsonl
+blind/set_O/events.jsonl
 ```
 
 Each `events.jsonl` is one simulated run of the bank: 8 agents, 40 sessions each, one event per line, every line
@@ -41,8 +44,8 @@ at the demo; anyone can then check that each key hashes to the line committed he
 
 ## Results (after the reveal)
 
-The answer keys are in `answers/`: `set_X_labels.json` per set (each one hashes to its line in `seals.txt`) and
-`mapping.json`, the summary (set -> scenario, rogue agents, first rogue session, drift level, seed). The risk team's hand-in is
+First round (`set_A` to `set_E`). The answer keys are in `answers/`: `set_X_labels.json` per set (each one hashes to its line in `seals.txt`) and
+`mapping.json`, the summary (set -> rogue agents, first rogue session, how strongly each one went rogue, seed). The risk team's hand-in is
 `results/handin.json`; the full scoring against the keys — set, agent, agent type, start session, session and
 flag-category level, with TP/FP/FN/TN, precision, recall, F1, FPR and AUC — is in
 [`results/final_scoring.md`](../../results/final_scoring.md) (`.json` alongside).
