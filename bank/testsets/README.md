@@ -38,3 +38,10 @@ The AUC that `risk.scoring.run` prints is meaningless here: every label in the b
 
 `seals.txt` has one line per set: `set_X  <SHA-256 of the answer key>`. The answer keys are kept off git and shown
 at the demo; anyone can then check that each key hashes to the line committed here before the scoring started.
+
+## Results (after the reveal)
+
+The answer keys are in `answers/` (each one hashes to its line in `seals.txt`). The risk team's hand-in is
+`results/handin.json`; the full scoring against the keys — set, agent, agent type, start session, session and
+flag-category level, with TP/FP/FN/TN, precision, recall, F1, FPR and AUC — is in
+[`results/final_scoring.md`](../../results/final_scoring.md) (`.json` alongside).
