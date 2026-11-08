@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="teams-t teams-d" viewBox="0 0 2000 1000" width="2000" height="1000" font-family="'Benton Sans','BentonSans','Public Sans','Helvetica Neue',Arial,sans-serif">
+<title id="teams-t">Two teams, sealed answers</title>
+<desc id="teams-d">Flow diagram of the blind test. Team 1, the agent builders, runs 8 banking agents, each in normal and pressure mode on the same scripted tasks against a fake bank. Team 1 hands over three things. OpenTelemetry traces, one span per step, and a practice set of good runs only go to Team 2, the risk team. Sealed answers, a fingerprint committed now with the file opened at the reveal, go straight to the reveal. Team 2 combines next-move guesses, a severity table and warning patterns to produce a decision per step (run, log, review or pause) and a report card per agent. A person decides at the pause. The reveal unseals the answers and scores the model.</desc>
+<defs><marker id="teams-a" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="userSpaceOnUse"><polygon points="0 0,12 5,0 10" fill="#4C5A6B"/></marker><marker id="teams-c" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="userSpaceOnUse"><polygon points="0 0,12 5,0 10" fill="#A8481B"/></marker></defs>
+<rect width="2000" height="1000" fill="#F5F7FA"/>
+<text x="40" y="52" font-size="13" font-weight="700" fill="#A8481B" text-anchor="start" letter-spacing="1.56" >TWO TEAMS  /  THE BLIND TEST</text>
+<text x="40" y="100" font-size="40" font-weight="700" fill="#0A2942" text-anchor="start" letter-spacing="-0.88" >Two teams, sealed answers, one shared log</text>
+<text x="40" y="134" font-size="20" font-weight="300" fill="#4C5A6B" text-anchor="start" letter-spacing="0" >Catch the risky move before the money moves.</text>
+<rect x="40" y="170" width="460" height="470" rx="6" fill="#FFFFFF" stroke="#D5DCE5" stroke-width="1.5"/>
+<text x="64" y="198" font-size="12" font-weight="700" fill="#4C5A6B" text-anchor="start" letter-spacing="1.4" >TEAM 1: THE AGENT BUILDERS</text>
+<rect x="64" y="215" width="412" height="195" rx="6" fill="#FFFFFF" stroke="#0A2942" stroke-width="1.75"/>
+<text x="80" y="247" font-size="19" font-weight="700" fill="#0A2942" text-anchor="start" letter-spacing="0" >8 banking agents</text>
+<text x="80" y="273" font-size="15" font-weight="700" fill="#14212F" text-anchor="start" letter-spacing="0" >normal and pressure runs</text>
+<text x="80" y="298" font-size="15" font-weight="400" fill="#4C5A6B" text-anchor="start" letter-spacing="0" >support, payments, disputes,</text>
+<text x="80" y="319" font-size="15" font-weight="400" fill="#4C5A6B" text-anchor="start" letter-spacing="0" >sales, collections, KYC,</text>
+<text x="80" y="350" font-size="15" font-weight="400" fill="#4C5A6B" text-anchor="start" letter-spacing="0" >underwriting and ops; each runs</text>
+<text x="80" y="371" font-size="15" font-weight="400" fill="#4C5A6B" text-anchor="start" letter-spacing="0" >normal or under pressure</text>
+<rect x="64" y="455" width="412" height="150" rx="6" fill="#E6ECF3" stroke="#77859A" stroke-width="1.75"/>
+<text x="80" y="487" font-size="19" font-weight="700" fill="#0A2942" text-anchor="start" letter-spacing="0" >Scripted tasks on a fake bank</text>
+<text x="80" y="513" font-size="15" font-weight="400" fill="#4C5A6B" text-anchor="start" letter-spacing="0" >every agent gets the same tasks</text>
+<text x="80" y="534" font-size="15" font-weight="400" fill="#4C5A6B" text-anchor="start" letter-spacing="0" >fake customers, synthetic data only</text>
+<text x="80" y="555" font-size="15" font-weight="400" fill="#4C5A6B" text-anchor="start" letter-spacing="0" >every step is written to the log</text>
+<path d="M270 410 L270 455" fill="none" stroke="#4C5A6B" stroke-width="1.75" marker-end="url(#teams-a)"/>
+<rect x="640" y="215" width="400" height="215" rx="6" fill="#E6ECF3" stroke="#0A2942" stroke-width="2.75"/>
+<text x="656" y="242" font-size="12" font-weight="700" fill="#0A2942" text-anchor="start" letter-spacing="1.4" >THE INTERFACE BETWEEN THE TEAMS</text>
+<text x="656" y="272" font-size="21" font-weight="700" fill="#0A2942" text-anchor="start" letter-spacing="0" >Action logs</text>
+<text x="656" y="298" font-size="15" font-weight="400" fill="#4C5A6B" text-anchor="start" letter-spacing="0" >JSON Lines, also sent as OTel spans,</text>
+<text x="656" y="318" font-size="15" font-weight="400" fill="#4C5A6B" text-anchor="start" letter-spacing="0" >one line per step</text>
+<rect x="656" y="334" width="368" height="50" rx="4" fill="#FFFFFF" stroke="#D5DCE5"/><text x="668" y="354" font-size="13" font-weight="400" fill="#14212F" text-anchor="start" letter-spacing="0" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace">{&quot;agent_id&quot;:&quot;payments-01&quot;,&quot;step&quot;:2,</text>
+<text x="668" y="373" font-size="13" font-weight="400" fill="#14212F" text-anchor="start" letter-spacing="0" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace">&quot;action&quot;:&quot;send_ach&quot;, ...}</text>
+<text x="656" y="410" font-size="14" font-weight="500" fill="#4C5A6B" text-anchor="start" letter-spacing="0" >pressure_mode is a label, never an input</text>
+<rect x="640" y="480" width="400" height="125" rx="6" fill="#FFFFFF" stroke="#0A2942" stroke-width="1.75"/>
+<text x="656" y="512" font-size="19" font-weight="700" fill="#0A2942" text-anchor="start" letter-spacing="0" >Practice set</text>
+<text x="656" y="538" font-size="15" font-weight="400" fill="#4C5A6B" text-anchor="start" letter-spacing="0" >normal sessions only,</text>
+<text x="656" y="559" font-size="15" font-weight="400" fill="#4C5A6B" text-anchor="start" letter-spacing="0" >labelled normal, so the risk team</text>
+<text x="656" y="580" font-size="15" font-weight="400" fill="#4C5A6B" text-anchor="start" letter-spacing="0" >can learn what normal looks like</text>
+<path d="M500 322 L640 322" fill="none" stroke="#4C5A6B" stroke-width="1.75" marker-end="url(#teams-a)"/>
+<path d="M500 542 L640 542" fill="none" stroke="#4C5A6B" stroke-width="1.75" marker-end="url(#teams-a)"/>
+<rect x="1180" y="170" width="460" height="470" rx="6" fill="#FFFFFF" stroke="#D5DCE5" stroke-width="1.5"/>
+<text x="1204" y="198" font-size="12" font-weight="700" fill="#4C5A6B" text-anchor="start" letter-spacing="1.4" >TEAM 2: THE RISK TEAM</text>
+<rect x="1204" y="215" width="412" height="115" rx="6" fill="#FFFFFF" stroke="#0A2942" stroke-width="1.75"/>
+<text x="1220" y="247" font-size="19" font-weight="700" fill="#0A2942" text-anchor="start" letter-spacing="0" >Markov next-move model</text>
+<text x="1220" y="273" font-size="15" font-weight="400" fill="#4C5A6B" text-anchor="start" letter-spacing="0" >the next move depends on the last k</text>
+<text x="1220" y="294" font-size="15" font-weight="400" fill="#4C5A6B" text-anchor="start" letter-spacing="0" >moves (history window); BehaviorGPT-v4</text>
+<text x="1220" y="315" font-size="15" font-weight="400" fill="#4C5A6B" text-anchor="start" letter-spacing="0" >can replace it if that is easy</text>
+<rect x="1204" y="350" width="412" height="80" rx="6" fill="#E6ECF3" stroke="#77859A" stroke-width="1.75"/>
+<text x="1220" y="382" font-size="19" font-weight="700" fill="#0A2942" text-anchor="start" letter-spacing="0" >Severity table</text>
+<text x="1220" y="408" font-size="15" font-weight="400" fill="#4C5A6B" text-anchor="start" letter-spacing="0" >how much harm each kind of move can do</text>
+<rect x="1204" y="450" width="412" height="100" rx="6" fill="#FFFFFF" stroke="#0A2942" stroke-width="1.75"/>
+<text x="1220" y="482" font-size="19" font-weight="700" fill="#0A2942" text-anchor="start" letter-spacing="0" >Warning patterns</text>
+<text x="1220" y="508" font-size="15" font-weight="400" fill="#4C5A6B" text-anchor="start" letter-spacing="0" >named patterns, for example paying</text>
+<text x="1220" y="529" font-size="15" font-weight="400" fill="#4C5A6B" text-anchor="start" letter-spacing="0" >right after changing where money goes</text>
+<text x="1204" y="585" font-size="15" font-weight="700" fill="#14212F" text-anchor="start" letter-spacing="0" >surprise × severity, plus a warning bonus</text>
+<text x="1204" y="607" font-size="15" font-weight="400" fill="#4C5A6B" text-anchor="start" letter-spacing="0" >then run, log, review or pause</text>
+<path d="M1040 322 L1180 322" fill="none" stroke="#4C5A6B" stroke-width="1.75" marker-end="url(#teams-a)"/>
+<path d="M1040 542 L1180 542" fill="none" stroke="#4C5A6B" stroke-width="1.75" marker-end="url(#teams-a)"/>
+<rect x="1720" y="190" width="240" height="130" rx="6" fill="#FBEEE3" stroke="#A8481B" stroke-width="2.5"/>
+<text x="1736" y="214" font-size="12" font-weight="700" fill="#A8481B" text-anchor="start" letter-spacing="1.4" >GOVERNANCE TOUCHPOINT</text>
+<text x="1736" y="240" font-size="20" font-weight="700" fill="#A8481B" text-anchor="start" letter-spacing="0" >Audit trail</text>
+<text x="1736" y="266" font-size="15" font-weight="400" fill="#4C5A6B" text-anchor="start" letter-spacing="0" >a decision per step:</text>
+<text x="1736" y="287" font-size="15" font-weight="400" fill="#4C5A6B" text-anchor="start" letter-spacing="0" >run, log, review or pause</text>
+<text x="1736" y="308" font-size="15" font-weight="400" fill="#4C5A6B" text-anchor="start" letter-spacing="0" >every one recorded</text>
+<rect x="1720" y="360" width="240" height="130" rx="6" fill="#FBEEE3" stroke="#A8481B" stroke-width="2.5"/>
+<text x="1736" y="384" font-size="12" font-weight="700" fill="#A8481B" text-anchor="start" letter-spacing="1.4" >GOVERNANCE TOUCHPOINT</text>
+<text x="1736" y="410" font-size="20" font-weight="700" fill="#A8481B" text-anchor="start" letter-spacing="0" >A person decides</text>
+<text x="1736" y="432" font-size="20" font-weight="700" fill="#A8481B" text-anchor="start" letter-spacing="0" >at the pause</text>
+<text x="1736" y="458" font-size="15" font-weight="400" fill="#4C5A6B" text-anchor="start" letter-spacing="0" >approve or block, before</text>
+<text x="1736" y="479" font-size="15" font-weight="400" fill="#4C5A6B" text-anchor="start" letter-spacing="0" >the money moves</text>
+<rect x="1720" y="530" width="240" height="110" rx="6" fill="#FFFFFF" stroke="#0A2942" stroke-width="1.75"/>
+<text x="1736" y="562" font-size="19" font-weight="700" fill="#0A2942" text-anchor="start" letter-spacing="0" >A report card</text>
+<text x="1736" y="586" font-size="15" font-weight="400" fill="#4C5A6B" text-anchor="start" letter-spacing="0" >per agent: low, medium</text>
+<text x="1736" y="607" font-size="15" font-weight="400" fill="#4C5A6B" text-anchor="start" letter-spacing="0" >or high risk, with the</text>
+<text x="1736" y="628" font-size="15" font-weight="400" fill="#4C5A6B" text-anchor="start" letter-spacing="0" >steps that drove it</text>
+<path d="M1640 255 L1720 255" fill="none" stroke="#4C5A6B" stroke-width="1.75" marker-end="url(#teams-a)"/>
+<path d="M1640 585 L1720 585" fill="none" stroke="#4C5A6B" stroke-width="1.75" marker-end="url(#teams-a)"/>
+<path d="M1840 320 L1840 360" fill="none" stroke="#A8481B" stroke-width="1.75" marker-end="url(#teams-c)"/>
+<text x="1856" y="345" font-size="13" font-weight="500" fill="#A8481B" text-anchor="start" letter-spacing="0" >on a pause</text>
+<rect x="40" y="740" width="460" height="150" rx="6" fill="#FBEEE3" stroke="#A8481B" stroke-width="2.5"/>
+<text x="64" y="768" font-size="12" font-weight="700" fill="#A8481B" text-anchor="start" letter-spacing="1.4" >GOVERNANCE TOUCHPOINT</text>
+<text x="64" y="798" font-size="21" font-weight="700" fill="#A8481B" text-anchor="start" letter-spacing="0" >Sealed answers</text>
+<text x="64" y="826" font-size="15" font-weight="400" fill="#4C5A6B" text-anchor="start" letter-spacing="0" >a fingerprint of the answer file is</text>
+<text x="64" y="847" font-size="15" font-weight="400" fill="#4C5A6B" text-anchor="start" letter-spacing="0" >committed now; the file is opened</text>
+<text x="64" y="868" font-size="15" font-weight="400" fill="#4C5A6B" text-anchor="start" letter-spacing="0" >at the reveal. The test is fixed in advance.</text>
+<path d="M270 640 L270 740" fill="none" stroke="#A8481B" stroke-width="1.75" marker-end="url(#teams-c)"/>
+<text x="286" y="695" font-size="14" font-weight="400" fill="#A8481B" text-anchor="start" letter-spacing="0" >Team 1 commits the fingerprint,</text>
+<text x="286" y="714" font-size="14" font-weight="400" fill="#A8481B" text-anchor="start" letter-spacing="0" >before any logs are shared</text>
+<rect x="700" y="740" width="1260" height="150" rx="6" fill="#E6ECF3" stroke="#0A2942" stroke-width="2.75"/>
+<text x="724" y="782" font-size="26" font-weight="700" fill="#0A2942" text-anchor="start" letter-spacing="0" >The reveal</text>
+<text x="724" y="812" font-size="16" font-weight="400" fill="#4C5A6B" text-anchor="start" letter-spacing="0" >Unseal the answers and score the model against them. Anyone can check that the file matches its fingerprint.</text>
+<text x="724" y="838" font-size="16" font-weight="400" fill="#4C5A6B" text-anchor="start" letter-spacing="0" >Team 2 submits its scores first, so nothing can be tuned to the answers.</text>
+<text x="724" y="868" font-size="16" font-weight="700" fill="#0A2942" text-anchor="start" letter-spacing="0" >Nobody sees which agent was good, bad or tricked until this step.</text>
+<path d="M500 815 L700 815" fill="none" stroke="#A8481B" stroke-width="1.75" marker-end="url(#teams-c)"/>
+<text x="600" y="792" font-size="14" font-weight="400" fill="#A8481B" text-anchor="middle" letter-spacing="0" >opened</text>
+<text x="600" y="808" font-size="14" font-weight="400" fill="#A8481B" text-anchor="middle" letter-spacing="0" >at the reveal</text>
+<path d="M1840 640 L1840 740" fill="none" stroke="#4C5A6B" stroke-width="1.75" marker-end="url(#teams-a)"/>
+<text x="1824" y="700" font-size="14" font-weight="400" fill="#4C5A6B" text-anchor="end" letter-spacing="0" >scores go in first</text>
+<text x="40" y="960" font-size="15" font-weight="500" fill="#4C5A6B" text-anchor="start" letter-spacing="0" >A plan, not results: the agents, logs and model are being built today. Synthetic data only. It flags agents and actions worth a human look.</text>
+</svg>
