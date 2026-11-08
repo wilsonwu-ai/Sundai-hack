@@ -47,10 +47,12 @@ class LiveScorer:
                 result = self.detector.score_session(events)
                 changed = self.store.save_scores(events, result["steps"], self.name)
                 # auto-pause: every step decided review or pause goes to the review
-                # queue (a step the gate already held keeps its hold)
-                for event, step in zip(events, result["steps"]):
-                    if step["decision"] in ("review", "pause"):
-                        self.store.hold(event, step, source="observed", tenant=tenant)
+                # queue (a step the gate already held keeps its hold); a test org's
+                # past runs are scored but nobody can act on them
+                if self.store.kind(tenant) != "test":
+                    for event, step in zip(events, result["steps"]):
+                        if step["decision"] in ("review", "pause"):
+                            self.store.hold(event, step, source="observed", tenant=tenant)
                 if changed and result["decision"] in ("review", "pause"):
                     top = max(result["steps"], key=lambda s: s["risk"])
                     log.warning("%s %s %s step %s: %s", tenant, agent_id, session_id, top["step"], top["decision"])

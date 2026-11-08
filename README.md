@@ -148,8 +148,14 @@ The live monitor (OTLP in on port 4318, API docs at `/docs`); details in [`risk/
 python3 -m venv .venv && .venv/bin/pip install -r risk/requirements.txt
 .venv/bin/uvicorn risk.api.server:app --port 4318      # run from the repo root
 .venv/bin/python -m risk.ingest.replay_otel            # replay shared/sample_logs into it as OTel spans
+.venv/bin/python -m risk.ingest.load_testsets          # the blind test sets A-E, as test orgs (no approvals)
 .venv/bin/pytest risk
 ```
+
+The dashboard is at http://localhost:4318. Its **Blind test** page shows the hand-in for sets A to E: every
+assistant's 40 sessions, which ones were called rogue and from when. Once the bank team puts the answer keys in
+`logs/answer_keys/` (where `bank/sim/reveal.py` reads them), the page also shows whether each call was right. It
+uses only keys that match `bank/testsets/seals.txt`.
 
 ### Workflow rules
 

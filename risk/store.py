@@ -106,9 +106,17 @@ CREATE TABLE IF NOT EXISTS holds (
     UNIQUE (tenant, agent_id, session_id, step)
 );
 CREATE INDEX IF NOT EXISTS holds_status ON holds (status, id);
+
+-- a test org (a blind test set, a replayed past run) is scored like any other,
+-- but nobody can act on it: its risky steps are not queued for a person
+CREATE TABLE IF NOT EXISTS tenant_kinds (
+    tenant TEXT PRIMARY KEY,
+    kind TEXT NOT NULL                 -- live | test
+);
 """
 
 HOLD_STATUSES = ("pending", "approved", "rejected")
+TENANT_KINDS = ("live", "test")
 
 SCORE_FIELDS = (
     "tenant", "agent_id", "agent_type", "session_id", "step", "timestamp", "action", "p", "expected",
@@ -263,10 +271,23 @@ class Store:
 
     def tenants(self) -> list[dict]:
         rows = self._rows(
-            "SELECT tenant, COUNT(DISTINCT agent_id) AS agents, COUNT(DISTINCT agent_id || '/' || session_id) AS sessions, "
-            "COUNT(*) AS events, MAX(timestamp) AS last_seen FROM events GROUP BY tenant ORDER BY tenant"
+            "SELECT e.tenant AS tenant, COALESCE(k.kind, 'live') AS kind, COUNT(DISTINCT e.agent_id) AS agents, "
+            "COUNT(DISTINCT e.agent_id || '/' || e.session_id) AS sessions, COUNT(*) AS events, "
+            "MAX(e.timestamp) AS last_seen FROM events e LEFT JOIN tenant_kinds k ON k.tenant = e.tenant "
+            "GROUP BY e.tenant ORDER BY e.tenant"
         )
         return [dict(r) for r in rows]
+
+    def set_kind(self, tenant: str, kind: str) -> None:
+        if kind not in TENANT_KINDS:
+            raise ValueError(f"kind must be one of {TENANT_KINDS}, not {kind!r}")
+        with self._lock, self._db:
+            self._db.execute("INSERT OR REPLACE INTO tenant_kinds (tenant, kind) VALUES (?, ?)", (tenant, kind))
+
+    def kind(self, tenant: str) -> str:
+        """live (the default) or test."""
+        rows = self._rows("SELECT kind FROM tenant_kinds WHERE tenant = ?", (tenant,))
+        return rows[0]["kind"] if rows else "live"
 
     # -- live scores ------------------------------------------------------------
 

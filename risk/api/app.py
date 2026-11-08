@@ -11,6 +11,7 @@ from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
+from risk.api.blindtest import blind_test
 from risk.api.labels import labels as plain_label_map
 from risk.api.labels import plain_reason
 from risk.api.live import LiveScorer
@@ -23,7 +24,7 @@ from risk.scoring.report import build as build_report
 from risk.scoring.report import from_step_rows as report_traces
 from risk.scoring.report import to_csv as report_csv
 from risk.scoring.detector import Detector, NoDetector
-from risk.store import DEFAULT_TENANT, Store, by_session
+from risk.store import DEFAULT_TENANT, TENANT_KINDS, Store, by_session
 
 log = logging.getLogger("risk.api")
 DASHBOARD = Path(__file__).resolve().parents[1] / "dashboard"
@@ -42,6 +43,10 @@ EXAMPLE_EVENT = {
     "pressure_mode": False,
     "reasoning_summary": "Customer asked to add their landlord as a payee for rent.",
 }
+
+
+class TenantKind(BaseModel):
+    kind: Literal[TENANT_KINDS]  # type: ignore[valid-type]
 
 
 class GateCheck(BaseModel):
@@ -70,7 +75,8 @@ class Decision(BaseModel):
     note: str | None = Field(None, description="Why")
 
 
-def create_app(db_path: str | Path, detector: Detector | None = None) -> FastAPI:
+def create_app(db_path: str | Path, detector: Detector | None = None, *, blindtest: dict | None = None) -> FastAPI:
+    """`blindtest`: paths for GET /blindtest (risk.api.blindtest.blind_test), for tests."""
     store = Store(db_path)
     detector = detector or NoDetector()
     app = FastAPI(
@@ -178,8 +184,17 @@ def create_app(db_path: str | Path, detector: Detector | None = None) -> FastAPI
 
     @app.get("/tenants", tags=["agents"])
     def list_tenants() -> list[dict]:
-        """The customer orgs with events: agents, sessions, events, last seen."""
+        """The customer orgs with events: kind (live or test), agents, sessions, events, last seen."""
         return store.tenants()
+
+    @app.put("/tenants/{tenant}", tags=["agents"])
+    def set_tenant_kind(tenant: str, body: TenantKind) -> dict:
+        """Mark an org as live (the default) or test. A test org (a blind test set, a
+        replayed past run) is scored like any other, but its risky steps are not
+        queued for a person, and the dashboard keeps it out of the live totals.
+        Set it before sending the org's events."""
+        store.set_kind(tenant, body.kind)
+        return {"tenant": tenant, "kind": body.kind}
 
     @app.get("/agents", tags=["agents"])
     def list_agents() -> list[dict]:
@@ -360,6 +375,13 @@ def create_app(db_path: str | Path, detector: Detector | None = None) -> FastAPI
         return RedirectResponse("/dashboard/")
 
     app.mount("/dashboard/", StaticFiles(directory=DASHBOARD, html=True), name="dashboard")
+
+    @app.get("/blindtest", tags=["eval"])
+    def blindtest_results() -> dict:
+        """The bank team's blind test: what we handed in per set (results/), every
+        session's decision, and the answers once their keys are in logs/answer_keys/
+        and match bank/testsets/seals.txt."""
+        return blind_test(**(blindtest or {}))
 
     @app.get("/eval/labels", tags=["eval"])
     def labels(agent_id: str | None = None) -> dict[str, bool]:
