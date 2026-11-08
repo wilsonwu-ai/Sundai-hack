@@ -26,6 +26,7 @@ node_modules/
 
 # --- Local data: logs, the monitor's database, API caches ---
 logs/
+risk/data/
 *.sqlite
 *.sqlite3
 *.sqlite-shm

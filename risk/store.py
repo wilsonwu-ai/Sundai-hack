@@ -35,7 +35,37 @@ CREATE TABLE IF NOT EXISTS events (
 );
 CREATE INDEX IF NOT EXISTS events_agent ON events (agent_id, timestamp);
 CREATE INDEX IF NOT EXISTS events_session ON events (session_id, step);
+
+-- the live scorer's output: one row per scored step. A row is rewritten only
+-- when its score changes, and a rewrite gets a new seq, so `seq > n` is
+-- exactly what changed since a reader last looked.
+CREATE TABLE IF NOT EXISTS step_scores (
+    seq INTEGER PRIMARY KEY AUTOINCREMENT,
+    agent_id TEXT NOT NULL,
+    agent_type TEXT NOT NULL,
+    session_id TEXT NOT NULL,
+    step INTEGER NOT NULL,
+    timestamp TEXT NOT NULL,
+    action TEXT NOT NULL,
+    p REAL,
+    expected TEXT,
+    p_expected REAL,
+    surprise REAL NOT NULL,
+    severity REAL NOT NULL,
+    risk REAL NOT NULL,
+    decision TEXT NOT NULL,
+    reason TEXT NOT NULL,
+    detector TEXT NOT NULL,
+    scored_at TEXT NOT NULL,
+    UNIQUE (agent_id, session_id, step)
+);
+CREATE INDEX IF NOT EXISTS scores_decision ON step_scores (decision, seq);
 """
+
+SCORE_FIELDS = (
+    "agent_id", "agent_type", "session_id", "step", "timestamp", "action", "p", "expected",
+    "p_expected", "surprise", "severity", "risk", "decision", "reason", "detector", "scored_at",
+)
 
 FIELDS = (
     "agent_id", "agent_type", "session_id", "step", "timestamp", "action", "params",
@@ -146,6 +176,72 @@ class Store:
             ],
             "actions": dict(Counter(e["action"] for e in events).most_common()),
         }
+
+    def sessions(self) -> list[tuple[str, str]]:
+        """Every (agent_id, session_id) with events."""
+        rows = self._rows("SELECT DISTINCT agent_id, session_id FROM events")
+        return [(r["agent_id"], r["session_id"]) for r in rows]
+
+    # -- live scores ------------------------------------------------------------
+
+    def save_scores(self, events: list[dict], steps: list[dict], detector: str) -> int:
+        """Store a session's step scores; only changed rows are rewritten. Returns how many."""
+        if not events:
+            return 0
+        agent_id, session_id = events[0]["agent_id"], events[0]["session_id"]
+        now = datetime.now(tz=UTC).isoformat()
+        with self._lock, self._db:
+            current = {
+                r["step"]: (r["action"], r["risk"], r["decision"], r["detector"])
+                for r in self._db.execute(
+                    "SELECT step, action, risk, decision, detector FROM step_scores "
+                    "WHERE agent_id = ? AND session_id = ?",
+                    (agent_id, session_id),
+                )
+            }
+            rows = [
+                (
+                    agent_id, e["agent_type"], session_id, s["step"], e["timestamp"], s["action"],
+                    s.get("p"), s.get("expected"), s.get("p_expected"), s["surprise"],
+                    s["severity"], s["risk"], s["decision"], s["reason"], detector, now,
+                )
+                for e, s in zip(events, steps)
+                if current.get(s["step"]) != (s["action"], s["risk"], s["decision"], detector)
+            ]
+            self._db.executemany(
+                f"INSERT OR REPLACE INTO step_scores ({', '.join(SCORE_FIELDS)}) "
+                f"VALUES ({', '.join('?' * len(SCORE_FIELDS))})",
+                rows,
+            )
+        return len(rows)
+
+    def scores_since(self, seq: int = 0, limit: int = 1000) -> list[dict]:
+        """Step scores written after `seq`, oldest first: the live feed."""
+        rows = self._rows(
+            f"SELECT seq, {', '.join(SCORE_FIELDS)} FROM step_scores WHERE seq > ? ORDER BY seq LIMIT ?",
+            (seq, limit),
+        )
+        return [dict(r) for r in rows]
+
+    def session_scores(self, session_id: str) -> list[dict]:
+        rows = self._rows(
+            f"SELECT seq, {', '.join(SCORE_FIELDS)} FROM step_scores "
+            "WHERE session_id = ? ORDER BY agent_id, step",
+            (session_id,),
+        )
+        return [dict(r) for r in rows]
+
+    def alerts(self, limit: int = 50) -> list[dict]:
+        """Steps decided review or pause, newest first."""
+        rows = self._rows(
+            f"SELECT seq, {', '.join(SCORE_FIELDS)} FROM step_scores "
+            "WHERE decision IN ('review', 'pause') ORDER BY seq DESC LIMIT ?",
+            (limit,),
+        )
+        return [dict(r) for r in rows]
+
+    def latest_seq(self) -> int:
+        return self._rows("SELECT COALESCE(MAX(seq), 0) AS seq FROM step_scores")[0]["seq"]
 
     def labels(self, agent_id: str | None = None) -> dict[str, bool]:
         """session_id -> pressure_mode, for evaluation only."""

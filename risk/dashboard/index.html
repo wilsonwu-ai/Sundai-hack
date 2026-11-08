@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Risk monitor</title>
+<style>
+  :root {
+    color-scheme: light;
+    --page: #f9f9f7;
+    --surface: #fcfcfb;
+    --ink: #0b0b0b;
+    --ink-2: #52514e;
+    --muted: #898781;
+    --grid: #e1e0d9;
+    --axis: #c3c2b7;
+    --border: rgba(11, 11, 11, 0.10);
+    --hover: rgba(11, 11, 11, 0.04);
+    --selected: rgba(42, 120, 214, 0.10);
+    --series: #2a78d6;
+    --track: #e1e0d9;
+    --good: #0ca30c;
+    --warning: #fab219;
+    --serious: #ec835a;
+    --critical: #d03b3b;
+    --fresh: rgba(250, 178, 25, 0.22);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) {
+      color-scheme: dark;
+      --page: #0d0d0d;
+      --surface: #1a1a19;
+      --ink: #f0efec;
+      --ink-2: #c3c2b7;
+      --muted: #898781;
+      --grid: #2c2c2a;
+      --axis: #383835;
+      --border: rgba(255, 255, 255, 0.10);
+      --hover: rgba(255, 255, 255, 0.05);
+      --selected: rgba(57, 135, 229, 0.16);
+      --series: #3987e5;
+      --track: #2c2c2a;
+      --fresh: rgba(250, 178, 25, 0.18);
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --page: #0d0d0d;
+    --surface: #1a1a19;
+    --ink: #f0efec;
+    --ink-2: #c3c2b7;
+    --muted: #898781;
+    --grid: #2c2c2a;
+    --axis: #383835;
+    --border: rgba(255, 255, 255, 0.10);
+    --hover: rgba(255, 255, 255, 0.05);
+    --selected: rgba(57, 135, 229, 0.16);
+    --series: #3987e5;
+    --track: #2c2c2a;
+    --fresh: rgba(250, 178, 25, 0.18);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--page); color: var(--ink);
+    font: 14px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  header {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px;
+    padding: 14px 20px; border-bottom: 1px solid var(--border); background: var(--surface);
+  }
+  header h1 { font-size: 16px; font-weight: 600; margin: 0; }
+  .live { display: inline-flex; align-items: center; gap: 6px; color: var(--ink-2); font-size: 13px; }
+  .live .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); }
+  .live.on .dot { background: var(--good); animation: pulse 2s infinite; }
+  @keyframes pulse { 50% { opacity: 0.35; } }
+  .config { color: var(--ink-2); font-size: 13px; }
+  .spacer { flex: 1; }
+  label.toggle { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--ink-2); cursor: pointer; }
+
+  .stats { display: flex; flex-wrap: wrap; gap: 12px; padding: 16px 20px 0; }
+  .stat { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; min-width: 130px; }
+  .stat .label { color: var(--ink-2); font-size: 12px; }
+  .stat .value { font-size: 22px; font-weight: 600; }
+
+  main {
+    display: grid; gap: 16px; padding: 16px 20px 24px;
+    grid-template-columns: minmax(230px, 290px) minmax(0, 1fr) minmax(250px, 330px);
+    align-items: start;
+  }
+  @media (max-width: 1100px) { main { grid-template-columns: minmax(0, 1fr); } }
+  section.card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px; min-width: 0; }
+  section.card h2 { font-size: 13px; font-weight: 600; color: var(--ink-2); margin: 0 0 10px; }
+  .empty { color: var(--muted); font-size: 13px; padding: 8px 0; }
+  .empty code { color: var(--ink-2); }
+
+  .list { display: flex; flex-direction: column; gap: 4px; }
+  .row {
+    display: block; width: 100%; text-align: left; border: 0; background: none; color: inherit; font: inherit;
+    padding: 8px 10px; border-radius: 8px; cursor: pointer;
+  }
+  .row:hover { background: var(--hover); }
+  .row[aria-current="true"] { background: var(--selected); }
+  .row.fresh { animation: fresh 1.6s ease-out; }
+  @keyframes fresh { from { background: var(--fresh); } }
+  .row .top { display: flex; align-items: center; gap: 8px; justify-content: space-between; }
+  .row .name { font-weight: 600; }
+  .row .sub { color: var(--ink-2); font-size: 12px; }
+  .meter { height: 6px; border-radius: 3px; background: var(--track); margin-top: 6px; overflow: hidden; }
+  .meter > span { display: block; height: 100%; border-radius: 3px; }
+
+  .chip { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: var(--ink); white-space: nowrap; }
+  .chip svg { flex: none; }
+  .num { font-variant-numeric: tabular-nums; }
+
+  .sessions { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+  .sessions .row { width: auto; border: 1px solid var(--border); padding: 6px 10px; }
+  .sessions .row .top { gap: 10px; }
+
+  .chart-title { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin-bottom: 4px; }
+  .chart-title .t { font-weight: 600; }
+  .chart-title .s { color: var(--ink-2); font-size: 13px; }
+  .key { display: flex; flex-wrap: wrap; gap: 14px; margin: 4px 0 6px; }
+  .chart { position: relative; }
+  .chart > svg { display: block; width: 100%; height: auto; max-height: 340px; }
+  .chart text { font: 11px system-ui, -apple-system, "Segoe UI", sans-serif; fill: var(--muted); font-variant-numeric: tabular-nums; }
+  .chart .hit { fill: transparent; cursor: crosshair; }
+  .chart .hit:focus { outline: none; }
+  .tip {
+    position: absolute; pointer-events: none; z-index: 2; max-width: 290px;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+    padding: 8px 10px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12); font-size: 12px; display: none;
+  }
+  .tip .v { font-size: 18px; font-weight: 600; }
+  .tip .k { color: var(--ink-2); }
+  .tip .reason { margin-top: 4px; color: var(--ink-2); }
+
+  table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 13px; }
+  th { text-align: left; color: var(--ink-2); font-weight: 600; font-size: 12px; padding: 6px 8px; border-bottom: 1px solid var(--axis); }
+  td { padding: 6px 8px; border-bottom: 1px solid var(--grid); vertical-align: top; }
+  td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; }
+  td.reason { color: var(--ink-2); min-width: 220px; }
+  tr.fresh td { animation: fresh 1.6s ease-out; }
+  .table-wrap { overflow-x: auto; }
+
+  .alert .what { margin-top: 2px; }
+  .alert .why { color: var(--ink-2); font-size: 12px; margin-top: 2px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Sundai Bank risk monitor</h1>
+  <span class="live" id="live"><span class="dot"></span><span id="live-text">connecting</span></span>
+  <span class="config" id="config"></span>
+  <span class="spacer"></span>
+  <label class="toggle"><input type="checkbox" id="follow" checked> Follow live</label>
+</header>
+
+<div class="stats" id="stats"></div>
+
+<main>
+  <section class="card" aria-labelledby="agents-h">
+    <h2 id="agents-h">Agents, riskiest first</h2>
+    <div class="list" id="agents"></div>
+  </section>
+
+  <section class="card" aria-labelledby="session-h">
+    <h2 id="session-h">Sessions</h2>
+    <div class="sessions" id="sessions"></div>
+    <div id="detail"></div>
+  </section>
+
+  <section class="card" aria-labelledby="alerts-h">
+    <h2 id="alerts-h">Review and pause, newest first</h2>
+    <div class="list" id="alerts"></div>
+  </section>
+</main>
+
+<script>
+"use strict";
+
+// run / log / review / pause use the reserved status colours, always with a
+// shape and a label, never colour alone.
+const DECISIONS = {
+  run:    { color: "var(--good)",     shape: "check" },
+  log:    { color: "var(--warning)",  shape: "dot" },
+  review: { color: "var(--serious)",  shape: "triangle" },
+  pause:  { color: "var(--critical)", shape: "square" },
+};
+const ORDER = ["run", "log", "review", "pause"];
+const SVG = "http://www.w3.org/2000/svg";
+
+const state = {
+  seq: 0,
+  rows: new Map(),        // "agent|session|step" -> step score
+  fresh: new Set(),
+  thresholds: { log: 0.2, review: 0.35, pause: 0.5 },
+  agent: null,
+  session: null,
+  follow: true,
+  hover: null,
+};
+
+// -- DOM helpers: every value from the API goes in as text, never as HTML ------
+function el(tag, attrs = {}, ...children) {
+  const node = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) {
+    if (k === "class") node.className = v;
+    else if (k.startsWith("on")) node.addEventListener(k.slice(2), v);
+    else node.setAttribute(k, v);
+  }
+  for (const c of children.flat()) {
+    if (c != null) node.append(c instanceof Node ? c : document.createTextNode(String(c)));
+  }
+  return node;
+}
+function svg(tag, attrs = {}) {
+  const node = document.createElementNS(SVG, tag);
+  for (const [k, v] of Object.entries(attrs)) node.setAttribute(k, v);
+  return node;
+}
+function icon(decision, size = 10) {
+  const d = DECISIONS[decision] || DECISIONS.run;
+  const s = svg("svg", { width: size, height: size, viewBox: "0 0 10 10", "aria-hidden": "true" });
+  if (d.shape === "check") s.append(svg("path", { d: "M1.5 5.2 4 7.6 8.6 2.4", fill: "none", stroke: d.color, "stroke-width": 2, "stroke-linecap": "round", "stroke-linejoin": "round" }));
+  if (d.shape === "dot") s.append(svg("circle", { cx: 5, cy: 5, r: 4, fill: d.color }));
+  if (d.shape === "triangle") s.append(svg("path", { d: "M5 1 9.4 9H.6Z", fill: d.color }));
+  if (d.shape === "square") s.append(svg("rect", { x: 1, y: 1, width: 8, height: 8, rx: 1.5, fill: d.color }));
+  return s;
+}
+const chip = (decision) => el("span", { class: "chip" }, icon(decision), decision);
+const fmt = (x) => (x == null ? "–" : Number(x).toFixed(2));
+const worst = (ds) => ds.reduce((a, b) => (ORDER.indexOf(b) > ORDER.indexOf(a) ? b : a), "run");
+const key = (r) => `${r.agent_id}|${r.session_id}|${r.step}`;
+
+// -- the model the views draw from ------------------------------------------
+function model() {
+  const agents = new Map();
+  for (const r of state.rows.values()) {
+    if (!agents.has(r.agent_id)) agents.set(r.agent_id, { id: r.agent_id, type: r.agent_type, sessions: new Map() });
+    const a = agents.get(r.agent_id);
+    if (!a.sessions.has(r.session_id)) a.sessions.set(r.session_id, []);
+    a.sessions.get(r.session_id).push(r);
+  }
+  for (const a of agents.values()) {
+    a.list = [];
+    for (const [id, steps] of a.sessions) {
+      steps.sort((x, y) => x.step - y.step);
+      a.list.push({
+        id, steps,
+        risk: Math.max(...steps.map((s) => s.risk)),
+        decision: worst(steps.map((s) => s.decision)),
+        last: Math.max(...steps.map((s) => s.seq)),
+        fresh: steps.some((s) => state.fresh.has(key(s))),
+      });
+    }
+    a.list.sort((x, y) => x.steps[0].timestamp.localeCompare(y.steps[0].timestamp));
+    a.risk = Math.max(...a.list.map((s) => s.risk));
+    a.decision = worst(a.list.map((s) => s.decision));
+    a.actions = a.list.reduce((n, s) => n + s.steps.length, 0);
+    a.fresh = a.list.some((s) => s.fresh);
+  }
+  return [...agents.values()].sort((x, y) => y.risk - x.risk || x.id.localeCompare(y.id));
+}
+
+// -- views ------------------------------------------------------------------
+function renderStats(agents) {
+  const rows = [...state.rows.values()];
+  const sessions = agents.reduce((n, a) => n + a.list.length, 0);
+  const tiles = [
+    ["Agents", agents.length],
+    ["Sessions", sessions],
+    ["Actions scored", rows.length],
+    ["Sessions paused", agents.reduce((n, a) => n + a.list.filter((s) => s.decision === "pause").length, 0)],
+    ["Sessions in review", agents.reduce((n, a) => n + a.list.filter((s) => s.decision === "review").length, 0)],
+  ];
+  document.getElementById("stats").replaceChildren(
+    ...tiles.map(([label, value]) => el("div", { class: "stat" }, el("div", { class: "label" }, label), el("div", { class: "value" }, value)))
+  );
+}
+
+function select(agent, session) {
+  state.agent = agent;
+  state.session = session;
+  state.follow = false;
+  document.getElementById("follow").checked = false;
+  render();
+}
+
+function renderAgents(agents) {
+  const box = document.getElementById("agents");
+  if (!agents.length) {
+    box.replaceChildren(el("div", { class: "empty" }, "No actions yet. Replay some: ", el("code", {}, "python -m risk.ingest.replay_otel --delay 1")));
+    return;
+  }
+  box.replaceChildren(...agents.map((a) => el("button", {
+      class: "row" + (a.fresh ? " fresh" : ""),
+      "aria-current": String(a.id === state.agent),
+      onclick: () => select(a.id, a.list[a.list.length - 1].id),
+    },
+    el("div", { class: "top" }, el("span", { class: "name" }, a.id), chip(a.decision)),
+    el("div", { class: "sub" }, `${a.type} · ${a.list.length} session${a.list.length === 1 ? "" : "s"} · ${a.actions} actions · peak risk ${fmt(a.risk)}`),
+    el("div", { class: "meter", "aria-hidden": "true" },
+      el("span", { style: `width:${Math.max(2, a.risk * 100)}%;background:${DECISIONS[a.decision].color}` })),
+  )));
+}
+
+function sparkline(steps) {
+  const w = 64, h = 20, n = steps.length;
+  const x = (i) => (n === 1 ? w / 2 : 3 + (i * (w - 6)) / (n - 1));
+  const y = (v) => h - 3 - v * (h - 6);
+  const s = svg("svg", { width: w, height: h, viewBox: `0 0 ${w} ${h}`, "aria-hidden": "true" });
+  s.append(svg("path", { d: steps.map((st, i) => `${i ? "L" : "M"}${x(i)},${y(st.risk)}`).join(""), fill: "none", stroke: "var(--muted)", "stroke-width": 1.5, "stroke-linejoin": "round" }));
+  const top = steps.reduce((a, b) => (b.risk > a.risk ? b : a));
+  s.append(svg("circle", { cx: x(steps.indexOf(top)), cy: y(top.risk), r: 2.5, fill: DECISIONS[top.decision].color }));
+  return s;
+}
+
+function renderSessions(agent) {
+  const box = document.getElementById("sessions");
+  document.getElementById("session-h").textContent = agent ? `Sessions of ${agent.id}` : "Sessions";
+  if (!agent) { box.replaceChildren(); return; }
+  box.replaceChildren(...agent.list.map((s) => el("button", {
+      class: "row" + (s.fresh ? " fresh" : ""),
+      "aria-current": String(s.id === state.session),
+      onclick: () => select(agent.id, s.id),
+    },
+    el("div", { class: "top" }, el("span", { class: "name" }, s.id), sparkline(s.steps), chip(s.decision)),
+  )));
+}
+
+function renderDetail(agent) {
+  const box = document.getElementById("detail");
+  const session = agent && agent.list.find((s) => s.id === state.session);
+  if (!session) {
+    box.replaceChildren(el("div", { class: "empty" }, agent ? "Pick a session." : "Pick an agent to see its sessions."));
+    return;
+  }
+  const t = state.thresholds;
+  box.replaceChildren(
+    el("div", { class: "chart-title" },
+      el("span", { class: "t" }, `Risk per step, ${session.id}`),
+      el("span", { class: "s" }, `${agent.id} · peak ${fmt(session.risk)} · log ≥ ${fmt(t.log)}, review ≥ ${fmt(t.review)}, pause ≥ ${fmt(t.pause)}`)),
+    el("div", { class: "key" }, ...ORDER.map(chip)),
+    chart(session.steps),
+    stepsTable(session.steps),
+  );
+}
+
+function chart(steps) {
+  const W = 640, H = 250, m = { l: 34, r: 84, t: 12, b: 26 };
+  const pw = W - m.l - m.r, ph = H - m.t - m.b, n = steps.length;
+  const x = (i) => m.l + (n === 1 ? pw / 2 : (i * pw) / (n - 1));
+  const y = (v) => m.t + (1 - Math.min(1, Math.max(0, v))) * ph;
+  const wrap = el("div", { class: "chart" });
+  const s = svg("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": `Risk per step for ${n} steps; the table below lists every value` });
+
+  for (const v of [0, 1]) {   // recessive grid; the decision lines carry the middle
+    s.append(svg("line", { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v), stroke: v === 0 ? "var(--axis)" : "var(--grid)", "stroke-width": 1 }));
+    const label = svg("text", { x: m.l - 6, y: y(v) + 4, "text-anchor": "end" }); label.textContent = v.toFixed(1); s.append(label);
+  }
+  for (const name of ["log", "review", "pause"]) {   // decision lines, labelled at the right
+    const v = state.thresholds[name];
+    if (v > 1) continue;
+    s.append(svg("line", { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v), stroke: "var(--ink-2)", "stroke-opacity": 0.45, "stroke-width": 1 }));
+    const label = svg("text", { x: W - m.r + 6, y: y(v) + 4 }); label.textContent = `${name} ${fmt(v)}`; s.append(label);
+  }
+  steps.forEach((st, i) => {
+    const label = svg("text", { x: x(i), y: H - 8, "text-anchor": "middle" }); label.textContent = st.step; s.append(label);
+  });
+
+  const cross = svg("line", { y1: m.t, y2: m.t + ph, stroke: "var(--axis)", "stroke-width": 1, visibility: "hidden" });
+  s.append(cross);
+  s.append(svg("path", { d: steps.map((st, i) => `${i ? "L" : "M"}${x(i)},${y(st.risk)}`).join(""), fill: "none", stroke: "var(--series)", "stroke-width": 2, "stroke-linejoin": "round", "stroke-linecap": "round" }));
+  steps.forEach((st, i) => {
+    if (state.fresh.has(key(st))) {
+      const ring = svg("circle", { cx: x(i), cy: y(st.risk), r: 5, fill: "none", stroke: DECISIONS[st.decision].color, "stroke-width": 2 });
+      ring.append(svg("animate", { attributeName: "r", from: 5, to: 16, dur: "1.2s", repeatCount: 2 }));
+      ring.append(svg("animate", { attributeName: "opacity", from: 1, to: 0, dur: "1.2s", repeatCount: 2 }));
+      s.append(ring);
+    }
+    s.append(svg("circle", { cx: x(i), cy: y(st.risk), r: 5, fill: DECISIONS[st.decision].color, stroke: "var(--surface)", "stroke-width": 2 }));
+  });
+
+  const tip = el("div", { class: "tip", role: "status" });
+  const show = (i) => {
+    const st = steps[i];
+    state.hover = st.step;
+    cross.setAttribute("x1", x(i)); cross.setAttribute("x2", x(i)); cross.setAttribute("visibility", "visible");
+    tip.replaceChildren(
+      el("div", {}, el("span", { class: "v num" }, fmt(st.risk)), el("span", { class: "k" }, " risk"), " ", chip(st.decision)),
+      el("div", {}, el("b", {}, `Step ${st.step} · ${st.action}`)),
+      el("div", { class: "k num" }, `surprise ${fmt(st.surprise)} × severity ${fmt(st.severity)}`),
+      st.expected && st.expected !== st.action ? el("div", { class: "k" }, `model expected ${st.expected}`) : null,
+      el("div", { class: "reason" }, st.reason),
+    );
+    tip.style.display = "block";
+    // where the drawing really is: the svg keeps its aspect ratio, so it may be letterboxed
+    const box = wrap.getBoundingClientRect(), r = s.getBoundingClientRect();
+    const scale = Math.min(r.width / W, r.height / H);
+    const ox = r.left - box.left + (r.width - W * scale) / 2, oy = r.top - box.top + (r.height - H * scale) / 2;
+    const px = ox + x(i) * scale, py = oy + y(st.risk) * scale;
+    const left = Math.min(Math.max(0, px + 12), Math.max(0, box.width - tip.offsetWidth));
+    const above = py - tip.offsetHeight - 12;
+    tip.style.left = `${left}px`;
+    tip.style.top = `${above >= 0 ? above : py + 14}px`;   // below the point if no room above
+  };
+  const hide = () => { state.hover = null; cross.setAttribute("visibility", "hidden"); tip.style.display = "none"; };
+  steps.forEach((st, i) => {   // hit columns: the whole step's width, not the 10px dot
+    const half = n === 1 ? pw / 2 : pw / (n - 1) / 2;
+    const hit = svg("rect", { class: "hit", x: x(i) - half, y: m.t, width: half * 2, height: ph, tabindex: 0, "aria-label": `Step ${st.step}, ${st.action}, risk ${fmt(st.risk)}, ${st.decision}` });
+    hit.addEventListener("pointerenter", () => show(i));
+    hit.addEventListener("focus", () => show(i));
+    hit.addEventListener("pointerleave", hide);
+    hit.addEventListener("blur", hide);
+    s.append(hit);
+  });
+  wrap.append(s, tip);
+  const again = steps.findIndex((st) => st.step === state.hover);
+  if (again >= 0) requestAnimationFrame(() => show(again));
+  return wrap;
+}
+
+function stepsTable(steps) {
+  const head = ["Step", "Action", "Model expected", "Surprise", "Severity", "Risk", "Decision", "Reason"];
+  const numeric = new Set(["Step", "Surprise", "Severity", "Risk"]);
+  return el("div", { class: "table-wrap" }, el("table", {},
+    el("thead", {}, el("tr", {}, ...head.map((h) => el("th", { class: numeric.has(h) ? "n" : "" }, h)))),
+    el("tbody", {}, ...steps.map((st) => el("tr", { class: state.fresh.has(key(st)) ? "fresh" : "" },
+      el("td", { class: "n" }, st.step),
+      el("td", {}, st.action),
+      el("td", {}, st.expected || "–"),
+      el("td", { class: "n" }, fmt(st.surprise)),
+      el("td", { class: "n" }, fmt(st.severity)),
+      el("td", { class: "n" }, el("b", {}, fmt(st.risk))),
+      el("td", {}, chip(st.decision)),
+      el("td", { class: "reason" }, st.reason),
+    ))),
+  ));
+}
+
+function renderAlerts() {
+  const alerts = [...state.rows.values()]
+    .filter((r) => r.decision === "review" || r.decision === "pause")
+    .sort((a, b) => b.seq - a.seq)
+    .slice(0, 50);
+  const box = document.getElementById("alerts");
+  if (!alerts.length) { box.replaceChildren(el("div", { class: "empty" }, "Nothing to review yet.")); return; }
+  box.replaceChildren(...alerts.map((r) => el("button", {
+      class: "row alert" + (state.fresh.has(key(r)) ? " fresh" : ""),
+      onclick: () => select(r.agent_id, r.session_id),
+    },
+    el("div", { class: "top" }, chip(r.decision), el("span", { class: "sub num" }, `risk ${fmt(r.risk)}`)),
+    el("div", { class: "what" }, el("b", {}, r.agent_id), ` · ${r.session_id} · step ${r.step} · ${r.action}`),
+    el("div", { class: "why" }, r.reason),
+  )));
+}
+
+function render() {
+  const agents = model();
+  if (state.agent && !agents.some((a) => a.id === state.agent)) state.agent = null;
+  if (!state.agent && agents.length) { state.agent = agents[0].id; state.session = null; }
+  const agent = agents.find((a) => a.id === state.agent);
+  if (agent && !agent.list.some((s) => s.id === state.session)) state.session = agent.list[agent.list.length - 1].id;
+  renderStats(agents);
+  renderAgents(agents);
+  renderSessions(agent);
+  renderDetail(agent);
+  renderAlerts();
+}
+
+// -- live feed ----------------------------------------------------------------
+function setLive(ok) {
+  document.getElementById("live").classList.toggle("on", ok);
+  document.getElementById("live-text").textContent = ok ? "live" : "offline, retrying";
+}
+
+async function poll() {
+  let more = false;
+  try {
+    const res = await fetch(`/live/steps?since=${state.seq}&limit=1000`);
+    if (!res.ok) throw new Error(res.status);
+    const data = await res.json();
+    setLive(true);
+    if (data.steps.length) {
+      const backlog = state.seq === 0;   // the first load is history, not news
+      state.fresh = new Set();
+      for (const r of data.steps) { state.rows.set(key(r), r); if (!backlog) state.fresh.add(key(r)); }
+      state.seq = data.seq;
+      more = data.steps.length === 1000;
+      if (state.follow) {
+        const last = data.steps[data.steps.length - 1];
+        state.agent = last.agent_id;
+        state.session = last.session_id;
+      }
+      render();
+    }
+  } catch (e) {
+    setLive(false);
+  }
+  setTimeout(poll, more ? 0 : 1000);
+}
+
+async function init() {
+  document.getElementById("follow").addEventListener("change", (e) => { state.follow = e.target.checked; });
+  try {
+    const h = await (await fetch("/healthz")).json();
+    const cfg = h.detector_config || {};
+    if (cfg.thresholds) state.thresholds = cfg.thresholds;
+    const parts = [`detector ${h.detector}`];
+    if (cfg.temperature && h.detector !== "severity_only") parts.push(`temperature ${cfg.temperature}`);
+    if (cfg.fit) parts.push(`fitted on ${cfg.fit.practice_runs} practice runs`);
+    document.getElementById("config").textContent = parts.join(" · ");
+  } catch (e) { /* the feed shows offline */ }
+  render();
+  poll();
+}
+init();
+</script>
+</body>
+</html>

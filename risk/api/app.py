@@ -6,7 +6,9 @@ from typing import Any
 
 from fastapi import Body, FastAPI, HTTPException, Query, Request, Response
 from fastapi.concurrency import run_in_threadpool
+from fastapi.responses import FileResponse, RedirectResponse
 
+from risk.api.live import LiveScorer
 from risk.behaviorgpt.history import to_history
 from risk.ingest.events import check, from_span
 from risk.ingest.load_logs import LogValidationError
@@ -15,6 +17,7 @@ from risk.scoring.detector import Detector, NoDetector
 from risk.store import Store, by_session
 
 log = logging.getLogger("risk.api")
+DASHBOARD = Path(__file__).resolve().parents[1] / "dashboard" / "index.html"
 
 EXAMPLE_EVENT = {
     "agent_id": "payments-01",
@@ -45,6 +48,16 @@ def create_app(db_path: str | Path, detector: Detector | None = None) -> FastAPI
     )
     app.state.store = store
 
+    # live scoring needs a detector that scores a session step by step
+    live = LiveScorer(store, detector) if hasattr(detector, "score_session") else None
+    app.state.live = live
+    if live:
+        live.submit(store.sessions())  # catch up on what was stored before a restart
+
+    def score_live(events: list[dict]) -> None:
+        if live:
+            live.submit({(e["agent_id"], e["session_id"]) for e in events})
+
     def agent_or_404(agent_id: str) -> dict[str, list[dict]]:
         sessions = by_session(store.events(agent_id=agent_id))
         if not sessions:
@@ -53,7 +66,8 @@ def create_app(db_path: str | Path, detector: Detector | None = None) -> FastAPI
 
     @app.get("/healthz", tags=["meta"])
     def healthz() -> dict:
-        return {"ok": True}
+        info = detector.info() if hasattr(detector, "info") else {"name": type(detector).__name__}
+        return {"ok": True, "detector": info.pop("name"), "detector_config": info}
 
     # -- ingest -----------------------------------------------------------------
 
@@ -83,6 +97,7 @@ def create_app(db_path: str | Path, detector: Detector | None = None) -> FastAPI
                 rejected.append(str(exc))
         if events:
             await run_in_threadpool(store.add, events, source="otel", otel_ids=otel_ids)
+            score_live(events)
         if rejected:
             log.warning("rejected %d span(s): %s", len(rejected), "; ".join(rejected[:3]))
         body, mt = encode_response(content_type, len(rejected), "; ".join(rejected[:5]))
@@ -101,7 +116,9 @@ def create_app(db_path: str | Path, detector: Detector | None = None) -> FastAPI
             events = [check(e, f"event {i}") for i, e in enumerate(items)]
         except LogValidationError as exc:
             raise HTTPException(422, str(exc)) from None
-        return {"ids": store.add(events, source="api")}
+        ids = store.add(events, source="api")
+        score_live(events)
+        return {"ids": ids}
 
     @app.get("/events", tags=["events"])
     def list_events(
@@ -153,6 +170,36 @@ def create_app(db_path: str | Path, detector: Detector | None = None) -> FastAPI
         if not events:
             raise HTTPException(404, f"no events for session {session_id!r}")
         return events
+
+    # -- live ------------------------------------------------------------------
+
+    @app.get("/live/steps", tags=["live"])
+    def live_steps(since: int = Query(0, ge=0), limit: int = Query(1000, ge=1, le=5000)) -> dict:
+        """Step scores written after `since` (a `seq`), oldest first. Poll with the
+        returned `seq` to get only what changed: the dashboard's feed."""
+        steps = store.scores_since(since, limit)
+        return {"seq": steps[-1]["seq"] if steps else max(since, 0), "steps": steps}
+
+    @app.get("/alerts", tags=["live"])
+    def alerts(limit: int = Query(50, ge=1, le=500)) -> list[dict]:
+        """Steps decided review or pause, newest first."""
+        return store.alerts(limit)
+
+    @app.get("/sessions/{session_id}/scores", tags=["live"])
+    def session_scores(session_id: str) -> list[dict]:
+        """The session's stored step scores: its risk curve."""
+        scores = store.session_scores(session_id)
+        if not scores:
+            raise HTTPException(404, f"no scores for session {session_id!r}")
+        return scores
+
+    @app.get("/dashboard", include_in_schema=False)
+    def dashboard() -> FileResponse:
+        return FileResponse(DASHBOARD, media_type="text/html")
+
+    @app.get("/", include_in_schema=False)
+    def root() -> RedirectResponse:
+        return RedirectResponse("/dashboard")
 
     @app.get("/eval/labels", tags=["eval"])
     def labels(agent_id: str | None = None) -> dict[str, bool]:

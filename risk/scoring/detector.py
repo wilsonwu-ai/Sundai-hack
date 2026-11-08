@@ -7,7 +7,9 @@ that session's events in step order, shaped as shared/log_schema.json WITHOUT
 - Offline: `sessions_by_agent(load_logs(folder)[0])`
 - Online: `GET /agents/{id}/risk` passes what the monitor has stored
 
-Implement `Detector` and pass it to `create_app(detector=...)` in risk/api/server.py.
+The monitor's detector is `surprise_severity.SurpriseSeverityDetector`
+(BehaviorGPT surprise x severity). Implement `Detector` for another one and
+pass it to `create_app(detector=...)` in risk/api/server.py.
 """
 
 from typing import Protocol
@@ -21,6 +23,8 @@ class Detector(Protocol):
 
 
 class NoDetector:
+    name = "none"
+
     def score_agent(self, agent_id: str, sessions: dict[str, list[dict]]) -> dict:
         return {
             "agent_id": agent_id,
