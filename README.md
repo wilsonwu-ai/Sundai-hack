@@ -173,6 +173,8 @@ This is a hack-day experiment, not a compliance control and not legal advice.
 
 ## Team
 
+![The Sundai Bank team at Sundai Club Hack 148, MIT, 8 November 2026](docs/demo/img/team-hack148.jpg)
+
 - **Zac Thomas**, idea and lead ([LinkedIn](https://www.linkedin.com/in/zac-thomas))
 - **Abdelhaq Chaoui** ([LinkedIn](https://www.linkedin.com/in/abdelhaq-chaoui-9627042ab))
 - **Vivek Chaudhari**, repo skeleton, log schema, action list and sample sessions ([LinkedIn](https://www.linkedin.com/in/vivek-kirankumar-chaudhari))
