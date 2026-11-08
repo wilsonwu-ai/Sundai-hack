@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-08T19:28:29.497509+00:00",
+  "generated_at": "2026-11-08T19:32:11.378104+00:00",
   "source": "bank/testsets/blind/set_A",
   "detector": {
     "name": "behaviorgpt+roles",
@@ -5184,7 +5184,7 @@
     }
   ],
   "provenance": {
-    "model_commit": "008c251edfda25c271c524b487a3501449af1d90",
+    "model_commit": "62a15113bb21e52aa5e6e43ebe302bcb1b8eaf10",
     "uncommitted_changes": false,
     "logs": {
       "events.jsonl": "1a66e062dd0455ad3fb9c376b194c9667ea4d5139adc42daaeefd3178a55cd77"
