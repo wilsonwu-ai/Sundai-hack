@@ -52,6 +52,27 @@ name, the same `events.jsonl`, `labels.json` and `labels.sha256`, byte for byte.
 
 `--otel/--no-otel` and `--gate/--no-gate` override these per run.
 
+## Run locally
+
+One command starts the risk monitor, the gate, the bank API and the web app, then kicks off the live demo run
+(seed 154, Payments + KYC drifting, OpenTelemetry and gate on):
+
+```sh
+bank/run_local.sh      # sets up .venv / web deps if missing, frees our own old servers, starts everything
+bank/stop_local.sh     # stops it all
+```
+
+| Screen | URL |
+|---|---|
+| Customer bank site | http://localhost:5173/ |
+| Staff console (live feed, Reveal) | http://localhost:5173/#staff |
+| Risk dashboard | http://localhost:4318/dashboard |
+
+Logs are in `logs/local/<name>.log` (`risk`, `gate`, `bank`, `web`). The script checks whether the risk monitor
+serves `POST /gate/check`: if it does, the bank uses it; if not, it starts `bank/sim/mock_gate.py` on port 4319 and
+points the bank there. It never kills a process on ports 4318, 8000, 5173 or 4319 unless it is one of our own
+servers from this repo.
+
 ## How it works
 
 ```
