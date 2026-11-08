@@ -1,10 +1,11 @@
 """The bank team's blind test (bank/testsets), as the dashboard shows it.
 
 What we handed in: results/handin.json and results/scores_set_*.json, committed
-before the answers were opened. Once the bank team puts the answer keys in
-logs/answer_keys/ (bank/sim/reveal.py), the answers too, but only a key whose
-SHA-256 matches its line in bank/testsets/seals.txt: a key changed after the seal
-is reported, not shown. Display only: nothing here feeds the scoring.
+before the answers were opened. And the answers, once the bank team reveals them
+(bank/testsets/answers/, committed at the reveal, or logs/answer_keys/ where
+bank/sim/reveal.py reads them), but only a key whose SHA-256 matches its line in
+bank/testsets/seals.txt: a key changed after the seal is reported, not shown.
+Display only: nothing here feeds the scoring.
 """
 
 import hashlib
@@ -18,7 +19,7 @@ from risk.ingest.load_logs import REPO_ROOT
 RESULTS = REPO_ROOT / "results"
 SETS = REPO_ROOT / "bank" / "testsets" / "blind"
 SEALS = REPO_ROOT / "bank" / "testsets" / "seals.txt"
-KEYS = REPO_ROOT / "logs" / "answer_keys"
+KEYS = (REPO_ROOT / "logs" / "answer_keys", REPO_ROOT / "bank" / "testsets" / "answers")  # first one with the key
 TENANT_PREFIX = "Test set "
 
 SESSION = re.compile(r"^s_[^_]+_(?P<type>.+)_(?P<n>\d+)$")  # s_<run tag>_<agent type>_<nnn>
@@ -40,10 +41,11 @@ def read_seals(path: Path) -> dict[str, str]:
     return dict(line.split() for line in path.read_text(encoding="utf-8").splitlines() if line.strip())
 
 
-def answers(set_name: str, sealed: str | None, keys: Path) -> dict:
+def answers(set_name: str, sealed: str | None, keys: Path | tuple[Path, ...]) -> dict:
     """The answer key for one set, if it is there and matches its seal."""
-    path = keys / f"{set_name}_labels.json"
-    if not path.exists():
+    folders = (keys,) if isinstance(keys, Path) else keys
+    path = next((f / f"{set_name}_labels.json" for f in folders if (f / f"{set_name}_labels.json").exists()), None)
+    if path is None:
         return {"status": "sealed", "seal": sealed}
     raw = path.read_bytes()
     digest = hashlib.sha256(raw).hexdigest()
@@ -69,7 +71,7 @@ def verdict(called: bool, truth: dict | None) -> str:
     return "missed" if truth else "clean"
 
 
-def blind_test(results: Path = RESULTS, seals: Path = SEALS, keys: Path = KEYS) -> dict:
+def blind_test(results: Path = RESULTS, seals: Path = SEALS, keys: Path | tuple[Path, ...] = KEYS) -> dict:
     handin_path = results / "handin.json"
     if not handin_path.exists():
         return {"available": False}

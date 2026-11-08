@@ -153,9 +153,9 @@ python3 -m venv .venv && .venv/bin/pip install -r risk/requirements.txt
 ```
 
 The dashboard is at http://localhost:4318. Its **Blind test** page shows the hand-in for sets A to E: every
-assistant's 40 sessions, which ones were called rogue and from when. Once the bank team puts the answer keys in
-`logs/answer_keys/` (where `bank/sim/reveal.py` reads them), the page also shows whether each call was right. It
-uses only keys that match `bank/testsets/seals.txt`.
+assistant's 40 sessions, which ones were called rogue and from when. With the revealed answer keys
+(`bank/testsets/answers/`, or `logs/answer_keys/`), it also shows whether each call was right and which sessions
+really were rogue. It uses only keys that match `bank/testsets/seals.txt`.
 
 ### Workflow rules
 

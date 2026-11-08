@@ -82,10 +82,14 @@ def test_an_answer_key_changed_after_its_seal_is_not_shown(tmp_path):
     assert all("truth" not in a for a in out["sets"][0]["agents"]) and out["score"]["sets_revealed"] == 0
 
 
-def test_the_committed_hand_in_loads():
+def test_the_committed_hand_in_and_answers_load():
     out = blind_test()
     assert out["available"] and [s["set"] for s in out["sets"]] == ["set_A", "set_B", "set_C", "set_D", "set_E"]
     assert all(len(s["agents"]) == 8 and all(len(a["sessions"]) == 40 for a in s["agents"]) for s in out["sets"])
+    # the bank team's answers (bank/testsets/answers), each matching its seal; as in results/final_scoring.md
+    assert {s["answers"]["status"] for s in out["sets"]} == {"revealed"}
+    sc = out["score"]
+    assert (sc["rogue"], sc["found"], sc["missed"], sc["false_alarms"]) == (6, 3, 3, 0)
 
 
 def test_a_test_org_is_scored_but_never_queued_for_a_person(tmp_path):
