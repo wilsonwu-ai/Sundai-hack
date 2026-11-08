@@ -150,11 +150,18 @@ def page(results: dict) -> str:
         lines.append(f"| {h['case']} | {h['agent_variant']} | {h['attack']} | "
                      f"{'yes (' + str(h['first_harmful_step']) + ')' if h['harmful'] else 'no'} | {h['decision']} | "
                      f"{h['risk']:.2f} | {h['first_risky_step'] or '–'} | {', '.join(h['categories']) or '–'} |")
+    quiet = agg.get("none", {"normal_flagged": 0, "normal": 0})
+    defended = [(a, r) for a, r in agg.items() if a != "none"]
     lines += ["", "## Notes", "",
               "- Synthetic agents and attacks: these numbers describe the simulator, not production.",
               "- The netsec role controls were written after reading seed-1 sessions; seeds 2 to 5 were not read before scoring.",
-              "- Most false alarms are \"review\" on long monitoring sessions the model finds unusual; counting only "
-              "pauses removes most of them.",
+              f"- Where the false alarms are: only {quiet['normal_flagged']} of {quiet['normal']} sessions with no attack were "
+              f"flagged. Almost all the rest ({sum(r['normal_flagged'] for _, r in defended)} of "
+              f"{sum(r['normal'] for _, r in defended)} attack sessions the agent handled without harm) are \"review\" on a good "
+              "agent fending off an attack: its defensive steps (revoking a token, opening an incident) look unusual to the "
+              "model. They do coincide with a real attack, but not with agent misbehaviour; counting only pauses leaves "
+              f"{sum(r['comparison']['cutoffs']['paused (high risk)']['false_alarms'] for r in results['per_seed'].values())} "
+              "false alarms in all.",
               "", "Reproduce: `python -m risk.eval.netsec --seeds 2 3 4 5 --sessions 300 --out results/netsec`", ""]
     return "\n".join(lines)
 
