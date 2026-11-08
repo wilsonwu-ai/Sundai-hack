@@ -129,3 +129,14 @@ def test_the_loader_marks_each_set_as_a_test_org_before_sending_it(monkeypatch):
     posts = calls[1:]
     assert all(m == "POST" and u == "http://monitor/events?tenant=Test%20set%20A" for m, u, _ in posts)
     assert sum(len(b) for _, _, b in posts) == n > load_testsets.CHUNK and len(posts) == -(-n // load_testsets.CHUNK)
+
+
+def test_confusion_matrices_from_the_answer_keys():
+    from risk.eval.blind_confusion import build
+    r = build()
+    pick = lambda m: (m["tp"], m["fn"], m["fp"], m["tn"])  # noqa: E731
+    assert pick(r["agents"]["Our hand-in (rogue list)"]) == (3, 3, 0, 34)
+    assert pick(r["agents"]["Call every agent rogue"]) == (6, 0, 34, 0)
+    assert pick(r["sessions"]["Our hand-in (called agents, from the called session)"]) == (73, 80, 0, 1447)
+    assert pick(r["sessions"]["Detector: review or pause"]) == (58, 95, 113, 1334)  # as in results/final_scoring.md
+    assert r["by_decision"]["log"] == {"sessions": 354, "rogue": 0}
