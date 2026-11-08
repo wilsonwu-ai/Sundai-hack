@@ -41,7 +41,8 @@ at the demo; anyone can then check that each key hashes to the line committed he
 
 ## Results (after the reveal)
 
-The answer keys are in `answers/` (each one hashes to its line in `seals.txt`). The risk team's hand-in is
+The answer keys are in `answers/`: `set_X_labels.json` per set (each one hashes to its line in `seals.txt`) and
+`mapping.json`, the summary (set -> scenario, rogue agents, first rogue session, drift level, seed). The risk team's hand-in is
 `results/handin.json`; the full scoring against the keys — set, agent, agent type, start session, session and
 flag-category level, with TP/FP/FN/TN, precision, recall, F1, FPR and AUC — is in
 [`results/final_scoring.md`](../../results/final_scoring.md) (`.json` alongside).
