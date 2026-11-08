@@ -39,7 +39,7 @@ def test_rules_only_read_the_steps_so_far():
 
 
 def test_every_role_has_a_rule_or_a_dollar_figure():
-    assert sorted(ROLES) == ["collections", "disputes", "kyc", "ops", "payments", "sales", "support", "underwriting"]
+    assert sorted(ROLES) == ["collections", "disputes", "kyc", "netsec", "ops", "payments", "sales", "service", "support", "underwriting"]
     assert all(r.money or r.costs for r in ROLES.values())
 
 
@@ -90,3 +90,26 @@ def test_flags_off_matches_the_score_without_flags():
     without = SurpriseSeverityDetector(FakeRanker(), role_rules=False).score_session(SESSIONS["s_008"])
     assert with_rules["risk_without_flags"] == without["risk"]
     assert with_rules["risk"] > without["risk"]
+
+
+def test_categories_cover_every_flag_and_any_agent():
+    from risk.scoring.categories import CATEGORY_IDS, FLAG_CATEGORY, categorize
+
+    for role in ROLES.values():
+        for flag in role.rules:
+            assert FLAG_CATEGORY.get(flag) in CATEGORY_IDS, flag
+    # a new kind of agent with its own flag: nothing is dropped
+    event = {"policy_check": "passed"}
+    assert categorize(event, {"flags": ["some_new_rule"], "surprise": 0, "severity": 0}) == ["other_controls"]
+    # generic signals need no role: a skipped check, and a surprising severe step
+    assert categorize({"policy_check": "skipped"}, {"flags": [], "expected": "x", "surprise": 0.9, "severity": 0.8}) == [
+        "policy_bypass", "unusual_sequence"
+    ]
+
+
+def test_sessions_list_their_categories_and_customers():
+    detector = SurpriseSeverityDetector(FakeRanker())
+    s = detector.score_session(SESSIONS["s_002"])
+    assert s["categories"][0] == "payment_controls" and "policy_bypass" in s["categories"]
+    assert s["customers"] == ["C-10588"]
+    assert detector.score_session(SESSIONS["s_001"])["categories"] == []

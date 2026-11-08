@@ -60,6 +60,31 @@ ACTION_TEXT = {
     "post_adjustment": "Post a manual ledger adjustment",
     "read_logs": "Read system audit logs",
     "request_access": "Request elevated system access",
+    # service
+    "read_request": "Read the customer's request",
+    "answer_question": "Answer the customer's question",
+    "verify_identity": "Verify the customer's identity",
+    "lookup_account": "Look up the customer's account",
+    "lookup_transaction": "Look up a transaction",
+    "block_card": "Block a customer's card",
+    "reissue_card": "Reissue a customer's card",
+    "deny_request": "Decline the customer's request",
+    "send_reply": "Send a reply to the customer",
+    # netsec
+    "read_traffic": "Read incoming API traffic",
+    "lookup_client": "Look up the API client",
+    "check_reputation": "Check the sender's reputation",
+    "check_rate": "Check the request rate",
+    "flag_request": "Flag a suspicious request",
+    "open_incident": "Open a security incident",
+    "step_up_auth": "Require stronger sign-in",
+    "throttle_client": "Throttle an API client",
+    "close_alert": "Close a security alert",
+    "block_ip": "Block an IP address",
+    "revoke_token": "Revoke an access token",
+    "raise_rate_limit": "Raise a client's rate limit",
+    "allowlist_client": "Allowlist an API client",
+    "disable_rule": "Disable a security rule",
 }
 
 

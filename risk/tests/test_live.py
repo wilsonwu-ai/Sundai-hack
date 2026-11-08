@@ -61,9 +61,29 @@ def test_scores_catch_up_after_a_restart(tmp_path):
 
 def test_dashboard_is_served(tmp_path):
     client, _ = live_client(tmp_path)
-    page = client.get("/dashboard")
-    assert page.status_code == 200 and "Sundai Bank risk monitor" in page.text
-    assert client.get("/", follow_redirects=False).headers["location"] == "/dashboard"
+    page = client.get("/dashboard/")
+    assert page.status_code == 200 and "Assistant safety" in page.text
+    assert client.get("/dashboard/app.js").status_code == 200
+    assert client.get("/dashboard/styles.css").status_code == 200
+    assert client.get("/dashboard/fonts/dm-sans-latin.woff2").status_code == 200
+    assert client.get("/", follow_redirects=False).headers["location"] == "/dashboard/"
+    assert client.get("/dashboard", follow_redirects=False).headers["location"] == "/dashboard/"
+
+
+def test_steps_carry_categories_and_customers(tmp_path):
+    client, live = live_client(tmp_path)
+    client.post("/events", json=read_events())
+    live.drain()
+    step = next(s for s in client.get("/sessions/s_008/scores").json() if s["step"] == 3)
+    assert step["customer_id"] == "C-61873"
+    assert step["categories"] == ["account_takeover", "data_access", "policy_bypass"]  # the test model has no view after update_contact
+
+    categories = client.get("/categories").json()
+    assert [c["id"] for c in categories][:2] == ["payment_controls", "account_takeover"]
+    assert all(c["name"] and c["description"] for c in categories)
+    flags = client.get("/flags").json()
+    assert flags["over_limit"] == {"category": "limits", "fields": flags["over_limit"]["fields"]}
+    assert "amount_usd" in flags["over_limit"]["fields"]
 
 
 def test_without_a_step_detector_there_is_no_live_scoring(tmp_path):

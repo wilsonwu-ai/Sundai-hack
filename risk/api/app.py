@@ -1,23 +1,32 @@
 """The trace monitor's API: OTLP ingest, the events API, per-agent views and risk."""
 
+import json
 import logging
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
 from fastapi import Body, FastAPI, HTTPException, Query, Request, Response
 from fastapi.concurrency import run_in_threadpool
-from fastapi.responses import FileResponse, RedirectResponse
+from fastapi.responses import RedirectResponse
+from fastapi.staticfiles import StaticFiles
+from pydantic import BaseModel, Field
 
+from risk.api.labels import labels as plain_label_map
+from risk.api.labels import plain_reason
 from risk.api.live import LiveScorer
 from risk.behaviorgpt.history import to_history
-from risk.ingest.events import check, from_span
+from risk.ingest.events import check, from_span, tenant_of
 from risk.ingest.load_logs import LogValidationError
 from risk.ingest.otlp import JSON, PROTOBUF, OTLPDecodeError, decode_request, encode_response, iter_spans, media_type
+from risk.scoring.categories import CATEGORIES, flag_info
+from risk.scoring.report import build as build_report
+from risk.scoring.report import from_step_rows as report_traces
+from risk.scoring.report import to_csv as report_csv
 from risk.scoring.detector import Detector, NoDetector
-from risk.store import Store, by_session
+from risk.store import DEFAULT_TENANT, Store, by_session
 
 log = logging.getLogger("risk.api")
-DASHBOARD = Path(__file__).resolve().parents[1] / "dashboard" / "index.html"
+DASHBOARD = Path(__file__).resolve().parents[1] / "dashboard"
 
 EXAMPLE_EVENT = {
     "agent_id": "payments-01",
@@ -33,6 +42,32 @@ EXAMPLE_EVENT = {
     "pressure_mode": False,
     "reasoning_summary": "Customer asked to add their landlord as a payee for rent.",
 }
+
+
+class GateCheck(BaseModel):
+    event: dict[str, Any]
+    history: list[dict[str, Any]] = Field(default_factory=list)
+
+
+def from_history(history: list[dict], proposed: dict) -> list[dict]:
+    """Earlier steps rebuilt from the gate call's short history: enough for the
+    model's next-step prediction and the role controls that look at actions."""
+    out = []
+    for h in sorted((h for h in history if isinstance(h, dict) and "action" in h and "step" in h), key=lambda h: h["step"]):
+        if h["step"] >= proposed["step"]:
+            continue
+        out.append({
+            **{k: proposed[k] for k in ("agent_id", "agent_type", "session_id", "timestamp", "auth_level")},
+            "step": h["step"], "action": h["action"], "params": {}, "reasoning_summary": "",
+            "policy_check": h.get("policy_check", "passed"), "outcome": h.get("outcome", "success"),
+        })
+    return out
+
+
+class Decision(BaseModel):
+    status: Literal["approved", "rejected"]
+    reviewer: str = Field(min_length=1, description="Who decided")
+    note: str | None = Field(None, description="Why")
 
 
 def create_app(db_path: str | Path, detector: Detector | None = None) -> FastAPI:
@@ -54,9 +89,9 @@ def create_app(db_path: str | Path, detector: Detector | None = None) -> FastAPI
     if live:
         live.submit(store.sessions())  # catch up on what was stored before a restart
 
-    def score_live(events: list[dict]) -> None:
+    def score_live(events: list[dict], tenants: list[str]) -> None:
         if live:
-            live.submit({(e["agent_id"], e["session_id"]) for e in events})
+            live.submit({(t, e["agent_id"], e["session_id"]) for e, t in zip(events, tenants)})
 
     def agent_or_404(agent_id: str) -> dict[str, list[dict]]:
         sessions = by_session(store.events(agent_id=agent_id))
@@ -85,7 +120,7 @@ def create_app(db_path: str | Path, detector: Detector | None = None) -> FastAPI
         except OTLPDecodeError as exc:
             return Response(str(exc), status_code=400, media_type="text/plain")
 
-        events, otel_ids, rejected = [], [], []
+        events, otel_ids, tenants, rejected = [], [], [], []
         for span in iter_spans(req):
             event = from_span(span)
             if event is None:
@@ -93,11 +128,12 @@ def create_app(db_path: str | Path, detector: Detector | None = None) -> FastAPI
             try:
                 events.append(check(event, f"span {span['span_id']}"))
                 otel_ids.append((span["trace_id"], span["span_id"]))
+                tenants.append(tenant_of(span))
             except LogValidationError as exc:
                 rejected.append(str(exc))
         if events:
-            await run_in_threadpool(store.add, events, source="otel", otel_ids=otel_ids)
-            score_live(events)
+            await run_in_threadpool(store.add, events, source="otel", otel_ids=otel_ids, tenants=tenants)
+            score_live(events, tenants)
         if rejected:
             log.warning("rejected %d span(s): %s", len(rejected), "; ".join(rejected[:3]))
         body, mt = encode_response(content_type, len(rejected), "; ".join(rejected[:5]))
@@ -108,6 +144,7 @@ def create_app(db_path: str | Path, detector: Detector | None = None) -> FastAPI
     @app.post("/events", tags=["events"])
     def post_events(
         body: dict[str, Any] | list[dict[str, Any]] = Body(examples=[EXAMPLE_EVENT]),
+        tenant: str = Query(DEFAULT_TENANT, min_length=1, description="The customer org these events belong to"),
     ) -> dict:
         """Record one log event or a list (shared/log_schema.json, as in the .jsonl logs).
         All or nothing: one invalid event rejects the request."""
@@ -116,12 +153,14 @@ def create_app(db_path: str | Path, detector: Detector | None = None) -> FastAPI
             events = [check(e, f"event {i}") for i, e in enumerate(items)]
         except LogValidationError as exc:
             raise HTTPException(422, str(exc)) from None
-        ids = store.add(events, source="api")
-        score_live(events)
+        tenants = [tenant] * len(events)
+        ids = store.add(events, source="api", tenants=tenants)
+        score_live(events, tenants)
         return {"ids": ids}
 
     @app.get("/events", tags=["events"])
     def list_events(
+        tenant: str | None = None,
         agent_id: str | None = None,
         agent_type: str | None = None,
         session_id: str | None = None,
@@ -131,11 +170,16 @@ def create_app(db_path: str | Path, detector: Detector | None = None) -> FastAPI
     ) -> list[dict]:
         """Events without `pressure_mode`, each session's together in step order."""
         return store.events(
-            agent_id=agent_id, agent_type=agent_type, session_id=session_id,
+            tenant=tenant, agent_id=agent_id, agent_type=agent_type, session_id=session_id,
             action=action, limit=limit, offset=offset,
         )
 
     # -- agents and sessions ----------------------------------------------------
+
+    @app.get("/tenants", tags=["agents"])
+    def list_tenants() -> list[dict]:
+        """The customer orgs with events: agents, sessions, events, last seen."""
+        return store.tenants()
 
     @app.get("/agents", tags=["agents"])
     def list_agents() -> list[dict]:
@@ -165,11 +209,101 @@ def create_app(db_path: str | Path, detector: Detector | None = None) -> FastAPI
         return detector.score_agent(agent_id, agent_or_404(agent_id))
 
     @app.get("/sessions/{session_id}", tags=["sessions"])
-    def get_session(session_id: str) -> list[dict]:
-        events = store.events(session_id=session_id)
+    def get_session(session_id: str, tenant: str | None = None) -> list[dict]:
+        events = store.events(session_id=session_id, tenant=tenant)
         if not events:
             raise HTTPException(404, f"no events for session {session_id!r}")
         return events
+
+    # -- gate and review queue ---------------------------------------------------
+
+    @app.post("/gate", tags=["gate"])
+    def gate(
+        response: Response,
+        body: dict[str, Any] = Body(examples=[EXAMPLE_EVENT]),
+        tenant: str = Query(DEFAULT_TENANT, min_length=1),
+    ) -> dict:
+        """Ask before acting. The proposed action (a log event, as it would be logged)
+        is scored after the session's earlier steps. A high-risk action (decision
+        pause) is held for a person: 202 with `allowed: false` and a `hold_id` to poll
+        at GET /holds/{id} until it is approved or rejected. Anything else is
+        allowed; its telemetry records it once it runs."""
+        try:
+            proposed = check(body, "proposed action")
+        except LogValidationError as exc:
+            raise HTTPException(422, str(exc)) from None
+        if not hasattr(detector, "score_session"):
+            return {"allowed": True, "decision": "unscored", "reason": "no detector configured"}
+        prior = [
+            e for e in store.events(tenant=tenant, agent_id=proposed["agent_id"], session_id=proposed["session_id"])
+            if e["step"] < proposed["step"]
+        ]
+        step = detector.score_session([*prior, proposed])["steps"][-1]
+        verdict = {
+            "decision": step["decision"], "risk": step["risk"], "reason": step["reason"],
+            "categories": step.get("categories", []), "at_stake_usd": step.get("at_stake_usd", 0.0),
+            "expected_loss_usd": step.get("expected_loss_usd", 0.0),
+        }
+        if step["decision"] != "pause":
+            return {**verdict, "allowed": True}
+        hold, _ = store.hold(proposed, step, source="gate", tenant=tenant)
+        if hold["status"] == "pending":
+            response.status_code = 202
+        return {**verdict, "allowed": hold["status"] == "approved", "hold_id": hold["id"],
+                "status": hold["status"], "poll": f"/holds/{hold['id']}"}
+
+    @app.post("/gate/check", tags=["gate"])
+    def gate_check(body: GateCheck, tenant: str = Query(DEFAULT_TENANT, min_length=1)) -> dict:
+        """The agent team's gate contract (bank/tools/gate.py): the proposed event
+        without `pressure_mode` and `outcome`, plus the session's earlier steps.
+        Answers `{decision, risk, reason}` with a plain-language reason; the agent
+        stops on review or pause. A stopped action is queued for a person to
+        confirm ("stopped before it ran")."""
+        # the scorer reads neither field; the schema check wants them present
+        try:
+            proposed = check({"pressure_mode": False, "outcome": "success", **body.event}, "proposed action")
+        except LogValidationError as exc:
+            raise HTTPException(422, str(exc)) from None
+        if not hasattr(detector, "score_session"):
+            return {"decision": "run", "risk": 0.0, "reason": "No risk model is configured"}
+        prior = [
+            e for e in store.events(tenant=tenant, agent_id=proposed["agent_id"], session_id=proposed["session_id"])
+            if e["step"] < proposed["step"]
+        ] or from_history(body.history, proposed)  # its spans may not have arrived (or OTel is off)
+        step = detector.score_session([*prior, proposed])["steps"][-1]
+        answer = {"decision": step["decision"], "risk": step["risk"], "reason": plain_reason(step["reason"])}
+        if step["decision"] in ("review", "pause"):
+            hold, _ = store.hold(proposed, step, source="gate_stop", tenant=tenant)
+            answer["hold_id"] = hold["id"]
+        return answer
+
+    @app.get("/holds", tags=["gate"])
+    def list_holds(
+        status: Literal["pending", "approved", "rejected"] | None = None,
+        tenant: str | None = None,
+        limit: int = Query(500, ge=1, le=5000),
+    ) -> list[dict]:
+        """The review queue: held and flagged steps, pending first."""
+        return store.holds(status=status, tenant=tenant, limit=limit)
+
+    @app.get("/holds/{hold_id}", tags=["gate"])
+    def get_hold(hold_id: int) -> dict:
+        """One hold; an agent waiting at the gate polls this until it is decided."""
+        hold = store.get_hold(hold_id)
+        if hold is None:
+            raise HTTPException(404, f"no hold {hold_id}")
+        return hold
+
+    @app.post("/holds/{hold_id}/decision", tags=["gate"])
+    def decide_hold(hold_id: int, body: Decision) -> dict:
+        """A person approves or rejects a held step. Recorded with who and why; final."""
+        try:
+            hold = store.decide(hold_id, body.status, body.reviewer, body.note)
+        except ValueError as exc:
+            raise HTTPException(409, str(exc)) from None
+        if hold is None:
+            raise HTTPException(404, f"no hold {hold_id}")
+        return hold
 
     # -- live ------------------------------------------------------------------
 
@@ -186,20 +320,46 @@ def create_app(db_path: str | Path, detector: Detector | None = None) -> FastAPI
         return store.alerts(limit)
 
     @app.get("/sessions/{session_id}/scores", tags=["live"])
-    def session_scores(session_id: str) -> list[dict]:
+    def session_scores(session_id: str, tenant: str | None = None) -> list[dict]:
         """The session's stored step scores: its risk curve."""
-        scores = store.session_scores(session_id)
+        scores = store.session_scores(session_id, tenant)
         if not scores:
             raise HTTPException(404, f"no scores for session {session_id!r}")
         return scores
 
-    @app.get("/dashboard", include_in_schema=False)
-    def dashboard() -> FileResponse:
-        return FileResponse(DASHBOARD, media_type="text/html")
+    @app.get("/report", tags=["live"])
+    def risky_report(tenant: str | None = None, format: Literal["json", "csv"] = "json") -> Response:
+        """Which traces and agents are risky right now: counts, lists and scores, to
+        compare with the ground truth later. `format=csv` gives the traces as a table."""
+        rows = [r for r in store.scores_since(0, 10_000_000) if tenant is None or r["tenant"] == tenant]
+        info = detector.info() if hasattr(detector, "info") else None
+        report = build_report(report_traces(rows), info, f"live{'' if tenant is None else f' · {tenant}'}")
+        if format == "csv":
+            return Response(report_csv(report), media_type="text/csv",
+                            headers={"content-disposition": 'attachment; filename="risky-traces.csv"'})
+        return Response(json.dumps(report), media_type="application/json")
+
+    @app.get("/categories", tags=["live"])
+    def categories() -> list[dict]:
+        """The violation categories steps are sorted into, in display order."""
+        return CATEGORIES
+
+    @app.get("/labels", tags=["live"])
+    def plain_labels() -> dict:
+        """Plain-language names for assistants, actions, fields and reasons."""
+        return plain_label_map()
+
+    @app.get("/flags", tags=["live"])
+    def flags() -> dict:
+        """Each role-control flag: its category and the event fields it is about."""
+        return flag_info()
 
     @app.get("/", include_in_schema=False)
-    def root() -> RedirectResponse:
-        return RedirectResponse("/dashboard")
+    @app.get("/dashboard", include_in_schema=False)
+    def to_dashboard() -> RedirectResponse:
+        return RedirectResponse("/dashboard/")
+
+    app.mount("/dashboard/", StaticFiles(directory=DASHBOARD, html=True), name="dashboard")
 
     @app.get("/eval/labels", tags=["eval"])
     def labels(agent_id: str | None = None) -> dict[str, bool]:

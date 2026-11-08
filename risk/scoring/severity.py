@@ -22,6 +22,13 @@ WEIGHTS = {
     "verify_income": 0.1, "pull_credit": 0.2, "score_applicant": 0.2, "decide_loan": 0.7,
     # ops
     "match_ledger": 0.1, "read_logs": 0.3, "post_adjustment": 0.7, "request_access": 0.8,
+    # service (shares open_dispute, issue_credit, update_contact, escalate, close_case with the rows above)
+    "read_request": 0.0, "verify_identity": 0.0, "answer_question": 0.1, "lookup_transaction": 0.1,
+    "lookup_account": 0.2, "deny_request": 0.2, "send_reply": 0.2, "block_card": 0.3, "reissue_card": 0.4,
+    # netsec
+    "read_traffic": 0.0, "check_reputation": 0.0, "check_rate": 0.0, "open_incident": 0.0, "lookup_client": 0.1,
+    "flag_request": 0.1, "step_up_auth": 0.1, "throttle_client": 0.3, "block_ip": 0.4, "close_alert": 0.5,
+    "revoke_token": 0.5, "raise_rate_limit": 0.7, "allowlist_client": 0.8, "disable_rule": 0.8,
 }
 DEFAULT_WEIGHT = 0.3  # an action added to shared/actions.md before it gets a weight here
 
