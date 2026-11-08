@@ -75,6 +75,7 @@ def from_scored(agents: dict[str, dict], tenant: str = "default") -> list[dict]:
                 "session_id": sid, "risk": s["risk"], "decision": s["decision"], "first_risky_step": first,
                 "categories": s.get("categories", []), "expected_loss_usd": s.get("expected_loss_usd", 0.0),
                 "at_stake_usd": s.get("at_stake_usd", 0.0),
+                "risk_without_flags": s.get("risk_without_flags"), "severity_only": s.get("severity_only"),
             })
     return out
 
@@ -192,6 +193,26 @@ def compare(report: dict, truth: dict[str, bool]) -> dict:
     }
 
 
+def provenance(folder: Path) -> dict:
+    """The model's commit and a fingerprint of every log file scored (PRD 6.4: scores
+    name the commit of the model that produced them)."""
+    import hashlib
+    import subprocess
+
+    def git(*args):
+        try:
+            return subprocess.run(["git", *args], capture_output=True, text=True, check=True).stdout.strip()
+        except (OSError, subprocess.CalledProcessError):
+            return None
+
+    return {
+        "model_commit": git("rev-parse", "HEAD"),
+        "uncommitted_changes": bool(git("status", "--porcelain", "--", "risk", "shared")),
+        "logs": {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(Path(folder).glob("*.jsonl"))},
+        "labels_read": False,
+    }
+
+
 def main() -> None:
     from risk.scoring.practice import DEFAULT_PRACTICE
     from risk.scoring.run import score_folder
@@ -208,6 +229,7 @@ def main() -> None:
     load_dotenv()
     detector = build_detector(severity_only=args.severity_only, practice_dir=DEFAULT_PRACTICE)
     report = build(from_scored(score_folder(args.folder, detector)), detector.info(), str(args.folder))
+    report["provenance"] = provenance(args.folder)
     c = report["counts"]
     print(f"detector: {detector.name}")
     print(f"risky traces: {c['risky_traces']} of {c['traces']}  (paused {c['traces_by_decision']['pause']}, "
@@ -228,6 +250,7 @@ def main() -> None:
     if args.labels:
         result = compare(report, load_truth(args.labels, {t["session_id"] for t in report["traces"]}))
         report["comparison"] = result
+        report["provenance"]["labels_read"] = str(args.labels)
         t = result["traces"]
         print(f"\nagainst {args.labels} ({result['labelled_traces']} labelled traces):")
         print(f"  traces: caught {t['risky_and_bad']} of {t['risky_and_bad'] + t['missed_bad']} bad (catch rate {t['catch_rate']}), "
