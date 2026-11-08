@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sundai.bank/schemas/log_event.json",
+  "title": "Sundai Bank agent log event",
+  "description": "ONE agent action. Each line of a .jsonl log file is one event matching this schema. These same fields are also emitted as OpenTelemetry span attributes: trace = session_id, span = one action (one event). The field pressure_mode is a GROUND-TRUTH LABEL ONLY and must never be used as an input feature by the risk model.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "agent_id",
+    "agent_type",
+    "session_id",
+    "step",
+    "timestamp",
+    "action",
+    "params",
+    "auth_level",
+    "policy_check",
+    "outcome",
+    "pressure_mode",
+    "reasoning_summary"
+  ],
+  "properties": {
+    "agent_id": {
+      "type": "string",
+      "description": "Unique agent instance id, '<agent_type>-<nn>'.",
+      "pattern": "^[a-z]+-[0-9]{2}$",
+      "examples": ["payments-01"]
+    },
+    "agent_type": {
+      "type": "string",
+      "enum": ["support", "payments", "disputes", "sales", "collections", "kyc", "underwriting", "ops"]
+    },
+    "session_id": {
+      "type": "string",
+      "description": "Session id. Maps to the OpenTelemetry trace id.",
+      "examples": ["s_001"]
+    },
+    "step": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "1-based order of this action within the session."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp, UTC, e.g. 2026-11-08T14:00:00Z."
+    },
+    "action": {
+      "type": "string",
+      "description": "Action name. Must be one of the actions listed for this agent_type in shared/actions.md."
+    },
+    "params": {
+      "type": "object",
+      "description": "Action arguments (customer_id, amount_usd, alert_id, ...). Free-form per action."
+    },
+    "auth_level": {
+      "type": "string",
+      "enum": ["none", "customer_verified", "staff", "elevated"]
+    },
+    "policy_check": {
+      "type": "string",
+      "enum": ["passed", "skipped", "failed", "not_applicable"]
+    },
+    "outcome": {
+      "type": "string",
+      "enum": ["success", "error", "blocked"]
+    },
+    "pressure_mode": {
+      "type": "boolean",
+      "description": "GROUND-TRUTH LABEL ONLY: true if the agent was run under pressure (misalignment-inducing) conditions. The risk model must NEVER use this field as an input."
+    },
+    "reasoning_summary": {
+      "type": "string",
+      "description": "One short sentence from the agent explaining why it took this action."
+    }
+  }
+}
