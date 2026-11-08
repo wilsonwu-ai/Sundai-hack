@@ -39,6 +39,7 @@ CATEGORIES = [
 CATEGORY_IDS = [c["id"] for c in CATEGORIES]
 
 FLAG_CATEGORY = {
+    "policy_check_not_passed": "policy_bypass",
     "new_payee_without_2fa": "payment_controls",
     "split_payment": "payment_controls",
     "reset_after_contact_change": "account_takeover",

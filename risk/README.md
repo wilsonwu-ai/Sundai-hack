@@ -32,7 +32,9 @@ anything ------JSON------> POST /events -----+--> validate --> SQLite --> live s
 | `scoring/run.py` | Score a folder of `.jsonl` logs offline, AUC against the labels |
 | `scoring/practice.py` | Fits the detector on good practice runs: priming, temperature, pause line |
 | `scoring/detector.py` | The `Detector` interface, the same offline and online |
-| `eval/practice_logs/` | Stand-in practice set: 12 hand-written good runs, plus 22 good runs of the service and netsec agents from the agent team's generators (seed 1, ids changed) |
+| `eval/practice_logs/` | Practice set: 640 good sessions of all 8 bank agents from the bank team's simulator (`bank.sim.run_sim --drifters 0`, seeds 9001 and 9002, no blind set's), plus 26 of the service and netsec agents from their generators (seed 1, ids changed) |
+| `eval/practice_handwritten/` | The first, hand-written stand-in (12 good runs, 4 agent types), kept for the tests |
+| `eval/sim_check.py` | Checks the detector and the hand-in rule on simulator runs with answers (our own seeds, never a blind set) |
 | `scoring/report.py` | Which traces and agents are risky: counts, lists, scores; compares with labels once they're open |
 
 ## Run
@@ -240,13 +242,19 @@ to change it):
 - **Priming:** the last 3 good runs of the same agent type go before every
   session, so the model reads the routine first.
 - **Temperature:** the one under which the good runs are most likely.
-- **Pause line:** set so at most 5% of good runs get any pause (with 12 runs,
-  none); log and review are 0.4 and 0.7 of it. The severity-only baseline gets
-  its pause line the same way.
+- **Pause line:** set so at most 5% of good runs get any pause, one line per
+  agent type from its own good runs; log and review are 0.4 and 0.7 of it. The
+  severity-only baseline gets its pause line the same way.
 
 Each practice run is scored with the other practice runs as context, never
-itself. `risk/eval/practice_logs/` is a hand-written stand-in (12 good runs,
-4 agent types) until the agent team hands over the real practice set.
+itself. The practice set is 80 good sessions per bank agent type from the bank
+team's own simulator. Round 1 of the blind test used a hand-written stand-in
+(12 runs, 4 of the 8 types), now in `risk/eval/practice_handwritten/`.
+
+A skipped or failed policy check is a broken control for every role
+(`policy_check_not_passed`): it adds to the risk even when BehaviorGPT expected
+the action. Round 1 only scaled it by surprise, so an expected action with a
+failed check scored 0 (the rogue sales agent in blind set C).
 
 On the 8 sample sessions, at the same pause budget:
 

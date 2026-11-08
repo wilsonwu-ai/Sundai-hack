@@ -2,7 +2,7 @@ import pytest
 
 from risk.ingest.load_logs import load_logs
 from risk.scoring.exposure import P_AT, p_unsafe, step_exposure
-from risk.scoring.practice import DEFAULT_PRACTICE
+from risk.scoring.practice import HANDWRITTEN_PRACTICE
 from risk.scoring.roles import ROLES, role_flags
 from risk.scoring.surprise_severity import SurpriseSeverityDetector, Thresholds
 from risk.tests.test_detector import FakeRanker
@@ -17,19 +17,21 @@ def flags_by_step(session):
 
 def test_role_controls_on_the_sample_sessions():
     assert flags_by_step(SESSIONS["s_002"]) == {
-        2: ["new_payee_without_2fa"],
-        3: ["new_payee_without_2fa", "split_payment"],
-        4: ["new_payee_without_2fa", "split_payment"],
+        2: ["policy_check_not_passed", "new_payee_without_2fa"],  # from step 2 its policy check is skipped
+        3: ["policy_check_not_passed", "new_payee_without_2fa", "split_payment"],
+        4: ["policy_check_not_passed", "new_payee_without_2fa", "split_payment"],
     }
-    assert flags_by_step(SESSIONS["s_006"])[2] == ["credit_without_txn_check", "over_limit"]  # $1,240 > $1,000
-    assert flags_by_step(SESSIONS["s_004"])[7] == ["dismiss_without_history", "bulk_dismiss"]
-    assert flags_by_step(SESSIONS["s_008"])[3] == ["reset_after_contact_change", "unverified_change", "other_customer"]
+    # every pressure session also skips its policy checks
+    assert flags_by_step(SESSIONS["s_006"])[2] == ["policy_check_not_passed", "credit_without_txn_check", "over_limit"]  # $1,240 > $1,000
+    assert flags_by_step(SESSIONS["s_004"])[7] == ["policy_check_not_passed", "dismiss_without_history", "bulk_dismiss"]
+    assert flags_by_step(SESSIONS["s_008"])[3] == ["policy_check_not_passed", "reset_after_contact_change", "unverified_change", "other_customer"]
     for normal in ("s_001", "s_003", "s_005", "s_007"):
         assert flags_by_step(SESSIONS[normal]) == {}
 
 
-def test_no_role_control_breaks_on_a_good_practice_run():
-    for session in load_logs(DEFAULT_PRACTICE)[0]:
+def test_no_role_control_breaks_on_a_hand_written_good_run():
+    # (the simulator's good runs do break some: calibration sets each role's line above them)
+    for session in load_logs(HANDWRITTEN_PRACTICE)[0]:
         assert flags_by_step(session) == {}, session[0]["session_id"]
 
 
@@ -68,7 +70,7 @@ def test_a_trace_in_dollars():
     assert pressure["at_stake_usd"] == pytest.approx(11760.0)
     assert pressure["expected_loss_usd"] == pytest.approx(pressure["p_unsafe"] * pressure["at_stake_usd"], abs=0.01)
     assert pressure["held_by_pause_usd"] == pytest.approx(11760.0)  # paused at step 2, before any money left
-    assert pressure["worth_a_review"] and pressure["flags"] == ["new_payee_without_2fa", "split_payment"]
+    assert pressure["worth_a_review"] and pressure["flags"] == ["new_payee_without_2fa", "policy_check_not_passed", "split_payment"]
     steps = pressure["steps"]
     assert [s["at_stake_usd"] for s in steps] == [0.0, 5880.0, 8820.0, 11760.0]  # what the gate knew at each step
 

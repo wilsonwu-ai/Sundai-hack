@@ -10,7 +10,7 @@ from risk.behaviorgpt.catalog import catalog_rows, write_catalog
 from risk.behaviorgpt.history import item_id
 from risk.behaviorgpt.ranker import BehaviorGPTRanker
 from risk.ingest.load_logs import DEFAULT_LOG_DIR, load_action_vocab, load_logs, read_events
-from risk.scoring.practice import DEFAULT_PRACTICE, TEMPERATURES, context, fit, good_runs
+from risk.scoring.practice import DEFAULT_PRACTICE, HANDWRITTEN_PRACTICE, TEMPERATURES, context, fit, good_runs
 from risk.scoring.run import auc, score_folder
 from risk.scoring.severity import severity
 from risk.scoring.surprise_severity import SurpriseSeverityDetector, build_detector, detector_from_env
@@ -134,8 +134,8 @@ def test_monitor_scores_agents_live(tmp_path):
 
 
 def test_fit_on_practice_runs_primes_and_calibrates():
-    runs = good_runs(DEFAULT_PRACTICE)
-    assert sorted(runs) == ["disputes", "kyc", "netsec", "payments", "service", "support"] and len(runs["kyc"]) == 3
+    runs = good_runs(HANDWRITTEN_PRACTICE)
+    assert sorted(runs) == ["disputes", "kyc", "payments", "support"] and len(runs["kyc"]) == 3
 
     detector = SurpriseSeverityDetector(FakeRanker())
     report = fit(detector, runs)
@@ -144,8 +144,10 @@ def test_fit_on_practice_runs_primes_and_calibrates():
     # each role gets its own pause line from its own good runs, with the same budget
     assert set(detector.thresholds_by_type) == set(runs)
     for agent_type, scores in report["good_run_scores_by_type"].items():
-        line = detector.thresholds_by_type[agent_type].pause
-        assert sum(score >= line for score in scores) <= int(0.05 * len(scores)), agent_type
+        lines = detector.thresholds_by_type[agent_type]
+        assert sum(score >= lines.pause for score in scores) <= int(0.05 * len(scores)), agent_type
+        assert sum(score >= lines.review for score in scores) <= int(0.10 * len(scores)), agent_type  # review has a budget too
+        assert lines.log <= lines.review <= lines.pause
     # primed with the practice routine, ending with the last practice run
     assert detector.context["payments"][-3:] == ("payments.add_beneficiary", "payments.confirm_2fa", "payments.send_ach")
     # at most 5% of the good runs may reach the pause line
@@ -155,7 +157,7 @@ def test_fit_on_practice_runs_primes_and_calibrates():
 
 
 def test_practice_runs_never_prime_themselves():
-    runs = good_runs(DEFAULT_PRACTICE)["payments"]
+    runs = good_runs(HANDWRITTEN_PRACTICE)["payments"]
     own = tuple(item_id(e) for e in runs[0])
     assert context(runs, k=3, exclude=runs[0]) == tuple(item_id(e) for r in runs[1:] for e in r)
     assert len(context(runs, k=3, exclude=runs[0])) == sum(map(len, runs)) - len(own)
@@ -173,3 +175,19 @@ def test_every_pressure_sample_is_flagged_by_the_fake_model(session):
     agents = score_folder(DEFAULT_LOG_DIR, SurpriseSeverityDetector(FakeRanker()))
     found = [a["sessions"][session] for a in agents.values() if session in a["sessions"]]
     assert found[0]["decision"] in ("review", "pause")
+
+
+def test_the_practice_set_covers_every_bank_agent():
+    runs = good_runs(DEFAULT_PRACTICE)
+    bank = ["collections", "disputes", "kyc", "ops", "payments", "sales", "support", "underwriting"]
+    assert sorted(runs) == sorted(bank + ["netsec", "service"])
+    assert all(len(runs[t]) == 80 for t in bank)  # two simulator runs of 40 sessions each
+
+
+def test_review_line_keeps_most_good_runs_out():
+    from risk.scoring.practice import pause_line
+    piled = [0.235] * 95 + [0.9] * 5  # good runs piled on one score, just under the pause line
+    t = pause_line(piled, 0.05)
+    assert t.pause == 0.236 and sum(s >= t.review for s in piled) <= 10 and t.log <= t.review <= t.pause
+    spread = [0.01] * 92 + [0.3] * 8  # most good runs far below: 0.7 of the pause line already keeps them out
+    assert pause_line(spread, 0.05).review == round(0.7 * pause_line(spread, 0.05).pause, 3)

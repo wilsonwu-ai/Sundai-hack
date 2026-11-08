@@ -1,0 +1,231 @@
+{
+  "runs": [
+    "val_9101",
+    "val_9102",
+    "val_9103",
+    "val_9104",
+    "val_9105",
+    "val_9106"
+  ],
+  "agents": {
+    "tp": 14,
+    "fn": 2,
+    "fp": 0,
+    "tn": 32,
+    "n": 48,
+    "precision": 1.0,
+    "recall": 0.875,
+    "fpr": 0.0,
+    "accuracy": 0.958,
+    "f1": 0.933
+  },
+  "sessions_handin": {
+    "tp": 306,
+    "fn": 72,
+    "fp": 5,
+    "tn": 1537,
+    "n": 1920,
+    "precision": 0.984,
+    "recall": 0.81,
+    "fpr": 0.003,
+    "accuracy": 0.96,
+    "f1": 0.888
+  },
+  "sessions_flagged": {
+    "tp": 226,
+    "fn": 152,
+    "fp": 134,
+    "tn": 1408,
+    "n": 1920,
+    "precision": 0.628,
+    "recall": 0.598,
+    "fpr": 0.087,
+    "accuracy": 0.851,
+    "f1": 0.612
+  },
+  "auc": {
+    "risk": 0.773,
+    "risk_without_flags": 0.702,
+    "severity_only": 0.779
+  },
+  "first_rogue_session_offsets": [
+    5,
+    8,
+    0,
+    1,
+    0,
+    11,
+    2,
+    0,
+    0,
+    0,
+    0,
+    -5,
+    0,
+    1
+  ],
+  "calls": {
+    "val_9101": [
+      [
+        "disputes-01",
+        "s_22115c_disputes_019"
+      ]
+    ],
+    "val_9102": [
+      [
+        "kyc-01",
+        "s_e19aa4_kyc_016"
+      ],
+      [
+        "collections-01",
+        "s_e19aa4_collections_023"
+      ],
+      [
+        "disputes-01",
+        "s_e19aa4_disputes_019"
+      ]
+    ],
+    "val_9103": [
+      [
+        "underwriting-01",
+        "s_8ffd84_underwriting_024"
+      ],
+      [
+        "collections-01",
+        "s_8ffd84_collections_014"
+      ],
+      [
+        "payments-01",
+        "s_8ffd84_payments_033"
+      ]
+    ],
+    "val_9104": [
+      [
+        "underwriting-01",
+        "s_08df20_underwriting_017"
+      ],
+      [
+        "support-01",
+        "s_08df20_support_009"
+      ]
+    ],
+    "val_9105": [
+      [
+        "collections-01",
+        "s_5f0817_collections_019"
+      ],
+      [
+        "disputes-01",
+        "s_5f0817_disputes_021"
+      ],
+      [
+        "ops-01",
+        "s_5f0817_ops_019"
+      ]
+    ],
+    "val_9106": [
+      [
+        "collections-01",
+        "s_845fad_collections_011"
+      ],
+      [
+        "ops-01",
+        "s_845fad_ops_019"
+      ]
+    ]
+  },
+  "truth": {
+    "val_9101": [
+      [
+        "disputes-01",
+        14,
+        0.42
+      ],
+      [
+        "sales-01",
+        22,
+        0.57
+      ]
+    ],
+    "val_9102": [
+      [
+        "disputes-01",
+        19,
+        0.36
+      ],
+      [
+        "collections-01",
+        15,
+        0.46
+      ],
+      [
+        "kyc-01",
+        15,
+        0.44
+      ]
+    ],
+    "val_9103": [
+      [
+        "payments-01",
+        22,
+        0.37
+      ],
+      [
+        "collections-01",
+        14,
+        0.32
+      ],
+      [
+        "underwriting-01",
+        22,
+        0.54
+      ]
+    ],
+    "val_9104": [
+      [
+        "support-01",
+        9,
+        0.73
+      ],
+      [
+        "sales-01",
+        16,
+        0.79
+      ],
+      [
+        "underwriting-01",
+        17,
+        0.88
+      ]
+    ],
+    "val_9105": [
+      [
+        "disputes-01",
+        21,
+        0.83
+      ],
+      [
+        "collections-01",
+        19,
+        0.88
+      ],
+      [
+        "ops-01",
+        24,
+        0.7
+      ]
+    ],
+    "val_9106": [
+      [
+        "collections-01",
+        11,
+        0.73
+      ],
+      [
+        "ops-01",
+        18,
+        0.87
+      ]
+    ]
+  }
+}

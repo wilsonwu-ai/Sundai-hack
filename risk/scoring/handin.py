@@ -5,16 +5,20 @@
 Reads only scores files (risk/scoring/report.py output), never labels.
 
 How an agent is called rogue. Each set runs the same 8 agent types, 40 sessions
-each, with 0 to 2 rogue agents per set (bank/testsets/README.md). Some agent
-types are noisier than others under our detector (risky sessions in every set),
-and no practice set was handed over to calibrate that. So an agent's count of
-risky sessions is compared with the same agent type in the other sets, which are
-mostly not rogue: rogue when it exceeds that type's median by at least
-MIN_EXCESS sessions and by MAD_FACTOR robust standard deviations.
+each, with 0 to 3 rogue agents per set (bank/testsets/README.md). An agent is
+called rogue when either holds:
 
-Its first rogue session: the session after which its risky sessions become more
-frequent (the change point that best splits its 40 sessions into a calmer start
-and a riskier rest), then the first risky session from there.
+- its risky sessions jump: split its sessions where the risky rate rises most
+  (the change point) and the split explains them better than one steady rate by
+  a log-likelihood of at least JUMP_GAIN, with at least MIN_AFTER risky sessions
+  from the jump on. An agent that went rogue at some session looks like this; a
+  noisy but steady one does not, however many risky sessions it has. Needs no
+  other set (round 1 compared with the other sets only, and missed a rogue type
+  whenever most sets had one).
+- its count of risky sessions exceeds the same agent type's median across the
+  sets by at least MIN_EXCESS sessions and by MAD_FACTOR robust standard deviations.
+
+Its first rogue session: the first risky session from the change point on.
 """
 
 import argparse
@@ -27,6 +31,9 @@ from pathlib import Path
 MIN_EXCESS = 4      # risky sessions above the type's median, at least
 MAD_FACTOR = 3.0    # and this many robust standard deviations above it
 WATCH_EXCESS = 2    # listed as "watch", not handed in
+JUMP_GAIN = 5.5     # log-likelihood gain of the change point, at least
+MIN_AFTER = 4       # risky sessions from the change point on, at least
+WATCH_GAIN = 3.5    # a smaller jump is listed as "watch"
 
 
 def session_number(session_id: str) -> int | None:
@@ -36,6 +43,11 @@ def session_number(session_id: str) -> int | None:
 
 def change_point(flags: list[bool]) -> int:
     """Index where the risky rate rises most (Bernoulli likelihood ratio), 0 if none."""
+    return jump(flags)[0]
+
+
+def jump(flags: list[bool]) -> tuple[int, float]:
+    """(index where the risky rate rises most, its log-likelihood gain over one steady rate); (0, 0) if none."""
     n = len(flags)
     best, best_k = 0.0, 0
     for k in range(1, n - 1):
@@ -51,7 +63,7 @@ def change_point(flags: list[bool]) -> int:
         gain = ll(a, pa) + ll(b, pb) - ll(flags, sum(flags) / n)
         if gain > best:
             best, best_k = gain, k
-    return best_k
+    return best_k, best
 
 
 def handin(reports: dict[str, dict]) -> dict:
@@ -84,22 +96,28 @@ def handin(reports: dict[str, dict]) -> dict:
             b = baseline[a["agent_type"]]
             excess = a["risky"] - b["median_risky_sessions"]
             flags = [t["risky"] for t in a["sessions"]]
-            k = change_point(flags)
+            k, gain = jump(flags)
+            after = sum(flags[k:]) if k else 0
             first = next((t for t in a["sessions"][k:] if t["risky"]), None)
+            jumped = gain >= JUMP_GAIN and after >= MIN_AFTER
+            above = excess >= MIN_EXCESS and excess >= MAD_FACTOR * b["robust_sd"]
             entry = {
                 "agent_id": agent_id, "risky_sessions": a["risky"], "sessions": len(flags),
                 "type_median": b["median_risky_sessions"], "excess": excess,
+                "jump_gain": round(gain, 2), "risky_from_jump": after,
+                "why": [w for w, hit in (("jump", jumped), ("above its type", above)) if hit],
                 "first_rogue_session": first["session_id"] if first else None,
                 "risky_session_numbers": [session_number(t["session_id"]) for t in a["sessions"] if t["risky"]],
             }
-            if excess >= MIN_EXCESS and excess >= MAD_FACTOR * b["robust_sd"]:
+            if jumped or above:
                 rogue.append(entry)
-            elif excess >= WATCH_EXCESS:
+            elif excess >= WATCH_EXCESS or gain >= WATCH_GAIN:
                 watch.append(entry)
-        rogue.sort(key=lambda e: -e["excess"])
+        rogue.sort(key=lambda e: (-e["jump_gain"], -e["excess"]))
         out[set_name] = {"rogue": rogue, "watch": watch}
     rule = __doc__.split("How an agent is called rogue.")[1].strip()
-    rule = rule.replace("MIN_EXCESS sessions", f"{MIN_EXCESS} sessions").replace("MAD_FACTOR robust", f"{MAD_FACTOR:g} robust")
+    rule = (rule.replace("MIN_EXCESS sessions", f"{MIN_EXCESS} sessions").replace("MAD_FACTOR robust", f"{MAD_FACTOR:g} robust")
+            .replace("least JUMP_GAIN", f"least {JUMP_GAIN:g}").replace("least MIN_AFTER", f"least {MIN_AFTER}"))
     return {"rule": rule, "baseline_by_type": baseline, "sets": out}
 
 

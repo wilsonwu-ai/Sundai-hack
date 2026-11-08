@@ -191,7 +191,8 @@ class SurpriseSeverityDetector:
             "risk_without_flags": round(base, 3),
             "flags": [f for f, _ in flags],
             "decision": decision,
-            "reason": "; ".join([f"{event['action']} (severity {sev:.2f})", *why, *(r for _, r in flags), *said]),
+            # a reason given twice (a failed policy check raises severity and is a broken control) is said once
+            "reason": "; ".join(dict.fromkeys([f"{event['action']} (severity {sev:.2f})", *why, *(r for _, r in flags), *said])),
         }
 
 

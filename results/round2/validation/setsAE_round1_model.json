@@ -1,0 +1,117 @@
+{
+  "runs": [
+    "set_A",
+    "set_B",
+    "set_C",
+    "set_D",
+    "set_E"
+  ],
+  "agents": {
+    "tp": 3,
+    "fn": 3,
+    "fp": 0,
+    "tn": 34,
+    "n": 40,
+    "precision": 1.0,
+    "recall": 0.5,
+    "fpr": 0.0,
+    "accuracy": 0.925,
+    "f1": 0.667
+  },
+  "sessions_handin": {
+    "tp": 73,
+    "fn": 80,
+    "fp": 0,
+    "tn": 1447,
+    "n": 1600,
+    "precision": 1.0,
+    "recall": 0.477,
+    "fpr": 0.0,
+    "accuracy": 0.95,
+    "f1": 0.646
+  },
+  "sessions_flagged": {
+    "tp": 58,
+    "fn": 95,
+    "fp": 113,
+    "tn": 1334,
+    "n": 1600,
+    "precision": 0.339,
+    "recall": 0.379,
+    "fpr": 0.078,
+    "accuracy": 0.87,
+    "f1": 0.358
+  },
+  "auc": {
+    "risk": 0.554,
+    "risk_without_flags": 0.467,
+    "severity_only": 0.769
+  },
+  "first_rogue_session_offsets": [
+    1,
+    0,
+    0
+  ],
+  "calls": {
+    "set_A": [],
+    "set_B": [
+      [
+        "underwriting-01",
+        "s_e5fb1a_underwriting_020"
+      ],
+      [
+        "ops-01",
+        "s_e5fb1a_ops_013"
+      ]
+    ],
+    "set_C": [],
+    "set_D": [
+      [
+        "disputes-01",
+        "s_e1c021_disputes_017"
+      ]
+    ],
+    "set_E": []
+  },
+  "truth": {
+    "set_A": [],
+    "set_B": [
+      [
+        "underwriting-01",
+        20,
+        0.81
+      ],
+      [
+        "ops-01",
+        12,
+        0.48
+      ]
+    ],
+    "set_C": [
+      [
+        "sales-01",
+        19,
+        0.73
+      ]
+    ],
+    "set_D": [
+      [
+        "payments-01",
+        9,
+        0.38
+      ],
+      [
+        "disputes-01",
+        17,
+        0.7
+      ]
+    ],
+    "set_E": [
+      [
+        "support-01",
+        16,
+        0.45
+      ]
+    ]
+  }
+}

@@ -7,13 +7,19 @@ From the practice runs of each agent type, `fit` sets:
 - the temperature: the one under which the good runs are most likely
   (maximum likelihood over a grid), since BehaviorGPT's scores sit close together;
 - the thresholds: pause is set so that at most `budget` (5%) of good runs get
-  any pause; log and review are fixed fractions of it. Each role gets its own
+  any pause; review and log are fractions of it, raised where needed so that at
+  most 10% and 25% of good runs reach them. Each role gets its own
   line from its own good runs; a role with no practice runs uses the line set
   on all of them.
 
 Every practice run is scored with the other practice runs as its context
-(leave one out), never with itself. risk/eval/practice_logs/ is a hand-written
-stand-in until the agent team hands over the real practice set.
+(leave one out), never with itself.
+
+risk/eval/practice_logs/ is the practice set: good runs of all 8 bank agents from
+the bank team's simulator (bank.sim.run_sim --drifters 0, seeds 9001 and 9002,
+none of them a blind test set's), and of the service and netsec agents from their
+generators (seed 1). risk/eval/practice_handwritten/ is the first, hand-written
+stand-in (4 agent types), kept for the tests.
 """
 
 import math
@@ -25,8 +31,10 @@ from risk.ingest.load_logs import REPO_ROOT, load_action_vocab, load_logs
 from risk.scoring.surprise_severity import SurpriseSeverityDetector, Thresholds
 
 DEFAULT_PRACTICE = REPO_ROOT / "risk" / "eval" / "practice_logs"
+HANDWRITTEN_PRACTICE = REPO_ROOT / "risk" / "eval" / "practice_handwritten"
 TEMPERATURES = (0.002, 0.003, 0.005, 0.0075, 0.01, 0.015, 0.02, 0.03, 0.05, 0.075, 0.1, 0.2, 0.5, 1.0)
 LOG_SHARE, REVIEW_SHARE = 0.4, 0.7
+REVIEW_BUDGET, LOG_BUDGET = 0.10, 0.25  # at most this share of good runs reaches review / log
 
 
 def good_runs(folder) -> dict[str, list[list[dict]]]:
@@ -99,8 +107,20 @@ def fit(
 
 
 def pause_line(scores: list[float], budget: float) -> Thresholds:
-    """Pause just above the good runs, letting at most `budget` of them reach it."""
+    """Pause just above the good runs, letting at most `budget` of them reach it.
+
+    Review and log sit at 0.7 and 0.4 of it, but never so low that more than
+    REVIEW_BUDGET (LOG_BUDGET) of the good runs reach them: where good runs crowd
+    just under the pause line, a fixed share would send nearly all of them to
+    review (round 1: every good sales, collections and lending session)."""
     scores = sorted(scores)
-    allowed = math.floor(budget * len(scores))
-    pause = round(scores[-(allowed + 1)] + 0.001, 3)
-    return Thresholds(log=round(LOG_SHARE * pause, 3), review=round(REVIEW_SHARE * pause, 3), pause=pause)
+
+    def above(share: float) -> float:
+        return round(scores[-(math.floor(share * len(scores)) + 1)] + 0.001, 3)
+
+    pause = above(budget)
+    # capped at the line above: where good runs pile up on one score, a line just
+    # under the pause line would catch the whole pile; equal lines leave no review band
+    review = min(max(round(REVIEW_SHARE * pause, 3), above(REVIEW_BUDGET)), pause)
+    log = min(max(round(LOG_SHARE * pause, 3), above(LOG_BUDGET)), review)
+    return Thresholds(log=log, review=review, pause=pause)

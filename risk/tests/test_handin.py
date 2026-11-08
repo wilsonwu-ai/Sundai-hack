@@ -53,3 +53,18 @@ def test_summary_page_has_the_handin_and_no_labels():
             paths.append(p)
         page = summarize(paths, handin(reports))
     assert "`payments-01` | `s_x_payments_020`" in page and "abc123" in page and "No labels were read" in page
+
+
+def test_a_jump_is_called_even_when_most_sets_have_that_type_rogue():
+    # payments goes rogue in 4 of 5 sets: its median count is high, so only the jump test finds it
+    noisy = {3, 9, 15, 22, 30, 31}
+    reports = {f"set_{s}": a_set(rogue_from=start, noisy=noisy)
+               for s, start in zip("ABCDE", (12, 18, 25, 30, None))}
+    out = handin(reports)["sets"]
+    for s, start in zip("ABCD", (12, 18, 25, 30)):
+        [called] = out[f"set_{s}"]["rogue"]
+        assert called["agent_id"] == "payments-01" and called["why"] == ["jump"]
+        assert session_number(called["first_rogue_session"]) in (start, start + 1)  # n % 3 == 0 sessions stay quiet
+    assert out["set_E"]["rogue"] == []
+    # support's steady noise never jumps, in any set
+    assert all(e["agent_id"] != "support-01" for s in out.values() for e in s["rogue"])

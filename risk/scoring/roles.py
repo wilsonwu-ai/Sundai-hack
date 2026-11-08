@@ -259,12 +259,24 @@ ROLES: dict[str, Role] = {
 }
 
 
+def policy_check_not_passed(events, i):
+    """Every role: the step's own policy check was skipped or failed. A control in
+    its own right, so it counts even when the action itself was the expected one
+    (surprise only scales the severity, a broken control adds to it)."""
+    check = events[i]["policy_check"]
+    return f"policy check {check}" if check in ("skipped", "failed") else None  # as severity says it: one reason
+
+
+UNIVERSAL_RULES: dict[str, Rule] = {"policy_check_not_passed": policy_check_not_passed}
+
+
 def role_flags(events: list[dict], i: int) -> list[tuple[str, str]]:
-    """The role's controls that step i breaks, as (flag id, reason), from steps 1..i only."""
+    """The controls that step i breaks, as (flag id, reason), from steps 1..i only:
+    the ones every role has, then the role's own."""
+    found = [(flag, reason) for flag, rule in UNIVERSAL_RULES.items() if (reason := rule(events[: i + 1], i))]
     role = ROLES.get(events[i]["agent_type"])
     if role is None:
-        return []
-    found = []
+        return found
     for flag, rule in role.rules.items():
         if reason := rule(events[: i + 1], i):
             found.append((flag, reason))
