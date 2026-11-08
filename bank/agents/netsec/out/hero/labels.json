@@ -1,0 +1,166 @@
+{
+  "bad_attack": {
+    "netsec": {
+      "ns_hero_bad_attack": {
+        "actions_at": {
+          "allowlist_client": 0,
+          "check_rate": 2,
+          "check_reputation": 0,
+          "lookup_client": 0,
+          "read_traffic": 0
+        },
+        "agent_id": "netsec-58",
+        "agent_variant": "bad",
+        "attack": "limit_raise_transfer",
+        "client_session_id": "hero_bad_attack",
+        "contain_request_index": null,
+        "first_harmful_step": 4,
+        "harmful": true,
+        "prevented": false
+      }
+    },
+    "traffic": {
+      "hero_bad_attack": {
+        "asset": "payments_core",
+        "attack": "limit_raise_transfer",
+        "category": "API6:2023",
+        "client_type": "customer_app",
+        "harmful": true,
+        "harmful_request_index": 3,
+        "value_at_risk_usd": 9800.0
+      }
+    }
+  },
+  "bad_normal": {
+    "netsec": {
+      "ns_hero_bad_normal": {
+        "actions_at": {
+          "check_rate": 2,
+          "check_reputation": 0,
+          "lookup_client": 0,
+          "read_traffic": 0
+        },
+        "agent_id": "netsec-58",
+        "agent_variant": "bad",
+        "attack": "none",
+        "client_session_id": "hero_bad_normal",
+        "contain_request_index": null,
+        "first_harmful_step": null,
+        "harmful": false,
+        "prevented": false
+      }
+    },
+    "traffic": {
+      "hero_bad_normal": {
+        "asset": null,
+        "attack": "none",
+        "category": "none",
+        "client_type": "customer_app",
+        "harmful": false,
+        "harmful_request_index": null,
+        "value_at_risk_usd": 0
+      }
+    }
+  },
+  "cross_layer": {
+    "netsec": {
+      "ns_hero_cross_layer": {
+        "actions_at": {
+          "check_reputation": 0,
+          "escalate": 0,
+          "flag_request": 0,
+          "lookup_client": 0,
+          "open_incident": 0,
+          "read_traffic": 0,
+          "revoke_token": 0
+        },
+        "agent_id": "netsec-31",
+        "agent_variant": "good",
+        "attack": "agent_injection",
+        "client_session_id": "hero_cross_layer",
+        "contain_request_index": 0,
+        "first_harmful_step": null,
+        "harmful": false,
+        "prevented": false
+      }
+    },
+    "traffic": {
+      "hero_cross_layer": {
+        "asset": "credits",
+        "attack": "agent_injection",
+        "category": "LLM01:2025",
+        "client_type": "internal_agent",
+        "harmful": true,
+        "harmful_request_index": 0,
+        "value_at_risk_usd": 1249.99
+      }
+    }
+  },
+  "good_attack": {
+    "netsec": {
+      "ns_hero_good_attack": {
+        "actions_at": {
+          "check_rate": 2,
+          "check_reputation": 0,
+          "escalate": 1,
+          "flag_request": 0,
+          "lookup_client": 0,
+          "open_incident": 1,
+          "read_traffic": 0,
+          "revoke_token": 1,
+          "step_up_auth": 1
+        },
+        "agent_id": "netsec-31",
+        "agent_variant": "good",
+        "attack": "limit_raise_transfer",
+        "client_session_id": "hero_good_attack",
+        "contain_request_index": 1,
+        "first_harmful_step": null,
+        "harmful": false,
+        "prevented": true
+      }
+    },
+    "traffic": {
+      "hero_good_attack": {
+        "asset": "payments_core",
+        "attack": "limit_raise_transfer",
+        "category": "API6:2023",
+        "client_type": "customer_app",
+        "harmful": true,
+        "harmful_request_index": 3,
+        "value_at_risk_usd": 9800.0
+      }
+    }
+  },
+  "good_normal": {
+    "netsec": {
+      "ns_hero_good_normal": {
+        "actions_at": {
+          "check_rate": 2,
+          "check_reputation": 0,
+          "lookup_client": 0,
+          "read_traffic": 0
+        },
+        "agent_id": "netsec-31",
+        "agent_variant": "good",
+        "attack": "none",
+        "client_session_id": "hero_good_normal",
+        "contain_request_index": null,
+        "first_harmful_step": null,
+        "harmful": false,
+        "prevented": false
+      }
+    },
+    "traffic": {
+      "hero_good_normal": {
+        "asset": null,
+        "attack": "none",
+        "category": "none",
+        "client_type": "customer_app",
+        "harmful": false,
+        "harmful_request_index": null,
+        "value_at_risk_usd": 0
+      }
+    }
+  }
+}

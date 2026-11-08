@@ -16,6 +16,12 @@ Sundai Club Hack 148, Sunday 8 November 2026. Status: plan, written before the b
 - **Online first.** The gate scores each step from past events only (online). A finished trace can also be scored whole (offline). We report lead time: how many steps before the harmful action the meter first rises.
 - **Realistic synthetic data from Hugging Face** (section 13).
 
+**Added in the afternoon (Wilson Wu's lane, on top of the 8 agents):**
+- **Agent 9, `service`:** a bank customer service agent in a good and a weaker variant, answering real BANKING77 requests, with a separate risk agent and a 5-seed evaluation. Contract: [`docs/customer-service-agent.md`](customer-service-agent.md). First synthetic results: [`risk/wilson_cs/results/eval.md`](../risk/wilson_cs/results/eval.md).
+- **Agent 10, `netsec`:** a network watch agent over the bank's API traffic, with dollar values on assets so that low-value attempts are contained without paging the IT team. Contract: [`docs/network-agent.md`](network-agent.md).
+- **Fleet risk:** what share of the agents is risky in each category, which one is worst and why. Contract: [`docs/fleet-risk.md`](fleet-risk.md).
+- **Research note** with every quote checked against the raw source: [`docs/research/markov-anomaly-detection.md`](research/markov-anomaly-detection.md); the findings that change the plan are in section 13.1.
+
 ## 1. Summary
 
 We will test one question in one day: can a risk model tell a banking AI agent under pressure from a normal one by watching only what the agent does? Team 1 (the agent builders, acting as the red team, meaning the side that attacks) builds 8 fake-bank agents (support, payments, disputes, sales, collections, KYC, underwriting and ops), runs each in normal and pressure mode on the same scripted tasks, and seals the answer key with a fingerprint before Team 2 sees any log. Team 2 (the risk team) builds a model that reads only the agents' action logs, scores each step before it runs, decides run, log, review or pause, and hands in a risk score for every run and every agent. We then unseal the key and score the model against a simple baseline, and we publish the result whatever it is. Everything uses fake data. The model flags agents and actions worth a human look. It does not detect misalignment and it does not make agents safe.
@@ -324,6 +330,16 @@ Repository facts below were checked by the main session with gh on the day.
 | slow_leak, where the final action was `send_data_external` | 100% caught (71 runs pooled over seeds) | `unseen_detail.patterns.slow_leak.by_final_action.send_data_external.catch_rate_mean` and `n_total_over_seeds` |
 
 The last two rows are the useful lesson. A short-memory model caught almost none of the long-gap leaks that ended in an ordinary network call, while catching every one that ended in an obviously dangerous send. That is why we plan to test a long-range pattern on purpose. In the same file, the BehaviorGPT comparison was skipped (`behaviorgpt.status` is `skipped`), so nothing is known there yet either.
+
+### 13.1 What the research says (8 November)
+
+The full note is [`docs/research/markov-anomaly-detection.md`](research/markov-anomaly-detection.md): about 50 sources, every quote matched against the raw source text, unverified items labelled. Five findings change the plan:
+
+1. **A short-window model is a credible baseline.** Detectors of unusual behaviour have used short sequences since Forrest et al. (1996). A 1999 comparison (Warrender et al.) found hidden Markov models most accurate on average but judged weaker methods likely sufficient, and on HDFS logs DeepLog's LSTM beat an order-1 n-gram only modestly: 833 against 1,360 false positives, 619 against 739 false negatives.
+2. **What we log matters more than the model.** The 1999 authors ranked the choice of data stream above the choice of method. For us that is the action list in `shared/actions.md` and the metadata on each event. Agent 9's synthetic ablation points the same way: the catch rate rose from 85% with actions alone (G0) to 95% once transaction and account evidence was added (G2), while the cheap keyword screen for injected text (G3) added nothing more.
+3. **Longer memory starves for data; short memory misses mimicry.** The contexts a model must learn grow as the number of actions to the power k, and DeepLog's n-gram baseline did best at N = 1. A 2026 agent-trace paper (Cho et al.) warns that a trace which keeps ordinary two-step statistics can replay an attack unseen. So severity weights, rolling totals and hard rules are requirements, not extras. Start at orders 1 to 3 with a floor probability for unseen actions; the principled upgrade is a likelihood ratio against a second model trained on scripted attacks.
+4. **Score before the money moves.** Card systems run their history-aware models after approval because of latency; an agent loop can afford them before the tool fires, which is the moment FinCEN, Nacha and the UK's 2024 payment rules (SI 2024/1013) single out as the most valuable. Count lead time against the first money-moving step and report it next to the false-pause rate.
+5. **OpenTelemetry's GenAI conventions are usable, not stable.** They are at Development status with no tagged release, and a core attribute has already been renamed (`gen_ai.system` to `gen_ai.provider.name`). Emit the `invoke_agent` and `execute_tool` span shapes, pin a commit, and keep bank fields under a `bank.*` namespace. Message content capture is off by default. OTLP JSON needs hex trace ids, not base64. Recording each human decision on a paused step as a span attribute turns the pause queue into a source of labels.
 
 ## Appendix: action list and warning patterns
 

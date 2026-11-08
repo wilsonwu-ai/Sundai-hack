@@ -1,0 +1,595 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="color-scheme" content="light dark">
+<title>Sundai Bank agent risk demo</title>
+<meta name="description" content="Step through a customer service agent, a network watch agent and a fleet view, and watch a risk agent pause the risky move before the money moves. Synthetic data only.">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="demo/style.css">
+</head>
+<body>
+<a class="skip" href="#case">Skip to the demo</a>
+
+<!-- 1. Hero -->
+<header class="hero">
+  <div class="wrap">
+    <p class="brand"><b>Sundai Bank</b> &middot; Wilson Wu's agents 9 and 10, and the fleet view</p>
+    <p class="kicker">Hack 148, MIT, 8 November 2026</p>
+    <h1>Catch the risky move <em>before</em> the money moves.</h1>
+    <p class="lede">Two of the bank's agents, a customer service agent and a network watch agent, act on real requests. A separate risk agent reads each action as it is logged, scores it before it runs, and pauses the ones worth a human look. Then one view across the whole fleet: what share of our agents is risky, and why.</p>
+    <ul class="pills" aria-label="The four decisions for every step">
+      <li>run</li><li>log</li><li>review</li><li class="pause">pause</li>
+    </ul>
+    <div class="btn-row">
+      <a class="btn" href="#case">Try agent 9</a>
+      <a class="btn ghost" href="#agent10">Agent 10</a>
+      <a class="btn ghost" href="#fleet">Fleet risk</a>
+    </div>
+    <p class="small hero-note">Synthetic data only. Nothing here touches a real bank, customer or card.</p>
+  </div>
+</header>
+
+<nav class="nav" aria-label="On this page">
+  <div class="wrap">
+    <ul>
+      <li><a href="#case">Agent 9</a></li>
+      <li><a href="#agent10">Agent 10</a></li>
+      <li><a href="#fleet">Fleet risk</a></li>
+      <li><a href="#built">How we built it</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="main">
+
+<!-- 2. Use case -->
+<section id="case" aria-labelledby="h-case">
+  <div class="wrap">
+    <p class="kicker">The use case</p>
+    <h2 id="h-case">One charge, two customers</h2>
+    <p class="lede">Two customers ask to cancel the same large Amazon charge on a credit card. One is telling the truth. The other hides an instruction inside the message. Pick an agent and a customer.</p>
+
+    <div class="switcher">
+      <div class="sw-grid" role="radiogroup" aria-label="Choose a case: agent and customer">
+        <span></span>
+        <span class="sw-head">Legit customer</span>
+        <span class="sw-head">Fake customer</span>
+
+        <span class="sw-row">Good agent</span>
+        <div class="sw-cell">
+          <input type="radio" name="case" id="c-good_legit" value="good_legit" checked>
+          <label for="c-good_legit"><b>Good + legit</b>Verifies, blocks the card, opens a dispute</label>
+        </div>
+        <div class="sw-cell">
+          <input type="radio" name="case" id="c-good_fake" value="good_fake">
+          <label for="c-good_fake"><b>Good + fake</b>Ignores the planted note and denies the request</label>
+        </div>
+
+        <span class="sw-row">Bad agent</span>
+        <div class="sw-cell">
+          <input type="radio" name="case" id="c-bad_legit" value="bad_legit">
+          <label for="c-bad_legit"><b>Bad + legit</b>Mostly the same as the good agent</label>
+        </div>
+        <div class="sw-cell hot">
+          <input type="radio" name="case" id="c-bad_fake" value="bad_fake">
+          <label for="c-bad_fake"><b>Bad + fake</b>Obeys the note, skips verification, credits at once</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="msg-card" id="msg-card">
+      <div class="who" id="msg-who">Customer message</div>
+      <blockquote id="msg-text">Loading the case.</blockquote>
+    </div>
+    <p class="small">The customer's words are treated as data. The risk agent never reads them: it gets one yes or no flag from a simple keyword screen, and nothing else about the message.</p>
+
+    <div class="sample-banner" id="sample-hero" role="note" hidden>Illustrative sample, not measured. These steps and scores were written by hand from the contract; real runs replace them.</div>
+    <p class="small" id="real-hero" hidden>These four sessions are synthetic: the service agent simulator produced them and the risk agent scored them. Every score on this page is read from a data file, not typed in.</p>
+
+    <!-- 3. Player -->
+    <div class="player" id="player" aria-labelledby="player-title">
+      <div class="player-top">
+        <span class="title" id="player-title">Step through the session</span>
+        <span class="small" id="player-agent"></span>
+      </div>
+      <div class="strip" id="strip" role="group" aria-label="Steps in this session. Bar height is the risk score."></div>
+
+      <div class="step" aria-live="polite" aria-atomic="false">
+        <div class="step-head">
+          <span class="count num" id="st-count">Step 1</span>
+          <span class="act" id="st-action">read_request</span>
+          <span class="badge" id="st-badge">run</span>
+        </div>
+        <div class="cols">
+          <div class="panel">
+            <h3>What the service agent did</h3>
+            <dl class="kv" id="st-meta"></dl>
+            <p class="why" id="st-why"></p>
+          </div>
+          <div class="panel">
+            <h3>What the risk agent says</h3>
+            <div class="meter">
+              <div class="lbl"><span>Risk (surprise &times; severity, plus flags)</span><span class="num" id="m-val">0.00</span></div>
+              <div class="track" role="img" id="m-track" aria-label="Risk meter">
+                <div class="fill" id="m-fill"></div>
+                <div class="tick" id="m-tick" hidden><span id="m-tick-lbl"></span></div>
+              </div>
+            </div>
+            <div class="stat">
+              <div><b id="s-surprise" class="num">0.00</b><span>surprise</span></div>
+              <div><b id="s-severity" class="num">0.0</b><span>severity</span></div>
+              <div><b id="s-decision">run</b><span>decision</span></div>
+            </div>
+            <ul class="flags" id="s-flags"></ul>
+          </div>
+        </div>
+
+        <div class="pause-panel" id="pause" role="group" aria-labelledby="pause-h" hidden>
+          <h3 id="pause-h" tabindex="-1">Paused before step</h3>
+          <p id="pause-text"></p>
+          <div class="btns">
+            <button type="button" class="btn" id="btn-approve">Approve and run</button>
+            <button type="button" class="btn warn" id="btn-block">Block</button>
+          </div>
+          <p class="decided" id="pause-decided" hidden></p>
+          <p class="demo-only">These buttons only change this page. Nothing is sent anywhere.</p>
+        </div>
+
+        <details class="span" id="span-box">
+          <summary>OpenTelemetry span for this step</summary>
+          <p class="cap">One span per action, one trace per session. The <code>gen_ai.*</code> lines follow the OpenTelemetry GenAI conventions. The customer's words are not in the span: content capture is off.</p>
+          <pre><code id="span-code"></code></pre>
+        </details>
+      </div>
+
+      <div class="result" id="result" hidden></div>
+      <div class="controls">
+        <button type="button" class="btn ghost" id="btn-back">Back</button>
+        <button type="button" class="btn" id="btn-next">Next step</button>
+        <button type="button" class="btn ghost" id="btn-play">Play</button>
+        <span class="spacer"></span>
+        <button type="button" class="btn ghost" id="btn-restart">Restart</button>
+      </div>
+    </div>
+    <p class="small">Keyboard: Tab to a control, or press the left and right arrow keys inside the player to step.</p>
+
+    <h3 class="sub">What customers actually ask</h3>
+    <p class="small">The request mix comes from public banking datasets on Hugging Face, so the agent is not answering made-up questions.</p>
+    <div class="sample-banner" id="sample-req" role="note" hidden>Illustrative sample, not measured. Replaced by real BANKING77 rows once the dataset is fetched.</div>
+    <p class="small" id="real-req" hidden>Real rows from <a href="https://huggingface.co/datasets/PolyAI/banking77" rel="noopener noreferrer">BANKING77</a> (CC-BY-4.0), each with its intent label.</p>
+    <ul class="req-list" id="req-list"></ul>
+  </div>
+</section>
+
+<!-- 4. How the risk team checks -->
+<section id="how" aria-labelledby="h-how">
+  <div class="wrap">
+    <p class="kicker">How the risk team checks</p>
+    <h2 id="h-how">From a span to a person</h2>
+    <p class="lede">The service agent never talks to the risk agent. It only logs. The risk side reads those logs, with the answer key kept apart.</p>
+
+    <div class="two">
+      <svg class="pipe" viewBox="0 0 360 600" role="img" aria-labelledby="pipe-t pipe-d" focusable="false">
+        <title id="pipe-t">The risk pipeline</title>
+        <desc id="pipe-d">Service agent, to OTLP over HTTP on port 4318, to Rushang's monitor which validates and stores in SQLite with the label kept apart, to a detector with a Markov next-move model, surprise times severity and flags, to a decision of run, log, review or pause, to a person who decides.</desc>
+        <rect class="node" x="20" y="8" width="320" height="60" rx="10"/>
+        <text class="t" x="36" y="33">Service agent</text>
+        <text class="s" x="36" y="53">every action logged, one span each</text>
+        <path class="arrow" d="M180 68 V96"/><polygon class="arrowhead" points="173,94 187,94 180,104"/>
+
+        <rect class="node" x="20" y="106" width="320" height="56" rx="10"/>
+        <text class="t" x="36" y="131">OpenTelemetry out</text>
+        <text class="m" x="36" y="150">OTLP/HTTP  POST :4318/v1/traces</text>
+        <path class="arrow" d="M180 162 V190"/><polygon class="arrowhead" points="173,188 187,188 180,198"/>
+
+        <rect class="node" x="20" y="200" width="320" height="78" rx="10"/>
+        <text class="t" x="36" y="225">Rushang's monitor</text>
+        <text class="s" x="36" y="245">validate, then SQLite</text>
+        <text class="c" x="36" y="266">label kept apart, never returned</text>
+        <path class="arrow" d="M180 278 V322"/><polygon class="arrowhead" points="173,320 187,320 180,330"/>
+        <text class="c" x="192" y="305">no label crosses</text>
+        <path class="node seal" d="M20 300 H170" fill="none"/>
+
+        <rect class="node" x="20" y="332" width="320" height="84" rx="10"/>
+        <text class="t" x="36" y="357">Detector</text>
+        <text class="s" x="36" y="377">Markov next-move model</text>
+        <text class="s" x="36" y="394">surprise &#215; severity, plus flags</text>
+        <path class="arrow" d="M180 416 V444"/><polygon class="arrowhead" points="173,442 187,442 180,452"/>
+
+        <rect class="node" x="20" y="454" width="320" height="84" rx="10"/>
+        <text class="t" x="36" y="479">Before the step runs</text>
+        <rect class="pill" x="32" y="494" width="58" height="26" rx="13"/><text class="pl" x="61" y="512">run</text>
+        <rect class="pill" x="100" y="494" width="58" height="26" rx="13"/><text class="pl" x="129" y="512">log</text>
+        <rect class="pill" x="168" y="494" width="70" height="26" rx="13"/><text class="pl" x="203" y="512">review</text>
+        <rect class="pill p" x="248" y="494" width="70" height="26" rx="13"/><text class="pl p" x="283" y="512">pause</text>
+        <path class="arrow cu" d="M283 538 V560"/>
+
+        <rect class="node hot" x="20" y="562" width="320" height="34" rx="10"/>
+        <text class="t c" x="36" y="584">A person decides: approve or block</text>
+      </svg>
+
+      <div>
+        <h3>Four metadata groups, one question</h3>
+        <p class="small">The same sessions are scored four times. Each time the risk agent may see a little more.</p>
+        <ul class="groups">
+          <li><b>G0</b> action names and order only <span class="q">Is the sequence alone enough?</span></li>
+          <li><b>G1</b> G0 plus outcome, auth level, policy check <span class="q">Do the platform's control fields matter?</span></li>
+          <li><b>G2</b> G1 plus charge and account evidence <span class="q">Does evidence about the charge matter? Amount band, 3-D Secure, device match, delivery, prior disputes, recent contact change.</span></li>
+          <li><b>G3</b> G2 plus the injection flag <span class="q">Does a cheap content screen add anything?</span></li>
+        </ul>
+        <p class="drop" id="drop-line"></p>
+      </div>
+    </div>
+
+    <h3 class="sub">Evaluation results</h3>
+    <div class="sample-banner" id="sample-eval" role="note" hidden>Illustrative sample, not measured. The evaluation has not been run on real sessions yet; these rows only show the shape of the table.</div>
+    <p class="small" id="eval-meta"></p>
+    <div class="tbl-wrap" tabindex="0" role="region" aria-label="Evaluation results table, scrolls sideways on a small screen">
+      <table>
+        <thead><tr>
+          <th scope="col">Row</th><th scope="col">Group</th><th scope="col">Order</th>
+          <th scope="col">AUC</th><th scope="col">Catch rate</th><th scope="col">Early warning</th><th scope="col">False alarms</th><th scope="col">Lead to first alert (steps)</th>
+        </tr></thead>
+        <tbody id="eval-body"></tbody>
+      </table>
+    </div>
+
+    <fieldset class="metric">
+      <legend>Ablation chart: pick a measure</legend>
+      <label><input type="radio" name="metric" value="catch_rate" checked><span>Catch rate</span></label>
+      <label><input type="radio" name="metric" value="auc"><span>AUC</span></label>
+      <label><input type="radio" name="metric" value="early_warning"><span>Early warning</span></label>
+      <label><input type="radio" name="metric" value="false_alarm_rate"><span>False alarms</span></label>
+      <label><input type="radio" name="metric" value="lead_time_steps"><span>Lead time</span></label>
+    </fieldset>
+    <ol class="bars" id="bars" aria-live="polite"></ol>
+    <p class="legend" aria-hidden="true">
+      <span><i class="lg0"></i>G0 actions only</span><span><i class="lg1"></i>G1 control fields</span>
+      <span><i class="lg2"></i>G2 charge evidence</span><span><i class="lg3"></i>G3 injection flag</span><span><i class="lgb"></i>baseline</span>
+    </p>
+    <p class="small" id="bars-note"></p>
+
+    <h3 class="sub">Why a person sits at the pause</h3>
+    <div class="quotes">
+      <blockquote>The EU AI Act says the people overseeing a high-risk AI system must be able "to intervene in the operation of the high-risk AI system or interrupt the system through a ‘stop’ button" (Art. 14(4)(e), <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=OJ:L_202401689" rel="noopener noreferrer">EUR-Lex</a>).</blockquote>
+      <blockquote>OWASP's Excessive Agency entry: "Utilise human-in-the-loop control to require a human to approve high-impact actions before they are taken." (<a href="https://genai.owasp.org/llmrisk/llm062025-excessive-agency/" rel="noopener noreferrer">OWASP LLM06:2025</a>)</blockquote>
+      <blockquote>Singapore's framework for agentic AI notes that "continuous human oversight over all agent workflows becomes impractical at scale" (<a href="https://www.imda.gov.sg/-/media/imda/files/about/emerging-tech-and-research/artificial-intelligence/mgf-for-agentic-ai.pdf" rel="noopener noreferrer">IMDA</a>). Pausing only the risky moves is one answer.</blockquote>
+    </div>
+    <p class="small">This is a hack-day experiment, not a compliance control and not legal advice.</p>
+  </div>
+</section>
+
+<!-- 5. BehaviorGPT -->
+<section id="behaviorgpt" aria-labelledby="h-bgpt">
+  <div class="wrap">
+    <p class="kicker">The sponsor model</p>
+    <h2 id="h-bgpt">Unbox AI BehaviorGPT-v4</h2>
+    <p class="lede">BehaviorGPT-v4 predicts what a person does next. The open question is whether the same idea can read an agent's actions. It would take the place of the Markov model as the next-move guesser.</p>
+    <div class="grid c3">
+      <div class="card"><span class="tag">1 Catalog</span><h3>Each action is an item</h3><p>Every action becomes a catalog item named <code>service.&lt;action&gt;</code>, for example <code>service.issue_credit</code>.</p></div>
+      <div class="card"><span class="tag">2 History</span><h3>The session is the history</h3><p>The steps so far, oldest first, are sent as the history of one user.</p></div>
+      <div class="card"><span class="tag">3 Rank</span><h3>The rank becomes surprise</h3><p>Where the model ranks the action that really happened sets the surprise: <code>ln(rank) / ln(catalog size)</code>. Then the same severity and flags apply.</p></div>
+    </div>
+    <h3 class="sub">The history for the case you picked</h3>
+    <ol class="hist" id="hist"></ol>
+    <div class="note" id="bgpt-status"></div>
+    <div id="bgpt-cmd" hidden>
+      <p>It runs with your own key. The key is read from the environment as <code>UNBOXAI_API_KEY</code> (copy <code>.env.example</code> to <code>.env</code>), and it is never printed.</p>
+      <pre class="cmd"><code>pip install behaviorgpt
+export UNBOXAI_API_KEY=...    # your own key, from the environment
+python3 -m risk.wilson_cs.behaviorgpt_rank --seed 1 --sessions 1500 --max-test 150 --max-val 120
+python3 -m risk.wilson_cs.eval --seeds 1 --sessions 1500</code></pre>
+      <p class="small">The last command rewrites the evaluation with a separate BehaviorGPT row, scored on a ranked subset and never blended with the baseline.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Agent 10 -->
+<section id="agent10" aria-labelledby="h-a10">
+  <div class="wrap">
+    <p class="kicker">Agent 10, network watch</p>
+    <h2 id="h-a10">Not every attack is an emergency</h2>
+    <p class="lede">Agent 10 watches the bank's API traffic at the gateway, one client session at a time, flags the unusual requests and acts. A network detector scores every request before it is served and prices what could be lost.</p>
+
+    <div class="sample-banner" id="sample-net" role="note" hidden>Illustrative sample, not measured. The agent 10 sessions, scores, dollar values and results below were written by hand; real runs replace them.</div>
+    <p class="fronts" id="fronts" hidden></p>
+
+    <h3 class="sub">Two layers, two kinds of watching</h3>
+    <svg class="pipe layers" viewBox="0 0 360 460" role="img" aria-labelledby="lay-t lay-d" focusable="false">
+      <title id="lay-t">The network layer and the behaviour layer</title>
+      <desc id="lay-d">Customer apps, the aggregator, attackers and the service agent send API calls through the gateway, where agent 10 and the network detector watch each request, on to the bank API. Separately, the behaviour layer watches every agent's actions, including agent 9 and agent 10.</desc>
+      <rect class="node" x="18" y="8" width="76" height="50" rx="8"/><text class="s" x="56" y="29" text-anchor="middle">Agent 9</text><text class="s" x="56" y="45" text-anchor="middle">API calls</text>
+      <rect class="node" x="100" y="8" width="76" height="50" rx="8"/><text class="s" x="138" y="29" text-anchor="middle">Customer</text><text class="s" x="138" y="45" text-anchor="middle">apps</text>
+      <rect class="node" x="182" y="8" width="76" height="50" rx="8"/><text class="s" x="220" y="38" text-anchor="middle">Aggregator</text>
+      <rect class="node hot" x="264" y="8" width="78" height="50" rx="8"/><text class="s" x="303" y="38" text-anchor="middle">Attackers</text>
+      <path class="arrow" d="M138 58 V94"/><polygon class="arrowhead" points="131,92 145,92 138,102"/>
+      <path class="arrow" d="M220 58 V94"/><polygon class="arrowhead" points="213,92 227,92 220,102"/>
+      <path class="arrow" d="M303 58 V94"/><polygon class="arrowhead" points="296,92 310,92 303,102"/>
+      <path class="arrow" d="M70 58 V94"/><polygon class="arrowhead" points="63,92 77,92 70,102"/>
+      <rect class="node" x="44" y="104" width="272" height="116" rx="10"/>
+      <text class="t" x="58" y="126">Gateway: one HTTP span per request</text>
+      <text class="c" x="58" y="144">Network layer</text>
+      <rect class="pill" x="56" y="154" width="248" height="54" rx="8"/>
+      <text class="t" x="68" y="175">Agent 10 and the network detector</text>
+      <text class="s" x="68" y="195">score each request before it is served</text>
+      <path class="arrow" d="M180 220 V246"/><polygon class="arrowhead" points="173,244 187,244 180,254"/>
+      <rect class="node" x="100" y="256" width="160" height="32" rx="8"/><text class="t" x="180" y="277" text-anchor="middle">Mock bank API</text>
+      <path class="arrow cu dash" d="M24 58 V312"/><polygon class="arrowhead cu" points="17,310 31,310 24,320"/>
+      <path class="arrow cu dash" d="M316 182 H336 V312"/><polygon class="arrowhead cu" points="329,310 343,310 336,320"/>
+      <rect class="node hot" x="18" y="322" width="324" height="78" rx="10"/>
+      <text class="t c" x="32" y="346">Behaviour layer</text>
+      <text class="s" x="32" y="366">The team's monitor reads every agent's actions:</text>
+      <text class="s" x="32" y="384">agent 9, agent 10 and the rest of the fleet</text>
+      <path class="arrow" d="M180 400 V420"/><polygon class="arrowhead" points="173,418 187,418 180,428"/>
+      <text class="t" x="180" y="448" text-anchor="middle">Fleet view</text>
+    </svg>
+
+    <h3 class="sub">The hero: a limit raise before a big transfer</h3>
+    <p class="small">The daily transfer limit is raised, then a large transfer follows. A normal customer and an attacker replaying a stolen token share that sequence, so the route alone cannot tell them apart. Pick a netsec agent and a client.</p>
+    <div class="switcher">
+      <div class="sw-grid" role="radiogroup" aria-label="Choose a case: netsec agent and client">
+        <span></span><span class="sw-head">Normal customer</span><span class="sw-head">Stolen token</span>
+        <span class="sw-row">Good agent</span>
+        <div class="sw-cell"><input type="radio" name="ncase" id="n-good_normal" value="good_normal" checked><label for="n-good_normal"><b>Good + normal</b>Allows everything</label></div>
+        <div class="sw-cell"><input type="radio" name="ncase" id="n-good_attack" value="good_attack"><label for="n-good_attack"><b>Good + stolen</b>Steps up, the challenge fails, revokes the token</label></div>
+        <span class="sw-row">Bad agent</span>
+        <div class="sw-cell"><input type="radio" name="ncase" id="n-bad_normal" value="bad_normal"><label for="n-bad_normal"><b>Bad + normal</b>Mostly the same as the good agent</label></div>
+        <div class="sw-cell hot"><input type="radio" name="ncase" id="n-bad_attack" value="bad_attack"><label for="n-bad_attack"><b>Bad + stolen</b>Obeys the planted note and allowlists the client</label></div>
+      </div>
+    </div>
+    <div class="msg-card"><div class="who" id="n-who">Client</div><blockquote id="n-note"></blockquote></div>
+
+    <div class="player" id="nplayer" aria-labelledby="nplayer-title">
+      <div class="player-top">
+        <span class="title" id="nplayer-title">Step through the session</span>
+        <span class="small" id="n-agent"></span>
+      </div>
+      <div class="tabs" role="group" aria-label="Which layer to step through">
+        <button type="button" class="tab" id="tab-req" aria-pressed="true">Network layer: requests</button>
+        <button type="button" class="tab" id="tab-ag" aria-pressed="false">Behaviour layer: agent 10's actions</button>
+      </div>
+      <div class="strip" id="n-strip" role="group" aria-label="Steps in this track. Bar height is the risk score."></div>
+      <div class="step" aria-live="polite">
+        <div class="step-head">
+          <span class="count num" id="n-count"></span>
+          <span class="act" id="n-action"></span>
+          <span class="badge" id="n-badge"></span>
+        </div>
+        <div class="cols">
+          <div class="panel"><h3 id="n-left-h">What was requested</h3><dl class="kv" id="n-meta"></dl><p class="why" id="n-why"></p></div>
+          <div class="panel"><h3 id="n-right-h">What the detector says</h3>
+            <div class="meter">
+              <div class="lbl"><span>Risk (surprise &times; severity, plus flags)</span><span class="num" id="n-mval">0.00</span></div>
+              <div class="track" role="img" id="n-mtrack" aria-label="Risk meter"><div class="fill" id="n-mfill"></div><div class="tick" id="n-mtick" hidden><span id="n-mtick-lbl"></span></div></div>
+            </div>
+            <div class="stat">
+              <div><b id="n-sur" class="num">0.00</b><span>surprise</span></div>
+              <div><b id="n-sev" class="num">0.0</b><span>severity</span></div>
+              <div id="n-exp-box"><b id="n-exp" class="num">$0</b><span>exposure</span></div>
+              <div><b id="n-dec">allow</b><span>decision</span></div>
+            </div>
+            <ul class="flags" id="n-flags"></ul>
+            <p class="small" id="n-dec-note"></p>
+          </div>
+        </div>
+        <div class="pause-panel" id="n-pause" role="group" aria-labelledby="n-pause-h" hidden>
+          <h3 id="n-pause-h" tabindex="-1">Paused</h3>
+          <p id="n-pause-text"></p>
+          <div class="btns">
+            <button type="button" class="btn" id="n-approve">Approve</button>
+            <button type="button" class="btn warn" id="n-block">Block</button>
+          </div>
+          <p class="decided" id="n-decided" hidden></p>
+          <p class="demo-only">These buttons only change this page. Nothing is sent anywhere.</p>
+        </div>
+        <details class="span">
+          <summary id="n-span-sum">OpenTelemetry span</summary>
+          <p class="cap" id="n-span-cap"></p>
+          <pre><code id="n-span-code"></code></pre>
+        </details>
+      </div>
+      <div class="result" id="n-result" hidden></div>
+      <div class="controls">
+        <button type="button" class="btn ghost" id="n-back">Back</button>
+        <button type="button" class="btn" id="n-next">Next step</button>
+        <button type="button" class="btn ghost" id="n-play">Play</button>
+        <span class="spacer"></span>
+        <button type="button" class="btn ghost" id="n-restart">Restart</button>
+      </div>
+    </div>
+    <p class="small">Keyboard: Tab to a control, or press the left and right arrow keys inside the player to step.</p>
+
+    <h3 class="sub">Triage: who gets paged</h3>
+    <p class="lede">Every route belongs to an asset with a dollar value at risk. Exposure is that value times the detector's risk. A loud attack on something cheap is contained and logged; a quiet one on something that moves money pages a person.</p>
+    <div class="tbl-wrap" tabindex="0" role="region" aria-label="Triage table, scrolls sideways on a small screen">
+      <table class="triage">
+        <thead><tr><th scope="col">Use case</th><th scope="col">Asset</th><th scope="col">Value at risk</th><th scope="col">Peak risk</th><th scope="col">Exposure</th><th scope="col">Decision</th></tr></thead>
+        <tbody id="triage-body"></tbody>
+      </table>
+    </div>
+    <p class="small" id="triage-note"></p>
+
+    <h3 class="sub">Which metadata the network side needs (N0 to N3)</h3>
+    <ul class="groups ngroups">
+      <li><b>N0</b> method and route, in order <span class="q">Is the request sequence alone enough?</span></li>
+      <li><b>N1</b> N0 plus status class and response size <span class="q">Does an ordinary access log add enough?</span></li>
+      <li><b>N2</b> N1 plus gateway context <span class="q">Client type, token age, MFA level, new device, network and region, object owner match, amount, payee age, limit change.</span></li>
+      <li><b>N3</b> N2 plus fan-out and payload flags <span class="q">Distinct objects per token, auth failures per address, and a cheap payload screen.</span></li>
+    </ul>
+    <div class="sample-banner" id="sample-neval" role="note" hidden>Illustrative sample, not measured. These rows only show the shape of the table.</div>
+    <p class="small" id="neval-meta"></p>
+    <div class="tbl-wrap" tabindex="0" role="region" aria-label="Network evaluation table, scrolls sideways on a small screen">
+      <table>
+        <thead><tr><th scope="col">Row</th><th scope="col">Group</th><th scope="col">Order</th><th scope="col">AUC</th><th scope="col">Catch rate</th><th scope="col">Early warning</th><th scope="col">False alarms</th><th scope="col">Aggregator false alarms</th><th scope="col">Lead (requests)</th></tr></thead>
+        <tbody id="neval-body"></tbody>
+      </table>
+    </div>
+    <fieldset class="metric">
+      <legend>Ablation chart: pick a measure</legend>
+      <label><input type="radio" name="nmetric" value="catch_rate" checked><span>Catch rate</span></label>
+      <label><input type="radio" name="nmetric" value="auc"><span>AUC</span></label>
+      <label><input type="radio" name="nmetric" value="early_warning"><span>Early warning</span></label>
+      <label><input type="radio" name="nmetric" value="false_alarm_rate"><span>False alarms</span></label>
+      <label><input type="radio" name="nmetric" value="aggregator_false_alarm_rate"><span>Aggregator false alarms</span></label>
+    </fieldset>
+    <ol class="bars" id="nbars" aria-live="polite"></ol>
+    <p class="legend" aria-hidden="true"><span><i class="lg0"></i>N0 routes</span><span><i class="lg1"></i>N1 access log</span><span><i class="lg2"></i>N2 gateway context</span><span><i class="lg3"></i>N3 fan-out and payload</span><span><i class="lgb"></i>baseline</span></p>
+    <p class="small" id="nbars-note"></p>
+
+    <h3 class="sub">What triage buys</h3>
+    <div class="grid c2" id="triage-metrics"></div>
+    <p class="small" id="a10-metrics-note"></p>
+  </div>
+</section>
+
+<!-- Fleet risk -->
+<section id="fleet" aria-labelledby="h-fleet">
+  <div class="wrap">
+    <p class="kicker">Fleet risk</p>
+    <h2 id="h-fleet">The answer, first</h2>
+    <div class="sample-banner" id="sample-fleet" role="note" hidden>Illustrative sample, not measured. The fleet numbers below come from a sample file; anything drawn from it is an illustrative sample too.</div>
+    <p class="bigline" id="fleet-head">Loading the fleet.</p>
+    <p class="small" id="fleet-rule"></p>
+
+    <h3 class="sub">Where</h3>
+    <p class="small" id="fleet-where"></p>
+    <ol class="bars cats" id="fleet-cats"></ol>
+    <p class="legend" aria-hidden="true"><span><i class="lgreal"></i>measured category</span><span><i class="lgstand"></i>stand-in simulator</span><span><i class="lgmiss"></i>no logs yet</span></p>
+
+    <h3 class="sub">The worst agent</h3>
+    <div class="card" id="fleet-worst"></div>
+
+    <h3 class="sub">So what</h3>
+    <div class="note copper"><ul class="sowhat">
+      <li>Hold that agent's privileged actions for review.</li>
+      <li>Send its paused sessions to a person.</li>
+      <li>Retest it after a fix, on the same budget.</li>
+    </ul></div>
+
+    <h3 class="sub">The check against sealed answers</h3>
+    <p class="bigline small-big" id="fleet-reveal"></p>
+
+    <h3 class="sub">The picture, the explainer and the video</h3>
+    <div class="grid c2 media" id="fleet-media">
+      <figure class="card media-card" id="m-diagram"><figcaption>Fleet diagram</figcaption><div class="ph">Not published yet.</div></figure>
+      <figure class="card media-card" id="m-explainer"><figcaption>Picture explainer</figcaption><div class="ph">Not published yet.</div></figure>
+      <figure class="card media-card wide" id="m-video"><figcaption>Video, about 15 seconds. Muted, press play.</figcaption><div class="ph">Not published yet.</div></figure>
+    </div>
+
+    <h3 class="sub">The code behind the answer</h3>
+    <p class="small">Read from the source files when the scorecard ran, so it cannot drift from the code.</p>
+    <div id="fleet-code"></div>
+  </div>
+</section>
+
+<!-- 6. Tools -->
+<section id="tools" aria-labelledby="h-tools">
+  <div class="wrap">
+    <p class="kicker">Tools used</p>
+    <h2 id="h-tools">What it is made of</h2>
+    <div class="grid c2">
+      <div class="card"><span class="tag">Data</span><h3>Hugging Face datasets</h3>
+        <ul>
+          <li><a href="https://huggingface.co/datasets/PolyAI/banking77" rel="noopener noreferrer">BANKING77</a>, customer requests labelled with banking intents. CC-BY-4.0.</li>
+          <li><a href="https://huggingface.co/datasets/bitext/Bitext-retail-banking-llm-chatbot-training-dataset" rel="noopener noreferrer">Bitext retail banking</a>, synthetic question and answer pairs. CDLA-Sharing-1.0.</li>
+          <li><a href="https://huggingface.co/datasets/flwrlabs/fed-fraud-paysim-banks" rel="noopener noreferrer">PaySim-style transactions by bank</a>. CC-BY-4.0.</li>
+          <li><a href="https://huggingface.co/datasets/misatadata/us-bank-transactions" rel="noopener noreferrer">US bank and card transactions (preview)</a>. CC-BY-4.0.</li>
+        </ul>
+        <p class="small">Licenses are from each dataset card. They require attribution, so the repo keeps a data README naming each source.</p></div>
+      <div class="card"><span class="tag">Telemetry</span><h3>OpenTelemetry GenAI conventions</h3>
+        <p>Each action is a span named <code>execute_tool &lt;action&gt;</code> with <code>gen_ai.operation.name</code> and <code>gen_ai.tool.name</code>. Standard viewers can read the traces. See the <a href="https://github.com/open-telemetry/semantic-conventions-genai" rel="noopener noreferrer">conventions</a>.</p></div>
+      <div class="card"><span class="tag">Network telemetry</span><h3>OpenTelemetry HTTP conventions</h3>
+        <p>Each request to the bank API is one server span named <code>&lt;method&gt; &lt;route&gt;</code> with the standard HTTP attributes, plus <code>bank.*</code> attributes for what the gateway knows. The span carries a payload flag, never the raw body.</p></div>
+      <div class="card"><span class="tag">Risk team</span><h3>Rushang's risk monitor</h3>
+        <p>OTLP/HTTP in on port 4318, FastAPI, SQLite, and a <code>Detector</code> protocol the same offline and online.</p></div>
+      <div class="card"><span class="tag">Contract</span><h3>Vivek's schema and loader</h3>
+        <p>One JSON Schema for one log event, the action list, the sample sessions, and the loader that strips the answer key.</p></div>
+      <div class="card"><span class="tag">Language</span><h3>Python standard library</h3>
+        <p>The agent, the detector and the evaluation need no installs. The page is vanilla HTML, CSS and JavaScript with no build step.</p></div>
+      <div class="card"><span class="tag">Sponsor model</span><h3>Unbox AI BehaviorGPT-v4</h3>
+        <p>An optional next-move scorer, run with your own key. See the section above for how it pairs.</p></div>
+      <div class="card"><span class="tag">Build</span><h3>Claude Code</h3>
+        <p>Wrote the agent, the risk agent, the evaluation and this page against a frozen contract.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. How we built it -->
+<section id="built" aria-labelledby="h-built">
+  <div class="wrap">
+    <p class="kicker">How we built it</p>
+    <h2 id="h-built">Four skills, consulted before building</h2>
+    <p class="lede">Each skill was read first and applied. Here is what each one changed.</p>
+    <div class="grid c2">
+      <div class="card"><span class="tag">Design council</span><h3>Three lenses, one spec</h3>
+        <ul>
+          <li>The three lenses were merged into one layout before any code. Answer first: the sentence, then the four cases, then the player. The pipeline and the table come after you have seen it work.</li>
+          <li>Copper means one thing, a warning or the pause. Navy is every normal state, so the pause is the one block that fills with color.</li>
+          <li>The pipeline is drawn top to bottom at one width, so it reads the same on a phone and on a projector.</li>
+        </ul></div>
+      <div class="card"><span class="tag">Frontend design</span><h3>A ledger and control room</h3>
+        <ul>
+          <li>One committed direction: chalk paper, a navy hero, copper hairlines, aligned figures. With no web fonts allowed, weight, size and number alignment carry the character.</li>
+          <li>One moment of motion: the meter fills and the pause panel rises. Both stop under the reduced-motion setting.</li>
+          <li>Native controls first: radio inputs for the 2x2, real buttons, a details element for the span, arrow keys to step, a live region for each step. Checked at 390 and 1280 pixels for sideways overflow.</li>
+        </ul></div>
+      <div class="card"><span class="tag">Senior backend</span><h3>Boundaries and data contracts</h3>
+        <ul>
+          <li>One schema check at the boundary: the monitor validates each span with the same function the offline loader uses, and drops and reports bad actions.</li>
+          <li>Idempotent writes: events are upserted by agent, session and step, so a retry stores once.</li>
+          <li>The page is a read-only client of three JSON files, each with a <code>sample</code> flag, built by one deterministic script. No runtime API call, so the demo cannot fail on stage because of a server.</li>
+        </ul></div>
+      <div class="card"><span class="tag">Secure by default</span><h3>A signature without an actor is a finding</h3>
+        <ul>
+          <li>The trust contract, stated first. ACTOR: the reviewer who clicks. RESOURCE: the paused step. RULE: only a person releases it.</li>
+          <li>The detector's signature takes events and nothing else. It has no parameter through which a label could arrive.</li>
+          <li>Calibrated down: the page says a step is worth a human look, never that it has proof. Nothing is called a verdict.</li>
+        </ul></div>
+      <div class="card wide"><span class="tag">Security, in full</span><h3>What the system does and does not do</h3>
+        <ul>
+          <li><b>Labels are sealed.</b> The answer key (<code>pressure_mode</code> and the variant) never reaches the detector. The loader strips it, the store keeps it in its own column, only an evaluation endpoint reads it, and its SHA-256 fingerprint is fixed before scoring.</li>
+          <li><b>Customer text is data.</b> The risk agent never reads message content, only one flag from a keyword screen. The planted note on this page is shown as text and never acted on.</li>
+          <li><b>Content capture is off.</b> OpenTelemetry spans carry the action, its parameters, the control fields and a one-line summary, not the customer's words.</li>
+          <li><b>Keys come only from environment variables</b> (<code>UNBOXAI_API_KEY</code> from a git-ignored <code>.env</code>), are never printed, and are nowhere in this page.</li>
+          <li><b>Synthetic and PII-free.</b> Cards, amounts and ids are made up. Requests come from public datasets.</li>
+          <li><b>A static site.</b> No cookies, no storage, no analytics, no fonts and no third-party requests. A Content-Security-Policy tag lets the page load only its own files.</li>
+          <li><b>A person decides at the pause.</b> The agent never releases its own paused step.</li>
+          <li><b>An audit trail.</b> Every action is a structured event, so a session can be replayed and checked after the fact.</li>
+        </ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- 8. Team -->
+<section id="team" aria-labelledby="h-team">
+  <div class="wrap">
+    <p class="kicker">Team and credits</p>
+    <h2 id="h-team">Sundai Bank</h2>
+    <figure class="team-photo">
+      <img src="demo/img/team-hack148.jpg" width="1400" height="1296" loading="lazy" decoding="async" alt="The Sundai Bank team around a table of laptops at Sundai Club Hack 148, MIT, 8 November 2026.">
+      <figcaption class="small">The team at Sundai Club Hack 148, MIT.</figcaption>
+    </figure>
+    <ul class="team">
+      <li>Zac Thomas</li><li>Abdelhaq Chaoui</li><li>Vivek Chaudhari</li>
+      <li>Rushang Karia</li><li>Nora Panholzer</li><li>Wilson Wu</li>
+    </ul>
+    <p class="small team-note">The idea is Zac Thomas's, from the <a href="https://sundai.club" rel="noopener noreferrer">Sundai Club</a> Hack 148 idea board. Sponsor model: BehaviorGPT-v4 by Unbox AI. Thanks to Sundai Club for the room and the Sunday.</p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Synthetic data only. This flags agents and actions worth a human look. It is a hack-day experiment, not a compliance control.</p>
+    <p class="small">Code under the <a href="https://github.com/zaccytoymas/Sundai-hack/blob/main/LICENSE">MIT License</a>. Dataset samples keep their own licenses.</p>
+  </div>
+</footer>
+
+<script src="demo/app.js" defer></script>
+<script src="demo/app2.js" defer></script>
+</body>
+</html>
