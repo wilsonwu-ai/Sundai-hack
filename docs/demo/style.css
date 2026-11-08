@@ -411,3 +411,35 @@ table.triage td:first-child { min-width: 190px; }
 .codepre .no { flex: 0 0 auto; min-width: 3.4em; padding: 0 12px 0 14px; text-align: right; color: var(--muted); user-select: none; font-variant-numeric: tabular-nums; border-right: 1px solid var(--line); margin-right: 12px; }
 .codepre .tx { flex: 0 0 auto; padding-right: 16px; }
 table.triage td:nth-child(2), table.triage th:nth-child(2), table.triage td:last-child, table.triage th:last-child { text-align: left; }
+
+/* ---------- agent 10 third layer: tool-call guard ---------- */
+.sub2 { font-size: 1rem; color: var(--navy); margin: 22px 0 6px; }
+.agent-chips { list-style: none; margin: 8px 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.agent-chips li { display: flex; flex-direction: column; gap: 2px; min-width: 112px; padding: 8px 12px; border: 2px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+.agent-chips .aid { font-family: var(--mono); font-size: 0.78rem; overflow-wrap: anywhere; }
+.agent-chips .asc { font-size: 1.15rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+.agent-chips li.hi { border-color: var(--copper); background: var(--tint-copper); }
+.agent-chips li.hi .asc { color: var(--copper); }
+.agent-chips li.hijacked { box-shadow: 0 0 0 3px var(--copper); }
+.agent-chips .atag { font-size: 0.7rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--copper); }
+.tg-call { border-top: 1px solid var(--line); padding: 10px 0; display: grid; gap: 4px; }
+.tg-call:first-of-type { border-top: 0; }
+.tg-call .top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 10px; align-items: center; font-weight: 700; }
+.tg-call .tool { font-family: var(--mono); font-size: 0.86rem; }
+.tg-call .meta { font-size: 0.82rem; color: var(--muted); overflow-wrap: anywhere; }
+.tg-call pre.args { margin: 0; padding: 8px 10px; background: var(--tint-navy); border: 1px solid var(--line); border-radius: 6px; font-size: 0.76rem; white-space: pre-wrap; overflow-wrap: anywhere; }
+.tg-call.blocked { border: 3px solid var(--copper); border-radius: var(--radius); background: var(--tint-copper); padding: 10px 12px; margin: 6px 0; }
+.tg-call .stop { font-weight: 800; color: var(--copper); }
+.tg-call .score { font-variant-numeric: tabular-nums; }
+.tg-controls { margin: 4px 0 8px; }
+.agent-grid { display: grid; gap: 6px; margin: 8px 0; }
+.agent-grid .arow { display: grid; grid-template-columns: 84px 1fr; gap: 8px; align-items: center; }
+.agent-grid .atype { font-size: 0.78rem; font-weight: 700; color: var(--muted); }
+.agent-grid .tiles { display: flex; flex-wrap: wrap; gap: 3px; }
+.agent-grid .tile { width: 14px; height: 14px; border-radius: 3px; border: 1px solid var(--line-strong); box-sizing: border-box; }
+.tile.b0, .legend i.tb0 { background: var(--tint-navy); }
+.tile.b1, .legend i.tb1 { background: var(--series-2); }
+.tile.b2, .legend i.tb2 { background: var(--copper); }
+.agent-grid .tile.hijacked { outline: 2px solid var(--navy); outline-offset: 1px; }
+.tg-call.never { opacity: 0.5; background: var(--tint-navy); border-radius: var(--radius); padding: 10px 12px; }
+.tg-call.never .stop { color: var(--muted); }
