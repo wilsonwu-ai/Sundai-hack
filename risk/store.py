@@ -55,6 +55,12 @@ CREATE TABLE IF NOT EXISTS step_scores (
     risk REAL NOT NULL,
     decision TEXT NOT NULL,
     reason TEXT NOT NULL,
+    flags TEXT NOT NULL,               -- JSON list of broken role controls
+    exposure_usd REAL NOT NULL,        -- this step
+    loss_if_harmful_usd REAL NOT NULL, -- this step, after recovery
+    at_stake_usd REAL NOT NULL,        -- the session through this step
+    p_unsafe REAL NOT NULL,            -- the session through this step
+    expected_loss_usd REAL NOT NULL,   -- the session through this step
     detector TEXT NOT NULL,
     scored_at TEXT NOT NULL,
     UNIQUE (agent_id, session_id, step)
@@ -64,8 +70,10 @@ CREATE INDEX IF NOT EXISTS scores_decision ON step_scores (decision, seq);
 
 SCORE_FIELDS = (
     "agent_id", "agent_type", "session_id", "step", "timestamp", "action", "p", "expected",
-    "p_expected", "surprise", "severity", "risk", "decision", "reason", "detector", "scored_at",
+    "p_expected", "surprise", "severity", "risk", "decision", "reason", "flags", "exposure_usd",
+    "loss_if_harmful_usd", "at_stake_usd", "p_unsafe", "expected_loss_usd", "detector", "scored_at",
 )
+STEP_KEYS = SCORE_FIELDS[5:-2]  # what a scored step dict carries, from action to expected loss
 
 FIELDS = (
     "agent_id", "agent_type", "session_id", "step", "timestamp", "action", "params",
@@ -93,6 +101,12 @@ class Store:
         with self._lock:
             self._db.execute("PRAGMA journal_mode=WAL")
             self._db.executescript(SCHEMA)
+            # step scores are derived: an older layout is dropped, and the live
+            # scorer rebuilds it from the events on start
+            have = {r["name"] for r in self._db.execute("PRAGMA table_info(step_scores)")}
+            if not set(SCORE_FIELDS) <= have:
+                self._db.execute("DROP TABLE step_scores")
+                self._db.executescript(SCHEMA)
 
     def add(
         self,
@@ -190,23 +204,27 @@ class Store:
             return 0
         agent_id, session_id = events[0]["agent_id"], events[0]["session_id"]
         now = datetime.now(tz=UTC).isoformat()
+        def row_key(action, risk, decision, expected_loss, det):
+            return (action, risk, decision, round(expected_loss, 2), det)
+
         with self._lock, self._db:
             current = {
-                r["step"]: (r["action"], r["risk"], r["decision"], r["detector"])
+                r["step"]: row_key(r["action"], r["risk"], r["decision"], r["expected_loss_usd"], r["detector"])
                 for r in self._db.execute(
-                    "SELECT step, action, risk, decision, detector FROM step_scores "
+                    "SELECT step, action, risk, decision, expected_loss_usd, detector FROM step_scores "
                     "WHERE agent_id = ? AND session_id = ?",
                     (agent_id, session_id),
                 )
             }
             rows = [
                 (
-                    agent_id, e["agent_type"], session_id, s["step"], e["timestamp"], s["action"],
-                    s.get("p"), s.get("expected"), s.get("p_expected"), s["surprise"],
-                    s["severity"], s["risk"], s["decision"], s["reason"], detector, now,
+                    agent_id, e["agent_type"], session_id, s["step"], e["timestamp"],
+                    *(json.dumps(s.get(k, [])) if k == "flags" else s.get(k) for k in STEP_KEYS),
+                    detector, now,
                 )
                 for e, s in zip(events, steps)
-                if current.get(s["step"]) != (s["action"], s["risk"], s["decision"], detector)
+                if current.get(s["step"])
+                != row_key(s["action"], s["risk"], s["decision"], s.get("expected_loss_usd", 0.0), detector)
             ]
             self._db.executemany(
                 f"INSERT OR REPLACE INTO step_scores ({', '.join(SCORE_FIELDS)}) "
@@ -221,7 +239,7 @@ class Store:
             f"SELECT seq, {', '.join(SCORE_FIELDS)} FROM step_scores WHERE seq > ? ORDER BY seq LIMIT ?",
             (seq, limit),
         )
-        return [dict(r) for r in rows]
+        return [_score_row(r) for r in rows]
 
     def session_scores(self, session_id: str) -> list[dict]:
         rows = self._rows(
@@ -229,7 +247,7 @@ class Store:
             "WHERE session_id = ? ORDER BY agent_id, step",
             (session_id,),
         )
-        return [dict(r) for r in rows]
+        return [_score_row(r) for r in rows]
 
     def alerts(self, limit: int = 50) -> list[dict]:
         """Steps decided review or pause, newest first."""
@@ -238,7 +256,7 @@ class Store:
             "WHERE decision IN ('review', 'pause') ORDER BY seq DESC LIMIT ?",
             (limit,),
         )
-        return [dict(r) for r in rows]
+        return [_score_row(r) for r in rows]
 
     def latest_seq(self) -> int:
         return self._rows("SELECT COALESCE(MAX(seq), 0) AS seq FROM step_scores")[0]["seq"]
@@ -263,6 +281,10 @@ def by_session(events: list[dict]) -> dict[str, list[dict]]:
 
 
 _TEXT = {"agent_id", "agent_type", "first_seen", "last_seen"}
+
+
+def _score_row(r: sqlite3.Row) -> dict:
+    return {**dict(r), "flags": json.loads(r["flags"])}
 
 
 def _counts(r: sqlite3.Row) -> dict:

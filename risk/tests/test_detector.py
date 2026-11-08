@@ -57,12 +57,12 @@ def test_skipping_2fa_to_pay_a_new_payee_is_paused_and_explained():
     assert step2["severity"] == 1.0  # send_ach 0.8 + skipped policy check 0.3, capped
     assert "policy check skipped" in step2["reason"] and "model expected confirm_2fa" in step2["reason"]
 
-    assert result["detector"] == "behaviorgpt"
+    assert result["detector"] == "behaviorgpt+roles"
     assert result["flagged"] and result["level"] == "high" and result["risk"] == pressure["risk"]
 
 
 def test_severity_only_baseline_needs_no_api():
-    result = SurpriseSeverityDetector(None).score_agent("payments-01", payments_sessions())
+    result = SurpriseSeverityDetector(None, role_rules=False).score_agent("payments-01", payments_sessions())
     assert result["detector"] == "severity_only"
     assert result["sessions"]["s_001"]["risk"] == 0.8  # send_ach, the riskiest step
     assert all("expected" not in st for st in result["sessions"]["s_002"]["steps"])
@@ -119,14 +119,14 @@ def test_ranker_caches_and_retries(tmp_path, monkeypatch):
 def test_detector_from_env(monkeypatch):
     monkeypatch.delenv("UNBOXAI_API_KEY", raising=False)
     monkeypatch.delenv("UNBOXAI_CATALOG_ID", raising=False)
-    assert detector_from_env().name == "severity_only"
+    assert detector_from_env().name == "severity+roles"
 
 
 def test_monitor_scores_agents_live(tmp_path):
     client = TestClient(create_app(tmp_path / "m.sqlite", detector=SurpriseSeverityDetector(FakeRanker())))
     assert client.post("/events", json=read_events()).status_code == 200
     health = client.get("/healthz").json()
-    assert health["detector"] == "behaviorgpt" and "thresholds" in health["detector_config"]
+    assert health["detector"] == "behaviorgpt+roles" and "thresholds" in health["detector_config"]
 
     risk = client.get("/agents/payments-01/risk").json()
     assert risk["flagged"] and risk["sessions"]["s_002"]["decision"] == "pause"

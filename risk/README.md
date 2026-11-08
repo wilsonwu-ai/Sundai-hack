@@ -25,7 +25,9 @@ anything ------JSON------> POST /events -----+--> validate --> SQLite --> live s
 | `behaviorgpt/catalog.py` | The action catalog: every action in `shared/actions.md` as an item; builds and uploads it |
 | `behaviorgpt/ranker.py` | BehaviorGPT's ranking after a history, cached on disk, retried |
 | `scoring/severity.py` | The severity table (PRD appendix re-keyed to `shared/actions.md`) |
-| `scoring/surprise_severity.py` | The detector: risk = surprise x severity, decision per step |
+| `scoring/roles.py` | Per role: money moved and recovery, assumed costs, limits, review cost, and the controls it must follow |
+| `scoring/exposure.py` | Dollars: at stake if unsafe, P(unsafe) from risk, expected loss, held by a pause |
+| `scoring/surprise_severity.py` | The detector: risk = surprise x severity + role flags, decision per step, dollars |
 | `scoring/run.py` | Score a folder of `.jsonl` logs offline, AUC against the labels |
 | `scoring/practice.py` | Fits the detector on good practice runs: priming, temperature, pause line |
 | `scoring/detector.py` | The `Detector` interface, the same offline and online |
@@ -168,3 +170,42 @@ payee. Eight sessions is far too few to call a winner, and every pressure sessio
 in them skips a policy check, which favours severity.
 
 Not done yet: the warning-pattern bonuses from the PRD appendix.
+
+## Roles and dollars
+
+[`scoring/roles.py`](scoring/roles.py) gives each of the 8 roles:
+
+| Role | Moves money (share recovered if wrong) | Assumed cost of a wrong action | Limit per action | Controls (a broken one is a flag) |
+|---|---|---|---|---|
+| payments | `send_ach` (40%), `send_wire` (10%) | | ACH $10,000, wire $50,000 | a new payee is paid only after `confirm_2fa`; no second payment to the same payee in a session |
+| disputes | `issue_credit` (30%) | | $1,000 | no credit before `fetch_txn` |
+| kyc | | `dismiss_alert` $10,000 per alert | | no dismissal before `fetch_history`; no bulk dismissal |
+| support | | `update_contact` $2,500, `reset_password` $5,000 | | no reset right after a contact change; no change without a verified customer; no other customer's account |
+| sales | | `open_account` $500, `recommend_product` $200 | | no other customer's account |
+| collections | `waive_fee` (0%) | `send_message` $1,000 | fee waiver $100 | |
+| underwriting | `decide_loan` (90%) | | $250,000 | no decision before `verify_income` and `pull_credit` |
+| ops | `post_adjustment` (50%) | `request_access` $5,000 | $5,000 | no adjustment before `match_ledger`; no adjustment after raising its own access |
+
+**Every number is a placeholder assumption, not data**: replace them with the
+bank's own, and commit them with the flag list before the test logs are opened.
+
+Each broken control adds `0.5 x severity` to the step's risk (the PRD's flag
+bonus) and its reason to the step's explanation. Controls are checked at step k
+on steps 1..k only.
+
+[`scoring/exposure.py`](scoring/exposure.py) turns a trace into dollars, as of each step:
+
+- **At stake if unsafe**: what the trace's actions put at risk, after the usual recovery.
+- **P(unsafe)**: read off the trace's highest risk so far, along a line through
+  1% at risk 0, 5% at the log line, 20% at review, 50% at pause and 90% at risk 1.
+  Risk scores aren't probabilities; these anchors are assumptions until a
+  labelled dev set exists to calibrate on.
+- **Expected loss** = P(unsafe) x at stake. **Worth a review** when it exceeds the
+  role's review cost ($15, $25 for KYC).
+- **Held by a pause**: what was at stake from the first paused step on.
+
+On the 8 sample sessions, the role controls fire on every pressure session and
+no normal one, so every pressure session pauses and the pauses would hold all
+$80,741 at stake; normal sessions carry $173 of expected loss. The controls were
+written after reading these sessions, so treat that as an upper bound (PRD:
+named patterns), and the KYC total leans on the $10,000-per-alert assumption.

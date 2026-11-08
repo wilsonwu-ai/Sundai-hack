@@ -121,6 +121,10 @@
   .chart-title .t { font-weight: 600; }
   .chart-title .s { color: var(--ink-2); font-size: 13px; }
   .key { display: flex; flex-wrap: wrap; gap: 14px; margin: 4px 0 6px; }
+  .dollars { display: flex; flex-wrap: wrap; gap: 8px 24px; margin: 8px 0; }
+  .dollars .label { color: var(--ink-2); font-size: 12px; }
+  .dollars .value { font-size: 18px; font-weight: 600; }
+  .flags { font-size: 13px; color: var(--ink-2); margin-bottom: 4px; }
   .chart { position: relative; }
   .chart > svg { display: block; width: 100%; height: auto; max-height: 340px; }
   .chart text { font: 11px system-ui, -apple-system, "Segoe UI", sans-serif; fill: var(--muted); font-variant-numeric: tabular-nums; }
@@ -160,7 +164,7 @@
 
 <main>
   <section class="card" aria-labelledby="agents-h">
-    <h2 id="agents-h">Agents, riskiest first</h2>
+    <h2 id="agents-h">Agents, by expected loss</h2>
     <div class="list" id="agents"></div>
   </section>
 
@@ -230,6 +234,10 @@ function icon(decision, size = 10) {
 }
 const chip = (decision) => el("span", { class: "chip" }, icon(decision), decision);
 const fmt = (x) => (x == null ? "–" : Number(x).toFixed(2));
+const USD = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
+const USD_SHORT = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", notation: "compact", maximumFractionDigits: 1 });
+const usd = (x) => USD.format(x || 0);
+const usdShort = (x) => (Math.abs(x || 0) < 1000 ? usd(x) : USD_SHORT.format(x));   // $167, $10.6K
 const worst = (ds) => ds.reduce((a, b) => (ORDER.indexOf(b) > ORDER.indexOf(a) ? b : a), "run");
 const key = (r) => `${r.agent_id}|${r.session_id}|${r.step}`;
 
@@ -246,11 +254,17 @@ function model() {
     a.list = [];
     for (const [id, steps] of a.sessions) {
       steps.sort((x, y) => x.step - y.step);
+      const last = steps[steps.length - 1];   // dollars are running totals: the last step has the session's
+      const firstPause = steps.findIndex((s) => s.decision === "pause");
       a.list.push({
         id, steps,
         risk: Math.max(...steps.map((s) => s.risk)),
         decision: worst(steps.map((s) => s.decision)),
-        last: Math.max(...steps.map((s) => s.seq)),
+        atStake: last.at_stake_usd,
+        pUnsafe: last.p_unsafe,
+        expected: last.expected_loss_usd,
+        held: firstPause < 0 ? 0 : steps.slice(firstPause).reduce((n, s) => n + s.loss_if_harmful_usd, 0),
+        flags: [...new Set(steps.flatMap((s) => s.flags || []))],
         fresh: steps.some((s) => state.fresh.has(key(s))),
       });
     }
@@ -258,21 +272,27 @@ function model() {
     a.risk = Math.max(...a.list.map((s) => s.risk));
     a.decision = worst(a.list.map((s) => s.decision));
     a.actions = a.list.reduce((n, s) => n + s.steps.length, 0);
+    a.expected = a.list.reduce((n, s) => n + s.expected, 0);
+    a.atStake = a.list.reduce((n, s) => n + s.atStake, 0);
+    a.held = a.list.reduce((n, s) => n + s.held, 0);
     a.fresh = a.list.some((s) => s.fresh);
   }
-  return [...agents.values()].sort((x, y) => y.risk - x.risk || x.id.localeCompare(y.id));
+  return [...agents.values()].sort((x, y) => y.expected - x.expected || y.risk - x.risk || x.id.localeCompare(y.id));
 }
 
 // -- views ------------------------------------------------------------------
 function renderStats(agents) {
   const rows = [...state.rows.values()];
   const sessions = agents.reduce((n, a) => n + a.list.length, 0);
+  const sum = (f) => agents.reduce((n, a) => n + f(a), 0);
   const tiles = [
     ["Agents", agents.length],
     ["Sessions", sessions],
     ["Actions scored", rows.length],
-    ["Sessions paused", agents.reduce((n, a) => n + a.list.filter((s) => s.decision === "pause").length, 0)],
-    ["Sessions in review", agents.reduce((n, a) => n + a.list.filter((s) => s.decision === "review").length, 0)],
+    ["Sessions paused", sum((a) => a.list.filter((s) => s.decision === "pause").length)],
+    ["Sessions in review", sum((a) => a.list.filter((s) => s.decision === "review").length)],
+    ["Expected loss", usdShort(sum((a) => a.expected))],
+    ["Held by pauses", usdShort(sum((a) => a.held))],
   ];
   document.getElementById("stats").replaceChildren(
     ...tiles.map(([label, value]) => el("div", { class: "stat" }, el("div", { class: "label" }, label), el("div", { class: "value" }, value)))
@@ -300,6 +320,7 @@ function renderAgents(agents) {
     },
     el("div", { class: "top" }, el("span", { class: "name" }, a.id), chip(a.decision)),
     el("div", { class: "sub" }, `${a.type} · ${a.list.length} session${a.list.length === 1 ? "" : "s"} · ${a.actions} actions · peak risk ${fmt(a.risk)}`),
+    el("div", { class: "sub num" }, `expected loss ${usd(a.expected)} · ${usd(a.atStake)} at stake if unsafe`),
     el("div", { class: "meter", "aria-hidden": "true" },
       el("span", { style: `width:${Math.max(2, a.risk * 100)}%;background:${DECISIONS[a.decision].color}` })),
   )));
@@ -325,7 +346,8 @@ function renderSessions(agent) {
       "aria-current": String(s.id === state.session),
       onclick: () => select(agent.id, s.id),
     },
-    el("div", { class: "top" }, el("span", { class: "name" }, s.id), sparkline(s.steps), chip(s.decision)),
+    el("div", { class: "top" }, el("span", { class: "name" }, s.id), sparkline(s.steps), chip(s.decision),
+      el("span", { class: "sub num" }, usdShort(s.expected))),
   )));
 }
 
@@ -336,11 +358,15 @@ function renderDetail(agent) {
     box.replaceChildren(el("div", { class: "empty" }, agent ? "Pick a session." : "Pick an agent to see its sessions."));
     return;
   }
-  const t = state.thresholds;
   box.replaceChildren(
     el("div", { class: "chart-title" },
       el("span", { class: "t" }, `Risk per step, ${session.id}`),
-      el("span", { class: "s" }, `${agent.id} · peak ${fmt(session.risk)} · log ≥ ${fmt(t.log)}, review ≥ ${fmt(t.review)}, pause ≥ ${fmt(t.pause)}`)),
+      el("span", { class: "s" }, `${agent.id} · peak risk ${fmt(session.risk)}`)),
+    el("div", { class: "dollars" },
+      ...[["At stake if unsafe", usd(session.atStake)], ["P(unsafe)", `${Math.round(session.pUnsafe * 100)}%`],
+          ["Expected loss", usd(session.expected)], ["Held by a pause", usd(session.held)]]
+        .map(([label, value]) => el("div", {}, el("div", { class: "label" }, label), el("div", { class: "value num" }, value)))),
+    session.flags.length ? el("div", { class: "flags" }, "Broken controls: ", session.flags.join(", ")) : null,
     el("div", { class: "key" }, ...ORDER.map(chip)),
     chart(session.steps),
     stepsTable(session.steps),
@@ -392,6 +418,7 @@ function chart(steps) {
       el("div", {}, el("b", {}, `Step ${st.step} · ${st.action}`)),
       el("div", { class: "k num" }, `surprise ${fmt(st.surprise)} × severity ${fmt(st.severity)}`),
       st.expected && st.expected !== st.action ? el("div", { class: "k" }, `model expected ${st.expected}`) : null,
+      el("div", { class: "k num" }, `${usd(st.loss_if_harmful_usd)} at stake this step · session so far ${usd(st.at_stake_usd)}`),
       el("div", { class: "reason" }, st.reason),
     );
     tip.style.display = "block";
@@ -422,8 +449,8 @@ function chart(steps) {
 }
 
 function stepsTable(steps) {
-  const head = ["Step", "Action", "Model expected", "Surprise", "Severity", "Risk", "Decision", "Reason"];
-  const numeric = new Set(["Step", "Surprise", "Severity", "Risk"]);
+  const head = ["Step", "Action", "Model expected", "Surprise", "Severity", "Risk", "Decision", "At stake", "Reason"];
+  const numeric = new Set(["Step", "Surprise", "Severity", "Risk", "At stake"]);
   return el("div", { class: "table-wrap" }, el("table", {},
     el("thead", {}, el("tr", {}, ...head.map((h) => el("th", { class: numeric.has(h) ? "n" : "" }, h)))),
     el("tbody", {}, ...steps.map((st) => el("tr", { class: state.fresh.has(key(st)) ? "fresh" : "" },
@@ -434,6 +461,7 @@ function stepsTable(steps) {
       el("td", { class: "n" }, fmt(st.severity)),
       el("td", { class: "n" }, el("b", {}, fmt(st.risk))),
       el("td", {}, chip(st.decision)),
+      el("td", { class: "n" }, st.loss_if_harmful_usd ? usd(st.loss_if_harmful_usd) : "–"),
       el("td", { class: "reason" }, st.reason),
     ))),
   ));
@@ -450,7 +478,8 @@ function renderAlerts() {
       class: "row alert" + (state.fresh.has(key(r)) ? " fresh" : ""),
       onclick: () => select(r.agent_id, r.session_id),
     },
-    el("div", { class: "top" }, chip(r.decision), el("span", { class: "sub num" }, `risk ${fmt(r.risk)}`)),
+    el("div", { class: "top" }, chip(r.decision),
+      el("span", { class: "sub num" }, `risk ${fmt(r.risk)}${r.loss_if_harmful_usd ? ` · ${usd(r.loss_if_harmful_usd)} at stake` : ""}`)),
     el("div", { class: "what" }, el("b", {}, r.agent_id), ` · ${r.session_id} · step ${r.step} · ${r.action}`),
     el("div", { class: "why" }, r.reason),
   )));

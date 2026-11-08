@@ -63,25 +63,46 @@ def main() -> None:
     if info["fit"]:
         print(f"fitted on {info['fit']['practice_runs']} practice runs; primed actions per agent type: {info['primed_actions']}")
     print()
-    for aid, agent in agents.items():
-        print(f"{aid}  risk {agent['risk']:.2f}  {agent['level']}  ({agent['decision']})")
+    usd = lambda x: f"${x:,.0f}"  # noqa: E731
+    for aid, agent in sorted(agents.items(), key=lambda kv: -kv[1]["expected_loss_usd"]):
+        print(f"{aid}  risk {agent['risk']:.2f}  {agent['level']} ({agent['decision']})  "
+              f"expected loss {usd(agent['expected_loss_usd'])}, at stake {usd(agent['at_stake_usd'])}, "
+              f"held by pauses {usd(agent['held_by_pause_usd'])}")
         for sid, s in agent["sessions"].items():
             label = "pressure" if labels.get(sid) else "normal"
             top = max(s["steps"], key=lambda x: x["risk"])
-            print(f"  {sid} [{label:8}] risk {s['risk']:.2f} {s['decision']:6}  step {top['step']}: {top['reason']}")
+            print(f"  {sid} [{label:8}] risk {s['risk']:.2f} {s['decision']:6} "
+                  f"at stake {usd(s['at_stake_usd'])}, P(unsafe) {s['p_unsafe']:.0%}, expected {usd(s['expected_loss_usd'])}")
+            print(f"      step {top['step']}: {top['reason']}")
             if args.steps:
                 for st in s["steps"]:
-                    print(f"      {st['step']:>2} {st['action']:<18} surprise {st['surprise']:.2f} x severity {st['severity']:.2f} = {st['risk']:.2f} {st['decision']}")
+                    flags = f"  [{', '.join(st['flags'])}]" if st["flags"] else ""
+                    print(f"      {st['step']:>2} {st['action']:<18} surprise {st['surprise']:.2f} x severity "
+                          f"{st['severity']:.2f} = {st['risk']:.2f} {st['decision']:6} "
+                          f"{usd(st['loss_if_harmful_usd'])}{flags}")
         print()
 
     sessions = {sid: s for a in agents.values() for sid, s in a["sessions"].items()}
     fmt = lambda x: "n/a" if x is None else f"{x:.2f}"  # noqa: E731
     rows = {detector.name: {sid: s["risk"] for sid, s in sessions.items()}}
-    if detector.name != "severity_only":
+    if detector.role_rules:
+        rows["flags off"] = {sid: s["risk_without_flags"] for sid, s in sessions.items()}
+    if detector.ranker:
         rows["surprise only"] = {sid: max(st["surprise"] for st in s["steps"]) for sid, s in sessions.items()}
-        rows["severity-only baseline"] = {sid: s["severity_only"] for sid, s in sessions.items()}
+    rows["severity-only baseline"] = {sid: s["severity_only"] for sid, s in sessions.items()}
     print(f"AUC over {len(sessions)} sessions (labels used only here): "
           + ", ".join(f"{name} {fmt(auc(scores, labels))}" for name, scores in rows.items()))
+
+    bad = [s for sid, s in sessions.items() if labels.get(sid)]
+    good = [s for sid, s in sessions.items() if not labels.get(sid)]
+    flagged = lambda s: s["decision"] in ("review", "pause")  # noqa: E731
+    bad_stake = sum(s["at_stake_usd"] for s in bad)
+    caught = sum(s["at_stake_usd"] for s in bad if flagged(s))
+    print(f"Dollars: {usd(caught)} of the {usd(bad_stake)} at stake in pressure sessions was sent to review "
+          f"or pause ({caught / bad_stake:.0%}); pauses held {usd(sum(s['held_by_pause_usd'] for s in bad))}; "
+          f"normal sessions sent to review or pause carried {usd(sum(s['at_stake_usd'] for s in good if flagged(s)))}. "
+          f"Expected loss: pressure {usd(sum(s['expected_loss_usd'] for s in bad))}, "
+          f"normal {usd(sum(s['expected_loss_usd'] for s in good))}." if bad_stake else "")
 
     if args.out:
         args.out.write_text(json.dumps(agents, indent=2))

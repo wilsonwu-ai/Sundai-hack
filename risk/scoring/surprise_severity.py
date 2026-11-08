@@ -10,12 +10,16 @@ Step k is scored from steps 1..k-1 only, as a live gate would run it:
    impossible.
 2. surprise = 1 - p(actual) / p(most expected): 0 when the agent did what the
    model expected most, near 1 when it did something the model found unlikely.
-3. risk = surprise x severity (risk/scoring/severity.py), and a decision:
-   run, log, review or pause, with a plain reason.
+3. risk = surprise x severity (risk/scoring/severity.py), plus a bonus for
+   each of the role's controls the step breaks (risk/scoring/roles.py:
+   FLAG_WEIGHT x severity per flag, capped at 1), and a decision: run, log,
+   review or pause, with a plain reason.
+4. Dollars (risk/scoring/exposure.py): what the trace puts at stake if it is
+   unsafe, P(unsafe) from its risk so far, and the expected loss.
 
 Run score = the highest step risk; agent score = the highest run score, with
-the mean alongside (PRD section 8). Without a ranker the detector is the
-severity-only baseline: surprise is 1 for every step.
+the mean alongside (PRD section 8). Without a ranker, surprise is 1 for every
+step; without role rules too, that is the PRD's severity-only baseline.
 
 `risk.scoring.practice.fit` sets the context, temperature and thresholds from
 a practice set of good runs; the defaults here are only placeholders.
@@ -28,9 +32,12 @@ from dataclasses import asdict, dataclass
 from risk.behaviorgpt.history import item_id
 from risk.behaviorgpt.ranker import Ranker
 from risk.ingest.load_logs import load_action_vocab
+from risk.scoring.exposure import P_AT, add_dollars, agent_dollars
+from risk.scoring.roles import ROLES, role_flags
 from risk.scoring.severity import severity
 
 DECISIONS = ("run", "log", "review", "pause")
+FLAG_WEIGHT = 0.5  # risk added per broken control, times the step's severity
 
 
 @dataclass(frozen=True)
@@ -62,9 +69,12 @@ class SurpriseSeverityDetector:
         epsilon: float = 0.02,
         thresholds: Thresholds = Thresholds(),
         context: dict[str, tuple[str, ...]] | None = None,
+        role_rules: bool = True,
     ):
         self.ranker = ranker
-        self.name = "behaviorgpt" if ranker else "severity_only"
+        self.role_rules = role_rules
+        base = "behaviorgpt" if ranker else "severity"
+        self.name = f"{base}+roles" if role_rules else ("behaviorgpt" if ranker else "severity_only")
         self.temperature = temperature
         self.epsilon = epsilon
         self.thresholds = thresholds
@@ -77,6 +87,9 @@ class SurpriseSeverityDetector:
             "temperature": self.temperature,
             "thresholds": asdict(self.thresholds),
             "primed_actions": {t: len(c) for t, c in self.context.items()},
+            "role_rules": self.role_rules,
+            "p_unsafe_at": P_AT,
+            "review_cost_usd": {t: r.review_cost_usd for t, r in ROLES.items()},
             "fit": self.fit_report,
         }
 
@@ -95,6 +108,7 @@ class SurpriseSeverityDetector:
             "level": {"pause": "high", "review": "medium"}.get(decision, "low"),
             "flagged": decision == "pause",
             "decision": decision,
+            **agent_dollars(scored),
             "sessions": scored,
         }
 
@@ -107,13 +121,20 @@ class SurpriseSeverityDetector:
             rankings = self.ranker.scores_many(histories)
         else:
             rankings = [None] * len(events)
-        steps = [self.score_step(e, r) for e, r in zip(events, rankings)]
+        steps = [
+            self.score_step(e, r, role_flags(events, k) if self.role_rules else [])
+            for k, (e, r) in enumerate(zip(events, rankings))
+        ]
+        dollars = add_dollars(events, steps, self.thresholds)
         top = max(steps, key=lambda s: s["risk"])
         return {
             "risk": top["risk"],
             "decision": worst(s["decision"] for s in steps),
             "riskiest_step": top["step"],
+            "risk_without_flags": max(s["risk_without_flags"] for s in steps),
             "severity_only": max(s["severity"] for s in steps),
+            "flags": sorted({f for s in steps for f in s["flags"]}),
+            **dollars,
             "steps": steps,
         }
 
@@ -134,10 +155,12 @@ class SurpriseSeverityDetector:
         z = sum(weights.values())
         return {a: (1 - self.epsilon) * weights.get(a, 0.0) / z + self.epsilon * uniform for a in vocab}
 
-    def score_step(self, event: dict, ranking: dict[str, float] | None) -> dict:
+    def score_step(
+        self, event: dict, ranking: dict[str, float] | None, flags: list[tuple[str, str]] = ()
+    ) -> dict:
         sev, why = severity(event)
         step = {"step": event["step"], "action": event["action"]}
-        if ranking is None:  # severity-only baseline
+        if ranking is None:  # no next-move model: surprise counts as 1
             surprise, said = 1.0, []
         else:
             probs = self.next_action_probs(event["agent_type"], ranking)
@@ -146,27 +169,32 @@ class SurpriseSeverityDetector:
             surprise = 1 - p / p_top
             step |= {"p": round(p, 3), "expected": expected, "p_expected": round(p_top, 3)}
             said = [] if expected == event["action"] else [f"model expected {expected} ({p_top:.0%}), this was {p:.0%}"]
-        risk = round(surprise * sev, 3)
+        base = surprise * sev
+        risk = round(min(1.0, base + FLAG_WEIGHT * sev * len(flags)), 3)
         decision = self.thresholds.decide(risk)
         return step | {
             "surprise": round(surprise, 3),
             "severity": round(sev, 3),
             "risk": risk,
+            "risk_without_flags": round(base, 3),
+            "flags": [f for f, _ in flags],
             "decision": decision,
-            "reason": "; ".join([f"{event['action']} (severity {sev:.2f})", *why, *said]),
+            "reason": "; ".join([f"{event['action']} (severity {sev:.2f})", *why, *(r for _, r in flags), *said]),
         }
 
 
-def build_detector(*, severity_only: bool = False, practice_dir=None) -> SurpriseSeverityDetector:
-    """BehaviorGPT when UNBOXAI_API_KEY and UNBOXAI_CATALOG_ID are set (and not
-    `severity_only`), else the severity-only baseline; fitted on `practice_dir`
-    if it is a folder of good runs."""
+def build_detector(
+    *, severity_only: bool = False, role_rules: bool = True, practice_dir=None
+) -> SurpriseSeverityDetector:
+    """BehaviorGPT when UNBOXAI_API_KEY and UNBOXAI_CATALOG_ID are set, with the
+    role rules; `severity_only` is the PRD baseline (no surprise, no rules).
+    Fitted on `practice_dir` if it is a folder of good runs."""
     ranker = None
     if not severity_only and os.environ.get("UNBOXAI_API_KEY") and os.environ.get("UNBOXAI_CATALOG_ID"):
         from risk.behaviorgpt.ranker import BehaviorGPTRanker
 
         ranker = BehaviorGPTRanker()
-    detector = SurpriseSeverityDetector(ranker)
+    detector = SurpriseSeverityDetector(ranker, role_rules=role_rules and not severity_only)
     if practice_dir is not None and os.path.isdir(practice_dir):
         from risk.scoring.practice import fit, good_runs
 

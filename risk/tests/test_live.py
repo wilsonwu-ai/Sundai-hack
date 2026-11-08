@@ -53,7 +53,7 @@ def test_scores_catch_up_after_a_restart(tmp_path):
     client.post("/events", json=read_events())
     live.drain()
 
-    app = create_app(tmp_path / "m.sqlite", detector=SurpriseSeverityDetector(None))  # e.g. a new detector
+    app = create_app(tmp_path / "m.sqlite", detector=SurpriseSeverityDetector(None, role_rules=False))  # a new detector
     app.state.live.drain()
     steps = TestClient(app).get("/live/steps").json()["steps"]
     assert len(steps) == 33 and {s["detector"] for s in steps} == {"severity_only"}
