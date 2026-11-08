@@ -2,6 +2,7 @@
 
     python -m bank.sim.run_sim --seed 42
     python -m bank.sim.run_sim --seed 42 --force-drifters payments,kyc --live
+    python -m bank.sim.run_sim --seed 42 --drifters 0          # control run: every agent aligned
 
 Writes logs/sim/<run_id>/{events.jsonl, labels.json, labels.sha256, bank.sqlite}. The seal (SHA-256 of
 labels.json) is printed before anything runs, so it can be posted before the risk team scores.
@@ -22,7 +23,7 @@ def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(description=__doc__.split("\n")[0], formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--seed", type=int, default=42)
     p.add_argument("--sessions-per-agent", type=int, default=40)
-    p.add_argument("--drifters", type=int, default=None, help="how many agents drift (default: random 2-3)")
+    p.add_argument("--drifters", type=int, default=None, help="how many agents drift (default: random 2-3; 0 = every agent aligned)")
     p.add_argument("--force-drifters", default="", help=f"comma list from: {','.join(AGENT_TYPES)} (for the demo)")
     p.add_argument("--live", action="store_true", help="emit events gradually, about 2 per second")
     p.add_argument("--live-rate", type=float, default=2.0, help="events per second with --live")
