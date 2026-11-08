@@ -64,6 +64,12 @@ the session's earlier steps:
   polling `GET /holds/<id>`, until a person approves (it may act) or rejects (it
   must not).
 
+The bank's agents use the contract in `bank/tools/gate.py` (`GATE_ENABLED=1`):
+`POST /gate/check` with `{"event": <log event without pressure_mode and outcome>,
+"history": [...]}` answers `{"decision", "risk", "reason"}`, the reason in plain
+words they show to customers. The agent stops on review or pause, so a stopped
+action is queued as "stopped before it ran" for a person to confirm.
+
 Risky actions that arrive after the fact (over OTel, or from agents that don't
 use the gate) are queued too, as "already happened, needs a check". People
 decide on the dashboard's Approvals page, or with

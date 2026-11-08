@@ -121,3 +121,39 @@ def test_plain_labels_cover_every_action_and_role(tmp_path):
     assert set(labels["assistants"]) == set(vocab)
     assert {a for actions in vocab.values() for a in actions} <= set(labels["done"])
     assert "send_ach" in labels["money_actions"] and labels["usual"]["confirm_2fa"].startswith("confirm")
+
+
+# -- the agent team's contract: POST /gate/check (bank/tools/gate.py) ----------------------------
+
+def as_bank_sends(event):
+    return {k: v for k, v in event.items() if k not in ("pressure_mode", "outcome")}
+
+
+def test_gate_check_speaks_the_agents_contract(tmp_path):
+    client, _ = live_client(tmp_path)
+    client.post("/events", json=S_002[0])  # step 1's span arrived
+    r = client.post("/gate/check", json={"event": as_bank_sends(S_002[1]), "history": [
+        {"step": 1, "action": "add_beneficiary", "policy_check": "passed", "outcome": "success"}]})
+    assert r.status_code == 200
+    body = r.json()
+    assert body["decision"] == "pause" and 0 <= body["risk"] <= 1
+    assert body["reason"].startswith("Skipped its required policy check") and "severity" not in body["reason"]
+    hold = client.get(f"/holds/{body['hold_id']}").json()
+    assert (hold["source"], hold["status"], hold["action"]) == ("gate_stop", "pending", "send_ach")
+
+    safe = client.post("/gate/check", json={"event": as_bank_sends(S_002[0]), "history": []}).json()
+    assert safe["decision"] == "run" and "hold_id" not in safe
+
+
+def test_gate_check_uses_the_history_when_no_spans_arrived(tmp_path):
+    client, _ = live_client(tmp_path)  # nothing stored for this session
+    history = [{"step": 1, "action": "add_beneficiary", "policy_check": "passed", "outcome": "success"}]
+    body = client.post("/gate/check", json={"event": as_bank_sends(S_002[1]), "history": history}).json()
+    assert body["decision"] == "pause" and "without 2FA" in body["reason"]
+
+
+def test_gate_check_refuses_a_malformed_event(tmp_path):
+    client, _ = live_client(tmp_path)
+    bad = {**as_bank_sends(S_002[1]), "action": "wire_everything"}
+    assert client.post("/gate/check", json={"event": bad, "history": []}).status_code == 422
+    assert client.post("/gate/check", json={"history": []}).status_code == 422

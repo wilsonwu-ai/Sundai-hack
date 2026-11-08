@@ -169,7 +169,7 @@ function orgSummaries() {
       const decision = worst(steps.map((s) => s.decision));
       return { agent: steps[0].agent_id, decision, expected: last.expected_loss_usd,
         held: (fp < 0 ? 0 : steps.slice(fp).reduce((n, s) => n + s.loss_if_harmful_usd, 0))
-          + own.filter((h) => h.source === "gate" && h.status !== "approved" && !ran.has(h.step)).reduce((n, h) => n + h.loss_if_harmful_usd, 0),
+          + own.filter((h) => ((h.source === "gate" && h.status !== "approved") || h.source === "gate_stop") && !ran.has(h.step)).reduce((n, h) => n + h.loss_if_harmful_usd, 0),
         needs: needsAttention(decision) || own.some((h) => h.status === "pending") };
     });
     return { id, sessions: list, agents: new Set(list.map((t) => t.agent)).size, decision: worst(list.map((t) => t.decision)),
@@ -221,7 +221,7 @@ function buildModel() {
       // actions the gate held never ran: they wait for a person, or were stopped
       const ran = new Set(steps.map((s) => s.step));
       t.holds = holdsBySession.get(`${t.tenant}|${a.id}|${t.id}`) || [];
-      t.proposed = t.holds.filter((h) => h.source === "gate" && h.status !== "approved" && !ran.has(h.step));
+      t.proposed = t.holds.filter((h) => ((h.source === "gate" && h.status !== "approved") || h.source === "gate_stop") && !ran.has(h.step));
       t.waiting = t.holds.filter((h) => h.status === "pending").length;
       t.held += t.proposed.reduce((n, h) => n + h.loss_if_harmful_usd, 0);
       t.needs = needsAttention(t.decision) || t.waiting > 0;
@@ -402,6 +402,14 @@ function stepLine(steps, onPick) {
 }
 
 // -- approvals ------------------------------------------------------------------
+// gate: the agent waits for the answer; gate_stop: the agent's own gate stopped it
+// and moved on; observed: it already happened
+const HOLD_KIND = {
+  gate:      { pill: "Waiting for approval", cls: "wait", yes: "Approve", no: "Reject", yesDone: "Approved", noDone: "Rejected" },
+  gate_stop: { pill: "Stopped before it ran · needs a check", cls: "review", yes: "Should have run", no: "Right to stop", yesDone: "Marked: should have run", noDone: "Confirmed: right to stop" },
+  observed:  { pill: "Already happened · needs a check", cls: "review", yes: "Looks fine", no: "Escalate", yesDone: "Marked as fine", noDone: "Escalated" },
+};
+const kindOf = (h) => HOLD_KIND[h.source] || HOLD_KIND.observed;
 async function decide(h, status, button) {
   if (!S.reviewer.trim()) {
     const input = document.getElementById("reviewer");
@@ -426,21 +434,23 @@ async function decide(h, status, button) {
 function holdTitle(h) {
   const params = h.event.params || {};
   const amount = typeof params.amount_usd === "number" ? params.amount_usd : null;
-  const verb = h.source === "gate" ? wantText(h.action, amount) : doneText(h.action, amount).replace(/^./, (c) => c.toLowerCase());
+  const verb = h.source === "gate" ? wantText(h.action, amount)
+    : h.source === "gate_stop" ? wantText(h.action, amount).replace(/^wants/, "wanted")
+    : doneText(h.action, amount).replace(/^./, (c) => c.toLowerCase());
   return `${assistant(h.agent_id)} ${verb}`;
 }
 
 function approvalCard(h, multi) {
+  const kind = kindOf(h);
   const gate = h.source === "gate";
   const decided = h.status !== "pending";
   const params = h.event.params || {};
-  const yes = gate ? "Approve" : "Looks fine";
-  const no = gate ? "Reject" : "Escalate";
-  const outcome = h.status === "approved" ? (gate ? "Approved" : "Marked as fine") : (gate ? "Rejected" : "Escalated");
+  const yes = kind.yes, no = kind.no;
+  const outcome = h.status === "approved" ? kind.yesDone : kind.noDone;
   return el("article", { class: `card approval${gate ? "" : " observed"}${decided ? " decided" : ""}` },
     el("div", {},
       el("div", { class: "top-line" },
-        decided ? pill(h.status === "approved" ? "run" : "pause", outcome) : gate ? el("span", { class: "pill wait" }, "Waiting for approval") : el("span", { class: "pill review" }, icon("review"), "Already happened · needs a check"),
+        decided ? pill(h.status === "approved" ? "run" : "pause", outcome) : el("span", { class: `pill ${kind.cls}` }, kind.cls === "review" ? icon("review") : null, kind.pill),
         multi ? el("span", {}, orgLabel(h.tenant)) : null,
         el("span", {}, when(h.created_at))),
       el("h3", {}, holdTitle(h)),
@@ -622,7 +632,7 @@ function timelineItem(st, event, t, hold) {
   const holdLine = hold ? el("div", { class: "held" },
     hold.status === "pending"
       ? [el("span", { class: "pill wait" }, hold.source === "gate" ? "Waiting for approval" : "Waiting for a check"), el("a", { href: "#/approvals", style: "text-decoration:underline" }, "Open approvals")]
-      : [pill(hold.status === "approved" ? "run" : "pause", hold.status === "approved" ? (hold.source === "gate" ? "Approved" : "Marked as fine") : (hold.source === "gate" ? "Rejected" : "Escalated")),
+      : [pill(hold.status === "approved" ? "run" : "pause", hold.status === "approved" ? kindOf(hold).yesDone : kindOf(hold).noDone),
          `by ${hold.reviewer} · ${when(hold.decided_at)}${hold.note ? ` · “${hold.note}”` : ""}`]) : null;
   return el("div", { class: `tl flagged ${st.decision}`, id: `step-${st.step}` },
     el("span", { class: "dot", style: `background:${LEVELS[st.decision].color}` }),
@@ -638,16 +648,18 @@ function proposedItem(h) {
   const params = h.event.params || {};
   const amount = typeof params.amount_usd === "number" ? params.amount_usd : null;
   const pending = h.status === "pending";
+  const stopped = h.source === "gate_stop";
+  const kind = kindOf(h);
   return el("div", { class: `tl flagged ${h.decision}`, id: `step-${h.step}` },
     el("span", { class: "dot", style: "background:var(--accent)" }),
     el("div", { class: "box" },
-      el("div", { class: "line" }, el("span", { class: "what" }, sentence(wantText(h.action, amount))), el("span", { class: "when" }, time(h.created_at)),
-        pending ? el("span", { class: "pill wait" }, "Paused · waiting for approval") : pill("pause", "Stopped")),
+      el("div", { class: "line" }, el("span", { class: "what" }, sentence(wantText(h.action, amount).replace(/^wants/, stopped ? "wanted" : "wants"))), el("span", { class: "when" }, time(h.created_at)),
+        pending && !stopped ? el("span", { class: "pill wait" }, "Paused · waiting for approval") : pill("pause", "Stopped")),
       el("ul", { class: "reasons" }, plainReasons(h.reason).map((r) => el("li", {}, r))),
       h.event.reasoning_summary ? el("div", { class: "note" }, `The assistant said: “${h.event.reasoning_summary}”`) : null,
-      el("div", { class: "held" }, el("b", { class: "num" }, usd(h.loss_if_harmful_usd)), pending ? "is held until a person decides" : "never left the bank"),
-      pending ? el("div", { class: "held" }, el("a", { class: "btn primary", href: "#/approvals" }, "Review it"))
-        : el("div", { class: "held" }, `Rejected by ${h.reviewer} · ${when(h.decided_at)}${h.note ? ` · “${h.note}”` : ""}`)));
+      el("div", { class: "held" }, el("b", { class: "num" }, usd(h.loss_if_harmful_usd)), pending && !stopped ? "is held until a person decides" : "never left the bank"),
+      pending ? el("div", { class: "held" }, el("a", { class: "btn primary", href: "#/approvals" }, stopped ? "Check it" : "Review it"))
+        : el("div", { class: "held" }, `${h.status === "approved" ? kind.yesDone : kind.noDone} by ${h.reviewer} · ${when(h.decided_at)}${h.note ? ` · “${h.note}”` : ""}`)));
 }
 
 function sessionPage(M, agentId, sessionId, q) {
@@ -810,7 +822,7 @@ async function pollHolds(once) {
       if (announce) {
         for (const h of holds) {
           if (seen.has(h.id) || h.status !== "pending" || (S.tenant !== "all" && h.tenant !== S.tenant)) continue;
-          toast(el("div", {}, el("span", { class: h.source === "gate" ? "pill wait" : "pill review" }, h.source === "gate" ? "Waiting for approval" : "Needs a check"),
+          toast(el("div", {}, el("span", { class: `pill ${kindOf(h).cls}` }, h.source === "gate" ? "Waiting for approval" : "Needs a check"),
             el("div", { style: "font-weight:700;margin-top:6px" }, holdTitle(h)),
             el("div", { class: "what" }, `${usd(h.loss_if_harmful_usd)} could be lost · ${plainReasons(h.reason)[0] || ""}`)), "#/approvals");
         }

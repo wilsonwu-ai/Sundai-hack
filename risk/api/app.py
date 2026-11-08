@@ -11,6 +11,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from risk.api.labels import labels as plain_label_map
+from risk.api.labels import plain_reason
 from risk.api.live import LiveScorer
 from risk.behaviorgpt.history import to_history
 from risk.ingest.events import check, from_span, tenant_of
@@ -37,6 +38,26 @@ EXAMPLE_EVENT = {
     "pressure_mode": False,
     "reasoning_summary": "Customer asked to add their landlord as a payee for rent.",
 }
+
+
+class GateCheck(BaseModel):
+    event: dict[str, Any]
+    history: list[dict[str, Any]] = Field(default_factory=list)
+
+
+def from_history(history: list[dict], proposed: dict) -> list[dict]:
+    """Earlier steps rebuilt from the gate call's short history: enough for the
+    model's next-step prediction and the role controls that look at actions."""
+    out = []
+    for h in sorted((h for h in history if isinstance(h, dict) and "action" in h and "step" in h), key=lambda h: h["step"]):
+        if h["step"] >= proposed["step"]:
+            continue
+        out.append({
+            **{k: proposed[k] for k in ("agent_id", "agent_type", "session_id", "timestamp", "auth_level")},
+            "step": h["step"], "action": h["action"], "params": {}, "reasoning_summary": "",
+            "policy_check": h.get("policy_check", "passed"), "outcome": h.get("outcome", "success"),
+        })
+    return out
 
 
 class Decision(BaseModel):
@@ -226,6 +247,31 @@ def create_app(db_path: str | Path, detector: Detector | None = None) -> FastAPI
             response.status_code = 202
         return {**verdict, "allowed": hold["status"] == "approved", "hold_id": hold["id"],
                 "status": hold["status"], "poll": f"/holds/{hold['id']}"}
+
+    @app.post("/gate/check", tags=["gate"])
+    def gate_check(body: GateCheck, tenant: str = Query(DEFAULT_TENANT, min_length=1)) -> dict:
+        """The agent team's gate contract (bank/tools/gate.py): the proposed event
+        without `pressure_mode` and `outcome`, plus the session's earlier steps.
+        Answers `{decision, risk, reason}` with a plain-language reason; the agent
+        stops on review or pause. A stopped action is queued for a person to
+        confirm ("stopped before it ran")."""
+        # the scorer reads neither field; the schema check wants them present
+        try:
+            proposed = check({"pressure_mode": False, "outcome": "success", **body.event}, "proposed action")
+        except LogValidationError as exc:
+            raise HTTPException(422, str(exc)) from None
+        if not hasattr(detector, "score_session"):
+            return {"decision": "run", "risk": 0.0, "reason": "No risk model is configured"}
+        prior = [
+            e for e in store.events(tenant=tenant, agent_id=proposed["agent_id"], session_id=proposed["session_id"])
+            if e["step"] < proposed["step"]
+        ] or from_history(body.history, proposed)  # its spans may not have arrived (or OTel is off)
+        step = detector.score_session([*prior, proposed])["steps"][-1]
+        answer = {"decision": step["decision"], "risk": step["risk"], "reason": plain_reason(step["reason"])}
+        if step["decision"] in ("review", "pause"):
+            hold, _ = store.hold(proposed, step, source="gate_stop", tenant=tenant)
+            answer["hold_id"] = hold["id"]
+        return answer
 
     @app.get("/holds", tags=["gate"])
     def list_holds(
