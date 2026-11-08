@@ -1,0 +1,117 @@
+{
+  "sample": false,
+  "synthetic": true,
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "sessions_per_seed": 1500,
+  "rows": [
+    {
+      "name": "N0, routes only",
+      "group": "N0",
+      "order": 2,
+      "auc": 0.9674,
+      "catch_rate": 0.9177,
+      "early_warning": 0.7221,
+      "false_alarm_rate": 0.0427,
+      "aggregator_false_alarm_rate": 0.0,
+      "lead_time_requests": 19.8882
+    },
+    {
+      "name": "N1, + status and size",
+      "group": "N1",
+      "order": 2,
+      "auc": 0.9835,
+      "catch_rate": 0.9196,
+      "early_warning": 0.8507,
+      "false_alarm_rate": 0.0427,
+      "aggregator_false_alarm_rate": 0.007,
+      "lead_time_requests": 29.0514
+    },
+    {
+      "name": "N2, + gateway context",
+      "group": "N2",
+      "order": 2,
+      "auc": 0.9831,
+      "catch_rate": 0.9855,
+      "early_warning": 0.8688,
+      "false_alarm_rate": 0.0686,
+      "aggregator_false_alarm_rate": 0.0,
+      "lead_time_requests": 26.6814
+    },
+    {
+      "name": "N3, Markov order 1",
+      "group": "N3",
+      "order": 1,
+      "auc": 0.9906,
+      "catch_rate": 0.994,
+      "early_warning": 0.8738,
+      "false_alarm_rate": 0.071,
+      "aggregator_false_alarm_rate": 0.0,
+      "lead_time_requests": 27.4247
+    },
+    {
+      "name": "N3, + fan-out and payload flags",
+      "group": "N3",
+      "order": 2,
+      "auc": 0.9903,
+      "catch_rate": 0.994,
+      "early_warning": 0.8728,
+      "false_alarm_rate": 0.0661,
+      "aggregator_false_alarm_rate": 0.0,
+      "lead_time_requests": 25.5746
+    },
+    {
+      "name": "N3, Markov order 3",
+      "group": "N3",
+      "order": 3,
+      "auc": 0.99,
+      "catch_rate": 0.994,
+      "early_warning": 0.8728,
+      "false_alarm_rate": 0.0594,
+      "aggregator_false_alarm_rate": 0.0,
+      "lead_time_requests": 25.513
+    },
+    {
+      "name": "Rules only (static thresholds)",
+      "group": null,
+      "order": null,
+      "auc": 0.5171,
+      "catch_rate": 0.0682,
+      "early_warning": 0.0682,
+      "false_alarm_rate": 0.0034,
+      "aggregator_false_alarm_rate": 0.0193,
+      "lead_time_requests": 154.2129
+    },
+    {
+      "name": "Severity only",
+      "group": null,
+      "order": null,
+      "auc": 0.7219,
+      "catch_rate": 0.218,
+      "early_warning": 0.3179,
+      "false_alarm_rate": 0.0,
+      "aggregator_false_alarm_rate": 0.0,
+      "lead_time_requests": 1.5015
+    }
+  ],
+  "triage": {
+    "detector": "N3_o2",
+    "it_pages_per_1000": 171.19056948529982,
+    "baseline_pages_per_1000": 256.87932880422096,
+    "pages_avoided_per_1000": 85.7,
+    "dollars_stopped_usd": 31473810.288,
+    "dollars_missed_usd": 2358.318
+  },
+  "agent10": {
+    "agent_auc": 1.0,
+    "bad_harmful_steps_paused": {
+      "k": 221,
+      "n": 221
+    }
+  }
+}

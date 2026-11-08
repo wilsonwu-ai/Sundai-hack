@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-labelledby="fd-title fd-desc" font-family="'Public Sans','Benton Sans','Helvetica Neue',system-ui,-apple-system,'Segoe UI',Arial,sans-serif">
-<title id="fd-title">Fleet risk by category: 19% of our agents are risky: 12 of 63.</title><desc id="fd-desc">One row per category and one dot per agent; risky agents are copper. 19% of our agents are risky: 12 of 63.. Worst agent: kyc-17.</desc>
+<title id="fd-title">Fleet risk by category: 18% of our agents are risky: 12 of 68.</title><desc id="fd-desc">One row per category and one dot per agent; risky agents are copper. 18% of our agents are risky: 12 of 68.. Worst agent: kyc-17.</desc>
 <defs><pattern id="hatch" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="12" height="12" fill="#FFFFFF"/><rect width="4" height="12" fill="#E6ECF3"/></pattern></defs>
 <rect width="1920" height="1080" fill="#F5F7FA"/>
 <g id="head" data-beat="0">
-<text x="64" y="88" font-size="52" font-weight="800" fill="#0A2942" text-anchor="start">19% of our agents are risky: 12 of 63.</text>
+<text x="64" y="88" font-size="52" font-weight="800" fill="#0A2942" text-anchor="start">18% of our agents are risky: 12 of 68.</text>
 <text x="64" y="140" font-size="28" font-weight="500" fill="#4C5A6B" text-anchor="start">One row per category, one dot per agent. Highest risky share: collections, 38%.</text>
 </g>
 <g id="rows" data-beat="1" data-enter="rise">
@@ -24,11 +24,15 @@
 <text x="878" y="240.0" font-size="28" font-weight="500" fill="#4C5A6B" text-anchor="start">2 of 10</text>
 </g>
 <g id="row-netsec">
-<rect x="64" y="268" width="1116" height="60" rx="10" fill="#FFFFFF" stroke="#77859A" stroke-width="2" stroke-dasharray="8 6"/>
+<rect x="64" y="268" width="1116" height="60" rx="10" fill="#FFFFFF" stroke="#D5DCE5" stroke-width="2"/>
 <text x="84" y="308.0" font-size="28" font-weight="700" fill="#0A2942" text-anchor="start">netsec</text>
-<text x="300" y="308.0" font-size="28" font-weight="500" fill="#4C5A6B" text-anchor="start" font-style="italic">no logs yet</text>
-<text x="790" y="308.0" font-size="28" font-weight="700" fill="#4C5A6B" text-anchor="start">n/a</text>
-<rect x="1000" y="278.0" width="164" height="40" rx="20" fill="#FFFFFF" stroke="#77859A" stroke-width="2" stroke-dasharray="6 5"/><text x="1082" y="308.0" font-size="28" font-weight="600" fill="#4C5A6B" text-anchor="middle">no logs</text>
+<circle cx="324.0" cy="298.0" r="16" fill="#0A2942"><title>netsec-16: paused 2 of 115 sessions</title></circle>
+<circle cx="370.0" cy="298.0" r="16" fill="#0A2942"><title>netsec-23: paused 2 of 122 sessions</title></circle>
+<circle cx="416.0" cy="298.0" r="16" fill="#0A2942"><title>netsec-25: paused 5 of 108 sessions</title></circle>
+<circle cx="462.0" cy="298.0" r="16" fill="#0A2942"><title>netsec-74: paused 3 of 118 sessions</title></circle>
+<circle cx="508.0" cy="298.0" r="16" fill="#0A2942"><title>netsec-83: paused 2 of 137 sessions</title></circle>
+<text x="790" y="308.0" font-size="28" font-weight="800" fill="#0A2942" text-anchor="start">0%</text>
+<text x="878" y="308.0" font-size="28" font-weight="500" fill="#4C5A6B" text-anchor="start">0 of 5</text>
 </g>
 <g id="row-support">
 <rect x="64" y="336" width="1116" height="60" rx="10" fill="url(#hatch)" stroke="#77859A" stroke-width="2" stroke-dasharray="8 6"/>

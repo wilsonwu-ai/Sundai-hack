@@ -394,9 +394,9 @@
       "rate": 0.9178743961352657
      },
      "page_catch_rate": {
-      "k": 150,
+      "k": 124,
       "n": 207,
-      "rate": 0.7246376811594203
+      "rate": 0.5990338164251208
      },
      "early_warning": {
       "k": 152,
@@ -489,9 +489,9 @@
         "rate": 1.0
        },
        "page_catch_rate": {
-        "k": 21,
+        "k": 0,
         "n": 21,
-        "rate": 1.0
+        "rate": 0.0
        },
        "early_warning": {
         "k": 17,
@@ -504,9 +504,9 @@
         "rate": 1.0
        },
        "any_page_rate": {
-        "k": 21,
+        "k": 0,
         "n": 52,
-        "rate": 0.40384615384615385
+        "rate": 0.0
        }
       },
       "function_authz_probe": {
@@ -576,9 +576,9 @@
         "rate": 0.5555555555555556
        },
        "page_catch_rate": {
-        "k": 5,
+        "k": 0,
         "n": 9,
-        "rate": 0.5555555555555556
+        "rate": 0.0
        },
        "early_warning": {
         "k": 9,
@@ -591,9 +591,9 @@
         "rate": 0.5384615384615384
        },
        "any_page_rate": {
-        "k": 7,
+        "k": 0,
         "n": 13,
-        "rate": 0.5384615384615384
+        "rate": 0.0
        }
       },
       "scraping": {
@@ -685,15 +685,15 @@
       }
      },
      "triage": {
-      "pages_per_1000": 180.41242937853104,
+      "pages_per_1000": 151.79661016949154,
       "baseline_pages_per_1000": 237.07909604519773,
-      "pages_avoided_share": 0.23902008912613504,
+      "pages_avoided_share": 0.3597216595572289,
       "page_precision": {
-       "k": 196,
-       "n": 211,
-       "rate": 0.9289099526066351
+       "k": 168,
+       "n": 180,
+       "rate": 0.9333333333333333
       },
-      "normal_pages_per_1000": 63.559322033898304,
+      "normal_pages_per_1000": 50.847457627118644,
       "exposure_stopped_usd": 45805747.76,
       "exposure_missed_usd": 86196.25,
       "by_asset": {
@@ -728,7 +728,7 @@
        "identity": {
         "n_harmful": 30,
         "caught": 26,
-        "paged_before_harm": 26,
+        "paged_before_harm": 0,
         "stopped_usd": 105000.0,
         "missed_usd": 10000.0
        },
@@ -761,9 +761,9 @@
       "rate": 0.9226190476190477
      },
      "page_catch_rate": {
-      "k": 125,
+      "k": 105,
       "n": 168,
-      "rate": 0.7440476190476191
+      "rate": 0.625
      },
      "early_warning": {
       "k": 126,
@@ -856,9 +856,9 @@
         "rate": 1.0
        },
        "page_catch_rate": {
-        "k": 16,
+        "k": 0,
         "n": 16,
-        "rate": 1.0
+        "rate": 0.0
        },
        "early_warning": {
         "k": 15,
@@ -871,9 +871,9 @@
         "rate": 1.0
        },
        "any_page_rate": {
-        "k": 16,
+        "k": 0,
         "n": 48,
-        "rate": 0.3333333333333333
+        "rate": 0.0
        }
       },
       "function_authz_probe": {
@@ -943,9 +943,9 @@
         "rate": 0.6666666666666666
        },
        "page_catch_rate": {
-        "k": 4,
+        "k": 0,
         "n": 6,
-        "rate": 0.6666666666666666
+        "rate": 0.0
        },
        "early_warning": {
         "k": 6,
@@ -958,9 +958,9 @@
         "rate": 0.7
        },
        "any_page_rate": {
-        "k": 7,
+        "k": 0,
         "n": 10,
-        "rate": 0.7
+        "rate": 0.0
        }
       },
       "scraping": {
@@ -1052,15 +1052,15 @@
       }
      },
      "triage": {
-      "pages_per_1000": 151.9173553719008,
+      "pages_per_1000": 126.60881542699725,
       "baseline_pages_per_1000": 206.5757575757576,
-      "pages_avoided_share": 0.2645925293717579,
+      "pages_avoided_share": 0.38710709856375103,
       "page_precision": {
-       "k": 178,
-       "n": 188,
-       "rate": 0.9468085106382979
+       "k": 155,
+       "n": 162,
+       "rate": 0.9567901234567902
       },
-      "normal_pages_per_1000": 41.32231404958678,
+      "normal_pages_per_1000": 28.925619834710744,
       "exposure_stopped_usd": 32658351.75,
       "exposure_missed_usd": 60739.96,
       "by_asset": {
@@ -1095,7 +1095,7 @@
        "identity": {
         "n_harmful": 22,
         "caught": 20,
-        "paged_before_harm": 20,
+        "paged_before_harm": 0,
         "stopped_usd": 82500.0,
         "missed_usd": 5000.0
        },
@@ -1128,9 +1128,9 @@
       "rate": 0.8882978723404256
      },
      "page_catch_rate": {
-      "k": 109,
+      "k": 83,
       "n": 188,
-      "rate": 0.5797872340425532
+      "rate": 0.44148936170212766
      },
      "early_warning": {
       "k": 131,
@@ -1223,9 +1223,9 @@
         "rate": 1.0
        },
        "page_catch_rate": {
-        "k": 23,
+        "k": 0,
         "n": 23,
-        "rate": 1.0
+        "rate": 0.0
        },
        "early_warning": {
         "k": 18,
@@ -1238,9 +1238,9 @@
         "rate": 1.0
        },
        "any_page_rate": {
-        "k": 23,
+        "k": 0,
         "n": 49,
-        "rate": 0.46938775510204084
+        "rate": 0.0
        }
       },
       "function_authz_probe": {
@@ -1310,9 +1310,9 @@
         "rate": 0.42857142857142855
        },
        "page_catch_rate": {
-        "k": 3,
+        "k": 0,
         "n": 7,
-        "rate": 0.42857142857142855
+        "rate": 0.0
        },
        "early_warning": {
         "k": 7,
@@ -1325,9 +1325,9 @@
         "rate": 0.5
        },
        "any_page_rate": {
-        "k": 5,
+        "k": 0,
         "n": 10,
-        "rate": 0.5
+        "rate": 0.0
        }
       },
       "scraping": {
@@ -1419,13 +1419,13 @@
       }
      },
      "triage": {
-      "pages_per_1000": 139.9,
+      "pages_per_1000": 121.23333333333333,
       "baseline_pages_per_1000": 203.23333333333335,
-      "pages_avoided_share": 0.31162866983762505,
+      "pages_avoided_share": 0.40347711989503043,
       "page_precision": {
-       "k": 165,
-       "n": 174,
-       "rate": 0.9482758620689655
+       "k": 137,
+       "n": 146,
+       "rate": 0.9383561643835616
       },
       "normal_pages_per_1000": 37.5,
       "exposure_stopped_usd": 19789284.68,
@@ -1462,7 +1462,7 @@
        "identity": {
         "n_harmful": 30,
         "caught": 26,
-        "paged_before_harm": 26,
+        "paged_before_harm": 0,
         "stopped_usd": 110000.0,
         "missed_usd": 10000.0
        },
@@ -1495,9 +1495,9 @@
       "rate": 0.9289340101522843
      },
      "page_catch_rate": {
-      "k": 132,
+      "k": 106,
       "n": 197,
-      "rate": 0.6700507614213198
+      "rate": 0.5380710659898477
      },
      "early_warning": {
       "k": 137,
@@ -1590,9 +1590,9 @@
         "rate": 1.0
        },
        "page_catch_rate": {
-        "k": 14,
+        "k": 0,
         "n": 14,
-        "rate": 1.0
+        "rate": 0.0
        },
        "early_warning": {
         "k": 13,
@@ -1605,9 +1605,9 @@
         "rate": 1.0
        },
        "any_page_rate": {
-        "k": 14,
+        "k": 0,
         "n": 40,
-        "rate": 0.35
+        "rate": 0.0
        }
       },
       "function_authz_probe": {
@@ -1677,9 +1677,9 @@
         "rate": 0.7058823529411765
        },
        "page_catch_rate": {
-        "k": 12,
+        "k": 0,
         "n": 17,
-        "rate": 0.7058823529411765
+        "rate": 0.0
        },
        "early_warning": {
         "k": 17,
@@ -1692,9 +1692,9 @@
         "rate": 0.75
        },
        "any_page_rate": {
-        "k": 15,
+        "k": 0,
         "n": 20,
-        "rate": 0.75
+        "rate": 0.0
        }
       },
       "scraping": {
@@ -1786,15 +1786,15 @@
       }
      },
      "triage": {
-      "pages_per_1000": 158.66666666666669,
+      "pages_per_1000": 122.66666666666666,
       "baseline_pages_per_1000": 217.33333333333334,
-      "pages_avoided_share": 0.26993865030674846,
+      "pages_avoided_share": 0.4355828220858896,
       "page_precision": {
-       "k": 198,
-       "n": 206,
-       "rate": 0.9611650485436893
+       "k": 169,
+       "n": 172,
+       "rate": 0.9825581395348837
       },
-      "normal_pages_per_1000": 33.898305084745765,
+      "normal_pages_per_1000": 12.711864406779661,
       "exposure_stopped_usd": 29842540.05,
       "exposure_missed_usd": 60584.09,
       "by_asset": {
@@ -1829,7 +1829,7 @@
        "identity": {
         "n_harmful": 31,
         "caught": 26,
-        "paged_before_harm": 26,
+        "paged_before_harm": 0,
         "stopped_usd": 90000.0,
         "missed_usd": 12500.0
        },
@@ -1862,9 +1862,9 @@
       "rate": 0.9308510638297872
      },
      "page_catch_rate": {
-      "k": 136,
+      "k": 107,
       "n": 188,
-      "rate": 0.723404255319149
+      "rate": 0.5691489361702128
      },
      "early_warning": {
       "k": 138,
@@ -1957,9 +1957,9 @@
         "rate": 1.0
        },
        "page_catch_rate": {
-        "k": 24,
+        "k": 0,
         "n": 24,
-        "rate": 1.0
+        "rate": 0.0
        },
        "early_warning": {
         "k": 22,
@@ -1972,9 +1972,9 @@
         "rate": 1.0
        },
        "any_page_rate": {
-        "k": 24,
+        "k": 0,
         "n": 51,
-        "rate": 0.47058823529411764
+        "rate": 0.0
        }
       },
       "function_authz_probe": {
@@ -2044,9 +2044,9 @@
         "rate": 1.0
        },
        "page_catch_rate": {
-        "k": 5,
+        "k": 0,
         "n": 5,
-        "rate": 1.0
+        "rate": 0.0
        },
        "early_warning": {
         "k": 5,
@@ -2059,9 +2059,9 @@
         "rate": 0.8
        },
        "any_page_rate": {
-        "k": 8,
+        "k": 0,
         "n": 10,
-        "rate": 0.8
+        "rate": 0.0
        }
       },
       "scraping": {
@@ -2153,15 +2153,15 @@
       }
      },
      "triage": {
-      "pages_per_1000": 138.56944444444443,
+      "pages_per_1000": 110.60833333333333,
       "baseline_pages_per_1000": 207.1777777777778,
-      "pages_avoided_share": 0.33115681647538364,
+      "pages_avoided_share": 0.4661187386034539,
       "page_precision": {
-       "k": 183,
-       "n": 188,
-       "rate": 0.973404255319149
+       "k": 151,
+       "n": 154,
+       "rate": 0.9805194805194806
       },
-      "normal_pages_per_1000": 20.833333333333332,
+      "normal_pages_per_1000": 12.5,
       "exposure_stopped_usd": 28892753.13,
       "exposure_missed_usd": 63701.17,
       "by_asset": {
@@ -2196,7 +2196,7 @@
        "identity": {
         "n_harmful": 29,
         "caught": 29,
-        "paged_before_harm": 29,
+        "paged_before_harm": 0,
         "stopped_usd": 110000.0,
         "missed_usd": 0
        },
@@ -2230,9 +2230,9 @@
      "rate": 0.9177152780153621
     },
     "page_catch_rate": {
-     "k": 652,
+     "k": 525,
      "n": 948,
-     "rate": 0.6883855101980123
+     "rate": 0.5545486360574617
     },
     "early_warning": {
      "k": 684,
@@ -2325,9 +2325,9 @@
        "rate": 1.0
       },
       "page_catch_rate": {
-       "k": 98,
+       "k": 0,
        "n": 98,
-       "rate": 1.0
+       "rate": 0.0
       },
       "early_warning": {
        "k": 85,
@@ -2340,9 +2340,9 @@
        "rate": 1.0
       },
       "any_page_rate": {
-       "k": 98,
+       "k": 0,
        "n": 240,
-       "rate": 0.4054310955151291
+       "rate": 0.0
       }
      },
      "function_authz_probe": {
@@ -2412,9 +2412,9 @@
        "rate": 0.6713352007469655
       },
       "page_catch_rate": {
-       "k": 29,
+       "k": 0,
        "n": 44,
-       "rate": 0.6713352007469655
+       "rate": 0.0
       },
       "early_warning": {
        "k": 44,
@@ -2427,9 +2427,9 @@
        "rate": 0.6576923076923077
       },
       "any_page_rate": {
-       "k": 42,
+       "k": 0,
        "n": 63,
-       "rate": 0.6576923076923077
+       "rate": 0.0
       }
      },
      "scraping": {
@@ -2521,15 +2521,15 @@
      }
     },
     "triage": {
-     "pages_per_1000": 153.8931791723086,
+     "pages_per_1000": 126.58275178596443,
      "baseline_pages_per_1000": 214.27985961307996,
-     "pages_avoided_share": 0.28326735102353,
+     "pages_avoided_share": 0.41040148774107077,
      "page_precision": {
-      "k": 920,
-      "n": 967,
-      "rate": 0.9517127258353474
+      "k": 780,
+      "n": 814,
+      "rate": 0.9583114482456099
      },
-     "normal_pages_per_1000": 39.422654900312835,
+     "normal_pages_per_1000": 28.49698837372181,
      "exposure_stopped_usd": 31397735.474,
      "exposure_missed_usd": 78433.132,
      "by_asset": {
@@ -2564,7 +2564,7 @@
       "identity": {
        "n_harmful": 28.4,
        "caught": 25.4,
-       "paged_before_harm": 25.4,
+       "paged_before_harm": 0.0,
        "stopped_usd": 99500.0,
        "missed_usd": 7500.0
       },
@@ -2607,9 +2607,9 @@
       "rate": 0.927536231884058
      },
      "page_catch_rate": {
-      "k": 152,
+      "k": 126,
       "n": 207,
-      "rate": 0.7342995169082126
+      "rate": 0.6086956521739131
      },
      "early_warning": {
       "k": 170,
@@ -2702,9 +2702,9 @@
         "rate": 1.0
        },
        "page_catch_rate": {
-        "k": 21,
+        "k": 0,
         "n": 21,
-        "rate": 1.0
+        "rate": 0.0
        },
        "early_warning": {
         "k": 21,
@@ -2717,9 +2717,9 @@
         "rate": 1.0
        },
        "any_page_rate": {
-        "k": 21,
+        "k": 0,
         "n": 52,
-        "rate": 0.40384615384615385
+        "rate": 0.0
        }
       },
       "function_authz_probe": {
@@ -2789,9 +2789,9 @@
         "rate": 0.5555555555555556
        },
        "page_catch_rate": {
-        "k": 5,
+        "k": 0,
         "n": 9,
-        "rate": 0.5555555555555556
+        "rate": 0.0
        },
        "early_warning": {
         "k": 9,
@@ -2804,9 +2804,9 @@
         "rate": 0.6923076923076923
        },
        "any_page_rate": {
-        "k": 9,
+        "k": 0,
         "n": 13,
-        "rate": 0.6923076923076923
+        "rate": 0.0
        }
       },
       "scraping": {
@@ -2898,15 +2898,15 @@
       }
      },
      "triage": {
-      "pages_per_1000": 183.7457627118644,
+      "pages_per_1000": 153.79661016949154,
       "baseline_pages_per_1000": 253.74576271186433,
-      "pages_avoided_share": 0.2758666755727739,
+      "pages_avoided_share": 0.39389486340257807,
       "page_precision": {
-       "k": 201,
-       "n": 216,
-       "rate": 0.9305555555555556
+       "k": 171,
+       "n": 183,
+       "rate": 0.9344262295081968
       },
-      "normal_pages_per_1000": 63.559322033898304,
+      "normal_pages_per_1000": 50.847457627118644,
       "exposure_stopped_usd": 45818611.58,
       "exposure_missed_usd": 73332.43,
       "by_asset": {
@@ -2941,7 +2941,7 @@
        "identity": {
         "n_harmful": 30,
         "caught": 26,
-        "paged_before_harm": 26,
+        "paged_before_harm": 0,
         "stopped_usd": 105000.0,
         "missed_usd": 10000.0
        },
@@ -2974,9 +2974,9 @@
       "rate": 0.9226190476190477
      },
      "page_catch_rate": {
-      "k": 125,
+      "k": 105,
       "n": 168,
-      "rate": 0.7440476190476191
+      "rate": 0.625
      },
      "early_warning": {
       "k": 143,
@@ -3069,9 +3069,9 @@
         "rate": 1.0
        },
        "page_catch_rate": {
-        "k": 16,
+        "k": 0,
         "n": 16,
-        "rate": 1.0
+        "rate": 0.0
        },
        "early_warning": {
         "k": 16,
@@ -3084,9 +3084,9 @@
         "rate": 1.0
        },
        "any_page_rate": {
-        "k": 16,
+        "k": 0,
         "n": 48,
-        "rate": 0.3333333333333333
+        "rate": 0.0
        }
       },
       "function_authz_probe": {
@@ -3156,9 +3156,9 @@
         "rate": 0.6666666666666666
        },
        "page_catch_rate": {
-        "k": 4,
+        "k": 0,
         "n": 6,
-        "rate": 0.6666666666666666
+        "rate": 0.0
        },
        "early_warning": {
         "k": 6,
@@ -3171,9 +3171,9 @@
         "rate": 0.8
        },
        "any_page_rate": {
-        "k": 8,
+        "k": 0,
         "n": 10,
-        "rate": 0.8
+        "rate": 0.0
        }
       },
       "scraping": {
@@ -3265,15 +3265,15 @@
       }
      },
      "triage": {
-      "pages_per_1000": 152.5840220385675,
+      "pages_per_1000": 119.95867768595042,
       "baseline_pages_per_1000": 222.56749311294766,
-      "pages_avoided_share": 0.31443707297752255,
+      "pages_avoided_share": 0.4610233686503614,
       "page_precision": {
-       "k": 179,
-       "n": 189,
-       "rate": 0.9470899470899471
+       "k": 155,
+       "n": 160,
+       "rate": 0.96875
       },
-      "normal_pages_per_1000": 41.32231404958678,
+      "normal_pages_per_1000": 20.66115702479339,
       "exposure_stopped_usd": 32658351.75,
       "exposure_missed_usd": 60739.96,
       "by_asset": {
@@ -3308,7 +3308,7 @@
        "identity": {
         "n_harmful": 22,
         "caught": 20,
-        "paged_before_harm": 20,
+        "paged_before_harm": 0,
         "stopped_usd": 82500.0,
         "missed_usd": 5000.0
        },
@@ -3341,9 +3341,9 @@
       "rate": 0.8882978723404256
      },
      "page_catch_rate": {
-      "k": 109,
+      "k": 83,
       "n": 188,
-      "rate": 0.5797872340425532
+      "rate": 0.44148936170212766
      },
      "early_warning": {
       "k": 163,
@@ -3436,9 +3436,9 @@
         "rate": 1.0
        },
        "page_catch_rate": {
-        "k": 23,
+        "k": 0,
         "n": 23,
-        "rate": 1.0
+        "rate": 0.0
        },
        "early_warning": {
         "k": 23,
@@ -3451,9 +3451,9 @@
         "rate": 1.0
        },
        "any_page_rate": {
-        "k": 23,
+        "k": 0,
         "n": 49,
-        "rate": 0.46938775510204084
+        "rate": 0.0
        }
       },
       "function_authz_probe": {
@@ -3523,9 +3523,9 @@
         "rate": 0.42857142857142855
        },
        "page_catch_rate": {
-        "k": 3,
+        "k": 0,
         "n": 7,
-        "rate": 0.42857142857142855
+        "rate": 0.0
        },
        "early_warning": {
         "k": 7,
@@ -3538,9 +3538,9 @@
         "rate": 0.6
        },
        "any_page_rate": {
-        "k": 6,
+        "k": 0,
         "n": 10,
-        "rate": 0.6
+        "rate": 0.0
        }
       },
       "scraping": {
@@ -3632,15 +3632,15 @@
       }
      },
      "triage": {
-      "pages_per_1000": 135.25555555555553,
+      "pages_per_1000": 112.6,
       "baseline_pages_per_1000": 209.25555555555556,
-      "pages_avoided_share": 0.35363457760314354,
+      "pages_avoided_share": 0.4619019805660277,
       "page_precision": {
-       "k": 168,
-       "n": 175,
-       "rate": 0.96
+       "k": 139,
+       "n": 145,
+       "rate": 0.9586206896551724
       },
-      "normal_pages_per_1000": 29.166666666666668,
+      "normal_pages_per_1000": 25.0,
       "exposure_stopped_usd": 19789284.68,
       "exposure_missed_usd": 120944.19,
       "by_asset": {
@@ -3675,7 +3675,7 @@
        "identity": {
         "n_harmful": 30,
         "caught": 26,
-        "paged_before_harm": 26,
+        "paged_before_harm": 0,
         "stopped_usd": 110000.0,
         "missed_usd": 10000.0
        },
@@ -3708,9 +3708,9 @@
       "rate": 0.9289340101522843
      },
      "page_catch_rate": {
-      "k": 132,
+      "k": 106,
       "n": 197,
-      "rate": 0.6700507614213198
+      "rate": 0.5380710659898477
      },
      "early_warning": {
       "k": 170,
@@ -3803,9 +3803,9 @@
         "rate": 1.0
        },
        "page_catch_rate": {
-        "k": 14,
+        "k": 0,
         "n": 14,
-        "rate": 1.0
+        "rate": 0.0
        },
        "early_warning": {
         "k": 14,
@@ -3818,9 +3818,9 @@
         "rate": 1.0
        },
        "any_page_rate": {
-        "k": 14,
+        "k": 0,
         "n": 40,
-        "rate": 0.35
+        "rate": 0.0
        }
       },
       "function_authz_probe": {
@@ -3890,9 +3890,9 @@
         "rate": 0.7058823529411765
        },
        "page_catch_rate": {
-        "k": 12,
+        "k": 0,
         "n": 17,
-        "rate": 0.7058823529411765
+        "rate": 0.0
        },
        "early_warning": {
         "k": 17,
@@ -3905,9 +3905,9 @@
         "rate": 0.75
        },
        "any_page_rate": {
-        "k": 15,
+        "k": 0,
         "n": 20,
-        "rate": 0.75
+        "rate": 0.0
        }
       },
       "scraping": {
@@ -3999,15 +3999,15 @@
       }
      },
      "triage": {
-      "pages_per_1000": 160.66666666666669,
+      "pages_per_1000": 124.66666666666666,
       "baseline_pages_per_1000": 229.33333333333337,
-      "pages_avoided_share": 0.2994186046511629,
+      "pages_avoided_share": 0.45639534883720945,
       "page_precision": {
-       "k": 201,
-       "n": 209,
-       "rate": 0.9617224880382775
+       "k": 172,
+       "n": 175,
+       "rate": 0.9828571428571429
       },
-      "normal_pages_per_1000": 33.898305084745765,
+      "normal_pages_per_1000": 12.711864406779661,
       "exposure_stopped_usd": 29842540.05,
       "exposure_missed_usd": 60584.09,
       "by_asset": {
@@ -4042,7 +4042,7 @@
        "identity": {
         "n_harmful": 31,
         "caught": 26,
-        "paged_before_harm": 26,
+        "paged_before_harm": 0,
         "stopped_usd": 90000.0,
         "missed_usd": 12500.0
        },
@@ -4075,9 +4075,9 @@
       "rate": 0.9308510638297872
      },
      "page_catch_rate": {
-      "k": 136,
+      "k": 107,
       "n": 188,
-      "rate": 0.723404255319149
+      "rate": 0.5691489361702128
      },
      "early_warning": {
       "k": 160,
@@ -4170,9 +4170,9 @@
         "rate": 1.0
        },
        "page_catch_rate": {
-        "k": 24,
+        "k": 0,
         "n": 24,
-        "rate": 1.0
+        "rate": 0.0
        },
        "early_warning": {
         "k": 24,
@@ -4185,9 +4185,9 @@
         "rate": 1.0
        },
        "any_page_rate": {
-        "k": 24,
+        "k": 0,
         "n": 51,
-        "rate": 0.47058823529411764
+        "rate": 0.0
        }
       },
       "function_authz_probe": {
@@ -4257,9 +4257,9 @@
         "rate": 1.0
        },
        "page_catch_rate": {
-        "k": 5,
+        "k": 0,
         "n": 5,
-        "rate": 1.0
+        "rate": 0.0
        },
        "early_warning": {
         "k": 5,
@@ -4272,9 +4272,9 @@
         "rate": 1.0
        },
        "any_page_rate": {
-        "k": 10,
+        "k": 0,
         "n": 10,
-        "rate": 1.0
+        "rate": 0.0
        }
       },
       "scraping": {
@@ -4366,15 +4366,15 @@
       }
      },
      "triage": {
-      "pages_per_1000": 145.21666666666667,
+      "pages_per_1000": 112.60833333333332,
       "baseline_pages_per_1000": 224.49166666666667,
-      "pages_avoided_share": 0.35313114814952296,
+      "pages_avoided_share": 0.49838524072905466,
       "page_precision": {
-       "k": 188,
-       "n": 194,
-       "rate": 0.9690721649484536
+       "k": 154,
+       "n": 157,
+       "rate": 0.9808917197452229
       },
-      "normal_pages_per_1000": 25.0,
+      "normal_pages_per_1000": 12.5,
       "exposure_stopped_usd": 28892753.13,
       "exposure_missed_usd": 63701.17,
       "by_asset": {
@@ -4409,7 +4409,7 @@
        "identity": {
         "n_harmful": 29,
         "caught": 29,
-        "paged_before_harm": 29,
+        "paged_before_harm": 0,
         "stopped_usd": 110000.0,
         "missed_usd": 0
        },
@@ -4443,9 +4443,9 @@
      "rate": 0.9196476451651205
     },
     "page_catch_rate": {
-     "k": 654,
+     "k": 527,
      "n": 948,
-     "rate": 0.6903178773477707
+     "rate": 0.5564810032072203
     },
     "early_warning": {
      "k": 806,
@@ -4538,9 +4538,9 @@
        "rate": 1.0
       },
       "page_catch_rate": {
-       "k": 98,
+       "k": 0,
        "n": 98,
-       "rate": 1.0
+       "rate": 0.0
       },
       "early_warning": {
        "k": 98,
@@ -4553,9 +4553,9 @@
        "rate": 1.0
       },
       "any_page_rate": {
-       "k": 98,
+       "k": 0,
        "n": 240,
-       "rate": 0.4054310955151291
+       "rate": 0.0
       }
      },
      "function_authz_probe": {
@@ -4625,9 +4625,9 @@
        "rate": 0.6713352007469655
       },
       "page_catch_rate": {
-       "k": 29,
+       "k": 0,
        "n": 44,
-       "rate": 0.6713352007469655
+       "rate": 0.0
       },
       "early_warning": {
        "k": 44,
@@ -4640,9 +4640,9 @@
        "rate": 0.7684615384615385
       },
       "any_page_rate": {
-       "k": 48,
+       "k": 0,
        "n": 63,
-       "rate": 0.7684615384615385
+       "rate": 0.0
       }
      },
      "scraping": {
@@ -4734,15 +4734,15 @@
      }
     },
     "triage": {
-     "pages_per_1000": 155.49373472786414,
+     "pages_per_1000": 124.72605757108838,
      "baseline_pages_per_1000": 227.87876227607353,
-     "pages_avoided_share": 0.31929761579082516,
+     "pages_avoided_share": 0.45432016043704626,
      "page_precision": {
-      "k": 937,
-      "n": 983,
-      "rate": 0.9536880311264468
+      "k": 791,
+      "n": 820,
+      "rate": 0.965109156353147
      },
-     "normal_pages_per_1000": 38.58932156697951,
+     "normal_pages_per_1000": 24.344095811738338,
      "exposure_stopped_usd": 31400308.237999998,
      "exposure_missed_usd": 75860.36799999999,
      "by_asset": {
@@ -4777,7 +4777,7 @@
       "identity": {
        "n_harmful": 28.4,
        "caught": 25.4,
-       "paged_before_harm": 25.4,
+       "paged_before_harm": 0.0,
        "stopped_usd": 99500.0,
        "missed_usd": 7500.0
       },
@@ -4820,9 +4820,9 @@
       "rate": 0.9806763285024155
      },
      "page_catch_rate": {
-      "k": 187,
+      "k": 161,
       "n": 207,
-      "rate": 0.9033816425120773
+      "rate": 0.7777777777777778
      },
      "early_warning": {
       "k": 173,
@@ -4915,9 +4915,9 @@
         "rate": 1.0
        },
        "page_catch_rate": {
-        "k": 21,
+        "k": 0,
         "n": 21,
-        "rate": 1.0
+        "rate": 0.0
        },
        "early_warning": {
         "k": 21,
@@ -4930,9 +4930,9 @@
         "rate": 1.0
        },
        "any_page_rate": {
-        "k": 21,
+        "k": 0,
         "n": 52,
-        "rate": 0.40384615384615385
+        "rate": 0.0
        }
       },
       "function_authz_probe": {
@@ -5002,9 +5002,9 @@
         "rate": 0.5555555555555556
        },
        "page_catch_rate": {
-        "k": 5,
+        "k": 0,
         "n": 9,
-        "rate": 0.5555555555555556
+        "rate": 0.0
        },
        "early_warning": {
         "k": 9,
@@ -5017,9 +5017,9 @@
         "rate": 0.6923076923076923
        },
        "any_page_rate": {
-        "k": 9,
+        "k": 0,
         "n": 13,
-        "rate": 0.6923076923076923
+        "rate": 0.0
        }
       },
       "scraping": {
@@ -5111,15 +5111,15 @@
       }
      },
      "triage": {
-      "pages_per_1000": 190.49717514124293,
+      "pages_per_1000": 163.864406779661,
       "baseline_pages_per_1000": 229.83050847457625,
-      "pages_avoided_share": 0.17114060963618483,
+      "pages_avoided_share": 0.28702064896755153,
       "page_precision": {
-       "k": 236,
-       "n": 246,
-       "rate": 0.959349593495935
+       "k": 206,
+       "n": 214,
+       "rate": 0.9626168224299065
       },
-      "normal_pages_per_1000": 42.3728813559322,
+      "normal_pages_per_1000": 33.898305084745765,
       "exposure_stopped_usd": 45881944.01,
       "exposure_missed_usd": 10000.0,
       "by_asset": {
@@ -5154,7 +5154,7 @@
        "identity": {
         "n_harmful": 30,
         "caught": 26,
-        "paged_before_harm": 26,
+        "paged_before_harm": 0,
         "stopped_usd": 105000.0,
         "missed_usd": 10000.0
        },
@@ -5187,9 +5187,9 @@
       "rate": 0.9880952380952381
      },
      "page_catch_rate": {
-      "k": 155,
+      "k": 135,
       "n": 168,
-      "rate": 0.9226190476190477
+      "rate": 0.8035714285714286
      },
      "early_warning": {
       "k": 147,
@@ -5282,9 +5282,9 @@
         "rate": 1.0
        },
        "page_catch_rate": {
-        "k": 16,
+        "k": 0,
         "n": 16,
-        "rate": 1.0
+        "rate": 0.0
        },
        "early_warning": {
         "k": 16,
@@ -5297,9 +5297,9 @@
         "rate": 1.0
        },
        "any_page_rate": {
-        "k": 16,
+        "k": 0,
         "n": 48,
-        "rate": 0.3333333333333333
+        "rate": 0.0
        }
       },
       "function_authz_probe": {
@@ -5369,9 +5369,9 @@
         "rate": 0.6666666666666666
        },
        "page_catch_rate": {
-        "k": 4,
+        "k": 0,
         "n": 6,
-        "rate": 0.6666666666666666
+        "rate": 0.0
        },
        "early_warning": {
         "k": 6,
@@ -5384,9 +5384,9 @@
         "rate": 0.8
        },
        "any_page_rate": {
-        "k": 8,
+        "k": 0,
         "n": 10,
-        "rate": 0.8
+        "rate": 0.0
        }
       },
       "scraping": {
@@ -5478,15 +5478,15 @@
       }
      },
      "triage": {
-      "pages_per_1000": 205.83471074380165,
+      "pages_per_1000": 169.88429752066114,
       "baseline_pages_per_1000": 270.47658402203854,
-      "pages_avoided_share": 0.2389924936088732,
+      "pages_avoided_share": 0.3719075603719585,
       "page_precision": {
-       "k": 209,
-       "n": 229,
-       "rate": 0.9126637554585153
+       "k": 185,
+       "n": 199,
+       "rate": 0.9296482412060302
       },
-      "normal_pages_per_1000": 82.64462809917356,
+      "normal_pages_per_1000": 57.85123966942149,
       "exposure_stopped_usd": 32714091.71,
       "exposure_missed_usd": 5000.0,
       "by_asset": {
@@ -5521,7 +5521,7 @@
        "identity": {
         "n_harmful": 22,
         "caught": 20,
-        "paged_before_harm": 20,
+        "paged_before_harm": 0,
         "stopped_usd": 82500.0,
         "missed_usd": 5000.0
        },
@@ -5554,9 +5554,9 @@
       "rate": 0.9840425531914894
      },
      "page_catch_rate": {
-      "k": 163,
+      "k": 136,
       "n": 188,
-      "rate": 0.8670212765957447
+      "rate": 0.723404255319149
      },
      "early_warning": {
       "k": 170,
@@ -5649,9 +5649,9 @@
         "rate": 1.0
        },
        "page_catch_rate": {
-        "k": 23,
+        "k": 0,
         "n": 23,
-        "rate": 1.0
+        "rate": 0.0
        },
        "early_warning": {
         "k": 23,
@@ -5664,9 +5664,9 @@
         "rate": 1.0
        },
        "any_page_rate": {
-        "k": 23,
+        "k": 0,
         "n": 49,
-        "rate": 0.46938775510204084
+        "rate": 0.0
        }
       },
       "function_authz_probe": {
@@ -5736,9 +5736,9 @@
         "rate": 0.5714285714285714
        },
        "page_catch_rate": {
-        "k": 4,
+        "k": 0,
         "n": 7,
-        "rate": 0.5714285714285714
+        "rate": 0.0
        },
        "early_warning": {
         "k": 7,
@@ -5751,9 +5751,9 @@
         "rate": 0.7
        },
        "any_page_rate": {
-        "k": 7,
+        "k": 0,
         "n": 10,
-        "rate": 0.7
+        "rate": 0.0
        }
       },
       "scraping": {
@@ -5845,13 +5845,13 @@
       }
      },
      "triage": {
-      "pages_per_1000": 194.51111111111112,
+      "pages_per_1000": 174.51111111111112,
       "baseline_pages_per_1000": 253.1555555555555,
-      "pages_avoided_share": 0.23165379213483128,
+      "pages_avoided_share": 0.3106566011235954,
       "page_precision": {
-       "k": 222,
-       "n": 236,
-       "rate": 0.940677966101695
+       "k": 192,
+       "n": 206,
+       "rate": 0.9320388349514563
       },
       "normal_pages_per_1000": 58.333333333333336,
       "exposure_stopped_usd": 19902728.87,
@@ -5888,7 +5888,7 @@
        "identity": {
         "n_harmful": 30,
         "caught": 27,
-        "paged_before_harm": 27,
+        "paged_before_harm": 0,
         "stopped_usd": 112500.0,
         "missed_usd": 7500.0
        },
@@ -5921,9 +5921,9 @@
       "rate": 0.9746192893401016
      },
      "page_catch_rate": {
-      "k": 175,
+      "k": 149,
       "n": 197,
-      "rate": 0.8883248730964467
+      "rate": 0.7563451776649747
      },
      "early_warning": {
       "k": 173,
@@ -6016,9 +6016,9 @@
         "rate": 1.0
        },
        "page_catch_rate": {
-        "k": 14,
+        "k": 0,
         "n": 14,
-        "rate": 1.0
+        "rate": 0.0
        },
        "early_warning": {
         "k": 14,
@@ -6031,9 +6031,9 @@
         "rate": 1.0
        },
        "any_page_rate": {
-        "k": 14,
+        "k": 0,
         "n": 40,
-        "rate": 0.35
+        "rate": 0.0
        }
       },
       "function_authz_probe": {
@@ -6103,9 +6103,9 @@
         "rate": 0.7058823529411765
        },
        "page_catch_rate": {
-        "k": 12,
+        "k": 0,
         "n": 17,
-        "rate": 0.7058823529411765
+        "rate": 0.0
        },
        "early_warning": {
         "k": 17,
@@ -6118,9 +6118,9 @@
         "rate": 0.75
        },
        "any_page_rate": {
-        "k": 15,
+        "k": 0,
         "n": 20,
-        "rate": 0.75
+        "rate": 0.0
        }
       },
       "scraping": {
@@ -6212,15 +6212,15 @@
       }
      },
      "triage": {
-      "pages_per_1000": 212.66666666666666,
+      "pages_per_1000": 173.33333333333334,
       "baseline_pages_per_1000": 266.6666666666667,
-      "pages_avoided_share": 0.20250000000000012,
+      "pages_avoided_share": 0.35,
       "page_precision": {
-       "k": 244,
-       "n": 259,
-       "rate": 0.9420849420849421
+       "k": 215,
+       "n": 224,
+       "rate": 0.9598214285714286
       },
-      "normal_pages_per_1000": 63.559322033898304,
+      "normal_pages_per_1000": 38.13559322033898,
       "exposure_stopped_usd": 29890624.14,
       "exposure_missed_usd": 12500.0,
       "by_asset": {
@@ -6255,7 +6255,7 @@
        "identity": {
         "n_harmful": 31,
         "caught": 26,
-        "paged_before_harm": 26,
+        "paged_before_harm": 0,
         "stopped_usd": 90000.0,
         "missed_usd": 12500.0
        },
@@ -6288,9 +6288,9 @@
       "rate": 1.0
      },
      "page_catch_rate": {
-      "k": 171,
+      "k": 142,
       "n": 188,
-      "rate": 0.9095744680851063
+      "rate": 0.7553191489361702
      },
      "early_warning": {
       "k": 160,
@@ -6383,9 +6383,9 @@
         "rate": 1.0
        },
        "page_catch_rate": {
-        "k": 24,
+        "k": 0,
         "n": 24,
-        "rate": 1.0
+        "rate": 0.0
        },
        "early_warning": {
         "k": 24,
@@ -6398,9 +6398,9 @@
         "rate": 1.0
        },
        "any_page_rate": {
-        "k": 24,
+        "k": 0,
         "n": 51,
-        "rate": 0.47058823529411764
+        "rate": 0.0
        }
       },
       "function_authz_probe": {
@@ -6470,9 +6470,9 @@
         "rate": 1.0
        },
        "page_catch_rate": {
-        "k": 5,
+        "k": 0,
         "n": 5,
-        "rate": 1.0
+        "rate": 0.0
        },
        "early_warning": {
         "k": 5,
@@ -6485,9 +6485,9 @@
         "rate": 1.0
        },
        "any_page_rate": {
-        "k": 10,
+        "k": 0,
         "n": 10,
-        "rate": 1.0
+        "rate": 0.0
        }
       },
       "scraping": {
@@ -6579,15 +6579,15 @@
       }
      },
      "triage": {
-      "pages_per_1000": 198.375,
+      "pages_per_1000": 165.76666666666668,
       "baseline_pages_per_1000": 257.68888888888887,
-      "pages_avoided_share": 0.23017635391514313,
+      "pages_avoided_share": 0.3567178337357708,
       "page_precision": {
-       "k": 223,
-       "n": 238,
-       "rate": 0.9369747899159664
+       "k": 189,
+       "n": 201,
+       "rate": 0.9402985074626866
       },
-      "normal_pages_per_1000": 62.5,
+      "normal_pages_per_1000": 50.0,
       "exposure_stopped_usd": 28956454.3,
       "exposure_missed_usd": 0,
       "by_asset": {
@@ -6622,7 +6622,7 @@
        "identity": {
         "n_harmful": 29,
         "caught": 29,
-        "paged_before_harm": 29,
+        "paged_before_harm": 0,
         "stopped_usd": 110000.0,
         "missed_usd": 0
        },
@@ -6656,9 +6656,9 @@
      "rate": 0.985486681825849
     },
     "page_catch_rate": {
-     "k": 851,
+     "k": 723,
      "n": 948,
-     "rate": 0.8981842615816845
+     "rate": 0.7632835576539001
     },
     "early_warning": {
      "k": 823,
@@ -6751,9 +6751,9 @@
        "rate": 1.0
       },
       "page_catch_rate": {
-       "k": 98,
+       "k": 0,
        "n": 98,
-       "rate": 1.0
+       "rate": 0.0
       },
       "early_warning": {
        "k": 98,
@@ -6766,9 +6766,9 @@
        "rate": 1.0
       },
       "any_page_rate": {
-       "k": 98,
+       "k": 0,
        "n": 240,
-       "rate": 0.4054310955151291
+       "rate": 0.0
       }
      },
      "function_authz_probe": {
@@ -6838,9 +6838,9 @@
        "rate": 0.699906629318394
       },
       "page_catch_rate": {
-       "k": 30,
+       "k": 0,
        "n": 44,
-       "rate": 0.699906629318394
+       "rate": 0.0
       },
       "early_warning": {
        "k": 44,
@@ -6853,9 +6853,9 @@
        "rate": 0.7884615384615385
       },
       "any_page_rate": {
-       "k": 49,
+       "k": 0,
        "n": 63,
-       "rate": 0.7884615384615385
+       "rate": 0.0
       }
      },
      "scraping": {
@@ -6947,15 +6947,15 @@
      }
     },
     "triage": {
-     "pages_per_1000": 200.37693273256448,
+     "pages_per_1000": 169.47196308228666,
      "baseline_pages_per_1000": 255.56364072154514,
-     "pages_avoided_share": 0.21489264985900652,
+     "pages_avoided_share": 0.33526052883977525,
      "page_precision": {
-      "k": 1134,
-      "n": 1208,
-      "rate": 0.9383502094114107
+      "k": 987,
+      "n": 1044,
+      "rate": 0.9448847669243017
      },
-     "normal_pages_per_1000": 61.88203296446748,
+     "normal_pages_per_1000": 47.643694261567916,
      "exposure_stopped_usd": 31469168.606,
      "exposure_missed_usd": 7000.0,
      "by_asset": {
@@ -6990,7 +6990,7 @@
       "identity": {
        "n_harmful": 28.4,
        "caught": 25.6,
-       "paged_before_harm": 25.6,
+       "paged_before_harm": 0.0,
        "stopped_usd": 100000.0,
        "missed_usd": 7000.0
       },
@@ -7033,9 +7033,9 @@
       "rate": 0.9951690821256038
      },
      "page_catch_rate": {
-      "k": 190,
+      "k": 160,
       "n": 207,
-      "rate": 0.9178743961352657
+      "rate": 0.7729468599033816
      },
      "early_warning": {
       "k": 176,
@@ -7128,9 +7128,9 @@
         "rate": 1.0
        },
        "page_catch_rate": {
-        "k": 21,
+        "k": 0,
         "n": 21,
-        "rate": 1.0
+        "rate": 0.0
        },
        "early_warning": {
         "k": 21,
@@ -7143,9 +7143,9 @@
         "rate": 1.0
        },
        "any_page_rate": {
-        "k": 21,
+        "k": 0,
         "n": 52,
-        "rate": 0.40384615384615385
+        "rate": 0.0
        }
       },
       "function_authz_probe": {
@@ -7215,9 +7215,9 @@
         "rate": 1.0
        },
        "page_catch_rate": {
-        "k": 9,
+        "k": 0,
         "n": 9,
-        "rate": 1.0
+        "rate": 0.0
        },
        "early_warning": {
         "k": 9,
@@ -7230,9 +7230,9 @@
         "rate": 1.0
        },
        "any_page_rate": {
-        "k": 13,
+        "k": 0,
         "n": 13,
-        "rate": 1.0
+        "rate": 0.0
        }
       },
       "scraping": {
@@ -7324,15 +7324,15 @@
       }
      },
      "triage": {
-      "pages_per_1000": 215.71186440677965,
+      "pages_per_1000": 179.77966101694915,
       "baseline_pages_per_1000": 268.3785310734463,
-      "pages_avoided_share": 0.1962402374586868,
+      "pages_avoided_share": 0.3301265183251584,
       "page_precision": {
-       "k": 239,
-       "n": 256,
-       "rate": 0.93359375
+       "k": 205,
+       "n": 218,
+       "rate": 0.9403669724770642
       },
-      "normal_pages_per_1000": 72.03389830508475,
+      "normal_pages_per_1000": 55.08474576271186,
       "exposure_stopped_usd": 45890986.95,
       "exposure_missed_usd": 957.06,
       "by_asset": {
@@ -7367,7 +7367,7 @@
        "identity": {
         "n_harmful": 30,
         "caught": 30,
-        "paged_before_harm": 30,
+        "paged_before_harm": 0,
         "stopped_usd": 115000.0,
         "missed_usd": 0
        },
@@ -7400,9 +7400,9 @@
       "rate": 1.0
      },
      "page_catch_rate": {
-      "k": 157,
+      "k": 135,
       "n": 168,
-      "rate": 0.9345238095238095
+      "rate": 0.8035714285714286
      },
      "early_warning": {
       "k": 147,
@@ -7495,9 +7495,9 @@
         "rate": 1.0
        },
        "page_catch_rate": {
-        "k": 16,
+        "k": 0,
         "n": 16,
-        "rate": 1.0
+        "rate": 0.0
        },
        "early_warning": {
         "k": 16,
@@ -7510,9 +7510,9 @@
         "rate": 1.0
        },
        "any_page_rate": {
-        "k": 16,
+        "k": 0,
         "n": 48,
-        "rate": 0.3333333333333333
+        "rate": 0.0
        }
       },
       "function_authz_probe": {
@@ -7582,9 +7582,9 @@
         "rate": 1.0
        },
        "page_catch_rate": {
-        "k": 6,
+        "k": 0,
         "n": 6,
-        "rate": 1.0
+        "rate": 0.0
        },
        "early_warning": {
         "k": 6,
@@ -7597,9 +7597,9 @@
         "rate": 1.0
        },
        "any_page_rate": {
-        "k": 10,
+        "k": 0,
         "n": 10,
-        "rate": 1.0
+        "rate": 0.0
        }
       },
       "scraping": {
@@ -7691,15 +7691,15 @@
       }
      },
      "triage": {
-      "pages_per_1000": 207.168044077135,
+      "pages_per_1000": 166.55922865013773,
       "baseline_pages_per_1000": 271.8099173553719,
-      "pages_avoided_share": 0.23782014249951855,
+      "pages_avoided_share": 0.3872216647916731,
       "page_precision": {
-       "k": 211,
-       "n": 231,
-       "rate": 0.9134199134199135
+       "k": 185,
+       "n": 198,
+       "rate": 0.9343434343434344
       },
-      "normal_pages_per_1000": 82.64462809917356,
+      "normal_pages_per_1000": 53.71900826446281,
       "exposure_stopped_usd": 32719091.71,
       "exposure_missed_usd": 0,
       "by_asset": {
@@ -7734,7 +7734,7 @@
        "identity": {
         "n_harmful": 22,
         "caught": 22,
-        "paged_before_harm": 22,
+        "paged_before_harm": 0,
         "stopped_usd": 87500.0,
         "missed_usd": 0
        },
@@ -7767,9 +7767,9 @@
       "rate": 1.0
      },
      "page_catch_rate": {
-      "k": 166,
+      "k": 136,
       "n": 188,
-      "rate": 0.8829787234042553
+      "rate": 0.723404255319149
      },
      "early_warning": {
       "k": 170,
@@ -7862,9 +7862,9 @@
         "rate": 1.0
        },
        "page_catch_rate": {
-        "k": 23,
+        "k": 0,
         "n": 23,
-        "rate": 1.0
+        "rate": 0.0
        },
        "early_warning": {
         "k": 23,
@@ -7877,9 +7877,9 @@
         "rate": 1.0
        },
        "any_page_rate": {
-        "k": 23,
+        "k": 0,
         "n": 49,
-        "rate": 0.46938775510204084
+        "rate": 0.0
        }
       },
       "function_authz_probe": {
@@ -7949,9 +7949,9 @@
         "rate": 1.0
        },
        "page_catch_rate": {
-        "k": 7,
+        "k": 0,
         "n": 7,
-        "rate": 1.0
+        "rate": 0.0
        },
        "early_warning": {
         "k": 7,
@@ -7964,9 +7964,9 @@
         "rate": 1.0
        },
        "any_page_rate": {
-        "k": 10,
+        "k": 0,
         "n": 10,
-        "rate": 1.0
+        "rate": 0.0
        }
       },
       "scraping": {
@@ -8058,13 +8058,13 @@
       }
      },
      "triage": {
-      "pages_per_1000": 199.83333333333334,
+      "pages_per_1000": 177.83333333333334,
       "baseline_pages_per_1000": 259.14444444444445,
-      "pages_avoided_share": 0.2288727865197444,
+      "pages_avoided_share": 0.3137675256184882,
       "page_precision": {
-       "k": 225,
-       "n": 240,
-       "rate": 0.9375
+       "k": 192,
+       "n": 207,
+       "rate": 0.927536231884058
       },
       "normal_pages_per_1000": 62.5,
       "exposure_stopped_usd": 19910228.87,
@@ -8101,7 +8101,7 @@
        "identity": {
         "n_harmful": 30,
         "caught": 30,
-        "paged_before_harm": 30,
+        "paged_before_harm": 0,
         "stopped_usd": 120000.0,
         "missed_usd": 0
        },
@@ -8134,9 +8134,9 @@
       "rate": 0.9746192893401016
      },
      "page_catch_rate": {
-      "k": 175,
+      "k": 148,
       "n": 197,
-      "rate": 0.8883248730964467
+      "rate": 0.751269035532995
      },
      "early_warning": {
       "k": 175,
@@ -8229,9 +8229,9 @@
         "rate": 1.0
        },
        "page_catch_rate": {
-        "k": 14,
+        "k": 0,
         "n": 14,
-        "rate": 1.0
+        "rate": 0.0
        },
        "early_warning": {
         "k": 14,
@@ -8244,9 +8244,9 @@
         "rate": 1.0
        },
        "any_page_rate": {
-        "k": 14,
+        "k": 0,
         "n": 40,
-        "rate": 0.35
+        "rate": 0.0
        }
       },
       "function_authz_probe": {
@@ -8316,9 +8316,9 @@
         "rate": 0.7647058823529411
        },
        "page_catch_rate": {
-        "k": 13,
+        "k": 0,
         "n": 17,
-        "rate": 0.7647058823529411
+        "rate": 0.0
        },
        "early_warning": {
         "k": 17,
@@ -8331,9 +8331,9 @@
         "rate": 0.8
        },
        "any_page_rate": {
-        "k": 16,
+        "k": 0,
         "n": 20,
-        "rate": 0.8
+        "rate": 0.0
        }
       },
       "scraping": {
@@ -8425,15 +8425,15 @@
       }
      },
      "triage": {
-      "pages_per_1000": 192.66666666666669,
+      "pages_per_1000": 162.66666666666666,
       "baseline_pages_per_1000": 239.33333333333331,
-      "pages_avoided_share": 0.19498607242339816,
+      "pages_avoided_share": 0.32033426183844005,
       "page_precision": {
-       "k": 244,
-       "n": 253,
-       "rate": 0.9644268774703557
+       "k": 214,
+       "n": 220,
+       "rate": 0.9727272727272728
       },
-      "normal_pages_per_1000": 38.13559322033898,
+      "normal_pages_per_1000": 25.423728813559322,
       "exposure_stopped_usd": 29892289.61,
       "exposure_missed_usd": 10834.53,
       "by_asset": {
@@ -8468,7 +8468,7 @@
        "identity": {
         "n_harmful": 31,
         "caught": 27,
-        "paged_before_harm": 27,
+        "paged_before_harm": 0,
         "stopped_usd": 92500.0,
         "missed_usd": 10000.0
        },
@@ -8501,9 +8501,9 @@
       "rate": 1.0
      },
      "page_catch_rate": {
-      "k": 171,
+      "k": 142,
       "n": 188,
-      "rate": 0.9095744680851063
+      "rate": 0.7553191489361702
      },
      "early_warning": {
       "k": 160,
@@ -8596,9 +8596,9 @@
         "rate": 1.0
        },
        "page_catch_rate": {
-        "k": 24,
+        "k": 0,
         "n": 24,
-        "rate": 1.0
+        "rate": 0.0
        },
        "early_warning": {
         "k": 24,
@@ -8611,9 +8611,9 @@
         "rate": 1.0
        },
        "any_page_rate": {
-        "k": 24,
+        "k": 0,
         "n": 51,
-        "rate": 0.47058823529411764
+        "rate": 0.0
        }
       },
       "function_authz_probe": {
@@ -8683,9 +8683,9 @@
         "rate": 1.0
        },
        "page_catch_rate": {
-        "k": 5,
+        "k": 0,
         "n": 5,
-        "rate": 1.0
+        "rate": 0.0
        },
        "early_warning": {
         "k": 5,
@@ -8698,9 +8698,9 @@
         "rate": 1.0
        },
        "any_page_rate": {
-        "k": 10,
+        "k": 0,
         "n": 10,
-        "rate": 1.0
+        "rate": 0.0
        }
       },
       "scraping": {
@@ -8792,15 +8792,15 @@
       }
      },
      "triage": {
-      "pages_per_1000": 208.3166666666667,
+      "pages_per_1000": 172.39444444444445,
       "baseline_pages_per_1000": 267.63055555555553,
-      "pages_avoided_share": 0.22162599769582847,
+      "pages_avoided_share": 0.3558491701869284,
       "page_precision": {
-       "k": 223,
-       "n": 241,
-       "rate": 0.9253112033195021
+       "k": 189,
+       "n": 203,
+       "rate": 0.9310344827586207
       },
-      "normal_pages_per_1000": 75.0,
+      "normal_pages_per_1000": 58.333333333333336,
       "exposure_stopped_usd": 28956454.3,
       "exposure_missed_usd": 0,
       "by_asset": {
@@ -8835,7 +8835,7 @@
        "identity": {
         "n_harmful": 29,
         "caught": 29,
-        "paged_before_harm": 29,
+        "paged_before_harm": 0,
         "stopped_usd": 110000.0,
         "missed_usd": 0
        },
@@ -8869,9 +8869,9 @@
      "rate": 0.9939576742931411
     },
     "page_catch_rate": {
-     "k": 859,
+     "k": 721,
      "n": 948,
-     "rate": 0.9066552540489766
+     "rate": 0.7613021456526249
     },
     "early_warning": {
      "k": 828,
@@ -8964,9 +8964,9 @@
        "rate": 1.0
       },
       "page_catch_rate": {
-       "k": 98,
+       "k": 0,
        "n": 98,
-       "rate": 1.0
+       "rate": 0.0
       },
       "early_warning": {
        "k": 98,
@@ -8979,9 +8979,9 @@
        "rate": 1.0
       },
       "any_page_rate": {
-       "k": 98,
+       "k": 0,
        "n": 240,
-       "rate": 0.4054310955151291
+       "rate": 0.0
       }
      },
      "function_authz_probe": {
@@ -9051,9 +9051,9 @@
        "rate": 0.9529411764705882
       },
       "page_catch_rate": {
-       "k": 40,
+       "k": 0,
        "n": 44,
-       "rate": 0.9529411764705882
+       "rate": 0.0
       },
       "early_warning": {
        "k": 44,
@@ -9066,9 +9066,9 @@
        "rate": 0.96
       },
       "any_page_rate": {
-       "k": 59,
+       "k": 0,
        "n": 63,
-       "rate": 0.96
+       "rate": 0.0
       }
      },
      "scraping": {
@@ -9160,15 +9160,15 @@
      }
     },
     "triage": {
-     "pages_per_1000": 204.73931503011627,
+     "pages_per_1000": 171.84666682230628,
      "baseline_pages_per_1000": 261.2593563524303,
-     "pages_avoided_share": 0.2159090473194353,
+     "pages_avoided_share": 0.3414598281521376,
      "page_precision": {
-      "k": 1142,
-      "n": 1221,
-      "rate": 0.9348503488419542
+      "k": 985,
+      "n": 1046,
+      "rate": 0.9412016788380899
      },
-     "normal_pages_per_1000": 66.06282392491946,
+     "normal_pages_per_1000": 51.012163234813464,
      "exposure_stopped_usd": 31473810.288,
      "exposure_missed_usd": 2358.318,
      "by_asset": {
@@ -9203,7 +9203,7 @@
       "identity": {
        "n_harmful": 28.4,
        "caught": 27.6,
-       "paged_before_harm": 27.6,
+       "paged_before_harm": 0.0,
        "stopped_usd": 105000.0,
        "missed_usd": 2000.0
       },
@@ -9246,9 +9246,9 @@
       "rate": 0.9951690821256038
      },
      "page_catch_rate": {
-      "k": 190,
+      "k": 160,
       "n": 207,
-      "rate": 0.9178743961352657
+      "rate": 0.7729468599033816
      },
      "early_warning": {
       "k": 176,
@@ -9341,9 +9341,9 @@
         "rate": 1.0
        },
        "page_catch_rate": {
-        "k": 21,
+        "k": 0,
         "n": 21,
-        "rate": 1.0
+        "rate": 0.0
        },
        "early_warning": {
         "k": 21,
@@ -9356,9 +9356,9 @@
         "rate": 1.0
        },
        "any_page_rate": {
-        "k": 21,
+        "k": 0,
         "n": 52,
-        "rate": 0.40384615384615385
+        "rate": 0.0
        }
       },
       "function_authz_probe": {
@@ -9428,9 +9428,9 @@
         "rate": 1.0
        },
        "page_catch_rate": {
-        "k": 9,
+        "k": 0,
         "n": 9,
-        "rate": 1.0
+        "rate": 0.0
        },
        "early_warning": {
         "k": 9,
@@ -9443,9 +9443,9 @@
         "rate": 1.0
        },
        "any_page_rate": {
-        "k": 13,
+        "k": 0,
         "n": 13,
-        "rate": 1.0
+        "rate": 0.0
        }
       },
       "scraping": {
@@ -9537,15 +9537,15 @@
       }
      },
      "triage": {
-      "pages_per_1000": 215.71186440677965,
+      "pages_per_1000": 179.77966101694915,
       "baseline_pages_per_1000": 268.3785310734463,
-      "pages_avoided_share": 0.1962402374586868,
+      "pages_avoided_share": 0.3301265183251584,
       "page_precision": {
-       "k": 239,
-       "n": 256,
-       "rate": 0.93359375
+       "k": 205,
+       "n": 218,
+       "rate": 0.9403669724770642
       },
-      "normal_pages_per_1000": 72.03389830508475,
+      "normal_pages_per_1000": 55.08474576271186,
       "exposure_stopped_usd": 45890986.95,
       "exposure_missed_usd": 957.06,
       "by_asset": {
@@ -9580,7 +9580,7 @@
        "identity": {
         "n_harmful": 30,
         "caught": 30,
-        "paged_before_harm": 30,
+        "paged_before_harm": 0,
         "stopped_usd": 115000.0,
         "missed_usd": 0
        },
@@ -9613,9 +9613,9 @@
       "rate": 1.0
      },
      "page_catch_rate": {
-      "k": 157,
+      "k": 135,
       "n": 168,
-      "rate": 0.9345238095238095
+      "rate": 0.8035714285714286
      },
      "early_warning": {
       "k": 147,
@@ -9708,9 +9708,9 @@
         "rate": 1.0
        },
        "page_catch_rate": {
-        "k": 16,
+        "k": 0,
         "n": 16,
-        "rate": 1.0
+        "rate": 0.0
        },
        "early_warning": {
         "k": 16,
@@ -9723,9 +9723,9 @@
         "rate": 1.0
        },
        "any_page_rate": {
-        "k": 16,
+        "k": 0,
         "n": 48,
-        "rate": 0.3333333333333333
+        "rate": 0.0
        }
       },
       "function_authz_probe": {
@@ -9795,9 +9795,9 @@
         "rate": 1.0
        },
        "page_catch_rate": {
-        "k": 6,
+        "k": 0,
         "n": 6,
-        "rate": 1.0
+        "rate": 0.0
        },
        "early_warning": {
         "k": 6,
@@ -9810,9 +9810,9 @@
         "rate": 1.0
        },
        "any_page_rate": {
-        "k": 10,
+        "k": 0,
         "n": 10,
-        "rate": 1.0
+        "rate": 0.0
        }
       },
       "scraping": {
@@ -9904,15 +9904,15 @@
       }
      },
      "triage": {
-      "pages_per_1000": 210.49311294765837,
+      "pages_per_1000": 169.88429752066114,
       "baseline_pages_per_1000": 263.8264462809917,
-      "pages_avoided_share": 0.20215309755766486,
+      "pages_avoided_share": 0.3560755568085706,
       "page_precision": {
-       "k": 211,
-       "n": 232,
-       "rate": 0.9094827586206896
+       "k": 185,
+       "n": 199,
+       "rate": 0.9296482412060302
       },
-      "normal_pages_per_1000": 86.77685950413223,
+      "normal_pages_per_1000": 57.85123966942149,
       "exposure_stopped_usd": 32719091.71,
       "exposure_missed_usd": 0,
       "by_asset": {
@@ -9947,7 +9947,7 @@
        "identity": {
         "n_harmful": 22,
         "caught": 22,
-        "paged_before_harm": 22,
+        "paged_before_harm": 0,
         "stopped_usd": 87500.0,
         "missed_usd": 0
        },
@@ -9980,9 +9980,9 @@
       "rate": 1.0
      },
      "page_catch_rate": {
-      "k": 166,
+      "k": 136,
       "n": 188,
-      "rate": 0.8829787234042553
+      "rate": 0.723404255319149
      },
      "early_warning": {
       "k": 170,
@@ -10075,9 +10075,9 @@
         "rate": 1.0
        },
        "page_catch_rate": {
-        "k": 23,
+        "k": 0,
         "n": 23,
-        "rate": 1.0
+        "rate": 0.0
        },
        "early_warning": {
         "k": 23,
@@ -10090,9 +10090,9 @@
         "rate": 1.0
        },
        "any_page_rate": {
-        "k": 23,
+        "k": 0,
         "n": 49,
-        "rate": 0.46938775510204084
+        "rate": 0.0
        }
       },
       "function_authz_probe": {
@@ -10162,9 +10162,9 @@
         "rate": 1.0
        },
        "page_catch_rate": {
-        "k": 7,
+        "k": 0,
         "n": 7,
-        "rate": 1.0
+        "rate": 0.0
        },
        "early_warning": {
         "k": 7,
@@ -10177,9 +10177,9 @@
         "rate": 1.0
        },
        "any_page_rate": {
-        "k": 10,
+        "k": 0,
         "n": 10,
-        "rate": 1.0
+        "rate": 0.0
        }
       },
       "scraping": {
@@ -10271,13 +10271,13 @@
       }
      },
      "triage": {
-      "pages_per_1000": 193.18888888888887,
+      "pages_per_1000": 171.1888888888889,
       "baseline_pages_per_1000": 245.1888888888889,
-      "pages_avoided_share": 0.21208138849866331,
+      "pages_avoided_share": 0.30180812978655913,
       "page_precision": {
-       "k": 225,
-       "n": 238,
-       "rate": 0.9453781512605042
+       "k": 192,
+       "n": 205,
+       "rate": 0.9365853658536586
       },
       "normal_pages_per_1000": 54.166666666666664,
       "exposure_stopped_usd": 19910228.87,
@@ -10314,7 +10314,7 @@
        "identity": {
         "n_harmful": 30,
         "caught": 30,
-        "paged_before_harm": 30,
+        "paged_before_harm": 0,
         "stopped_usd": 120000.0,
         "missed_usd": 0
        },
@@ -10347,9 +10347,9 @@
       "rate": 0.9746192893401016
      },
      "page_catch_rate": {
-      "k": 175,
+      "k": 148,
       "n": 197,
-      "rate": 0.8883248730964467
+      "rate": 0.751269035532995
      },
      "early_warning": {
       "k": 174,
@@ -10442,9 +10442,9 @@
         "rate": 1.0
        },
        "page_catch_rate": {
-        "k": 14,
+        "k": 0,
         "n": 14,
-        "rate": 1.0
+        "rate": 0.0
        },
        "early_warning": {
         "k": 14,
@@ -10457,9 +10457,9 @@
         "rate": 1.0
        },
        "any_page_rate": {
-        "k": 14,
+        "k": 0,
         "n": 40,
-        "rate": 0.35
+        "rate": 0.0
        }
       },
       "function_authz_probe": {
@@ -10529,9 +10529,9 @@
         "rate": 0.7647058823529411
        },
        "page_catch_rate": {
-        "k": 13,
+        "k": 0,
         "n": 17,
-        "rate": 0.7647058823529411
+        "rate": 0.0
        },
        "early_warning": {
         "k": 17,
@@ -10544,9 +10544,9 @@
         "rate": 0.8
        },
        "any_page_rate": {
-        "k": 16,
+        "k": 0,
         "n": 20,
-        "rate": 0.8
+        "rate": 0.0
        }
       },
       "scraping": {
@@ -10638,15 +10638,15 @@
       }
      },
      "triage": {
-      "pages_per_1000": 199.33333333333334,
+      "pages_per_1000": 169.33333333333334,
       "baseline_pages_per_1000": 245.99999999999997,
-      "pages_avoided_share": 0.1897018970189701,
+      "pages_avoided_share": 0.31165311653116523,
       "page_precision": {
-       "k": 244,
-       "n": 255,
-       "rate": 0.9568627450980393
+       "k": 214,
+       "n": 222,
+       "rate": 0.963963963963964
       },
-      "normal_pages_per_1000": 46.610169491525426,
+      "normal_pages_per_1000": 33.898305084745765,
       "exposure_stopped_usd": 29892289.61,
       "exposure_missed_usd": 10834.53,
       "by_asset": {
@@ -10681,7 +10681,7 @@
        "identity": {
         "n_harmful": 31,
         "caught": 27,
-        "paged_before_harm": 27,
+        "paged_before_harm": 0,
         "stopped_usd": 92500.0,
         "missed_usd": 10000.0
        },
@@ -10714,9 +10714,9 @@
       "rate": 1.0
      },
      "page_catch_rate": {
-      "k": 171,
+      "k": 142,
       "n": 188,
-      "rate": 0.9095744680851063
+      "rate": 0.7553191489361702
      },
      "early_warning": {
       "k": 160,
@@ -10809,9 +10809,9 @@
         "rate": 1.0
        },
        "page_catch_rate": {
-        "k": 24,
+        "k": 0,
         "n": 24,
-        "rate": 1.0
+        "rate": 0.0
        },
        "early_warning": {
         "k": 24,
@@ -10824,9 +10824,9 @@
         "rate": 1.0
        },
        "any_page_rate": {
-        "k": 24,
+        "k": 0,
         "n": 51,
-        "rate": 0.47058823529411764
+        "rate": 0.0
        }
       },
       "function_authz_probe": {
@@ -10896,9 +10896,9 @@
         "rate": 1.0
        },
        "page_catch_rate": {
-        "k": 5,
+        "k": 0,
         "n": 5,
-        "rate": 1.0
+        "rate": 0.0
        },
        "early_warning": {
         "k": 5,
@@ -10911,9 +10911,9 @@
         "rate": 1.0
        },
        "any_page_rate": {
-        "k": 10,
+        "k": 0,
         "n": 10,
-        "rate": 1.0
+        "rate": 0.0
        }
       },
       "scraping": {
@@ -11005,15 +11005,15 @@
       }
      },
      "triage": {
-      "pages_per_1000": 201.6888888888889,
+      "pages_per_1000": 165.76666666666668,
       "baseline_pages_per_1000": 261.0027777777778,
-      "pages_avoided_share": 0.22725386064430986,
+      "pages_avoided_share": 0.3648854311895361,
       "page_precision": {
-       "k": 223,
-       "n": 239,
-       "rate": 0.9330543933054394
+       "k": 189,
+       "n": 201,
+       "rate": 0.9402985074626866
       },
-      "normal_pages_per_1000": 66.66666666666667,
+      "normal_pages_per_1000": 50.0,
       "exposure_stopped_usd": 28956454.3,
       "exposure_missed_usd": 0,
       "by_asset": {
@@ -11048,7 +11048,7 @@
        "identity": {
         "n_harmful": 29,
         "caught": 29,
-        "paged_before_harm": 29,
+        "paged_before_harm": 0,
         "stopped_usd": 110000.0,
         "missed_usd": 0
        },
@@ -11082,9 +11082,9 @@
      "rate": 0.9939576742931411
     },
     "page_catch_rate": {
-     "k": 859,
+     "k": 721,
      "n": 948,
-     "rate": 0.9066552540489766
+     "rate": 0.7613021456526249
     },
     "early_warning": {
      "k": 827,
@@ -11177,9 +11177,9 @@
        "rate": 1.0
       },
       "page_catch_rate": {
-       "k": 98,
+       "k": 0,
        "n": 98,
-       "rate": 1.0
+       "rate": 0.0
       },
       "early_warning": {
        "k": 98,
@@ -11192,9 +11192,9 @@
        "rate": 1.0
       },
       "any_page_rate": {
-       "k": 98,
+       "k": 0,
        "n": 240,
-       "rate": 0.4054310955151291
+       "rate": 0.0
       }
      },
      "function_authz_probe": {
@@ -11264,9 +11264,9 @@
        "rate": 0.9529411764705882
       },
       "page_catch_rate": {
-       "k": 40,
+       "k": 0,
        "n": 44,
-       "rate": 0.9529411764705882
+       "rate": 0.0
       },
       "early_warning": {
        "k": 44,
@@ -11279,9 +11279,9 @@
        "rate": 0.96
       },
       "any_page_rate": {
-       "k": 59,
+       "k": 0,
        "n": 63,
-       "rate": 0.96
+       "rate": 0.0
       }
      },
      "scraping": {
@@ -11373,15 +11373,15 @@
      }
     },
     "triage": {
-     "pages_per_1000": 204.08321769310982,
+     "pages_per_1000": 171.19056948529982,
      "baseline_pages_per_1000": 256.87932880422096,
-     "pages_avoided_share": 0.20548609623565897,
+     "pages_avoided_share": 0.3329097505281979,
      "page_precision": {
-      "k": 1142,
-      "n": 1220,
-      "rate": 0.9356743596569345
+      "k": 985,
+      "n": 1045,
+      "rate": 0.9421726101926808
      },
-     "normal_pages_per_1000": 65.25085212681515,
+     "normal_pages_per_1000": 50.200191436709154,
      "exposure_stopped_usd": 31473810.288,
      "exposure_missed_usd": 2358.318,
      "by_asset": {
@@ -11416,7 +11416,7 @@
       "identity": {
        "n_harmful": 28.4,
        "caught": 27.6,
-       "paged_before_harm": 27.6,
+       "paged_before_harm": 0.0,
        "stopped_usd": 105000.0,
        "missed_usd": 2000.0
       },
@@ -11459,9 +11459,9 @@
       "rate": 0.9951690821256038
      },
      "page_catch_rate": {
-      "k": 190,
+      "k": 160,
       "n": 207,
-      "rate": 0.9178743961352657
+      "rate": 0.7729468599033816
      },
      "early_warning": {
       "k": 176,
@@ -11554,9 +11554,9 @@
         "rate": 1.0
        },
        "page_catch_rate": {
-        "k": 21,
+        "k": 0,
         "n": 21,
-        "rate": 1.0
+        "rate": 0.0
        },
        "early_warning": {
         "k": 21,
@@ -11569,9 +11569,9 @@
         "rate": 1.0
        },
        "any_page_rate": {
-        "k": 21,
+        "k": 0,
         "n": 52,
-        "rate": 0.40384615384615385
+        "rate": 0.0
        }
       },
       "function_authz_probe": {
@@ -11641,9 +11641,9 @@
         "rate": 1.0
        },
        "page_catch_rate": {
-        "k": 9,
+        "k": 0,
         "n": 9,
-        "rate": 1.0
+        "rate": 0.0
        },
        "early_warning": {
         "k": 9,
@@ -11656,9 +11656,9 @@
         "rate": 1.0
        },
        "any_page_rate": {
-        "k": 13,
+        "k": 0,
         "n": 13,
-        "rate": 1.0
+        "rate": 0.0
        }
       },
       "scraping": {
@@ -11750,13 +11750,13 @@
       }
      },
      "triage": {
-      "pages_per_1000": 205.76271186440675,
+      "pages_per_1000": 183.0960451977401,
       "baseline_pages_per_1000": 258.42937853107344,
-      "pages_avoided_share": 0.20379519916050903,
+      "pages_avoided_share": 0.2915045253814875,
       "page_precision": {
-       "k": 239,
-       "n": 253,
-       "rate": 0.9446640316205533
+       "k": 205,
+       "n": 219,
+       "rate": 0.9360730593607306
       },
       "normal_pages_per_1000": 59.32203389830509,
       "exposure_stopped_usd": 45890986.95,
@@ -11793,7 +11793,7 @@
        "identity": {
         "n_harmful": 30,
         "caught": 30,
-        "paged_before_harm": 30,
+        "paged_before_harm": 0,
         "stopped_usd": 115000.0,
         "missed_usd": 0
        },
@@ -11826,9 +11826,9 @@
       "rate": 1.0
      },
      "page_catch_rate": {
-      "k": 157,
+      "k": 135,
       "n": 168,
-      "rate": 0.9345238095238095
+      "rate": 0.8035714285714286
      },
      "early_warning": {
       "k": 147,
@@ -11921,9 +11921,9 @@
         "rate": 1.0
        },
        "page_catch_rate": {
-        "k": 16,
+        "k": 0,
         "n": 16,
-        "rate": 1.0
+        "rate": 0.0
        },
        "early_warning": {
         "k": 16,
@@ -11936,9 +11936,9 @@
         "rate": 1.0
        },
        "any_page_rate": {
-        "k": 16,
+        "k": 0,
         "n": 48,
-        "rate": 0.3333333333333333
+        "rate": 0.0
        }
       },
       "function_authz_probe": {
@@ -12008,9 +12008,9 @@
         "rate": 1.0
        },
        "page_catch_rate": {
-        "k": 6,
+        "k": 0,
         "n": 6,
-        "rate": 1.0
+        "rate": 0.0
        },
        "early_warning": {
         "k": 6,
@@ -12023,9 +12023,9 @@
         "rate": 1.0
        },
        "any_page_rate": {
-        "k": 10,
+        "k": 0,
         "n": 10,
-        "rate": 1.0
+        "rate": 0.0
        }
       },
       "scraping": {
@@ -12117,13 +12117,13 @@
       }
      },
      "triage": {
-      "pages_per_1000": 190.5426997245179,
+      "pages_per_1000": 173.20936639118457,
       "baseline_pages_per_1000": 243.87603305785123,
-      "pages_avoided_share": 0.21869034305917978,
+      "pages_avoided_share": 0.2897647045534131,
       "page_precision": {
-       "k": 211,
-       "n": 226,
-       "rate": 0.9336283185840708
+       "k": 185,
+       "n": 200,
+       "rate": 0.925
       },
       "normal_pages_per_1000": 61.98347107438016,
       "exposure_stopped_usd": 32719091.71,
@@ -12160,7 +12160,7 @@
        "identity": {
         "n_harmful": 22,
         "caught": 22,
-        "paged_before_harm": 22,
+        "paged_before_harm": 0,
         "stopped_usd": 87500.0,
         "missed_usd": 0
        },
@@ -12193,9 +12193,9 @@
       "rate": 1.0
      },
      "page_catch_rate": {
-      "k": 166,
+      "k": 136,
       "n": 188,
-      "rate": 0.8829787234042553
+      "rate": 0.723404255319149
      },
      "early_warning": {
       "k": 170,
@@ -12288,9 +12288,9 @@
         "rate": 1.0
        },
        "page_catch_rate": {
-        "k": 23,
+        "k": 0,
         "n": 23,
-        "rate": 1.0
+        "rate": 0.0
        },
        "early_warning": {
         "k": 23,
@@ -12303,9 +12303,9 @@
         "rate": 1.0
        },
        "any_page_rate": {
-        "k": 23,
+        "k": 0,
         "n": 49,
-        "rate": 0.46938775510204084
+        "rate": 0.0
        }
       },
       "function_authz_probe": {
@@ -12375,9 +12375,9 @@
         "rate": 1.0
        },
        "page_catch_rate": {
-        "k": 7,
+        "k": 0,
         "n": 7,
-        "rate": 1.0
+        "rate": 0.0
        },
        "early_warning": {
         "k": 7,
@@ -12390,9 +12390,9 @@
         "rate": 1.0
        },
        "any_page_rate": {
-        "k": 10,
+        "k": 0,
         "n": 10,
-        "rate": 1.0
+        "rate": 0.0
        }
       },
       "scraping": {
@@ -12484,13 +12484,13 @@
       }
      },
      "triage": {
-      "pages_per_1000": 196.51111111111112,
+      "pages_per_1000": 174.51111111111112,
       "baseline_pages_per_1000": 248.51111111111112,
-      "pages_avoided_share": 0.20924617723330052,
+      "pages_avoided_share": 0.2977734060627738,
       "page_precision": {
-       "k": 225,
-       "n": 239,
-       "rate": 0.9414225941422594
+       "k": 192,
+       "n": 206,
+       "rate": 0.9320388349514563
       },
       "normal_pages_per_1000": 58.333333333333336,
       "exposure_stopped_usd": 19910228.87,
@@ -12527,7 +12527,7 @@
        "identity": {
         "n_harmful": 30,
         "caught": 30,
-        "paged_before_harm": 30,
+        "paged_before_harm": 0,
         "stopped_usd": 120000.0,
         "missed_usd": 0
        },
@@ -12560,9 +12560,9 @@
       "rate": 0.9746192893401016
      },
      "page_catch_rate": {
-      "k": 175,
+      "k": 148,
       "n": 197,
-      "rate": 0.8883248730964467
+      "rate": 0.751269035532995
      },
      "early_warning": {
       "k": 174,
@@ -12655,9 +12655,9 @@
         "rate": 1.0
        },
        "page_catch_rate": {
-        "k": 14,
+        "k": 0,
         "n": 14,
-        "rate": 1.0
+        "rate": 0.0
        },
        "early_warning": {
         "k": 14,
@@ -12670,9 +12670,9 @@
         "rate": 1.0
        },
        "any_page_rate": {
-        "k": 14,
+        "k": 0,
         "n": 40,
-        "rate": 0.35
+        "rate": 0.0
        }
       },
       "function_authz_probe": {
@@ -12742,9 +12742,9 @@
         "rate": 0.7647058823529411
        },
        "page_catch_rate": {
-        "k": 13,
+        "k": 0,
         "n": 17,
-        "rate": 0.7647058823529411
+        "rate": 0.0
        },
        "early_warning": {
         "k": 17,
@@ -12757,9 +12757,9 @@
         "rate": 0.8
        },
        "any_page_rate": {
-        "k": 16,
+        "k": 0,
         "n": 20,
-        "rate": 0.8
+        "rate": 0.0
        }
       },
       "scraping": {
@@ -12851,15 +12851,15 @@
       }
      },
      "triage": {
-      "pages_per_1000": 199.33333333333334,
+      "pages_per_1000": 169.33333333333334,
       "baseline_pages_per_1000": 245.99999999999997,
-      "pages_avoided_share": 0.1897018970189701,
+      "pages_avoided_share": 0.31165311653116523,
       "page_precision": {
-       "k": 244,
-       "n": 255,
-       "rate": 0.9568627450980393
+       "k": 214,
+       "n": 222,
+       "rate": 0.963963963963964
       },
-      "normal_pages_per_1000": 46.610169491525426,
+      "normal_pages_per_1000": 33.898305084745765,
       "exposure_stopped_usd": 29892289.61,
       "exposure_missed_usd": 10834.53,
       "by_asset": {
@@ -12894,7 +12894,7 @@
        "identity": {
         "n_harmful": 31,
         "caught": 27,
-        "paged_before_harm": 27,
+        "paged_before_harm": 0,
         "stopped_usd": 92500.0,
         "missed_usd": 10000.0
        },
@@ -12927,9 +12927,9 @@
       "rate": 1.0
      },
      "page_catch_rate": {
-      "k": 171,
+      "k": 142,
       "n": 188,
-      "rate": 0.9095744680851063
+      "rate": 0.7553191489361702
      },
      "early_warning": {
       "k": 160,
@@ -13022,9 +13022,9 @@
         "rate": 1.0
        },
        "page_catch_rate": {
-        "k": 24,
+        "k": 0,
         "n": 24,
-        "rate": 1.0
+        "rate": 0.0
        },
        "early_warning": {
         "k": 24,
@@ -13037,9 +13037,9 @@
         "rate": 1.0
        },
        "any_page_rate": {
-        "k": 24,
+        "k": 0,
         "n": 51,
-        "rate": 0.47058823529411764
+        "rate": 0.0
        }
       },
       "function_authz_probe": {
@@ -13109,9 +13109,9 @@
         "rate": 1.0
        },
        "page_catch_rate": {
-        "k": 5,
+        "k": 0,
         "n": 5,
-        "rate": 1.0
+        "rate": 0.0
        },
        "early_warning": {
         "k": 5,
@@ -13124,9 +13124,9 @@
         "rate": 1.0
        },
        "any_page_rate": {
-        "k": 10,
+        "k": 0,
         "n": 10,
-        "rate": 1.0
+        "rate": 0.0
        }
       },
       "scraping": {
@@ -13218,15 +13218,15 @@
       }
      },
      "triage": {
-      "pages_per_1000": 201.6888888888889,
+      "pages_per_1000": 165.76666666666668,
       "baseline_pages_per_1000": 261.0027777777778,
-      "pages_avoided_share": 0.22725386064430986,
+      "pages_avoided_share": 0.3648854311895361,
       "page_precision": {
-       "k": 223,
-       "n": 239,
-       "rate": 0.9330543933054394
+       "k": 189,
+       "n": 201,
+       "rate": 0.9402985074626866
       },
-      "normal_pages_per_1000": 66.66666666666667,
+      "normal_pages_per_1000": 50.0,
       "exposure_stopped_usd": 28956454.3,
       "exposure_missed_usd": 0,
       "by_asset": {
@@ -13261,7 +13261,7 @@
        "identity": {
         "n_harmful": 29,
         "caught": 29,
-        "paged_before_harm": 29,
+        "paged_before_harm": 0,
         "stopped_usd": 110000.0,
         "missed_usd": 0
        },
@@ -13295,9 +13295,9 @@
      "rate": 0.9939576742931411
     },
     "page_catch_rate": {
-     "k": 859,
+     "k": 721,
      "n": 948,
-     "rate": 0.9066552540489766
+     "rate": 0.7613021456526249
     },
     "early_warning": {
      "k": 827,
@@ -13390,9 +13390,9 @@
        "rate": 1.0
       },
       "page_catch_rate": {
-       "k": 98,
+       "k": 0,
        "n": 98,
-       "rate": 1.0
+       "rate": 0.0
       },
       "early_warning": {
        "k": 98,
@@ -13405,9 +13405,9 @@
        "rate": 1.0
       },
       "any_page_rate": {
-       "k": 98,
+       "k": 0,
        "n": 240,
-       "rate": 0.4054310955151291
+       "rate": 0.0
       }
      },
      "function_authz_probe": {
@@ -13477,9 +13477,9 @@
        "rate": 0.9529411764705882
       },
       "page_catch_rate": {
-       "k": 40,
+       "k": 0,
        "n": 44,
-       "rate": 0.9529411764705882
+       "rate": 0.0
       },
       "early_warning": {
        "k": 44,
@@ -13492,9 +13492,9 @@
        "rate": 0.96
       },
       "any_page_rate": {
-       "k": 59,
+       "k": 0,
        "n": 63,
-       "rate": 0.96
+       "rate": 0.0
       }
      },
      "scraping": {
@@ -13586,15 +13586,15 @@
      }
     },
     "triage": {
-     "pages_per_1000": 198.7677489844516,
+     "pages_per_1000": 173.18330454000716,
      "baseline_pages_per_1000": 251.56386009556272,
-     "pages_avoided_share": 0.20973749542325387,
+     "pages_avoided_share": 0.31111623674367517,
      "page_precision": {
-      "k": 1142,
-      "n": 1212,
-      "rate": 0.9419264165500725
+      "k": 985,
+      "n": 1048,
+      "rate": 0.9394748731477675
      },
-     "normal_pages_per_1000": 58.58313489284213,
+     "normal_pages_per_1000": 52.70742867815287,
      "exposure_stopped_usd": 31473810.288,
      "exposure_missed_usd": 2358.318,
      "by_asset": {
@@ -13629,7 +13629,7 @@
       "identity": {
        "n_harmful": 28.4,
        "caught": 27.6,
-       "paged_before_harm": 27.6,
+       "paged_before_harm": 0.0,
        "stopped_usd": 105000.0,
        "missed_usd": 2000.0
       },
@@ -19791,7 +19791,7 @@
  "triage_cases": {
   "scraper_exporter": "contain",
   "stuffing_failing": "contain",
-  "stuffing_lands": "page_it",
+  "stuffing_lands": "contain",
   "stolen_token_limit_raise": "page_it",
   "ssrf_webhook": "page_it",
   "enumeration_v0": "page_it"

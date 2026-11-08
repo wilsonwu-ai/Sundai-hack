@@ -91,32 +91,27 @@ def load_service(seed: int, sessions_per_agent: int) -> CategoryData:
 
 # ---- netsec (agent 10), lights up when both modules exist ---------------------------------
 
-def _netsec_detector_factory(scorer):
-    for name in ("NetsecDetector", "NetDetector", "Detector", "build_detector", "make_detector"):
-        obj = getattr(scorer, name, None)
-        if callable(obj):
-            probe = obj()
-            if all(callable(getattr(probe, m, None)) for m in ("fit", "calibrate", "score_session")):
-                return obj
-    raise RuntimeError("risk.wilson_net.agent_scorer exposes no detector with fit, calibrate and score_session")
-
-
 def load_netsec(seed: int, sessions_per_agent: int) -> CategoryData:
+    """Agent 10: AgentScorer fitted on good-agent practice sessions on any traffic (attacks included, as in
+    risk/wilson_net/eval.py), calibrated on good-agent validation sessions."""
     try:
         gen_mod = importlib.import_module("bank.agents.netsec.generate")
         scorer = importlib.import_module("risk.wilson_net.agent_scorer")
-        factory = _netsec_detector_factory(scorer)
+        detector_cls = scorer.AgentScorer
         n_agents = NETSEC_FLEET["n_good"] + NETSEC_FLEET["n_bad"]
-        practice, plabels = gen_mod.generate(900, 10_000 + seed, **NETSEC_FLEET)
-        good = [s for s in practice
-                if plabels[s[0]["session_id"]].get("agent_variant") == "good" and not s[0].get("pressure_mode", False)]
+        practice = gen_mod.generate(900, 10_000 + seed, **NETSEC_FLEET)
+        plabels = practice["netsec_labels"]
+        good = [s for s in practice["netsec"]
+                if plabels[s[0]["session_id"]].get("agent_variant") == "good"]  # any traffic: a good agent revoking a stolen token is routine
         train, val = _split_normal(good, seed)
-        test, tlabels = gen_mod.generate(sessions_per_agent * n_agents, seed, **NETSEC_FLEET)
-        variants = {lab["agent_id"]: ("weaker" if lab["agent_variant"] == "bad" else "normal") for lab in tlabels.values()}
+        made = gen_mod.generate(sessions_per_agent * n_agents, seed, **NETSEC_FLEET)
+        test, tlabels = made["netsec"], made["netsec_labels"]
+        variants = {lab["agent_id"]: ("weaker" if lab["agent_variant"] == "bad" else "normal")
+                    for lab in tlabels.values()}
     except Exception as exc:  # the modules are being built; expect "missing" until they land
         return CategoryData("netsec", "missing", note=f"not built yet ({type(exc).__name__}: {exc})")
     return CategoryData("netsec", "generated", _stripped(train), _stripped(val), _stripped(test),
-                        Sealed(variants), factory, "agent 10's generator and agent scorer")
+                        Sealed(variants), detector_cls, "agent 10's generator and AgentScorer")
 
 
 # ---- the team's eight categories -------------------------------------------------------
