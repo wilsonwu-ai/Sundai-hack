@@ -9,7 +9,7 @@ from risk.api.app import create_app
 from risk.behaviorgpt.catalog import catalog_rows, write_catalog
 from risk.behaviorgpt.history import item_id
 from risk.behaviorgpt.ranker import BehaviorGPTRanker
-from risk.ingest.load_logs import DEFAULT_LOG_DIR, load_logs, read_events
+from risk.ingest.load_logs import DEFAULT_LOG_DIR, load_action_vocab, load_logs, read_events
 from risk.scoring.practice import DEFAULT_PRACTICE, TEMPERATURES, context, fit, good_runs
 from risk.scoring.run import auc, score_folder
 from risk.scoring.severity import severity
@@ -91,7 +91,7 @@ def test_severity_table():
 
 
 def test_catalog_covers_every_action(tmp_path):
-    assert len(CATALOG) == len(set(CATALOG)) == 32
+    assert len(CATALOG) == len(set(CATALOG)) == sum(len(a) for a in load_action_vocab().values())
     assert {item_id(e) for e in read_events()} <= set(CATALOG)
     check_catalog_schema(write_catalog(tmp_path / "sundai_actions.parquet"))
 

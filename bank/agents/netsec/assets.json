@@ -1,0 +1,111 @@
+{
+  "note": "Illustrative assumptions for the demo bank, not real figures; a real bank sets its own. The bank size (customers, accounts, daily payment flow) uses round made-up numbers. value_fronted_usd = daily_payment_flow_usd + customers x 150 + accounts x 2500 + the fixed assets (internal_network + admin + exporter).",
+  "assets": {
+    "payments_core": {
+      "routes": [
+        "POST /v1/payees",
+        "PATCH /v1/accounts/{account_id}/limits",
+        "POST /v1/transfers"
+      ],
+      "value_model": "amount",
+      "usd_per_unit": null,
+      "basis": "the amount about to move (the transfer, or the size of the limit raise)"
+    },
+    "credits": {
+      "routes": [
+        "POST /v1/credits",
+        "POST /v1/disputes"
+      ],
+      "value_model": "amount",
+      "usd_per_unit": null,
+      "basis": "the credit or dispute amount"
+    },
+    "customer_data": {
+      "routes": [
+        "GET /v1/customers/{customer_id}",
+        "GET /v1/accounts/{account_id}",
+        "GET /v1/accounts/{account_id}/transactions",
+        "GET /v0/accounts/{account_id}"
+      ],
+      "value_model": "per_record",
+      "usd_per_unit": 150,
+      "basis": "per customer record exposed"
+    },
+    "identity": {
+      "routes": [
+        "POST /v1/auth/token",
+        "POST /v1/auth/mfa/verify",
+        "PATCH /v1/customers/{customer_id}"
+      ],
+      "value_model": "per_account",
+      "usd_per_unit": 2500,
+      "basis": "per account taken over (average balance at risk)"
+    },
+    "internal_network": {
+      "routes": [
+        "POST /v1/webhooks"
+      ],
+      "value_model": "fixed",
+      "usd_per_unit": 1000000,
+      "basis": "a foothold inside the bank's network"
+    },
+    "admin": {
+      "routes": [
+        "GET /v1/admin/users"
+      ],
+      "value_model": "fixed",
+      "usd_per_unit": 5000000,
+      "basis": "full compromise"
+    },
+    "exporter": {
+      "routes": [
+        "POST /v1/exports"
+      ],
+      "value_model": "fixed",
+      "usd_per_unit": 5000,
+      "basis": "nuisance and load (aggregated reports only: rates and branch statistics, no customer data)"
+    },
+    "reads": {
+      "routes": [
+        "GET /v1/me",
+        "GET /v1/accounts",
+        "GET /v1/accounts/{account_id}/balance",
+        "GET /v1/transactions/{txn_id}",
+        "POST /v1/cards/{card_id}/block"
+      ],
+      "value_model": "zero",
+      "usd_per_unit": 0,
+      "basis": "$0 on their own (POST /v1/cards/{card_id}/block is not in the contract's asset table; it is filed here at $0, a protective write)"
+    }
+  },
+  "route_severity": {
+    "GET /v1/me": 0.0,
+    "GET /v1/accounts": 0.0,
+    "GET /v1/accounts/{account_id}": 0.1,
+    "GET /v1/accounts/{account_id}/balance": 0.1,
+    "GET /v1/transactions/{txn_id}": 0.1,
+    "POST /v1/auth/mfa/verify": 0.1,
+    "POST /v1/auth/token": 0.2,
+    "GET /v1/accounts/{account_id}/transactions": 0.2,
+    "POST /v1/exports": 0.2,
+    "GET /v1/customers/{customer_id}": 0.3,
+    "POST /v1/cards/{card_id}/block": 0.3,
+    "GET /v0/accounts/{account_id}": 0.4,
+    "POST /v1/payees": 0.5,
+    "POST /v1/disputes": 0.5,
+    "POST /v1/webhooks": 0.5,
+    "PATCH /v1/customers/{customer_id}": 0.6,
+    "PATCH /v1/accounts/{account_id}/limits": 0.8,
+    "POST /v1/transfers": 0.9,
+    "POST /v1/credits": 0.9,
+    "GET /v1/admin/users": 0.9
+  },
+  "bank": {
+    "customers": 180000,
+    "accounts": 300000,
+    "daily_payment_flow_usd": 85000000,
+    "note": "Round illustrative numbers for the demo bank."
+  },
+  "fixed_assets_usd": 6005000,
+  "value_fronted_usd": 868005000
+}
