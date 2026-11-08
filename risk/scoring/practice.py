@@ -7,7 +7,9 @@ From the practice runs of each agent type, `fit` sets:
 - the temperature: the one under which the good runs are most likely
   (maximum likelihood over a grid), since BehaviorGPT's scores sit close together;
 - the thresholds: pause is set so that at most `budget` (5%) of good runs get
-  any pause; log and review are fixed fractions of it.
+  any pause; log and review are fixed fractions of it. Each role gets its own
+  line from its own good runs; a role with no practice runs uses the line set
+  on all of them.
 
 Every practice run is scored with the other practice runs as its context
 (leave one out), never with itself. risk/eval/practice_logs/ is a hand-written
@@ -16,6 +18,7 @@ stand-in until the agent team hands over the real practice set.
 
 import math
 from collections import defaultdict
+from dataclasses import asdict
 
 from risk.behaviorgpt.history import item_id
 from risk.ingest.load_logs import REPO_ROOT, load_action_vocab, load_logs
@@ -36,9 +39,12 @@ def good_runs(folder) -> dict[str, list[list[dict]]]:
     return dict(runs)
 
 
+MAX_CONTEXT = 40  # priming items at most: long runs would otherwise make very long histories
+
+
 def context(runs: list[list[dict]], k: int, exclude: list[dict] | None = None) -> tuple[str, ...]:
     picked = [r for r in runs if r is not exclude][-k:]
-    return tuple(item_id(e) for r in picked for e in r)
+    return tuple(item_id(e) for r in picked for e in r)[-MAX_CONTEXT:]
 
 
 def fit(
@@ -75,17 +81,26 @@ def fit(
             "uniform_log_likelihood_per_step": round(uniform / len(cases), 3),
         }
 
-    scores = sorted(
-        detector.score_session(run, context=context(runs, k, exclude=run))["risk"]
-        for runs in runs_by_type.values()
-        for run in runs
-    )
-    allowed = math.floor(budget * len(scores))  # good runs that may get a pause
-    pause = round(scores[-(allowed + 1)] + 0.001, 3)
-    detector.thresholds = Thresholds(
-        log=round(LOG_SHARE * pause, 3), review=round(REVIEW_SHARE * pause, 3), pause=pause
-    )
-    report["thresholds"] = {"log": detector.thresholds.log, "review": detector.thresholds.review, "pause": pause}
+    by_type = {
+        t: sorted(detector.score_session(run, context=context(runs, k, exclude=run))["risk"] for run in runs)
+        for t, runs in runs_by_type.items()
+    }
+    scores = sorted(s for type_scores in by_type.values() for s in type_scores)
+    # one line for all roles (the fallback), and one per role from its own good runs:
+    # roles differ in what is normal (PRD open question), so each gets the same 5% budget
+    detector.thresholds = pause_line(scores, budget)
+    detector.thresholds_by_type = {t: pause_line(s, budget) for t, s in by_type.items()}
+    report["thresholds"] = asdict(detector.thresholds)
+    report["thresholds_by_type"] = {t: asdict(th) for t, th in detector.thresholds_by_type.items()}
     report["good_run_scores"] = scores
+    report["good_run_scores_by_type"] = by_type
     detector.fit_report = report
     return report
+
+
+def pause_line(scores: list[float], budget: float) -> Thresholds:
+    """Pause just above the good runs, letting at most `budget` of them reach it."""
+    scores = sorted(scores)
+    allowed = math.floor(budget * len(scores))
+    pause = round(scores[-(allowed + 1)] + 0.001, 3)
+    return Thresholds(log=round(LOG_SHARE * pause, 3), review=round(REVIEW_SHARE * pause, 3), pause=pause)

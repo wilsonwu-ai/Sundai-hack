@@ -326,10 +326,11 @@ function placeTip(wrap, s, tip, x, y, W, H) {
 }
 const legend = () => el("div", { class: "legend" }, BY_LEVEL.map((d) => pill(d)));
 
-function refLines(s, W, m, y, names) {
+const thresholdsFor = (type) => (S.thresholdsByType && S.thresholdsByType[type]) || S.thresholds;
+function refLines(s, W, m, y, names, type) {
   const words = { log: "Note", review: "Review", pause: "Auto-pause" };
   for (const name of names) {
-    const v = S.thresholds[name];
+    const v = thresholdsFor(type)[name];
     if (v > 1) continue;
     s.append(svg("line", { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v), stroke: "var(--axis)", "stroke-width": 1, "stroke-dasharray": name === "pause" ? null : "3 4" }));
     s.append(svg("text", { x: W - m.r + 8, y: y(v) + 4 }, words[name]));
@@ -345,7 +346,7 @@ function sessionColumns(sessions) {
   const wrap = el("div", { class: "chart" });
   const s = svg("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": `Risk of ${n} sessions; the sessions list below has every one` });
   s.append(svg("line", { x1: m.l, x2: W - m.r, y1: y(0), y2: y(0), stroke: "var(--axis)", "stroke-width": 1 }));
-  refLines(s, W, m, y, ["review", "pause"]);
+  refLines(s, W, m, y, ["review", "pause"], sessions[0] && sessions[0].type);
   const every = Math.ceil(n / 10);
   sessions.forEach((t, i) => {
     const x0 = cx(i) - bw / 2, x1 = cx(i) + bw / 2, yt = y(Math.max(t.risk, 0.02)), yb = y(0), r = Math.min(5, bw / 2, yb - yt);
@@ -382,7 +383,7 @@ function stepLine(steps, onPick) {
   const wrap = el("div", { class: "chart" });
   const s = svg("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": `How risk built up over ${n} steps; the steps below have every value` });
   s.append(svg("line", { x1: m.l, x2: W - m.r, y1: y(0), y2: y(0), stroke: "var(--axis)", "stroke-width": 1 }));
-  refLines(s, W, m, y, ["review", "pause"]);
+  refLines(s, W, m, y, ["review", "pause"], steps[0] && steps[0].agent_type);
   steps.forEach((st, i) => s.append(svg("text", { x: x(i), y: H - 8, "text-anchor": "middle" }, `Step ${st.step}`)));
   s.append(svg("path", { d: steps.map((st, i) => `${i ? "L" : "M"}${x(i)},${y(st.risk)}`).join(""), fill: "none", stroke: "var(--ink)", "stroke-opacity": 0.55, "stroke-width": 2, "stroke-linejoin": "round", "stroke-linecap": "round" }));
   steps.forEach((st, i) => s.append(svg("circle", { cx: x(i), cy: y(st.risk), r: 6, fill: LEVELS[st.decision].color, stroke: "var(--surface)", "stroke-width": 2.5 })));
@@ -519,6 +520,10 @@ function overviewPage(M, q) {
       ["Sessions needing attention", `${attention.length} of ${M.sessions.length}`,
         M.pending.length ? `${M.pending.length} waiting for approval` : levelCounts(M.sessions.map((t) => t.decision)) || "none yet"],
     ]),
+    el("div", { style: "margin-top:14px;display:flex;flex-wrap:wrap;gap:8px 18px;font-size:14px;color:var(--ink-2)" },
+      el("span", {}, `${plural(M.sessions.filter((t) => needsAttention(t.decision)).length, "risky session")} · ${plural(M.agents.filter((a) => needsAttention(a.decision)).length, "risky assistant")}`),
+      el("a", { href: `/report?format=csv${S.tenant === "all" ? "" : `&tenant=${encodeURIComponent(S.tenant)}`}`, style: "text-decoration:underline;text-underline-offset:3px;font-weight:600" }, "Download the list (spreadsheet)"),
+      el("a", { href: `/report${S.tenant === "all" ? "" : `?tenant=${encodeURIComponent(S.tenant)}`}`, target: "_blank", style: "text-decoration:underline;text-underline-offset:3px" }, "Full report (JSON)")),
     M.multi ? block("Organisations", "each organisation's assistants, kept apart · choose one to focus on it",
       el("div", { class: "agrid" }, M.orgs.map((o) => orgCard(o, () => setTenant(S.tenant === o.id ? "all" : o.id), S.tenant === o.id)))) : null,
     block("Assistants", null, M.agents.length ? el("div", { class: "agrid" }, M.agents.map((a) => assistantCard(a, M))) : el("div", { class: "card" }, el("div", { class: "empty" }, "No assistants here yet."))),
@@ -850,6 +855,7 @@ async function init() {
   const [L, cats, flags, health] = await Promise.all([get("/labels", S.L), get("/categories", []), get("/flags", {}), get("/healthz", null)]);
   S.L = L; S.categories = cats; S.catById = Object.fromEntries(cats.map((c) => [c.id, c])); S.flags = flags;
   if (health && health.detector_config && health.detector_config.thresholds) S.thresholds = health.detector_config.thresholds;
+  if (health && health.detector_config) S.thresholdsByType = health.detector_config.thresholds_by_type || {};
   window.addEventListener("hashchange", () => render(true));
   render(true);
   pollSteps();

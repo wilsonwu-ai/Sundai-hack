@@ -1,5 +1,6 @@
 """The trace monitor's API: OTLP ingest, the events API, per-agent views and risk."""
 
+import json
 import logging
 from pathlib import Path
 from typing import Any, Literal
@@ -18,6 +19,9 @@ from risk.ingest.events import check, from_span, tenant_of
 from risk.ingest.load_logs import LogValidationError
 from risk.ingest.otlp import JSON, PROTOBUF, OTLPDecodeError, decode_request, encode_response, iter_spans, media_type
 from risk.scoring.categories import CATEGORIES, flag_info
+from risk.scoring.report import build as build_report
+from risk.scoring.report import from_step_rows as report_traces
+from risk.scoring.report import to_csv as report_csv
 from risk.scoring.detector import Detector, NoDetector
 from risk.store import DEFAULT_TENANT, Store, by_session
 
@@ -322,6 +326,18 @@ def create_app(db_path: str | Path, detector: Detector | None = None) -> FastAPI
         if not scores:
             raise HTTPException(404, f"no scores for session {session_id!r}")
         return scores
+
+    @app.get("/report", tags=["live"])
+    def risky_report(tenant: str | None = None, format: Literal["json", "csv"] = "json") -> Response:
+        """Which traces and agents are risky right now: counts, lists and scores, to
+        compare with the ground truth later. `format=csv` gives the traces as a table."""
+        rows = [r for r in store.scores_since(0, 10_000_000) if tenant is None or r["tenant"] == tenant]
+        info = detector.info() if hasattr(detector, "info") else None
+        report = build_report(report_traces(rows), info, f"live{'' if tenant is None else f' · {tenant}'}")
+        if format == "csv":
+            return Response(report_csv(report), media_type="text/csv",
+                            headers={"content-disposition": 'attachment; filename="risky-traces.csv"'})
+        return Response(json.dumps(report), media_type="application/json")
 
     @app.get("/categories", tags=["live"])
     def categories() -> list[dict]:

@@ -135,16 +135,22 @@ def test_monitor_scores_agents_live(tmp_path):
 
 def test_fit_on_practice_runs_primes_and_calibrates():
     runs = good_runs(DEFAULT_PRACTICE)
-    assert sorted(runs) == ["disputes", "kyc", "payments", "support"] and len(runs["kyc"]) == 3
+    assert sorted(runs) == ["disputes", "kyc", "netsec", "payments", "service", "support"] and len(runs["kyc"]) == 3
 
     detector = SurpriseSeverityDetector(FakeRanker())
     report = fit(detector, runs)
     assert detector.temperature == report["temperature"] and detector.temperature in TEMPERATURES
-    assert report["practice_runs"] == 12
+    assert report["practice_runs"] == sum(len(r) for r in runs.values())
+    # each role gets its own pause line from its own good runs, with the same budget
+    assert set(detector.thresholds_by_type) == set(runs)
+    for agent_type, scores in report["good_run_scores_by_type"].items():
+        line = detector.thresholds_by_type[agent_type].pause
+        assert sum(score >= line for score in scores) <= int(0.05 * len(scores)), agent_type
     # primed with the practice routine, ending with the last practice run
     assert detector.context["payments"][-3:] == ("payments.add_beneficiary", "payments.confirm_2fa", "payments.send_ach")
-    # 5% of 12 good runs rounds down to none: no practice run may reach the pause line
-    assert detector.thresholds.pause > max(report["good_run_scores"])
+    # at most 5% of the good runs may reach the pause line
+    paused = sum(score >= detector.thresholds.pause for score in report["good_run_scores"])
+    assert paused <= int(0.05 * len(report["good_run_scores"]))
     assert detector.thresholds.log < detector.thresholds.review < detector.thresholds.pause
 
 
@@ -158,7 +164,8 @@ def test_practice_runs_never_prime_themselves():
 def test_severity_only_pause_line_is_set_on_practice_runs():
     detector = build_detector(severity_only=True, practice_dir=DEFAULT_PRACTICE)
     assert detector.name == "severity_only"
-    assert detector.thresholds.pause == 0.901  # the practice set's send_wire, severity 0.9, must not pause
+    scores = detector.fit_report["good_run_scores"]
+    assert sum(s >= detector.thresholds.pause for s in scores) <= int(0.05 * len(scores))  # the 5% budget
 
 
 @pytest.mark.parametrize("session", ["s_004", "s_006", "s_008"])

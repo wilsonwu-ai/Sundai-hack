@@ -80,13 +80,18 @@ class SurpriseSeverityDetector:
         self.epsilon = epsilon
         self.thresholds = thresholds
         self.context = context or {}  # agent_type -> item ids of good runs to prime with
+        self.thresholds_by_type: dict[str, Thresholds] = {}  # set per role by practice.fit
         self.fit_report: dict | None = None
+
+    def thresholds_for(self, agent_type: str) -> Thresholds:
+        return self.thresholds_by_type.get(agent_type, self.thresholds)
 
     def info(self) -> dict:
         return {
             "name": self.name,
             "temperature": self.temperature,
             "thresholds": asdict(self.thresholds),
+            "thresholds_by_type": {t: asdict(th) for t, th in self.thresholds_by_type.items()},
             "primed_actions": {t: len(c) for t, c in self.context.items()},
             "role_rules": self.role_rules,
             "p_unsafe_at": P_AT,
@@ -102,6 +107,7 @@ class SurpriseSeverityDetector:
         decision = worst(s["decision"] for s in scored.values())
         return {
             "agent_id": agent_id,
+            "agent_type": next(iter(sessions.values()))[0]["agent_type"] if sessions else None,
             "status": "scored",
             "detector": self.name,
             "risk": max(runs),
@@ -126,7 +132,7 @@ class SurpriseSeverityDetector:
             self.score_step(e, r, role_flags(events, k) if self.role_rules else [])
             for k, (e, r) in enumerate(zip(events, rankings))
         ]
-        dollars = add_dollars(events, steps, self.thresholds)
+        dollars = add_dollars(events, steps, self.thresholds_for(events[0]["agent_type"]) if events else self.thresholds)
         for event, step in zip(events, steps):
             step["categories"] = categorize(event, step)
             step["customer_id"] = event["params"].get("customer_id")
@@ -177,7 +183,7 @@ class SurpriseSeverityDetector:
             said = [] if expected == event["action"] else [f"model expected {expected} ({p_top:.0%}), this was {p:.0%}"]
         base = surprise * sev
         risk = round(min(1.0, base + FLAG_WEIGHT * sev * len(flags)), 3)
-        decision = self.thresholds.decide(risk)
+        decision = self.thresholds_for(event["agent_type"]).decide(risk)
         return step | {
             "surprise": round(surprise, 3),
             "severity": round(sev, 3),

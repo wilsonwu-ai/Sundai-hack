@@ -39,7 +39,7 @@ def test_rules_only_read_the_steps_so_far():
 
 
 def test_every_role_has_a_rule_or_a_dollar_figure():
-    assert sorted(ROLES) == ["collections", "disputes", "kyc", "ops", "payments", "sales", "support", "underwriting"]
+    assert sorted(ROLES) == ["collections", "disputes", "kyc", "netsec", "ops", "payments", "sales", "service", "support", "underwriting"]
     assert all(r.money or r.costs for r in ROLES.values())
 
 
