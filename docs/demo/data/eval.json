@@ -1,0 +1,94 @@
+{
+  "sample": false,
+  "synthetic": true,
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "sessions_per_seed": 1500,
+  "rows": [
+    {
+      "name": "G0, Markov order 2",
+      "group": "G0",
+      "order": 2,
+      "auc": 0.9954,
+      "catch_rate": 0.8508,
+      "early_warning": 0.2156,
+      "false_alarm_rate": 0.0077,
+      "lead_time_steps": 0.2824
+    },
+    {
+      "name": "G1, Markov order 2",
+      "group": "G1",
+      "order": 2,
+      "auc": 0.9976,
+      "catch_rate": 0.8859,
+      "early_warning": 0.2156,
+      "false_alarm_rate": 0.0081,
+      "lead_time_steps": 0.2827
+    },
+    {
+      "name": "G2, Markov order 2",
+      "group": "G2",
+      "order": 2,
+      "auc": 0.9983,
+      "catch_rate": 0.9525,
+      "early_warning": 0.302,
+      "false_alarm_rate": 0.0101,
+      "lead_time_steps": 0.4888
+    },
+    {
+      "name": "G3, Markov order 2",
+      "group": "G3",
+      "order": 2,
+      "auc": 0.9983,
+      "catch_rate": 0.9525,
+      "early_warning": 0.302,
+      "false_alarm_rate": 0.0101,
+      "lead_time_steps": 0.4888
+    },
+    {
+      "name": "G3, Markov order 1",
+      "group": "G3",
+      "order": 1,
+      "auc": 0.9916,
+      "catch_rate": 0.9314,
+      "early_warning": 0.372,
+      "false_alarm_rate": 0.0079,
+      "lead_time_steps": 0.61
+    },
+    {
+      "name": "G3, Markov order 3",
+      "group": "G3",
+      "order": 3,
+      "auc": 0.9983,
+      "catch_rate": 0.9693,
+      "early_warning": 0.302,
+      "false_alarm_rate": 0.0149,
+      "lead_time_steps": 0.4888
+    },
+    {
+      "name": "Severity only",
+      "group": null,
+      "order": null,
+      "auc": 0.9468,
+      "catch_rate": 0.0,
+      "early_warning": 0.2446,
+      "false_alarm_rate": 0.0,
+      "lead_time_steps": 0.2594
+    },
+    {
+      "name": "Surprise only",
+      "group": null,
+      "order": null,
+      "auc": 0.9064,
+      "catch_rate": 0.9577,
+      "early_warning": 0.6425,
+      "false_alarm_rate": 0.1984,
+      "lead_time_steps": 1.094
+    }
+  ]
+}

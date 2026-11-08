@@ -42,3 +42,14 @@ Thumbs.db
 
 # --- Claude Code local settings ---
 .claude/settings.local.json
+
+# --- Generated agent output: regenerate with each agent's generate.py (hero cases are kept) ---
+bank/agents/customer_service/out/*
+!bank/agents/customer_service/out/hero/
+bank/agents/netsec/out/*
+!bank/agents/netsec/out/hero/
+
+# --- Third-party files we use locally but do not redistribute ---
+bank/data/bitext_banking.jsonl
+docs/fleet/motion/gsap.min.js
+docs/motion/src/

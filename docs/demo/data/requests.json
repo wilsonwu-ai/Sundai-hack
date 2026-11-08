@@ -1,0 +1,40 @@
+{
+  "sample": false,
+  "source": {
+    "name": "PolyAI/banking77",
+    "url": "https://huggingface.co/datasets/PolyAI/banking77",
+    "license": "CC-BY-4.0"
+  },
+  "requests": [
+    {
+      "text": "Just today there was a purchase on my card that wasn't done by me. Can this be reversed and my card be frozen? I can't have this continue!",
+      "intent": "card_payment_not_recognised",
+      "source": "PolyAI/banking77"
+    },
+    {
+      "text": "Several items I have charged this week are appearing twice.  Please review my statement and remove any duplicate charges.",
+      "intent": "transaction_charged_twice",
+      "source": "PolyAI/banking77"
+    },
+    {
+      "text": "How long does it take to get a refund on something I bought?",
+      "intent": "request_refund",
+      "source": "PolyAI/banking77"
+    },
+    {
+      "text": "Someone might have had access to my card.",
+      "intent": "compromised_card",
+      "source": "PolyAI/banking77"
+    },
+    {
+      "text": "There is a 1£ charge that appears as pending on my statement. What is that? I haven't purchased anything for a pound there.",
+      "intent": "extra_charge_on_statement",
+      "source": "PolyAI/banking77"
+    },
+    {
+      "text": "I am still waiting on my card?",
+      "intent": "card_arrival",
+      "source": "PolyAI/banking77"
+    }
+  ]
+}

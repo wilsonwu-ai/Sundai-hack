@@ -53,7 +53,33 @@ The picture below is an illustrative run of the same idea, where the pressure is
 
 ![An illustrative payments run](docs/diagrams/payments-run.png)
 
-**Result.** None yet. At the demo we report, from the evaluation plan in [PRD section 8](docs/PRD.md#8-evaluation-plan): ranking quality (AUC) over sessions and over agents; catch rate at a fixed pause budget, with at most 5% of normal sessions paused; early warning and lead time, meaning how many steps before the harmful one the meter rose; false alarms; and how much history the model needs (Markov orders 1, 2 and 3). Each sits next to a severity-only baseline, every miss is listed, and the result is posted whatever it is.
+**Result.** None yet for the team's eight agents. At the demo we report, from the evaluation plan in [PRD section 8](docs/PRD.md#8-evaluation-plan): ranking quality (AUC) over sessions and over agents; catch rate at a fixed pause budget, with at most 5% of normal sessions paused; early warning and lead time, meaning how many steps before the harmful one the meter rose; false alarms; and how much history the model needs (Markov orders 1, 2 and 3). Each sits next to a severity-only baseline, every miss is listed, and the result is posted whatever it is. The first synthetic numbers, from agent 9, are in the next section; they are not the team's result.
+
+## Agents 9 and 10, and the fleet view (Wilson Wu)
+
+Two more agents on the same contract, each with its own risk check, plus one view across the whole fleet. Everything here is synthetic. There is a page to click through: [`docs/index.html`](docs/index.html), served by GitHub Pages from `docs/`, and its [presenter script](docs/demo/how-to-demo.md).
+
+- **Agent 9, `service`** ([contract](docs/customer-service-agent.md)): the bank's customer service agent, in a good and a weaker variant. It answers real customer requests from BANKING77 (CC-BY-4.0), with prompt injections from deepset/prompt-injections (Apache-2.0) mixed in. The use case is two customers asking to cancel the same large Amazon charge: one is telling the truth, the other hides an instruction in the message. A separate risk agent ([`risk/wilson_cs/`](risk/wilson_cs/)) reads only the logged actions and scores each step before it runs.
+- **Agent 10, `netsec`** ([contract](docs/network-agent.md)): watches the bank's API traffic for unusual requests. Every asset carries a dollar value, so a scraper hammering a low-value exporter is contained without paging the IT team, while a stolen token raising a transfer limit pages them before the money moves.
+- **Fleet risk** ([contract](docs/fleet-risk.md)): what share of the agents in each category is risky, which one is worst and why.
+
+**Which metadata does the risk side need?** Agent 9's answer, from 5 seeds of 1,500 synthetic sessions each (means; full tables in [`risk/wilson_cs/results/eval.md`](risk/wilson_cs/results/eval.md)):
+
+| What the risk agent sees | Harmful sessions paused at or before the first harmful step | Sessions with a false pause |
+|---|---|---|
+| G0: action names and order only | 85% | 1% |
+| G1: + outcome, permission level and policy check | 89% | 1% |
+| G2: + evidence about the charge and the account (3-D Secure, device match, delivery, prior disputes, recent contact change, verification result) | 95% | 1% |
+| G3: + a keyword screen for injected text | 95% | 1% |
+| Severity alone, no sequence model | 0% | 0% |
+
+Stripping the evidence about the charge costs 10 points of catch rate; the cheap keyword screen adds nothing once that evidence is there. In the Amazon case the risk agent pauses the weaker agent's credit before it runs, and lets both genuine requests through with a routine review of the provisional credit. Treat these numbers as a ceiling: the agent simulator and the risk agent were written to the same contract.
+
+```bash
+python3 -m bank.agents.customer_service.run --sessions 300 --seed 1 --out bank/agents/customer_service/out --hero
+python3 -m risk.wilson_cs.eval --seeds 1 2 3 4 5 --sessions 1500
+python3 docs/demo/build_data.py && python3 -m http.server 8765 --directory docs
+```
 
 ## The repo
 
@@ -65,7 +91,11 @@ Layout, contracts and rules from Vivek Chaudhari's starter skeleton.
 | `web/` | Agent team |
 | `risk/` | Risk team |
 | `shared/` | Both teams. **Announce in team chat before changing anything here.** |
-| `docs/` | PRD, explainer, diagrams, motion |
+| `docs/` | PRD, explainer, diagrams, motion, research note, and the demo page (`docs/index.html`, `docs/demo/`, `docs/fleet/`) |
+| `bank/agents/customer_service/`, `risk/wilson_cs/` | Wilson Wu: agent 9 and its risk agent |
+| `bank/agents/netsec/`, `risk/wilson_net/` | Wilson Wu: agent 10 and the network detector |
+| `risk/fleet/` | Wilson Wu: the fleet risk scorecard |
+| `bank/data/` | Hugging Face samples with their licenses ([`bank/data/README.md`](bank/data/README.md)) |
 
 Key shared contracts:
 
@@ -135,6 +165,8 @@ This is a hack-day experiment, not a compliance control and not legal advice.
 ## Docs
 
 - [Product requirements (PRD)](docs/PRD.md): goals, the two teams, the contract, the answer-sealing protocol, the evaluation plan and the timeline.
+- [Research note](docs/research/markov-anomaly-detection.md): Markov and n-gram detectors from system calls to agent traces, scoring before the money moves, and OpenTelemetry for agents, with every quote checked against its source.
+- Build contracts for [agent 9](docs/customer-service-agent.md), [agent 10](docs/network-agent.md) and the [fleet view](docs/fleet-risk.md).
 - [Five-picture explainer](docs/explainer/how-it-works.html)
 - Diagrams: [two teams](docs/diagrams/two-teams.svg) and [payments run](docs/diagrams/payments-run.svg)
 - Motion: [payments gate](docs/motion/payments-gate.mp4), illustrative. It was drawn before the eight agent types were fixed; an updated cut is next.
@@ -146,7 +178,7 @@ This is a hack-day experiment, not a compliance control and not legal advice.
 - **Vivek Chaudhari**, repo skeleton, log schema, action list and sample sessions ([LinkedIn](https://www.linkedin.com/in/vivek-kirankumar-chaudhari))
 - **Rushang Karia**, live risk monitor: OpenTelemetry ingest, API and detector hook ([LinkedIn](https://www.linkedin.com/in/rushangkaria))
 - **Nora Panholzer** ([LinkedIn](https://www.linkedin.com/in/norapanholzer))
-- **Wilson Wu**, PRD and docs ([LinkedIn](https://www.linkedin.com/in/wilson1wu))
+- **Wilson Wu**, PRD, research note and the demo page; agent 9 (customer service) and agent 10 (network watch) with their risk checks, and the fleet risk view ([LinkedIn](https://www.linkedin.com/in/wilson1wu))
 
 ## Credits
 
@@ -159,4 +191,4 @@ This is a hack-day experiment, not a compliance control and not legal advice.
 
 ## License
 
-No license yet. The repo owner, Zac Thomas, will choose one.
+MIT, see [LICENSE](LICENSE). The public dataset samples in `bank/data/` keep their own licenses, listed in [bank/data/README.md](bank/data/README.md) and [bank/data/net/README.md](bank/data/net/README.md).

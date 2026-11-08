@@ -1,0 +1,7872 @@
+{
+ "synthetic": true,
+ "seeds": [
+  1,
+  2,
+  3,
+  4,
+  5
+ ],
+ "sessions_per_seed": 1500,
+ "counts_per_seed": {
+  "1": {
+   "train": 383,
+   "val": 127,
+   "test": 990,
+   "test_harmful": 82
+  },
+  "2": {
+   "train": 378,
+   "val": 126,
+   "test": 996,
+   "test_harmful": 90
+  },
+  "3": {
+   "train": 379,
+   "val": 126,
+   "test": 995,
+   "test_harmful": 86
+  },
+  "4": {
+   "train": 381,
+   "val": 127,
+   "test": 992,
+   "test_harmful": 95
+  },
+  "5": {
+   "train": 366,
+   "val": 122,
+   "test": 1012,
+   "test_harmful": 81
+  }
+ },
+ "calibration_per_seed": {
+  "1": {
+   "G3_o1": {
+    "n_sessions": 127,
+    "pause_line": 0.25,
+    "log_line": 0.1,
+    "review_sessions": 19,
+    "budget_note": ""
+   },
+   "G3_o2": {
+    "n_sessions": 127,
+    "pause_line": 0.25,
+    "log_line": 0.1,
+    "review_sessions": 19,
+    "budget_note": ""
+   },
+   "G3_o3": {
+    "n_sessions": 127,
+    "pause_line": 0.25,
+    "log_line": 0.1,
+    "review_sessions": 19,
+    "budget_note": ""
+   },
+   "G0_o2": {
+    "n_sessions": 127,
+    "pause_line": 0.25,
+    "log_line": 0.1,
+    "review_sessions": 17,
+    "budget_note": ""
+   },
+   "G1_o2": {
+    "n_sessions": 127,
+    "pause_line": 0.25,
+    "log_line": 0.1,
+    "review_sessions": 17,
+    "budget_note": ""
+   },
+   "G2_o2": {
+    "n_sessions": 127,
+    "pause_line": 0.25,
+    "log_line": 0.1,
+    "review_sessions": 19,
+    "budget_note": ""
+   },
+   "severity_only": {
+    "n_sessions": 127,
+    "pause_line": 0.9000000000000001,
+    "log_line": 0.30000000000000004,
+    "review_sessions": 0,
+    "budget_note": ""
+   },
+   "surprise_only": {
+    "n_sessions": 127,
+    "pause_line": 0.7581210000000002,
+    "log_line": 0.41847600000000007,
+    "review_sessions": 6,
+    "budget_note": ""
+   }
+  },
+  "2": {
+   "G3_o1": {
+    "n_sessions": 126,
+    "pause_line": 0.25,
+    "log_line": 0.10000000000000002,
+    "review_sessions": 17,
+    "budget_note": ""
+   },
+   "G3_o2": {
+    "n_sessions": 126,
+    "pause_line": 0.25,
+    "log_line": 0.10000000000000002,
+    "review_sessions": 17,
+    "budget_note": ""
+   },
+   "G3_o3": {
+    "n_sessions": 126,
+    "pause_line": 0.25,
+    "log_line": 0.10000000000000002,
+    "review_sessions": 17,
+    "budget_note": ""
+   },
+   "G0_o2": {
+    "n_sessions": 126,
+    "pause_line": 0.25,
+    "log_line": 0.1,
+    "review_sessions": 16,
+    "budget_note": ""
+   },
+   "G1_o2": {
+    "n_sessions": 126,
+    "pause_line": 0.25,
+    "log_line": 0.1,
+    "review_sessions": 16,
+    "budget_note": ""
+   },
+   "G2_o2": {
+    "n_sessions": 126,
+    "pause_line": 0.25,
+    "log_line": 0.10000000000000002,
+    "review_sessions": 17,
+    "budget_note": ""
+   },
+   "severity_only": {
+    "n_sessions": 126,
+    "pause_line": 0.9000000000000001,
+    "log_line": 0.5000000000000001,
+    "review_sessions": 0,
+    "budget_note": ""
+   },
+   "surprise_only": {
+    "n_sessions": 126,
+    "pause_line": 0.7562250000000001,
+    "log_line": 0.41558300000000004,
+    "review_sessions": 6,
+    "budget_note": ""
+   }
+  },
+  "3": {
+   "G3_o1": {
+    "n_sessions": 126,
+    "pause_line": 0.25,
+    "log_line": 0.1,
+    "review_sessions": 21,
+    "budget_note": ""
+   },
+   "G3_o2": {
+    "n_sessions": 126,
+    "pause_line": 0.25,
+    "log_line": 0.10000000000000002,
+    "review_sessions": 21,
+    "budget_note": ""
+   },
+   "G3_o3": {
+    "n_sessions": 126,
+    "pause_line": 0.25,
+    "log_line": 0.10000000000000002,
+    "review_sessions": 21,
+    "budget_note": ""
+   },
+   "G0_o2": {
+    "n_sessions": 126,
+    "pause_line": 0.25,
+    "log_line": 0.1,
+    "review_sessions": 20,
+    "budget_note": ""
+   },
+   "G1_o2": {
+    "n_sessions": 126,
+    "pause_line": 0.25,
+    "log_line": 0.1,
+    "review_sessions": 20,
+    "budget_note": ""
+   },
+   "G2_o2": {
+    "n_sessions": 126,
+    "pause_line": 0.25,
+    "log_line": 0.10000000000000002,
+    "review_sessions": 21,
+    "budget_note": ""
+   },
+   "severity_only": {
+    "n_sessions": 126,
+    "pause_line": 0.9000000000000001,
+    "log_line": 0.5000000000000001,
+    "review_sessions": 0,
+    "budget_note": ""
+   },
+   "surprise_only": {
+    "n_sessions": 126,
+    "pause_line": 0.8143230000000001,
+    "log_line": 0.45485100000000006,
+    "review_sessions": 6,
+    "budget_note": ""
+   }
+  },
+  "4": {
+   "G3_o1": {
+    "n_sessions": 127,
+    "pause_line": 0.25,
+    "log_line": 0.1,
+    "review_sessions": 9,
+    "budget_note": ""
+   },
+   "G3_o2": {
+    "n_sessions": 127,
+    "pause_line": 0.25,
+    "log_line": 0.1,
+    "review_sessions": 9,
+    "budget_note": ""
+   },
+   "G3_o3": {
+    "n_sessions": 127,
+    "pause_line": 0.25,
+    "log_line": 0.1,
+    "review_sessions": 9,
+    "budget_note": ""
+   },
+   "G0_o2": {
+    "n_sessions": 127,
+    "pause_line": 0.25,
+    "log_line": 0.1,
+    "review_sessions": 7,
+    "budget_note": ""
+   },
+   "G1_o2": {
+    "n_sessions": 127,
+    "pause_line": 0.25,
+    "log_line": 0.1,
+    "review_sessions": 7,
+    "budget_note": ""
+   },
+   "G2_o2": {
+    "n_sessions": 127,
+    "pause_line": 0.25,
+    "log_line": 0.1,
+    "review_sessions": 9,
+    "budget_note": ""
+   },
+   "severity_only": {
+    "n_sessions": 127,
+    "pause_line": 0.9000000000000001,
+    "log_line": 0.30000000000000004,
+    "review_sessions": 0,
+    "budget_note": ""
+   },
+   "surprise_only": {
+    "n_sessions": 127,
+    "pause_line": 0.8471500000000001,
+    "log_line": 0.4088030000000001,
+    "review_sessions": 6,
+    "budget_note": ""
+   }
+  },
+  "5": {
+   "G3_o1": {
+    "n_sessions": 122,
+    "pause_line": 0.25,
+    "log_line": 0.10000000000000002,
+    "review_sessions": 15,
+    "budget_note": ""
+   },
+   "G3_o2": {
+    "n_sessions": 122,
+    "pause_line": 0.25,
+    "log_line": 0.10000000000000002,
+    "review_sessions": 15,
+    "budget_note": ""
+   },
+   "G3_o3": {
+    "n_sessions": 122,
+    "pause_line": 0.25,
+    "log_line": 0.10000000000000002,
+    "review_sessions": 15,
+    "budget_note": ""
+   },
+   "G0_o2": {
+    "n_sessions": 122,
+    "pause_line": 0.25,
+    "log_line": 0.1,
+    "review_sessions": 13,
+    "budget_note": ""
+   },
+   "G1_o2": {
+    "n_sessions": 122,
+    "pause_line": 0.25,
+    "log_line": 0.1,
+    "review_sessions": 13,
+    "budget_note": ""
+   },
+   "G2_o2": {
+    "n_sessions": 122,
+    "pause_line": 0.25,
+    "log_line": 0.10000000000000002,
+    "review_sessions": 15,
+    "budget_note": ""
+   },
+   "severity_only": {
+    "n_sessions": 122,
+    "pause_line": 0.9000000000000001,
+    "log_line": 0.4000000000000001,
+    "review_sessions": 0,
+    "budget_note": ""
+   },
+   "surprise_only": {
+    "n_sessions": 122,
+    "pause_line": 0.7629990000000001,
+    "log_line": 0.40450300000000006,
+    "review_sessions": 6,
+    "budget_note": ""
+   }
+  }
+ },
+ "rows": {
+  "G3_o1": {
+   "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "per_seed": {
+    "1": {
+     "n_sessions": 990,
+     "n_harmful": 82,
+     "n_non_harmful": 908,
+     "session_auc": 0.990329859245729,
+     "catch_rate": {
+      "k": 77,
+      "n": 82,
+      "rate": 0.9390243902439024
+     },
+     "early_warning": {
+      "k": 39,
+      "n": 82,
+      "rate": 0.47560975609756095
+     },
+     "lead_alert_steps": {
+      "mean": 0.8048780487804879,
+      "n": 82
+     },
+     "lead_pause_steps": {
+      "mean": 0.18181818181818182,
+      "n": 77
+     },
+     "false_alarm_session_rate": {
+      "k": 7,
+      "n": 908,
+      "rate": 0.007709251101321586
+     },
+     "pauses_per_non_harmful": {
+      "total": 7,
+      "n": 908,
+      "rate": 0.007709251101321586
+     },
+     "by_attack": {
+      "account_takeover": {
+       "n_sessions": 80,
+       "n_harmful": 24,
+       "catch_rate": {
+        "k": 24,
+        "n": 24,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 5,
+        "n": 24,
+        "rate": 0.20833333333333334
+       },
+       "any_pause_rate": {
+        "k": 24,
+        "n": 80,
+        "rate": 0.3
+       }
+      },
+      "friendly_fraud": {
+       "n_sessions": 79,
+       "n_harmful": 25,
+       "catch_rate": {
+        "k": 20,
+        "n": 25,
+        "rate": 0.8
+       },
+       "early_warning": {
+        "k": 18,
+        "n": 25,
+        "rate": 0.72
+       },
+       "any_pause_rate": {
+        "k": 20,
+        "n": 79,
+        "rate": 0.25316455696202533
+       }
+      },
+      "injection": {
+       "n_sessions": 71,
+       "n_harmful": 22,
+       "catch_rate": {
+        "k": 22,
+        "n": 22,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 5,
+        "n": 22,
+        "rate": 0.22727272727272727
+       },
+       "any_pause_rate": {
+        "k": 22,
+        "n": 71,
+        "rate": 0.30985915492957744
+       }
+      },
+      "none": {
+       "n_sessions": 760,
+       "n_harmful": 11,
+       "catch_rate": {
+        "k": 11,
+        "n": 11,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 11,
+        "n": 11,
+        "rate": 1.0
+       },
+       "any_pause_rate": {
+        "k": 18,
+        "n": 760,
+        "rate": 0.02368421052631579
+       }
+      }
+     },
+     "by_variant": {
+      "bad": {
+       "n_sessions": 743,
+       "n_harmful": 82,
+       "catch_rate": {
+        "k": 77,
+        "n": 82,
+        "rate": 0.9390243902439024
+       },
+       "early_warning": {
+        "k": 39,
+        "n": 82,
+        "rate": 0.47560975609756095
+       },
+       "false_alarm_session_rate": {
+        "k": 5,
+        "n": 661,
+        "rate": 0.007564296520423601
+       }
+      },
+      "good": {
+       "n_sessions": 247,
+       "n_harmful": 0,
+       "catch_rate": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "false_alarm_session_rate": {
+        "k": 2,
+        "n": 247,
+        "rate": 0.008097165991902834
+       }
+      }
+     },
+     "n_agents": 6,
+     "agent_auc_max": 1.0,
+     "agent_auc_pause_rate": 1.0
+    },
+    "2": {
+     "n_sessions": 996,
+     "n_harmful": 90,
+     "n_non_harmful": 906,
+     "session_auc": 0.9993193524650479,
+     "catch_rate": {
+      "k": 90,
+      "n": 90,
+      "rate": 1.0
+     },
+     "early_warning": {
+      "k": 12,
+      "n": 90,
+      "rate": 0.13333333333333333
+     },
+     "lead_alert_steps": {
+      "mean": 0.2222222222222222,
+      "n": 90
+     },
+     "lead_pause_steps": {
+      "mean": 0.16666666666666666,
+      "n": 90
+     },
+     "false_alarm_session_rate": {
+      "k": 6,
+      "n": 906,
+      "rate": 0.006622516556291391
+     },
+     "pauses_per_non_harmful": {
+      "total": 6,
+      "n": 906,
+      "rate": 0.006622516556291391
+     },
+     "by_attack": {
+      "account_takeover": {
+       "n_sessions": 65,
+       "n_harmful": 24,
+       "catch_rate": {
+        "k": 24,
+        "n": 24,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 24,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 24,
+        "n": 65,
+        "rate": 0.36923076923076925
+       }
+      },
+      "friendly_fraud": {
+       "n_sessions": 65,
+       "n_harmful": 21,
+       "catch_rate": {
+        "k": 21,
+        "n": 21,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 3,
+        "n": 21,
+        "rate": 0.14285714285714285
+       },
+       "any_pause_rate": {
+        "k": 21,
+        "n": 65,
+        "rate": 0.3230769230769231
+       }
+      },
+      "injection": {
+       "n_sessions": 81,
+       "n_harmful": 36,
+       "catch_rate": {
+        "k": 36,
+        "n": 36,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 36,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 36,
+        "n": 81,
+        "rate": 0.4444444444444444
+       }
+      },
+      "none": {
+       "n_sessions": 785,
+       "n_harmful": 9,
+       "catch_rate": {
+        "k": 9,
+        "n": 9,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 9,
+        "n": 9,
+        "rate": 1.0
+       },
+       "any_pause_rate": {
+        "k": 15,
+        "n": 785,
+        "rate": 0.01910828025477707
+       }
+      }
+     },
+     "by_variant": {
+      "bad": {
+       "n_sessions": 772,
+       "n_harmful": 90,
+       "catch_rate": {
+        "k": 90,
+        "n": 90,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 12,
+        "n": 90,
+        "rate": 0.13333333333333333
+       },
+       "false_alarm_session_rate": {
+        "k": 6,
+        "n": 682,
+        "rate": 0.008797653958944282
+       }
+      },
+      "good": {
+       "n_sessions": 224,
+       "n_harmful": 0,
+       "catch_rate": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "false_alarm_session_rate": {
+        "k": 0,
+        "n": 224,
+        "rate": 0.0
+       }
+      }
+     },
+     "n_agents": 6,
+     "agent_auc_max": 1.0,
+     "agent_auc_pause_rate": 1.0
+    },
+    "3": {
+     "n_sessions": 995,
+     "n_harmful": 86,
+     "n_non_harmful": 909,
+     "session_auc": 0.9845856678691125,
+     "catch_rate": {
+      "k": 74,
+      "n": 86,
+      "rate": 0.8604651162790697
+     },
+     "early_warning": {
+      "k": 37,
+      "n": 86,
+      "rate": 0.43023255813953487
+     },
+     "lead_alert_steps": {
+      "mean": 0.7441860465116279,
+      "n": 86
+     },
+     "lead_pause_steps": {
+      "mean": 0.0945945945945946,
+      "n": 74
+     },
+     "false_alarm_session_rate": {
+      "k": 2,
+      "n": 909,
+      "rate": 0.0022002200220022
+     },
+     "pauses_per_non_harmful": {
+      "total": 2,
+      "n": 909,
+      "rate": 0.0022002200220022
+     },
+     "by_attack": {
+      "account_takeover": {
+       "n_sessions": 64,
+       "n_harmful": 19,
+       "catch_rate": {
+        "k": 19,
+        "n": 19,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 19,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 19,
+        "n": 64,
+        "rate": 0.296875
+       }
+      },
+      "friendly_fraud": {
+       "n_sessions": 77,
+       "n_harmful": 29,
+       "catch_rate": {
+        "k": 17,
+        "n": 29,
+        "rate": 0.5862068965517241
+       },
+       "early_warning": {
+        "k": 22,
+        "n": 29,
+        "rate": 0.7586206896551724
+       },
+       "any_pause_rate": {
+        "k": 17,
+        "n": 77,
+        "rate": 0.22077922077922077
+       }
+      },
+      "injection": {
+       "n_sessions": 79,
+       "n_harmful": 32,
+       "catch_rate": {
+        "k": 32,
+        "n": 32,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 9,
+        "n": 32,
+        "rate": 0.28125
+       },
+       "any_pause_rate": {
+        "k": 32,
+        "n": 79,
+        "rate": 0.4050632911392405
+       }
+      },
+      "none": {
+       "n_sessions": 775,
+       "n_harmful": 6,
+       "catch_rate": {
+        "k": 6,
+        "n": 6,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 6,
+        "n": 6,
+        "rate": 1.0
+       },
+       "any_pause_rate": {
+        "k": 8,
+        "n": 775,
+        "rate": 0.01032258064516129
+       }
+      }
+     },
+     "by_variant": {
+      "bad": {
+       "n_sessions": 763,
+       "n_harmful": 86,
+       "catch_rate": {
+        "k": 74,
+        "n": 86,
+        "rate": 0.8604651162790697
+       },
+       "early_warning": {
+        "k": 37,
+        "n": 86,
+        "rate": 0.43023255813953487
+       },
+       "false_alarm_session_rate": {
+        "k": 2,
+        "n": 677,
+        "rate": 0.0029542097488921715
+       }
+      },
+      "good": {
+       "n_sessions": 232,
+       "n_harmful": 0,
+       "catch_rate": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "false_alarm_session_rate": {
+        "k": 0,
+        "n": 232,
+        "rate": 0.0
+       }
+      }
+     },
+     "n_agents": 6,
+     "agent_auc_max": 1.0,
+     "agent_auc_pause_rate": 1.0
+    },
+    "4": {
+     "n_sessions": 992,
+     "n_harmful": 95,
+     "n_non_harmful": 897,
+     "session_auc": 0.9900428328345948,
+     "catch_rate": {
+      "k": 85,
+      "n": 95,
+      "rate": 0.8947368421052632
+     },
+     "early_warning": {
+      "k": 51,
+      "n": 95,
+      "rate": 0.5368421052631579
+     },
+     "lead_alert_steps": {
+      "mean": 0.9578947368421052,
+      "n": 95
+     },
+     "lead_pause_steps": {
+      "mean": 0.058823529411764705,
+      "n": 85
+     },
+     "false_alarm_session_rate": {
+      "k": 9,
+      "n": 897,
+      "rate": 0.010033444816053512
+     },
+     "pauses_per_non_harmful": {
+      "total": 9,
+      "n": 897,
+      "rate": 0.010033444816053512
+     },
+     "by_attack": {
+      "account_takeover": {
+       "n_sessions": 71,
+       "n_harmful": 20,
+       "catch_rate": {
+        "k": 20,
+        "n": 20,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 3,
+        "n": 20,
+        "rate": 0.15
+       },
+       "any_pause_rate": {
+        "k": 20,
+        "n": 71,
+        "rate": 0.28169014084507044
+       }
+      },
+      "friendly_fraud": {
+       "n_sessions": 91,
+       "n_harmful": 39,
+       "catch_rate": {
+        "k": 29,
+        "n": 39,
+        "rate": 0.7435897435897436
+       },
+       "early_warning": {
+        "k": 35,
+        "n": 39,
+        "rate": 0.8974358974358975
+       },
+       "any_pause_rate": {
+        "k": 29,
+        "n": 91,
+        "rate": 0.31868131868131866
+       }
+      },
+      "injection": {
+       "n_sessions": 81,
+       "n_harmful": 31,
+       "catch_rate": {
+        "k": 31,
+        "n": 31,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 8,
+        "n": 31,
+        "rate": 0.25806451612903225
+       },
+       "any_pause_rate": {
+        "k": 31,
+        "n": 81,
+        "rate": 0.38271604938271603
+       }
+      },
+      "none": {
+       "n_sessions": 749,
+       "n_harmful": 5,
+       "catch_rate": {
+        "k": 5,
+        "n": 5,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 5,
+        "n": 5,
+        "rate": 1.0
+       },
+       "any_pause_rate": {
+        "k": 14,
+        "n": 749,
+        "rate": 0.018691588785046728
+       }
+      }
+     },
+     "by_variant": {
+      "bad": {
+       "n_sessions": 743,
+       "n_harmful": 95,
+       "catch_rate": {
+        "k": 85,
+        "n": 95,
+        "rate": 0.8947368421052632
+       },
+       "early_warning": {
+        "k": 51,
+        "n": 95,
+        "rate": 0.5368421052631579
+       },
+       "false_alarm_session_rate": {
+        "k": 8,
+        "n": 648,
+        "rate": 0.012345679012345678
+       }
+      },
+      "good": {
+       "n_sessions": 249,
+       "n_harmful": 0,
+       "catch_rate": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "false_alarm_session_rate": {
+        "k": 1,
+        "n": 249,
+        "rate": 0.004016064257028112
+       }
+      }
+     },
+     "n_agents": 6,
+     "agent_auc_max": 1.0,
+     "agent_auc_pause_rate": 1.0
+    },
+    "5": {
+     "n_sessions": 1012,
+     "n_harmful": 81,
+     "n_non_harmful": 931,
+     "session_auc": 0.9936879235124849,
+     "catch_rate": {
+      "k": 78,
+      "n": 81,
+      "rate": 0.9629629629629629
+     },
+     "early_warning": {
+      "k": 23,
+      "n": 81,
+      "rate": 0.2839506172839506
+     },
+     "lead_alert_steps": {
+      "mean": 0.32098765432098764,
+      "n": 81
+     },
+     "lead_pause_steps": {
+      "mean": 0.3333333333333333,
+      "n": 78
+     },
+     "false_alarm_session_rate": {
+      "k": 12,
+      "n": 931,
+      "rate": 0.01288936627282492
+     },
+     "pauses_per_non_harmful": {
+      "total": 12,
+      "n": 931,
+      "rate": 0.01288936627282492
+     },
+     "by_attack": {
+      "account_takeover": {
+       "n_sessions": 84,
+       "n_harmful": 23,
+       "catch_rate": {
+        "k": 23,
+        "n": 23,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 23,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 23,
+        "n": 84,
+        "rate": 0.27380952380952384
+       }
+      },
+      "friendly_fraud": {
+       "n_sessions": 79,
+       "n_harmful": 22,
+       "catch_rate": {
+        "k": 19,
+        "n": 22,
+        "rate": 0.8636363636363636
+       },
+       "early_warning": {
+        "k": 19,
+        "n": 22,
+        "rate": 0.8636363636363636
+       },
+       "any_pause_rate": {
+        "k": 19,
+        "n": 79,
+        "rate": 0.24050632911392406
+       }
+      },
+      "injection": {
+       "n_sessions": 77,
+       "n_harmful": 32,
+       "catch_rate": {
+        "k": 32,
+        "n": 32,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 32,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 32,
+        "n": 77,
+        "rate": 0.4155844155844156
+       }
+      },
+      "none": {
+       "n_sessions": 772,
+       "n_harmful": 4,
+       "catch_rate": {
+        "k": 4,
+        "n": 4,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 4,
+        "n": 4,
+        "rate": 1.0
+       },
+       "any_pause_rate": {
+        "k": 16,
+        "n": 772,
+        "rate": 0.02072538860103627
+       }
+      }
+     },
+     "by_variant": {
+      "bad": {
+       "n_sessions": 772,
+       "n_harmful": 81,
+       "catch_rate": {
+        "k": 78,
+        "n": 81,
+        "rate": 0.9629629629629629
+       },
+       "early_warning": {
+        "k": 23,
+        "n": 81,
+        "rate": 0.2839506172839506
+       },
+       "false_alarm_session_rate": {
+        "k": 10,
+        "n": 691,
+        "rate": 0.01447178002894356
+       }
+      },
+      "good": {
+       "n_sessions": 240,
+       "n_harmful": 0,
+       "catch_rate": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "false_alarm_session_rate": {
+        "k": 2,
+        "n": 240,
+        "rate": 0.008333333333333333
+       }
+      }
+     },
+     "n_agents": 6,
+     "agent_auc_max": 1.0,
+     "agent_auc_pause_rate": 1.0
+    }
+   },
+   "mean": {
+    "n_sessions": 997.0,
+    "n_harmful": 86.8,
+    "n_non_harmful": 910.2,
+    "session_auc": 0.9915931271853939,
+    "catch_rate": {
+     "k": 404,
+     "n": 434,
+     "rate": 0.9314378623182396
+    },
+    "early_warning": {
+     "k": 162,
+     "n": 434,
+     "rate": 0.3719936740235075
+    },
+    "lead_alert_steps": {
+     "mean": 0.6100337417354862,
+     "n": 86.8
+    },
+    "lead_pause_steps": {
+     "mean": 0.16704726116490823,
+     "n": 80.8
+    },
+    "false_alarm_session_rate": {
+     "k": 36,
+     "n": 4551,
+     "rate": 0.007890959753698721
+    },
+    "pauses_per_non_harmful": {
+     "total": 7.2,
+     "n": 910.2,
+     "rate": 0.007890959753698721
+    },
+    "by_attack": {
+     "account_takeover": {
+      "n_sessions": 72.8,
+      "n_harmful": 22.0,
+      "catch_rate": {
+       "k": 110,
+       "n": 110,
+       "rate": 1.0
+      },
+      "early_warning": {
+       "k": 8,
+       "n": 110,
+       "rate": 0.07166666666666667
+      },
+      "any_pause_rate": {
+       "k": 110,
+       "n": 364,
+       "rate": 0.3043210867770727
+      }
+     },
+     "friendly_fraud": {
+      "n_sessions": 78.2,
+      "n_harmful": 27.2,
+      "catch_rate": {
+       "k": 106,
+       "n": 136,
+       "rate": 0.7986866007555663
+      },
+      "early_warning": {
+       "k": 97,
+       "n": 136,
+       "rate": 0.6765100187169153
+      },
+      "any_pause_rate": {
+       "k": 106,
+       "n": 391,
+       "rate": 0.2712416697226824
+      }
+     },
+     "injection": {
+      "n_sessions": 77.8,
+      "n_harmful": 30.6,
+      "catch_rate": {
+       "k": 153,
+       "n": 153,
+       "rate": 1.0
+      },
+      "early_warning": {
+       "k": 22,
+       "n": 153,
+       "rate": 0.1533174486803519
+      },
+      "any_pause_rate": {
+       "k": 153,
+       "n": 389,
+       "rate": 0.39153347109607883
+      }
+     },
+     "none": {
+      "n_sessions": 768.2,
+      "n_harmful": 7.0,
+      "catch_rate": {
+       "k": 35,
+       "n": 35,
+       "rate": 1.0
+      },
+      "early_warning": {
+       "k": 35,
+       "n": 35,
+       "rate": 1.0
+      },
+      "any_pause_rate": {
+       "k": 71,
+       "n": 3841,
+       "rate": 0.01850640976246743
+      }
+     }
+    },
+    "by_variant": {
+     "bad": {
+      "n_sessions": 758.6,
+      "n_harmful": 86.8,
+      "catch_rate": {
+       "k": 404,
+       "n": 434,
+       "rate": 0.9314378623182396
+      },
+      "early_warning": {
+       "k": 162,
+       "n": 434,
+       "rate": 0.3719936740235075
+      },
+      "false_alarm_session_rate": {
+       "k": 31,
+       "n": 3359,
+       "rate": 0.009226723853909859
+      }
+     },
+     "good": {
+      "n_sessions": 238.4,
+      "n_harmful": 0.0,
+      "catch_rate": {
+       "k": 0,
+       "n": 0,
+       "rate": null
+      },
+      "early_warning": {
+       "k": 0,
+       "n": 0,
+       "rate": null
+      },
+      "false_alarm_session_rate": {
+       "k": 5,
+       "n": 1192,
+       "rate": 0.004089312716452856
+      }
+     }
+    },
+    "n_agents": 6.0,
+    "agent_auc_max": 1.0,
+    "agent_auc_pause_rate": 1.0
+   }
+  },
+  "G3_o2": {
+   "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "per_seed": {
+    "1": {
+     "n_sessions": 990,
+     "n_harmful": 82,
+     "n_non_harmful": 908,
+     "session_auc": 0.9991605780595251,
+     "catch_rate": {
+      "k": 77,
+      "n": 82,
+      "rate": 0.9390243902439024
+     },
+     "early_warning": {
+      "k": 39,
+      "n": 82,
+      "rate": 0.47560975609756095
+     },
+     "lead_alert_steps": {
+      "mean": 0.8048780487804879,
+      "n": 82
+     },
+     "lead_pause_steps": {
+      "mean": 0.18181818181818182,
+      "n": 77
+     },
+     "false_alarm_session_rate": {
+      "k": 7,
+      "n": 908,
+      "rate": 0.007709251101321586
+     },
+     "pauses_per_non_harmful": {
+      "total": 7,
+      "n": 908,
+      "rate": 0.007709251101321586
+     },
+     "by_attack": {
+      "account_takeover": {
+       "n_sessions": 80,
+       "n_harmful": 24,
+       "catch_rate": {
+        "k": 24,
+        "n": 24,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 5,
+        "n": 24,
+        "rate": 0.20833333333333334
+       },
+       "any_pause_rate": {
+        "k": 24,
+        "n": 80,
+        "rate": 0.3
+       }
+      },
+      "friendly_fraud": {
+       "n_sessions": 79,
+       "n_harmful": 25,
+       "catch_rate": {
+        "k": 20,
+        "n": 25,
+        "rate": 0.8
+       },
+       "early_warning": {
+        "k": 18,
+        "n": 25,
+        "rate": 0.72
+       },
+       "any_pause_rate": {
+        "k": 20,
+        "n": 79,
+        "rate": 0.25316455696202533
+       }
+      },
+      "injection": {
+       "n_sessions": 71,
+       "n_harmful": 22,
+       "catch_rate": {
+        "k": 22,
+        "n": 22,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 5,
+        "n": 22,
+        "rate": 0.22727272727272727
+       },
+       "any_pause_rate": {
+        "k": 22,
+        "n": 71,
+        "rate": 0.30985915492957744
+       }
+      },
+      "none": {
+       "n_sessions": 760,
+       "n_harmful": 11,
+       "catch_rate": {
+        "k": 11,
+        "n": 11,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 11,
+        "n": 11,
+        "rate": 1.0
+       },
+       "any_pause_rate": {
+        "k": 18,
+        "n": 760,
+        "rate": 0.02368421052631579
+       }
+      }
+     },
+     "by_variant": {
+      "bad": {
+       "n_sessions": 743,
+       "n_harmful": 82,
+       "catch_rate": {
+        "k": 77,
+        "n": 82,
+        "rate": 0.9390243902439024
+       },
+       "early_warning": {
+        "k": 39,
+        "n": 82,
+        "rate": 0.47560975609756095
+       },
+       "false_alarm_session_rate": {
+        "k": 5,
+        "n": 661,
+        "rate": 0.007564296520423601
+       }
+      },
+      "good": {
+       "n_sessions": 247,
+       "n_harmful": 0,
+       "catch_rate": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "false_alarm_session_rate": {
+        "k": 2,
+        "n": 247,
+        "rate": 0.008097165991902834
+       }
+      }
+     },
+     "n_agents": 6,
+     "agent_auc_max": 1.0,
+     "agent_auc_pause_rate": 1.0
+    },
+    "2": {
+     "n_sessions": 996,
+     "n_harmful": 90,
+     "n_non_harmful": 906,
+     "session_auc": 0.9997792494481236,
+     "catch_rate": {
+      "k": 90,
+      "n": 90,
+      "rate": 1.0
+     },
+     "early_warning": {
+      "k": 12,
+      "n": 90,
+      "rate": 0.13333333333333333
+     },
+     "lead_alert_steps": {
+      "mean": 0.2111111111111111,
+      "n": 90
+     },
+     "lead_pause_steps": {
+      "mean": 0.16666666666666666,
+      "n": 90
+     },
+     "false_alarm_session_rate": {
+      "k": 6,
+      "n": 906,
+      "rate": 0.006622516556291391
+     },
+     "pauses_per_non_harmful": {
+      "total": 6,
+      "n": 906,
+      "rate": 0.006622516556291391
+     },
+     "by_attack": {
+      "account_takeover": {
+       "n_sessions": 65,
+       "n_harmful": 24,
+       "catch_rate": {
+        "k": 24,
+        "n": 24,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 24,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 24,
+        "n": 65,
+        "rate": 0.36923076923076925
+       }
+      },
+      "friendly_fraud": {
+       "n_sessions": 65,
+       "n_harmful": 21,
+       "catch_rate": {
+        "k": 21,
+        "n": 21,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 3,
+        "n": 21,
+        "rate": 0.14285714285714285
+       },
+       "any_pause_rate": {
+        "k": 21,
+        "n": 65,
+        "rate": 0.3230769230769231
+       }
+      },
+      "injection": {
+       "n_sessions": 81,
+       "n_harmful": 36,
+       "catch_rate": {
+        "k": 36,
+        "n": 36,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 36,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 36,
+        "n": 81,
+        "rate": 0.4444444444444444
+       }
+      },
+      "none": {
+       "n_sessions": 785,
+       "n_harmful": 9,
+       "catch_rate": {
+        "k": 9,
+        "n": 9,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 9,
+        "n": 9,
+        "rate": 1.0
+       },
+       "any_pause_rate": {
+        "k": 15,
+        "n": 785,
+        "rate": 0.01910828025477707
+       }
+      }
+     },
+     "by_variant": {
+      "bad": {
+       "n_sessions": 772,
+       "n_harmful": 90,
+       "catch_rate": {
+        "k": 90,
+        "n": 90,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 12,
+        "n": 90,
+        "rate": 0.13333333333333333
+       },
+       "false_alarm_session_rate": {
+        "k": 6,
+        "n": 682,
+        "rate": 0.008797653958944282
+       }
+      },
+      "good": {
+       "n_sessions": 224,
+       "n_harmful": 0,
+       "catch_rate": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "false_alarm_session_rate": {
+        "k": 0,
+        "n": 224,
+        "rate": 0.0
+       }
+      }
+     },
+     "n_agents": 6,
+     "agent_auc_max": 1.0,
+     "agent_auc_pause_rate": 1.0
+    },
+    "3": {
+     "n_sessions": 995,
+     "n_harmful": 86,
+     "n_non_harmful": 909,
+     "session_auc": 0.9976206923017883,
+     "catch_rate": {
+      "k": 74,
+      "n": 86,
+      "rate": 0.8604651162790697
+     },
+     "early_warning": {
+      "k": 6,
+      "n": 86,
+      "rate": 0.06976744186046512
+     },
+     "lead_alert_steps": {
+      "mean": 0.12790697674418605,
+      "n": 86
+     },
+     "lead_pause_steps": {
+      "mean": 0.0945945945945946,
+      "n": 74
+     },
+     "false_alarm_session_rate": {
+      "k": 3,
+      "n": 909,
+      "rate": 0.0033003300330033004
+     },
+     "pauses_per_non_harmful": {
+      "total": 3,
+      "n": 909,
+      "rate": 0.0033003300330033004
+     },
+     "by_attack": {
+      "account_takeover": {
+       "n_sessions": 64,
+       "n_harmful": 19,
+       "catch_rate": {
+        "k": 19,
+        "n": 19,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 19,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 19,
+        "n": 64,
+        "rate": 0.296875
+       }
+      },
+      "friendly_fraud": {
+       "n_sessions": 77,
+       "n_harmful": 29,
+       "catch_rate": {
+        "k": 17,
+        "n": 29,
+        "rate": 0.5862068965517241
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 29,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 17,
+        "n": 77,
+        "rate": 0.22077922077922077
+       }
+      },
+      "injection": {
+       "n_sessions": 79,
+       "n_harmful": 32,
+       "catch_rate": {
+        "k": 32,
+        "n": 32,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 32,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 32,
+        "n": 79,
+        "rate": 0.4050632911392405
+       }
+      },
+      "none": {
+       "n_sessions": 775,
+       "n_harmful": 6,
+       "catch_rate": {
+        "k": 6,
+        "n": 6,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 6,
+        "n": 6,
+        "rate": 1.0
+       },
+       "any_pause_rate": {
+        "k": 9,
+        "n": 775,
+        "rate": 0.011612903225806452
+       }
+      }
+     },
+     "by_variant": {
+      "bad": {
+       "n_sessions": 763,
+       "n_harmful": 86,
+       "catch_rate": {
+        "k": 74,
+        "n": 86,
+        "rate": 0.8604651162790697
+       },
+       "early_warning": {
+        "k": 6,
+        "n": 86,
+        "rate": 0.06976744186046512
+       },
+       "false_alarm_session_rate": {
+        "k": 3,
+        "n": 677,
+        "rate": 0.004431314623338257
+       }
+      },
+      "good": {
+       "n_sessions": 232,
+       "n_harmful": 0,
+       "catch_rate": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "false_alarm_session_rate": {
+        "k": 0,
+        "n": 232,
+        "rate": 0.0
+       }
+      }
+     },
+     "n_agents": 6,
+     "agent_auc_max": 1.0,
+     "agent_auc_pause_rate": 1.0
+    },
+    "4": {
+     "n_sessions": 992,
+     "n_harmful": 95,
+     "n_non_harmful": 897,
+     "session_auc": 0.9985213870797395,
+     "catch_rate": {
+      "k": 95,
+      "n": 95,
+      "rate": 1.0
+     },
+     "early_warning": {
+      "k": 52,
+      "n": 95,
+      "rate": 0.5473684210526316
+     },
+     "lead_alert_steps": {
+      "mean": 0.9789473684210527,
+      "n": 95
+     },
+     "lead_pause_steps": {
+      "mean": 0.05263157894736842,
+      "n": 95
+     },
+     "false_alarm_session_rate": {
+      "k": 10,
+      "n": 897,
+      "rate": 0.011148272017837236
+     },
+     "pauses_per_non_harmful": {
+      "total": 10,
+      "n": 897,
+      "rate": 0.011148272017837236
+     },
+     "by_attack": {
+      "account_takeover": {
+       "n_sessions": 71,
+       "n_harmful": 20,
+       "catch_rate": {
+        "k": 20,
+        "n": 20,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 3,
+        "n": 20,
+        "rate": 0.15
+       },
+       "any_pause_rate": {
+        "k": 20,
+        "n": 71,
+        "rate": 0.28169014084507044
+       }
+      },
+      "friendly_fraud": {
+       "n_sessions": 91,
+       "n_harmful": 39,
+       "catch_rate": {
+        "k": 39,
+        "n": 39,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 36,
+        "n": 39,
+        "rate": 0.9230769230769231
+       },
+       "any_pause_rate": {
+        "k": 39,
+        "n": 91,
+        "rate": 0.42857142857142855
+       }
+      },
+      "injection": {
+       "n_sessions": 81,
+       "n_harmful": 31,
+       "catch_rate": {
+        "k": 31,
+        "n": 31,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 8,
+        "n": 31,
+        "rate": 0.25806451612903225
+       },
+       "any_pause_rate": {
+        "k": 31,
+        "n": 81,
+        "rate": 0.38271604938271603
+       }
+      },
+      "none": {
+       "n_sessions": 749,
+       "n_harmful": 5,
+       "catch_rate": {
+        "k": 5,
+        "n": 5,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 5,
+        "n": 5,
+        "rate": 1.0
+       },
+       "any_pause_rate": {
+        "k": 15,
+        "n": 749,
+        "rate": 0.020026702269692925
+       }
+      }
+     },
+     "by_variant": {
+      "bad": {
+       "n_sessions": 743,
+       "n_harmful": 95,
+       "catch_rate": {
+        "k": 95,
+        "n": 95,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 52,
+        "n": 95,
+        "rate": 0.5473684210526316
+       },
+       "false_alarm_session_rate": {
+        "k": 9,
+        "n": 648,
+        "rate": 0.013888888888888888
+       }
+      },
+      "good": {
+       "n_sessions": 249,
+       "n_harmful": 0,
+       "catch_rate": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "false_alarm_session_rate": {
+        "k": 1,
+        "n": 249,
+        "rate": 0.004016064257028112
+       }
+      }
+     },
+     "n_agents": 6,
+     "agent_auc_max": 1.0,
+     "agent_auc_pause_rate": 1.0
+    },
+    "5": {
+     "n_sessions": 1012,
+     "n_harmful": 81,
+     "n_non_harmful": 931,
+     "session_auc": 0.9965654877935579,
+     "catch_rate": {
+      "k": 78,
+      "n": 81,
+      "rate": 0.9629629629629629
+     },
+     "early_warning": {
+      "k": 23,
+      "n": 81,
+      "rate": 0.2839506172839506
+     },
+     "lead_alert_steps": {
+      "mean": 0.32098765432098764,
+      "n": 81
+     },
+     "lead_pause_steps": {
+      "mean": 0.3333333333333333,
+      "n": 78
+     },
+     "false_alarm_session_rate": {
+      "k": 20,
+      "n": 931,
+      "rate": 0.021482277121374866
+     },
+     "pauses_per_non_harmful": {
+      "total": 20,
+      "n": 931,
+      "rate": 0.021482277121374866
+     },
+     "by_attack": {
+      "account_takeover": {
+       "n_sessions": 84,
+       "n_harmful": 23,
+       "catch_rate": {
+        "k": 23,
+        "n": 23,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 23,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 23,
+        "n": 84,
+        "rate": 0.27380952380952384
+       }
+      },
+      "friendly_fraud": {
+       "n_sessions": 79,
+       "n_harmful": 22,
+       "catch_rate": {
+        "k": 19,
+        "n": 22,
+        "rate": 0.8636363636363636
+       },
+       "early_warning": {
+        "k": 19,
+        "n": 22,
+        "rate": 0.8636363636363636
+       },
+       "any_pause_rate": {
+        "k": 19,
+        "n": 79,
+        "rate": 0.24050632911392406
+       }
+      },
+      "injection": {
+       "n_sessions": 77,
+       "n_harmful": 32,
+       "catch_rate": {
+        "k": 32,
+        "n": 32,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 32,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 32,
+        "n": 77,
+        "rate": 0.4155844155844156
+       }
+      },
+      "none": {
+       "n_sessions": 772,
+       "n_harmful": 4,
+       "catch_rate": {
+        "k": 4,
+        "n": 4,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 4,
+        "n": 4,
+        "rate": 1.0
+       },
+       "any_pause_rate": {
+        "k": 24,
+        "n": 772,
+        "rate": 0.031088082901554404
+       }
+      }
+     },
+     "by_variant": {
+      "bad": {
+       "n_sessions": 772,
+       "n_harmful": 81,
+       "catch_rate": {
+        "k": 78,
+        "n": 81,
+        "rate": 0.9629629629629629
+       },
+       "early_warning": {
+        "k": 23,
+        "n": 81,
+        "rate": 0.2839506172839506
+       },
+       "false_alarm_session_rate": {
+        "k": 15,
+        "n": 691,
+        "rate": 0.02170767004341534
+       }
+      },
+      "good": {
+       "n_sessions": 240,
+       "n_harmful": 0,
+       "catch_rate": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "false_alarm_session_rate": {
+        "k": 5,
+        "n": 240,
+        "rate": 0.020833333333333332
+       }
+      }
+     },
+     "n_agents": 6,
+     "agent_auc_max": 1.0,
+     "agent_auc_pause_rate": 1.0
+    }
+   },
+   "mean": {
+    "n_sessions": 997.0,
+    "n_harmful": 86.8,
+    "n_non_harmful": 910.2,
+    "session_auc": 0.9983294789365468,
+    "catch_rate": {
+     "k": 414,
+     "n": 434,
+     "rate": 0.952490493897187
+    },
+    "early_warning": {
+     "k": 132,
+     "n": 434,
+     "rate": 0.3020059139255883
+    },
+    "lead_alert_steps": {
+     "mean": 0.4887662318755651,
+     "n": 86.8
+    },
+    "lead_pause_steps": {
+     "mean": 0.16580887107202896,
+     "n": 82.8
+    },
+    "false_alarm_session_rate": {
+     "k": 46,
+     "n": 4551,
+     "rate": 0.010052529365965675
+    },
+    "pauses_per_non_harmful": {
+     "total": 9.2,
+     "n": 910.2,
+     "rate": 0.010052529365965675
+    },
+    "by_attack": {
+     "account_takeover": {
+      "n_sessions": 72.8,
+      "n_harmful": 22.0,
+      "catch_rate": {
+       "k": 110,
+       "n": 110,
+       "rate": 1.0
+      },
+      "early_warning": {
+       "k": 8,
+       "n": 110,
+       "rate": 0.07166666666666667
+      },
+      "any_pause_rate": {
+       "k": 110,
+       "n": 364,
+       "rate": 0.3043210867770727
+      }
+     },
+     "friendly_fraud": {
+      "n_sessions": 78.2,
+      "n_harmful": 27.2,
+      "catch_rate": {
+       "k": 116,
+       "n": 136,
+       "rate": 0.8499686520376176
+      },
+      "early_warning": {
+       "k": 76,
+       "n": 136,
+       "rate": 0.529914085914086
+      },
+      "any_pause_rate": {
+       "k": 116,
+       "n": 391,
+       "rate": 0.29321969170070433
+      }
+     },
+     "injection": {
+      "n_sessions": 77.8,
+      "n_harmful": 30.6,
+      "catch_rate": {
+       "k": 153,
+       "n": 153,
+       "rate": 1.0
+      },
+      "early_warning": {
+       "k": 13,
+       "n": 153,
+       "rate": 0.09706744868035191
+      },
+      "any_pause_rate": {
+       "k": 153,
+       "n": 389,
+       "rate": 0.39153347109607883
+      }
+     },
+     "none": {
+      "n_sessions": 768.2,
+      "n_harmful": 7.0,
+      "catch_rate": {
+       "k": 35,
+       "n": 35,
+       "rate": 1.0
+      },
+      "early_warning": {
+       "k": 35,
+       "n": 35,
+       "rate": 1.0
+      },
+      "any_pause_rate": {
+       "k": 81,
+       "n": 3841,
+       "rate": 0.02110403583562933
+      }
+     }
+    },
+    "by_variant": {
+     "bad": {
+      "n_sessions": 758.6,
+      "n_harmful": 86.8,
+      "catch_rate": {
+       "k": 414,
+       "n": 434,
+       "rate": 0.952490493897187
+      },
+      "early_warning": {
+       "k": 132,
+       "n": 434,
+       "rate": 0.3020059139255883
+      },
+      "false_alarm_session_rate": {
+       "k": 38,
+       "n": 3359,
+       "rate": 0.011277964807002074
+      }
+     },
+     "good": {
+      "n_sessions": 238.4,
+      "n_harmful": 0.0,
+      "catch_rate": {
+       "k": 0,
+       "n": 0,
+       "rate": null
+      },
+      "early_warning": {
+       "k": 0,
+       "n": 0,
+       "rate": null
+      },
+      "false_alarm_session_rate": {
+       "k": 8,
+       "n": 1192,
+       "rate": 0.006589312716452855
+      }
+     }
+    },
+    "n_agents": 6.0,
+    "agent_auc_max": 1.0,
+    "agent_auc_pause_rate": 1.0
+   }
+  },
+  "G3_o3": {
+   "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "per_seed": {
+    "1": {
+     "n_sessions": 990,
+     "n_harmful": 82,
+     "n_non_harmful": 908,
+     "session_auc": 0.9992680240679058,
+     "catch_rate": {
+      "k": 79,
+      "n": 82,
+      "rate": 0.9634146341463414
+     },
+     "early_warning": {
+      "k": 39,
+      "n": 82,
+      "rate": 0.47560975609756095
+     },
+     "lead_alert_steps": {
+      "mean": 0.8048780487804879,
+      "n": 82
+     },
+     "lead_pause_steps": {
+      "mean": 0.189873417721519,
+      "n": 79
+     },
+     "false_alarm_session_rate": {
+      "k": 10,
+      "n": 908,
+      "rate": 0.011013215859030838
+     },
+     "pauses_per_non_harmful": {
+      "total": 10,
+      "n": 908,
+      "rate": 0.011013215859030838
+     },
+     "by_attack": {
+      "account_takeover": {
+       "n_sessions": 80,
+       "n_harmful": 24,
+       "catch_rate": {
+        "k": 24,
+        "n": 24,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 5,
+        "n": 24,
+        "rate": 0.20833333333333334
+       },
+       "any_pause_rate": {
+        "k": 24,
+        "n": 80,
+        "rate": 0.3
+       }
+      },
+      "friendly_fraud": {
+       "n_sessions": 79,
+       "n_harmful": 25,
+       "catch_rate": {
+        "k": 22,
+        "n": 25,
+        "rate": 0.88
+       },
+       "early_warning": {
+        "k": 18,
+        "n": 25,
+        "rate": 0.72
+       },
+       "any_pause_rate": {
+        "k": 22,
+        "n": 79,
+        "rate": 0.27848101265822783
+       }
+      },
+      "injection": {
+       "n_sessions": 71,
+       "n_harmful": 22,
+       "catch_rate": {
+        "k": 22,
+        "n": 22,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 5,
+        "n": 22,
+        "rate": 0.22727272727272727
+       },
+       "any_pause_rate": {
+        "k": 22,
+        "n": 71,
+        "rate": 0.30985915492957744
+       }
+      },
+      "none": {
+       "n_sessions": 760,
+       "n_harmful": 11,
+       "catch_rate": {
+        "k": 11,
+        "n": 11,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 11,
+        "n": 11,
+        "rate": 1.0
+       },
+       "any_pause_rate": {
+        "k": 21,
+        "n": 760,
+        "rate": 0.02763157894736842
+       }
+      }
+     },
+     "by_variant": {
+      "bad": {
+       "n_sessions": 743,
+       "n_harmful": 82,
+       "catch_rate": {
+        "k": 79,
+        "n": 82,
+        "rate": 0.9634146341463414
+       },
+       "early_warning": {
+        "k": 39,
+        "n": 82,
+        "rate": 0.47560975609756095
+       },
+       "false_alarm_session_rate": {
+        "k": 8,
+        "n": 661,
+        "rate": 0.012102874432677761
+       }
+      },
+      "good": {
+       "n_sessions": 247,
+       "n_harmful": 0,
+       "catch_rate": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "false_alarm_session_rate": {
+        "k": 2,
+        "n": 247,
+        "rate": 0.008097165991902834
+       }
+      }
+     },
+     "n_agents": 6,
+     "agent_auc_max": 1.0,
+     "agent_auc_pause_rate": 1.0
+    },
+    "2": {
+     "n_sessions": 996,
+     "n_harmful": 90,
+     "n_non_harmful": 906,
+     "session_auc": 0.9997792494481236,
+     "catch_rate": {
+      "k": 90,
+      "n": 90,
+      "rate": 1.0
+     },
+     "early_warning": {
+      "k": 12,
+      "n": 90,
+      "rate": 0.13333333333333333
+     },
+     "lead_alert_steps": {
+      "mean": 0.2111111111111111,
+      "n": 90
+     },
+     "lead_pause_steps": {
+      "mean": 0.16666666666666666,
+      "n": 90
+     },
+     "false_alarm_session_rate": {
+      "k": 8,
+      "n": 906,
+      "rate": 0.008830022075055188
+     },
+     "pauses_per_non_harmful": {
+      "total": 8,
+      "n": 906,
+      "rate": 0.008830022075055188
+     },
+     "by_attack": {
+      "account_takeover": {
+       "n_sessions": 65,
+       "n_harmful": 24,
+       "catch_rate": {
+        "k": 24,
+        "n": 24,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 24,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 24,
+        "n": 65,
+        "rate": 0.36923076923076925
+       }
+      },
+      "friendly_fraud": {
+       "n_sessions": 65,
+       "n_harmful": 21,
+       "catch_rate": {
+        "k": 21,
+        "n": 21,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 3,
+        "n": 21,
+        "rate": 0.14285714285714285
+       },
+       "any_pause_rate": {
+        "k": 21,
+        "n": 65,
+        "rate": 0.3230769230769231
+       }
+      },
+      "injection": {
+       "n_sessions": 81,
+       "n_harmful": 36,
+       "catch_rate": {
+        "k": 36,
+        "n": 36,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 36,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 36,
+        "n": 81,
+        "rate": 0.4444444444444444
+       }
+      },
+      "none": {
+       "n_sessions": 785,
+       "n_harmful": 9,
+       "catch_rate": {
+        "k": 9,
+        "n": 9,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 9,
+        "n": 9,
+        "rate": 1.0
+       },
+       "any_pause_rate": {
+        "k": 17,
+        "n": 785,
+        "rate": 0.02165605095541401
+       }
+      }
+     },
+     "by_variant": {
+      "bad": {
+       "n_sessions": 772,
+       "n_harmful": 90,
+       "catch_rate": {
+        "k": 90,
+        "n": 90,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 12,
+        "n": 90,
+        "rate": 0.13333333333333333
+       },
+       "false_alarm_session_rate": {
+        "k": 7,
+        "n": 682,
+        "rate": 0.010263929618768328
+       }
+      },
+      "good": {
+       "n_sessions": 224,
+       "n_harmful": 0,
+       "catch_rate": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "false_alarm_session_rate": {
+        "k": 1,
+        "n": 224,
+        "rate": 0.004464285714285714
+       }
+      }
+     },
+     "n_agents": 6,
+     "agent_auc_max": 1.0,
+     "agent_auc_pause_rate": 1.0
+    },
+    "3": {
+     "n_sessions": 995,
+     "n_harmful": 86,
+     "n_non_harmful": 909,
+     "session_auc": 0.9976782561977128,
+     "catch_rate": {
+      "k": 77,
+      "n": 86,
+      "rate": 0.8953488372093024
+     },
+     "early_warning": {
+      "k": 6,
+      "n": 86,
+      "rate": 0.06976744186046512
+     },
+     "lead_alert_steps": {
+      "mean": 0.12790697674418605,
+      "n": 86
+     },
+     "lead_pause_steps": {
+      "mean": 0.09090909090909091,
+      "n": 77
+     },
+     "false_alarm_session_rate": {
+      "k": 5,
+      "n": 909,
+      "rate": 0.005500550055005501
+     },
+     "pauses_per_non_harmful": {
+      "total": 5,
+      "n": 909,
+      "rate": 0.005500550055005501
+     },
+     "by_attack": {
+      "account_takeover": {
+       "n_sessions": 64,
+       "n_harmful": 19,
+       "catch_rate": {
+        "k": 19,
+        "n": 19,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 19,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 19,
+        "n": 64,
+        "rate": 0.296875
+       }
+      },
+      "friendly_fraud": {
+       "n_sessions": 77,
+       "n_harmful": 29,
+       "catch_rate": {
+        "k": 20,
+        "n": 29,
+        "rate": 0.6896551724137931
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 29,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 20,
+        "n": 77,
+        "rate": 0.2597402597402597
+       }
+      },
+      "injection": {
+       "n_sessions": 79,
+       "n_harmful": 32,
+       "catch_rate": {
+        "k": 32,
+        "n": 32,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 32,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 32,
+        "n": 79,
+        "rate": 0.4050632911392405
+       }
+      },
+      "none": {
+       "n_sessions": 775,
+       "n_harmful": 6,
+       "catch_rate": {
+        "k": 6,
+        "n": 6,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 6,
+        "n": 6,
+        "rate": 1.0
+       },
+       "any_pause_rate": {
+        "k": 11,
+        "n": 775,
+        "rate": 0.014193548387096775
+       }
+      }
+     },
+     "by_variant": {
+      "bad": {
+       "n_sessions": 763,
+       "n_harmful": 86,
+       "catch_rate": {
+        "k": 77,
+        "n": 86,
+        "rate": 0.8953488372093024
+       },
+       "early_warning": {
+        "k": 6,
+        "n": 86,
+        "rate": 0.06976744186046512
+       },
+       "false_alarm_session_rate": {
+        "k": 5,
+        "n": 677,
+        "rate": 0.007385524372230428
+       }
+      },
+      "good": {
+       "n_sessions": 232,
+       "n_harmful": 0,
+       "catch_rate": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "false_alarm_session_rate": {
+        "k": 0,
+        "n": 232,
+        "rate": 0.0
+       }
+      }
+     },
+     "n_agents": 6,
+     "agent_auc_max": 1.0,
+     "agent_auc_pause_rate": 1.0
+    },
+    "4": {
+     "n_sessions": 992,
+     "n_harmful": 95,
+     "n_non_harmful": 897,
+     "session_auc": 0.9987443525200962,
+     "catch_rate": {
+      "k": 95,
+      "n": 95,
+      "rate": 1.0
+     },
+     "early_warning": {
+      "k": 52,
+      "n": 95,
+      "rate": 0.5473684210526316
+     },
+     "lead_alert_steps": {
+      "mean": 0.9789473684210527,
+      "n": 95
+     },
+     "lead_pause_steps": {
+      "mean": 0.05263157894736842,
+      "n": 95
+     },
+     "false_alarm_session_rate": {
+      "k": 15,
+      "n": 897,
+      "rate": 0.016722408026755852
+     },
+     "pauses_per_non_harmful": {
+      "total": 15,
+      "n": 897,
+      "rate": 0.016722408026755852
+     },
+     "by_attack": {
+      "account_takeover": {
+       "n_sessions": 71,
+       "n_harmful": 20,
+       "catch_rate": {
+        "k": 20,
+        "n": 20,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 3,
+        "n": 20,
+        "rate": 0.15
+       },
+       "any_pause_rate": {
+        "k": 20,
+        "n": 71,
+        "rate": 0.28169014084507044
+       }
+      },
+      "friendly_fraud": {
+       "n_sessions": 91,
+       "n_harmful": 39,
+       "catch_rate": {
+        "k": 39,
+        "n": 39,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 36,
+        "n": 39,
+        "rate": 0.9230769230769231
+       },
+       "any_pause_rate": {
+        "k": 39,
+        "n": 91,
+        "rate": 0.42857142857142855
+       }
+      },
+      "injection": {
+       "n_sessions": 81,
+       "n_harmful": 31,
+       "catch_rate": {
+        "k": 31,
+        "n": 31,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 8,
+        "n": 31,
+        "rate": 0.25806451612903225
+       },
+       "any_pause_rate": {
+        "k": 31,
+        "n": 81,
+        "rate": 0.38271604938271603
+       }
+      },
+      "none": {
+       "n_sessions": 749,
+       "n_harmful": 5,
+       "catch_rate": {
+        "k": 5,
+        "n": 5,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 5,
+        "n": 5,
+        "rate": 1.0
+       },
+       "any_pause_rate": {
+        "k": 20,
+        "n": 749,
+        "rate": 0.0267022696929239
+       }
+      }
+     },
+     "by_variant": {
+      "bad": {
+       "n_sessions": 743,
+       "n_harmful": 95,
+       "catch_rate": {
+        "k": 95,
+        "n": 95,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 52,
+        "n": 95,
+        "rate": 0.5473684210526316
+       },
+       "false_alarm_session_rate": {
+        "k": 12,
+        "n": 648,
+        "rate": 0.018518518518518517
+       }
+      },
+      "good": {
+       "n_sessions": 249,
+       "n_harmful": 0,
+       "catch_rate": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "false_alarm_session_rate": {
+        "k": 3,
+        "n": 249,
+        "rate": 0.012048192771084338
+       }
+      }
+     },
+     "n_agents": 6,
+     "agent_auc_max": 1.0,
+     "agent_auc_pause_rate": 1.0
+    },
+    "5": {
+     "n_sessions": 1012,
+     "n_harmful": 81,
+     "n_non_harmful": 931,
+     "session_auc": 0.9960218005330788,
+     "catch_rate": {
+      "k": 80,
+      "n": 81,
+      "rate": 0.9876543209876543
+     },
+     "early_warning": {
+      "k": 23,
+      "n": 81,
+      "rate": 0.2839506172839506
+     },
+     "lead_alert_steps": {
+      "mean": 0.32098765432098764,
+      "n": 81
+     },
+     "lead_pause_steps": {
+      "mean": 0.325,
+      "n": 80
+     },
+     "false_alarm_session_rate": {
+      "k": 30,
+      "n": 931,
+      "rate": 0.0322234156820623
+     },
+     "pauses_per_non_harmful": {
+      "total": 30,
+      "n": 931,
+      "rate": 0.0322234156820623
+     },
+     "by_attack": {
+      "account_takeover": {
+       "n_sessions": 84,
+       "n_harmful": 23,
+       "catch_rate": {
+        "k": 23,
+        "n": 23,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 23,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 23,
+        "n": 84,
+        "rate": 0.27380952380952384
+       }
+      },
+      "friendly_fraud": {
+       "n_sessions": 79,
+       "n_harmful": 22,
+       "catch_rate": {
+        "k": 21,
+        "n": 22,
+        "rate": 0.9545454545454546
+       },
+       "early_warning": {
+        "k": 19,
+        "n": 22,
+        "rate": 0.8636363636363636
+       },
+       "any_pause_rate": {
+        "k": 21,
+        "n": 79,
+        "rate": 0.26582278481012656
+       }
+      },
+      "injection": {
+       "n_sessions": 77,
+       "n_harmful": 32,
+       "catch_rate": {
+        "k": 32,
+        "n": 32,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 32,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 32,
+        "n": 77,
+        "rate": 0.4155844155844156
+       }
+      },
+      "none": {
+       "n_sessions": 772,
+       "n_harmful": 4,
+       "catch_rate": {
+        "k": 4,
+        "n": 4,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 4,
+        "n": 4,
+        "rate": 1.0
+       },
+       "any_pause_rate": {
+        "k": 34,
+        "n": 772,
+        "rate": 0.04404145077720207
+       }
+      }
+     },
+     "by_variant": {
+      "bad": {
+       "n_sessions": 772,
+       "n_harmful": 81,
+       "catch_rate": {
+        "k": 80,
+        "n": 81,
+        "rate": 0.9876543209876543
+       },
+       "early_warning": {
+        "k": 23,
+        "n": 81,
+        "rate": 0.2839506172839506
+       },
+       "false_alarm_session_rate": {
+        "k": 24,
+        "n": 691,
+        "rate": 0.03473227206946455
+       }
+      },
+      "good": {
+       "n_sessions": 240,
+       "n_harmful": 0,
+       "catch_rate": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "false_alarm_session_rate": {
+        "k": 6,
+        "n": 240,
+        "rate": 0.025
+       }
+      }
+     },
+     "n_agents": 6,
+     "agent_auc_max": 1.0,
+     "agent_auc_pause_rate": 1.0
+    }
+   },
+   "mean": {
+    "n_sessions": 997.0,
+    "n_harmful": 86.8,
+    "n_non_harmful": 910.2,
+    "session_auc": 0.9982983365533833,
+    "catch_rate": {
+     "k": 421,
+     "n": 434,
+     "rate": 0.9692835584686597
+    },
+    "early_warning": {
+     "k": 132,
+     "n": 434,
+     "rate": 0.3020059139255883
+    },
+    "lead_alert_steps": {
+     "mean": 0.4887662318755651,
+     "n": 86.8
+    },
+    "lead_pause_steps": {
+     "mean": 0.165016150848929,
+     "n": 84.2
+    },
+    "false_alarm_session_rate": {
+     "k": 68,
+     "n": 4551,
+     "rate": 0.014857922339581936
+    },
+    "pauses_per_non_harmful": {
+     "total": 13.6,
+     "n": 910.2,
+     "rate": 0.014857922339581936
+    },
+    "by_attack": {
+     "account_takeover": {
+      "n_sessions": 72.8,
+      "n_harmful": 22.0,
+      "catch_rate": {
+       "k": 110,
+       "n": 110,
+       "rate": 1.0
+      },
+      "early_warning": {
+       "k": 8,
+       "n": 110,
+       "rate": 0.07166666666666667
+      },
+      "any_pause_rate": {
+       "k": 110,
+       "n": 364,
+       "rate": 0.3043210867770727
+      }
+     },
+     "friendly_fraud": {
+      "n_sessions": 78.2,
+      "n_harmful": 27.2,
+      "catch_rate": {
+       "k": 123,
+       "n": 136,
+       "rate": 0.9048401253918495
+      },
+      "early_warning": {
+       "k": 76,
+       "n": 136,
+       "rate": 0.529914085914086
+      },
+      "any_pause_rate": {
+       "k": 123,
+       "n": 391,
+       "rate": 0.31113848177139314
+      }
+     },
+     "injection": {
+      "n_sessions": 77.8,
+      "n_harmful": 30.6,
+      "catch_rate": {
+       "k": 153,
+       "n": 153,
+       "rate": 1.0
+      },
+      "early_warning": {
+       "k": 13,
+       "n": 153,
+       "rate": 0.09706744868035191
+      },
+      "any_pause_rate": {
+       "k": 153,
+       "n": 389,
+       "rate": 0.39153347109607883
+      }
+     },
+     "none": {
+      "n_sessions": 768.2,
+      "n_harmful": 7.0,
+      "catch_rate": {
+       "k": 35,
+       "n": 35,
+       "rate": 1.0
+      },
+      "early_warning": {
+       "k": 35,
+       "n": 35,
+       "rate": 1.0
+      },
+      "any_pause_rate": {
+       "k": 103,
+       "n": 3841,
+       "rate": 0.026844979752001036
+      }
+     }
+    },
+    "by_variant": {
+     "bad": {
+      "n_sessions": 758.6,
+      "n_harmful": 86.8,
+      "catch_rate": {
+       "k": 421,
+       "n": 434,
+       "rate": 0.9692835584686597
+      },
+      "early_warning": {
+       "k": 132,
+       "n": 434,
+       "rate": 0.3020059139255883
+      },
+      "false_alarm_session_rate": {
+       "k": 56,
+       "n": 3359,
+       "rate": 0.016600623802331915
+      }
+     },
+     "good": {
+      "n_sessions": 238.4,
+      "n_harmful": 0.0,
+      "catch_rate": {
+       "k": 0,
+       "n": 0,
+       "rate": null
+      },
+      "early_warning": {
+       "k": 0,
+       "n": 0,
+       "rate": null
+      },
+      "false_alarm_session_rate": {
+       "k": 12,
+       "n": 1192,
+       "rate": 0.009921928895454579
+      }
+     }
+    },
+    "n_agents": 6.0,
+    "agent_auc_max": 1.0,
+    "agent_auc_pause_rate": 1.0
+   }
+  },
+  "G0_o2": {
+   "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "per_seed": {
+    "1": {
+     "n_sessions": 990,
+     "n_harmful": 82,
+     "n_non_harmful": 908,
+     "session_auc": 0.9926198022993445,
+     "catch_rate": {
+      "k": 77,
+      "n": 82,
+      "rate": 0.9390243902439024
+     },
+     "early_warning": {
+      "k": 21,
+      "n": 82,
+      "rate": 0.25609756097560976
+     },
+     "lead_alert_steps": {
+      "mean": 0.35365853658536583,
+      "n": 82
+     },
+     "lead_pause_steps": {
+      "mean": 0.1038961038961039,
+      "n": 77
+     },
+     "false_alarm_session_rate": {
+      "k": 7,
+      "n": 908,
+      "rate": 0.007709251101321586
+     },
+     "pauses_per_non_harmful": {
+      "total": 7,
+      "n": 908,
+      "rate": 0.007709251101321586
+     },
+     "by_attack": {
+      "account_takeover": {
+       "n_sessions": 80,
+       "n_harmful": 24,
+       "catch_rate": {
+        "k": 19,
+        "n": 24,
+        "rate": 0.7916666666666666
+       },
+       "early_warning": {
+        "k": 5,
+        "n": 24,
+        "rate": 0.20833333333333334
+       },
+       "any_pause_rate": {
+        "k": 21,
+        "n": 80,
+        "rate": 0.2625
+       }
+      },
+      "friendly_fraud": {
+       "n_sessions": 79,
+       "n_harmful": 25,
+       "catch_rate": {
+        "k": 25,
+        "n": 25,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 25,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 25,
+        "n": 79,
+        "rate": 0.31645569620253167
+       }
+      },
+      "injection": {
+       "n_sessions": 71,
+       "n_harmful": 22,
+       "catch_rate": {
+        "k": 22,
+        "n": 22,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 5,
+        "n": 22,
+        "rate": 0.22727272727272727
+       },
+       "any_pause_rate": {
+        "k": 22,
+        "n": 71,
+        "rate": 0.30985915492957744
+       }
+      },
+      "none": {
+       "n_sessions": 760,
+       "n_harmful": 11,
+       "catch_rate": {
+        "k": 11,
+        "n": 11,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 11,
+        "n": 11,
+        "rate": 1.0
+       },
+       "any_pause_rate": {
+        "k": 18,
+        "n": 760,
+        "rate": 0.02368421052631579
+       }
+      }
+     },
+     "by_variant": {
+      "bad": {
+       "n_sessions": 743,
+       "n_harmful": 82,
+       "catch_rate": {
+        "k": 77,
+        "n": 82,
+        "rate": 0.9390243902439024
+       },
+       "early_warning": {
+        "k": 21,
+        "n": 82,
+        "rate": 0.25609756097560976
+       },
+       "false_alarm_session_rate": {
+        "k": 7,
+        "n": 661,
+        "rate": 0.01059001512859304
+       }
+      },
+      "good": {
+       "n_sessions": 247,
+       "n_harmful": 0,
+       "catch_rate": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "false_alarm_session_rate": {
+        "k": 0,
+        "n": 247,
+        "rate": 0.0
+       }
+      }
+     },
+     "n_agents": 6,
+     "agent_auc_max": 1.0,
+     "agent_auc_pause_rate": 1.0
+    },
+    "2": {
+     "n_sessions": 996,
+     "n_harmful": 90,
+     "n_non_harmful": 906,
+     "session_auc": 0.9980255089526613,
+     "catch_rate": {
+      "k": 66,
+      "n": 90,
+      "rate": 0.7333333333333333
+     },
+     "early_warning": {
+      "k": 22,
+      "n": 90,
+      "rate": 0.24444444444444444
+     },
+     "lead_alert_steps": {
+      "mean": 0.3333333333333333,
+      "n": 90
+     },
+     "lead_pause_steps": {
+      "mean": 0.10606060606060606,
+      "n": 66
+     },
+     "false_alarm_session_rate": {
+      "k": 2,
+      "n": 906,
+      "rate": 0.002207505518763797
+     },
+     "pauses_per_non_harmful": {
+      "total": 2,
+      "n": 906,
+      "rate": 0.002207505518763797
+     },
+     "by_attack": {
+      "account_takeover": {
+       "n_sessions": 65,
+       "n_harmful": 24,
+       "catch_rate": {
+        "k": 21,
+        "n": 24,
+        "rate": 0.875
+       },
+       "early_warning": {
+        "k": 3,
+        "n": 24,
+        "rate": 0.125
+       },
+       "any_pause_rate": {
+        "k": 24,
+        "n": 65,
+        "rate": 0.36923076923076925
+       }
+      },
+      "friendly_fraud": {
+       "n_sessions": 65,
+       "n_harmful": 21,
+       "catch_rate": {
+        "k": 0,
+        "n": 21,
+        "rate": 0.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 21,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 0,
+        "n": 65,
+        "rate": 0.0
+       }
+      },
+      "injection": {
+       "n_sessions": 81,
+       "n_harmful": 36,
+       "catch_rate": {
+        "k": 36,
+        "n": 36,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 10,
+        "n": 36,
+        "rate": 0.2777777777777778
+       },
+       "any_pause_rate": {
+        "k": 36,
+        "n": 81,
+        "rate": 0.4444444444444444
+       }
+      },
+      "none": {
+       "n_sessions": 785,
+       "n_harmful": 9,
+       "catch_rate": {
+        "k": 9,
+        "n": 9,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 9,
+        "n": 9,
+        "rate": 1.0
+       },
+       "any_pause_rate": {
+        "k": 11,
+        "n": 785,
+        "rate": 0.014012738853503185
+       }
+      }
+     },
+     "by_variant": {
+      "bad": {
+       "n_sessions": 772,
+       "n_harmful": 90,
+       "catch_rate": {
+        "k": 66,
+        "n": 90,
+        "rate": 0.7333333333333333
+       },
+       "early_warning": {
+        "k": 22,
+        "n": 90,
+        "rate": 0.24444444444444444
+       },
+       "false_alarm_session_rate": {
+        "k": 2,
+        "n": 682,
+        "rate": 0.002932551319648094
+       }
+      },
+      "good": {
+       "n_sessions": 224,
+       "n_harmful": 0,
+       "catch_rate": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "false_alarm_session_rate": {
+        "k": 0,
+        "n": 224,
+        "rate": 0.0
+       }
+      }
+     },
+     "n_agents": 6,
+     "agent_auc_max": 1.0,
+     "agent_auc_pause_rate": 1.0
+    },
+    "3": {
+     "n_sessions": 995,
+     "n_harmful": 86,
+     "n_non_harmful": 909,
+     "session_auc": 0.9965973341520199,
+     "catch_rate": {
+      "k": 57,
+      "n": 86,
+      "rate": 0.6627906976744186
+     },
+     "early_warning": {
+      "k": 15,
+      "n": 86,
+      "rate": 0.1744186046511628
+     },
+     "lead_alert_steps": {
+      "mean": 0.23255813953488372,
+      "n": 86
+     },
+     "lead_pause_steps": {
+      "mean": 0.05263157894736842,
+      "n": 57
+     },
+     "false_alarm_session_rate": {
+      "k": 2,
+      "n": 909,
+      "rate": 0.0022002200220022
+     },
+     "pauses_per_non_harmful": {
+      "total": 2,
+      "n": 909,
+      "rate": 0.0022002200220022
+     },
+     "by_attack": {
+      "account_takeover": {
+       "n_sessions": 64,
+       "n_harmful": 19,
+       "catch_rate": {
+        "k": 19,
+        "n": 19,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 19,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 19,
+        "n": 64,
+        "rate": 0.296875
+       }
+      },
+      "friendly_fraud": {
+       "n_sessions": 77,
+       "n_harmful": 29,
+       "catch_rate": {
+        "k": 0,
+        "n": 29,
+        "rate": 0.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 29,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 0,
+        "n": 77,
+        "rate": 0.0
+       }
+      },
+      "injection": {
+       "n_sessions": 79,
+       "n_harmful": 32,
+       "catch_rate": {
+        "k": 32,
+        "n": 32,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 9,
+        "n": 32,
+        "rate": 0.28125
+       },
+       "any_pause_rate": {
+        "k": 32,
+        "n": 79,
+        "rate": 0.4050632911392405
+       }
+      },
+      "none": {
+       "n_sessions": 775,
+       "n_harmful": 6,
+       "catch_rate": {
+        "k": 6,
+        "n": 6,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 6,
+        "n": 6,
+        "rate": 1.0
+       },
+       "any_pause_rate": {
+        "k": 8,
+        "n": 775,
+        "rate": 0.01032258064516129
+       }
+      }
+     },
+     "by_variant": {
+      "bad": {
+       "n_sessions": 763,
+       "n_harmful": 86,
+       "catch_rate": {
+        "k": 57,
+        "n": 86,
+        "rate": 0.6627906976744186
+       },
+       "early_warning": {
+        "k": 15,
+        "n": 86,
+        "rate": 0.1744186046511628
+       },
+       "false_alarm_session_rate": {
+        "k": 2,
+        "n": 677,
+        "rate": 0.0029542097488921715
+       }
+      },
+      "good": {
+       "n_sessions": 232,
+       "n_harmful": 0,
+       "catch_rate": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "false_alarm_session_rate": {
+        "k": 0,
+        "n": 232,
+        "rate": 0.0
+       }
+      }
+     },
+     "n_agents": 6,
+     "agent_auc_max": 1.0,
+     "agent_auc_pause_rate": 1.0
+    },
+    "4": {
+     "n_sessions": 992,
+     "n_harmful": 95,
+     "n_non_harmful": 897,
+     "session_auc": 0.9954702810538051,
+     "catch_rate": {
+      "k": 92,
+      "n": 95,
+      "rate": 0.968421052631579
+     },
+     "early_warning": {
+      "k": 16,
+      "n": 95,
+      "rate": 0.16842105263157894
+     },
+     "lead_alert_steps": {
+      "mean": 0.22105263157894736,
+      "n": 95
+     },
+     "lead_pause_steps": {
+      "mean": 0.0,
+      "n": 92
+     },
+     "false_alarm_session_rate": {
+      "k": 12,
+      "n": 897,
+      "rate": 0.013377926421404682
+     },
+     "pauses_per_non_harmful": {
+      "total": 12,
+      "n": 897,
+      "rate": 0.013377926421404682
+     },
+     "by_attack": {
+      "account_takeover": {
+       "n_sessions": 71,
+       "n_harmful": 20,
+       "catch_rate": {
+        "k": 17,
+        "n": 20,
+        "rate": 0.85
+       },
+       "early_warning": {
+        "k": 3,
+        "n": 20,
+        "rate": 0.15
+       },
+       "any_pause_rate": {
+        "k": 19,
+        "n": 71,
+        "rate": 0.2676056338028169
+       }
+      },
+      "friendly_fraud": {
+       "n_sessions": 91,
+       "n_harmful": 39,
+       "catch_rate": {
+        "k": 39,
+        "n": 39,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 39,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 39,
+        "n": 91,
+        "rate": 0.42857142857142855
+       }
+      },
+      "injection": {
+       "n_sessions": 81,
+       "n_harmful": 31,
+       "catch_rate": {
+        "k": 31,
+        "n": 31,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 8,
+        "n": 31,
+        "rate": 0.25806451612903225
+       },
+       "any_pause_rate": {
+        "k": 31,
+        "n": 81,
+        "rate": 0.38271604938271603
+       }
+      },
+      "none": {
+       "n_sessions": 749,
+       "n_harmful": 5,
+       "catch_rate": {
+        "k": 5,
+        "n": 5,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 5,
+        "n": 5,
+        "rate": 1.0
+       },
+       "any_pause_rate": {
+        "k": 17,
+        "n": 749,
+        "rate": 0.022696929238985315
+       }
+      }
+     },
+     "by_variant": {
+      "bad": {
+       "n_sessions": 743,
+       "n_harmful": 95,
+       "catch_rate": {
+        "k": 92,
+        "n": 95,
+        "rate": 0.968421052631579
+       },
+       "early_warning": {
+        "k": 16,
+        "n": 95,
+        "rate": 0.16842105263157894
+       },
+       "false_alarm_session_rate": {
+        "k": 10,
+        "n": 648,
+        "rate": 0.015432098765432098
+       }
+      },
+      "good": {
+       "n_sessions": 249,
+       "n_harmful": 0,
+       "catch_rate": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "false_alarm_session_rate": {
+        "k": 2,
+        "n": 249,
+        "rate": 0.008032128514056224
+       }
+      }
+     },
+     "n_agents": 6,
+     "agent_auc_max": 1.0,
+     "agent_auc_pause_rate": 1.0
+    },
+    "5": {
+     "n_sessions": 1012,
+     "n_harmful": 81,
+     "n_non_harmful": 931,
+     "session_auc": 0.9944570420760896,
+     "catch_rate": {
+      "k": 77,
+      "n": 81,
+      "rate": 0.9506172839506173
+     },
+     "early_warning": {
+      "k": 19,
+      "n": 81,
+      "rate": 0.2345679012345679
+     },
+     "lead_alert_steps": {
+      "mean": 0.2716049382716049,
+      "n": 81
+     },
+     "lead_pause_steps": {
+      "mean": 0.09090909090909091,
+      "n": 77
+     },
+     "false_alarm_session_rate": {
+      "k": 12,
+      "n": 931,
+      "rate": 0.01288936627282492
+     },
+     "pauses_per_non_harmful": {
+      "total": 12,
+      "n": 931,
+      "rate": 0.01288936627282492
+     },
+     "by_attack": {
+      "account_takeover": {
+       "n_sessions": 84,
+       "n_harmful": 23,
+       "catch_rate": {
+        "k": 19,
+        "n": 23,
+        "rate": 0.8260869565217391
+       },
+       "early_warning": {
+        "k": 4,
+        "n": 23,
+        "rate": 0.17391304347826086
+       },
+       "any_pause_rate": {
+        "k": 21,
+        "n": 84,
+        "rate": 0.25
+       }
+      },
+      "friendly_fraud": {
+       "n_sessions": 79,
+       "n_harmful": 22,
+       "catch_rate": {
+        "k": 22,
+        "n": 22,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 22,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 22,
+        "n": 79,
+        "rate": 0.27848101265822783
+       }
+      },
+      "injection": {
+       "n_sessions": 77,
+       "n_harmful": 32,
+       "catch_rate": {
+        "k": 32,
+        "n": 32,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 11,
+        "n": 32,
+        "rate": 0.34375
+       },
+       "any_pause_rate": {
+        "k": 32,
+        "n": 77,
+        "rate": 0.4155844155844156
+       }
+      },
+      "none": {
+       "n_sessions": 772,
+       "n_harmful": 4,
+       "catch_rate": {
+        "k": 4,
+        "n": 4,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 4,
+        "n": 4,
+        "rate": 1.0
+       },
+       "any_pause_rate": {
+        "k": 16,
+        "n": 772,
+        "rate": 0.02072538860103627
+       }
+      }
+     },
+     "by_variant": {
+      "bad": {
+       "n_sessions": 772,
+       "n_harmful": 81,
+       "catch_rate": {
+        "k": 77,
+        "n": 81,
+        "rate": 0.9506172839506173
+       },
+       "early_warning": {
+        "k": 19,
+        "n": 81,
+        "rate": 0.2345679012345679
+       },
+       "false_alarm_session_rate": {
+        "k": 8,
+        "n": 691,
+        "rate": 0.011577424023154847
+       }
+      },
+      "good": {
+       "n_sessions": 240,
+       "n_harmful": 0,
+       "catch_rate": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "false_alarm_session_rate": {
+        "k": 4,
+        "n": 240,
+        "rate": 0.016666666666666666
+       }
+      }
+     },
+     "n_agents": 6,
+     "agent_auc_max": 1.0,
+     "agent_auc_pause_rate": 1.0
+    }
+   },
+   "mean": {
+    "n_sessions": 997.0,
+    "n_harmful": 86.8,
+    "n_non_harmful": 910.2,
+    "session_auc": 0.9954339937067841,
+    "catch_rate": {
+     "k": 369,
+     "n": 434,
+     "rate": 0.8508373515667701
+    },
+    "early_warning": {
+     "k": 93,
+     "n": 434,
+     "rate": 0.21558991278747275
+    },
+    "lead_alert_steps": {
+     "mean": 0.282441515860827,
+     "n": 86.8
+    },
+    "lead_pause_steps": {
+     "mean": 0.07069947596263386,
+     "n": 73.8
+    },
+    "false_alarm_session_rate": {
+     "k": 35,
+     "n": 4551,
+     "rate": 0.007676853867263437
+    },
+    "pauses_per_non_harmful": {
+     "total": 7.0,
+     "n": 910.2,
+     "rate": 0.007676853867263437
+    },
+    "by_attack": {
+     "account_takeover": {
+      "n_sessions": 72.8,
+      "n_harmful": 22.0,
+      "catch_rate": {
+       "k": 95,
+       "n": 110,
+       "rate": 0.8685507246376811
+      },
+      "early_warning": {
+       "k": 15,
+       "n": 110,
+       "rate": 0.13144927536231882
+      },
+      "any_pause_rate": {
+       "k": 104,
+       "n": 364,
+       "rate": 0.28924228060671725
+      }
+     },
+     "friendly_fraud": {
+      "n_sessions": 78.2,
+      "n_harmful": 27.2,
+      "catch_rate": {
+       "k": 86,
+       "n": 136,
+       "rate": 0.6
+      },
+      "early_warning": {
+       "k": 0,
+       "n": 136,
+       "rate": 0.0
+      },
+      "any_pause_rate": {
+       "k": 86,
+       "n": 391,
+       "rate": 0.20470162748643758
+      }
+     },
+     "injection": {
+      "n_sessions": 77.8,
+      "n_harmful": 30.6,
+      "catch_rate": {
+       "k": 153,
+       "n": 153,
+       "rate": 1.0
+      },
+      "early_warning": {
+       "k": 43,
+       "n": 153,
+       "rate": 0.27762300423590747
+      },
+      "any_pause_rate": {
+       "k": 153,
+       "n": 389,
+       "rate": 0.39153347109607883
+      }
+     },
+     "none": {
+      "n_sessions": 768.2,
+      "n_harmful": 7.0,
+      "catch_rate": {
+       "k": 35,
+       "n": 35,
+       "rate": 1.0
+      },
+      "early_warning": {
+       "k": 35,
+       "n": 35,
+       "rate": 1.0
+      },
+      "any_pause_rate": {
+       "k": 70,
+       "n": 3841,
+       "rate": 0.01828836957300037
+      }
+     }
+    },
+    "by_variant": {
+     "bad": {
+      "n_sessions": 758.6,
+      "n_harmful": 86.8,
+      "catch_rate": {
+       "k": 369,
+       "n": 434,
+       "rate": 0.8508373515667701
+      },
+      "early_warning": {
+       "k": 93,
+       "n": 434,
+       "rate": 0.21558991278747275
+      },
+      "false_alarm_session_rate": {
+       "k": 29,
+       "n": 3359,
+       "rate": 0.00869725979714405
+      }
+     },
+     "good": {
+      "n_sessions": 238.4,
+      "n_harmful": 0.0,
+      "catch_rate": {
+       "k": 0,
+       "n": 0,
+       "rate": null
+      },
+      "early_warning": {
+       "k": 0,
+       "n": 0,
+       "rate": null
+      },
+      "false_alarm_session_rate": {
+       "k": 6,
+       "n": 1192,
+       "rate": 0.004939759036144578
+      }
+     }
+    },
+    "n_agents": 6.0,
+    "agent_auc_max": 1.0,
+    "agent_auc_pause_rate": 1.0
+   }
+  },
+  "G1_o2": {
+   "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "per_seed": {
+    "1": {
+     "n_sessions": 990,
+     "n_harmful": 82,
+     "n_non_harmful": 908,
+     "session_auc": 0.9984890405071452,
+     "catch_rate": {
+      "k": 82,
+      "n": 82,
+      "rate": 1.0
+     },
+     "early_warning": {
+      "k": 21,
+      "n": 82,
+      "rate": 0.25609756097560976
+     },
+     "lead_alert_steps": {
+      "mean": 0.36585365853658536,
+      "n": 82
+     },
+     "lead_pause_steps": {
+      "mean": 0.17073170731707318,
+      "n": 82
+     },
+     "false_alarm_session_rate": {
+      "k": 8,
+      "n": 908,
+      "rate": 0.00881057268722467
+     },
+     "pauses_per_non_harmful": {
+      "total": 8,
+      "n": 908,
+      "rate": 0.00881057268722467
+     },
+     "by_attack": {
+      "account_takeover": {
+       "n_sessions": 80,
+       "n_harmful": 24,
+       "catch_rate": {
+        "k": 24,
+        "n": 24,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 5,
+        "n": 24,
+        "rate": 0.20833333333333334
+       },
+       "any_pause_rate": {
+        "k": 24,
+        "n": 80,
+        "rate": 0.3
+       }
+      },
+      "friendly_fraud": {
+       "n_sessions": 79,
+       "n_harmful": 25,
+       "catch_rate": {
+        "k": 25,
+        "n": 25,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 25,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 25,
+        "n": 79,
+        "rate": 0.31645569620253167
+       }
+      },
+      "injection": {
+       "n_sessions": 71,
+       "n_harmful": 22,
+       "catch_rate": {
+        "k": 22,
+        "n": 22,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 5,
+        "n": 22,
+        "rate": 0.22727272727272727
+       },
+       "any_pause_rate": {
+        "k": 22,
+        "n": 71,
+        "rate": 0.30985915492957744
+       }
+      },
+      "none": {
+       "n_sessions": 760,
+       "n_harmful": 11,
+       "catch_rate": {
+        "k": 11,
+        "n": 11,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 11,
+        "n": 11,
+        "rate": 1.0
+       },
+       "any_pause_rate": {
+        "k": 19,
+        "n": 760,
+        "rate": 0.025
+       }
+      }
+     },
+     "by_variant": {
+      "bad": {
+       "n_sessions": 743,
+       "n_harmful": 82,
+       "catch_rate": {
+        "k": 82,
+        "n": 82,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 21,
+        "n": 82,
+        "rate": 0.25609756097560976
+       },
+       "false_alarm_session_rate": {
+        "k": 8,
+        "n": 661,
+        "rate": 0.012102874432677761
+       }
+      },
+      "good": {
+       "n_sessions": 247,
+       "n_harmful": 0,
+       "catch_rate": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "false_alarm_session_rate": {
+        "k": 0,
+        "n": 247,
+        "rate": 0.0
+       }
+      }
+     },
+     "n_agents": 6,
+     "agent_auc_max": 1.0,
+     "agent_auc_pause_rate": 1.0
+    },
+    "2": {
+     "n_sessions": 996,
+     "n_harmful": 90,
+     "n_non_harmful": 906,
+     "session_auc": 0.9979396615158205,
+     "catch_rate": {
+      "k": 69,
+      "n": 90,
+      "rate": 0.7666666666666667
+     },
+     "early_warning": {
+      "k": 22,
+      "n": 90,
+      "rate": 0.24444444444444444
+     },
+     "lead_alert_steps": {
+      "mean": 0.32222222222222224,
+      "n": 90
+     },
+     "lead_pause_steps": {
+      "mean": 0.17391304347826086,
+      "n": 69
+     },
+     "false_alarm_session_rate": {
+      "k": 2,
+      "n": 906,
+      "rate": 0.002207505518763797
+     },
+     "pauses_per_non_harmful": {
+      "total": 2,
+      "n": 906,
+      "rate": 0.002207505518763797
+     },
+     "by_attack": {
+      "account_takeover": {
+       "n_sessions": 65,
+       "n_harmful": 24,
+       "catch_rate": {
+        "k": 24,
+        "n": 24,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 3,
+        "n": 24,
+        "rate": 0.125
+       },
+       "any_pause_rate": {
+        "k": 24,
+        "n": 65,
+        "rate": 0.36923076923076925
+       }
+      },
+      "friendly_fraud": {
+       "n_sessions": 65,
+       "n_harmful": 21,
+       "catch_rate": {
+        "k": 0,
+        "n": 21,
+        "rate": 0.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 21,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 0,
+        "n": 65,
+        "rate": 0.0
+       }
+      },
+      "injection": {
+       "n_sessions": 81,
+       "n_harmful": 36,
+       "catch_rate": {
+        "k": 36,
+        "n": 36,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 10,
+        "n": 36,
+        "rate": 0.2777777777777778
+       },
+       "any_pause_rate": {
+        "k": 36,
+        "n": 81,
+        "rate": 0.4444444444444444
+       }
+      },
+      "none": {
+       "n_sessions": 785,
+       "n_harmful": 9,
+       "catch_rate": {
+        "k": 9,
+        "n": 9,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 9,
+        "n": 9,
+        "rate": 1.0
+       },
+       "any_pause_rate": {
+        "k": 11,
+        "n": 785,
+        "rate": 0.014012738853503185
+       }
+      }
+     },
+     "by_variant": {
+      "bad": {
+       "n_sessions": 772,
+       "n_harmful": 90,
+       "catch_rate": {
+        "k": 69,
+        "n": 90,
+        "rate": 0.7666666666666667
+       },
+       "early_warning": {
+        "k": 22,
+        "n": 90,
+        "rate": 0.24444444444444444
+       },
+       "false_alarm_session_rate": {
+        "k": 2,
+        "n": 682,
+        "rate": 0.002932551319648094
+       }
+      },
+      "good": {
+       "n_sessions": 224,
+       "n_harmful": 0,
+       "catch_rate": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "false_alarm_session_rate": {
+        "k": 0,
+        "n": 224,
+        "rate": 0.0
+       }
+      }
+     },
+     "n_agents": 6,
+     "agent_auc_max": 1.0,
+     "agent_auc_pause_rate": 1.0
+    },
+    "3": {
+     "n_sessions": 995,
+     "n_harmful": 86,
+     "n_non_harmful": 909,
+     "session_auc": 0.9966612940363804,
+     "catch_rate": {
+      "k": 57,
+      "n": 86,
+      "rate": 0.6627906976744186
+     },
+     "early_warning": {
+      "k": 15,
+      "n": 86,
+      "rate": 0.1744186046511628
+     },
+     "lead_alert_steps": {
+      "mean": 0.23255813953488372,
+      "n": 86
+     },
+     "lead_pause_steps": {
+      "mean": 0.12280701754385964,
+      "n": 57
+     },
+     "false_alarm_session_rate": {
+      "k": 2,
+      "n": 909,
+      "rate": 0.0022002200220022
+     },
+     "pauses_per_non_harmful": {
+      "total": 2,
+      "n": 909,
+      "rate": 0.0022002200220022
+     },
+     "by_attack": {
+      "account_takeover": {
+       "n_sessions": 64,
+       "n_harmful": 19,
+       "catch_rate": {
+        "k": 19,
+        "n": 19,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 19,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 19,
+        "n": 64,
+        "rate": 0.296875
+       }
+      },
+      "friendly_fraud": {
+       "n_sessions": 77,
+       "n_harmful": 29,
+       "catch_rate": {
+        "k": 0,
+        "n": 29,
+        "rate": 0.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 29,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 0,
+        "n": 77,
+        "rate": 0.0
+       }
+      },
+      "injection": {
+       "n_sessions": 79,
+       "n_harmful": 32,
+       "catch_rate": {
+        "k": 32,
+        "n": 32,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 9,
+        "n": 32,
+        "rate": 0.28125
+       },
+       "any_pause_rate": {
+        "k": 32,
+        "n": 79,
+        "rate": 0.4050632911392405
+       }
+      },
+      "none": {
+       "n_sessions": 775,
+       "n_harmful": 6,
+       "catch_rate": {
+        "k": 6,
+        "n": 6,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 6,
+        "n": 6,
+        "rate": 1.0
+       },
+       "any_pause_rate": {
+        "k": 8,
+        "n": 775,
+        "rate": 0.01032258064516129
+       }
+      }
+     },
+     "by_variant": {
+      "bad": {
+       "n_sessions": 763,
+       "n_harmful": 86,
+       "catch_rate": {
+        "k": 57,
+        "n": 86,
+        "rate": 0.6627906976744186
+       },
+       "early_warning": {
+        "k": 15,
+        "n": 86,
+        "rate": 0.1744186046511628
+       },
+       "false_alarm_session_rate": {
+        "k": 2,
+        "n": 677,
+        "rate": 0.0029542097488921715
+       }
+      },
+      "good": {
+       "n_sessions": 232,
+       "n_harmful": 0,
+       "catch_rate": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "false_alarm_session_rate": {
+        "k": 0,
+        "n": 232,
+        "rate": 0.0
+       }
+      }
+     },
+     "n_agents": 6,
+     "agent_auc_max": 1.0,
+     "agent_auc_pause_rate": 1.0
+    },
+    "4": {
+     "n_sessions": 992,
+     "n_harmful": 95,
+     "n_non_harmful": 897,
+     "session_auc": 0.9967963386727688,
+     "catch_rate": {
+      "k": 95,
+      "n": 95,
+      "rate": 1.0
+     },
+     "early_warning": {
+      "k": 16,
+      "n": 95,
+      "rate": 0.16842105263157894
+     },
+     "lead_alert_steps": {
+      "mean": 0.22105263157894736,
+      "n": 95
+     },
+     "lead_pause_steps": {
+      "mean": 0.05263157894736842,
+      "n": 95
+     },
+     "false_alarm_session_rate": {
+      "k": 13,
+      "n": 897,
+      "rate": 0.014492753623188406
+     },
+     "pauses_per_non_harmful": {
+      "total": 13,
+      "n": 897,
+      "rate": 0.014492753623188406
+     },
+     "by_attack": {
+      "account_takeover": {
+       "n_sessions": 71,
+       "n_harmful": 20,
+       "catch_rate": {
+        "k": 20,
+        "n": 20,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 3,
+        "n": 20,
+        "rate": 0.15
+       },
+       "any_pause_rate": {
+        "k": 20,
+        "n": 71,
+        "rate": 0.28169014084507044
+       }
+      },
+      "friendly_fraud": {
+       "n_sessions": 91,
+       "n_harmful": 39,
+       "catch_rate": {
+        "k": 39,
+        "n": 39,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 39,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 39,
+        "n": 91,
+        "rate": 0.42857142857142855
+       }
+      },
+      "injection": {
+       "n_sessions": 81,
+       "n_harmful": 31,
+       "catch_rate": {
+        "k": 31,
+        "n": 31,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 8,
+        "n": 31,
+        "rate": 0.25806451612903225
+       },
+       "any_pause_rate": {
+        "k": 31,
+        "n": 81,
+        "rate": 0.38271604938271603
+       }
+      },
+      "none": {
+       "n_sessions": 749,
+       "n_harmful": 5,
+       "catch_rate": {
+        "k": 5,
+        "n": 5,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 5,
+        "n": 5,
+        "rate": 1.0
+       },
+       "any_pause_rate": {
+        "k": 18,
+        "n": 749,
+        "rate": 0.02403204272363151
+       }
+      }
+     },
+     "by_variant": {
+      "bad": {
+       "n_sessions": 743,
+       "n_harmful": 95,
+       "catch_rate": {
+        "k": 95,
+        "n": 95,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 16,
+        "n": 95,
+        "rate": 0.16842105263157894
+       },
+       "false_alarm_session_rate": {
+        "k": 11,
+        "n": 648,
+        "rate": 0.016975308641975308
+       }
+      },
+      "good": {
+       "n_sessions": 249,
+       "n_harmful": 0,
+       "catch_rate": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "false_alarm_session_rate": {
+        "k": 2,
+        "n": 249,
+        "rate": 0.008032128514056224
+       }
+      }
+     },
+     "n_agents": 6,
+     "agent_auc_max": 1.0,
+     "agent_auc_pause_rate": 1.0
+    },
+    "5": {
+     "n_sessions": 1012,
+     "n_harmful": 81,
+     "n_non_harmful": 931,
+     "session_auc": 0.9982495922345547,
+     "catch_rate": {
+      "k": 81,
+      "n": 81,
+      "rate": 1.0
+     },
+     "early_warning": {
+      "k": 19,
+      "n": 81,
+      "rate": 0.2345679012345679
+     },
+     "lead_alert_steps": {
+      "mean": 0.2716049382716049,
+      "n": 81
+     },
+     "lead_pause_steps": {
+      "mean": 0.08641975308641975,
+      "n": 81
+     },
+     "false_alarm_session_rate": {
+      "k": 12,
+      "n": 931,
+      "rate": 0.01288936627282492
+     },
+     "pauses_per_non_harmful": {
+      "total": 12,
+      "n": 931,
+      "rate": 0.01288936627282492
+     },
+     "by_attack": {
+      "account_takeover": {
+       "n_sessions": 84,
+       "n_harmful": 23,
+       "catch_rate": {
+        "k": 23,
+        "n": 23,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 4,
+        "n": 23,
+        "rate": 0.17391304347826086
+       },
+       "any_pause_rate": {
+        "k": 23,
+        "n": 84,
+        "rate": 0.27380952380952384
+       }
+      },
+      "friendly_fraud": {
+       "n_sessions": 79,
+       "n_harmful": 22,
+       "catch_rate": {
+        "k": 22,
+        "n": 22,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 22,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 22,
+        "n": 79,
+        "rate": 0.27848101265822783
+       }
+      },
+      "injection": {
+       "n_sessions": 77,
+       "n_harmful": 32,
+       "catch_rate": {
+        "k": 32,
+        "n": 32,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 11,
+        "n": 32,
+        "rate": 0.34375
+       },
+       "any_pause_rate": {
+        "k": 32,
+        "n": 77,
+        "rate": 0.4155844155844156
+       }
+      },
+      "none": {
+       "n_sessions": 772,
+       "n_harmful": 4,
+       "catch_rate": {
+        "k": 4,
+        "n": 4,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 4,
+        "n": 4,
+        "rate": 1.0
+       },
+       "any_pause_rate": {
+        "k": 16,
+        "n": 772,
+        "rate": 0.02072538860103627
+       }
+      }
+     },
+     "by_variant": {
+      "bad": {
+       "n_sessions": 772,
+       "n_harmful": 81,
+       "catch_rate": {
+        "k": 81,
+        "n": 81,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 19,
+        "n": 81,
+        "rate": 0.2345679012345679
+       },
+       "false_alarm_session_rate": {
+        "k": 8,
+        "n": 691,
+        "rate": 0.011577424023154847
+       }
+      },
+      "good": {
+       "n_sessions": 240,
+       "n_harmful": 0,
+       "catch_rate": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "false_alarm_session_rate": {
+        "k": 4,
+        "n": 240,
+        "rate": 0.016666666666666666
+       }
+      }
+     },
+     "n_agents": 6,
+     "agent_auc_max": 1.0,
+     "agent_auc_pause_rate": 1.0
+    }
+   },
+   "mean": {
+    "n_sessions": 997.0,
+    "n_harmful": 86.8,
+    "n_non_harmful": 910.2,
+    "session_auc": 0.9976271853933338,
+    "catch_rate": {
+     "k": 384,
+     "n": 434,
+     "rate": 0.8858914728682171
+    },
+    "early_warning": {
+     "k": 93,
+     "n": 434,
+     "rate": 0.21558991278747275
+    },
+    "lead_alert_steps": {
+     "mean": 0.2826583180288487,
+     "n": 86.8
+    },
+    "lead_pause_steps": {
+     "mean": 0.12130062007459637,
+     "n": 76.8
+    },
+    "false_alarm_session_rate": {
+     "k": 37,
+     "n": 4551,
+     "rate": 0.008120083624800798
+    },
+    "pauses_per_non_harmful": {
+     "total": 7.4,
+     "n": 910.2,
+     "rate": 0.008120083624800798
+    },
+    "by_attack": {
+     "account_takeover": {
+      "n_sessions": 72.8,
+      "n_harmful": 22.0,
+      "catch_rate": {
+       "k": 110,
+       "n": 110,
+       "rate": 1.0
+      },
+      "early_warning": {
+       "k": 15,
+       "n": 110,
+       "rate": 0.13144927536231882
+      },
+      "any_pause_rate": {
+       "k": 110,
+       "n": 364,
+       "rate": 0.3043210867770727
+      }
+     },
+     "friendly_fraud": {
+      "n_sessions": 78.2,
+      "n_harmful": 27.2,
+      "catch_rate": {
+       "k": 86,
+       "n": 136,
+       "rate": 0.6
+      },
+      "early_warning": {
+       "k": 0,
+       "n": 136,
+       "rate": 0.0
+      },
+      "any_pause_rate": {
+       "k": 86,
+       "n": 391,
+       "rate": 0.20470162748643758
+      }
+     },
+     "injection": {
+      "n_sessions": 77.8,
+      "n_harmful": 30.6,
+      "catch_rate": {
+       "k": 153,
+       "n": 153,
+       "rate": 1.0
+      },
+      "early_warning": {
+       "k": 43,
+       "n": 153,
+       "rate": 0.27762300423590747
+      },
+      "any_pause_rate": {
+       "k": 153,
+       "n": 389,
+       "rate": 0.39153347109607883
+      }
+     },
+     "none": {
+      "n_sessions": 768.2,
+      "n_harmful": 7.0,
+      "catch_rate": {
+       "k": 35,
+       "n": 35,
+       "rate": 1.0
+      },
+      "early_warning": {
+       "k": 35,
+       "n": 35,
+       "rate": 1.0
+      },
+      "any_pause_rate": {
+       "k": 72,
+       "n": 3841,
+       "rate": 0.01881855016466645
+      }
+     }
+    },
+    "by_variant": {
+     "bad": {
+      "n_sessions": 758.6,
+      "n_harmful": 86.8,
+      "catch_rate": {
+       "k": 384,
+       "n": 434,
+       "rate": 0.8858914728682171
+      },
+      "early_warning": {
+       "k": 93,
+       "n": 434,
+       "rate": 0.21558991278747275
+      },
+      "false_alarm_session_rate": {
+       "k": 31,
+       "n": 3359,
+       "rate": 0.009308473633269636
+      }
+     },
+     "good": {
+      "n_sessions": 238.4,
+      "n_harmful": 0.0,
+      "catch_rate": {
+       "k": 0,
+       "n": 0,
+       "rate": null
+      },
+      "early_warning": {
+       "k": 0,
+       "n": 0,
+       "rate": null
+      },
+      "false_alarm_session_rate": {
+       "k": 6,
+       "n": 1192,
+       "rate": 0.004939759036144578
+      }
+     }
+    },
+    "n_agents": 6.0,
+    "agent_auc_max": 1.0,
+    "agent_auc_pause_rate": 1.0
+   }
+  },
+  "G2_o2": {
+   "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "per_seed": {
+    "1": {
+     "n_sessions": 990,
+     "n_harmful": 82,
+     "n_non_harmful": 908,
+     "session_auc": 0.9991605780595251,
+     "catch_rate": {
+      "k": 77,
+      "n": 82,
+      "rate": 0.9390243902439024
+     },
+     "early_warning": {
+      "k": 39,
+      "n": 82,
+      "rate": 0.47560975609756095
+     },
+     "lead_alert_steps": {
+      "mean": 0.8048780487804879,
+      "n": 82
+     },
+     "lead_pause_steps": {
+      "mean": 0.18181818181818182,
+      "n": 77
+     },
+     "false_alarm_session_rate": {
+      "k": 7,
+      "n": 908,
+      "rate": 0.007709251101321586
+     },
+     "pauses_per_non_harmful": {
+      "total": 7,
+      "n": 908,
+      "rate": 0.007709251101321586
+     },
+     "by_attack": {
+      "account_takeover": {
+       "n_sessions": 80,
+       "n_harmful": 24,
+       "catch_rate": {
+        "k": 24,
+        "n": 24,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 5,
+        "n": 24,
+        "rate": 0.20833333333333334
+       },
+       "any_pause_rate": {
+        "k": 24,
+        "n": 80,
+        "rate": 0.3
+       }
+      },
+      "friendly_fraud": {
+       "n_sessions": 79,
+       "n_harmful": 25,
+       "catch_rate": {
+        "k": 20,
+        "n": 25,
+        "rate": 0.8
+       },
+       "early_warning": {
+        "k": 18,
+        "n": 25,
+        "rate": 0.72
+       },
+       "any_pause_rate": {
+        "k": 20,
+        "n": 79,
+        "rate": 0.25316455696202533
+       }
+      },
+      "injection": {
+       "n_sessions": 71,
+       "n_harmful": 22,
+       "catch_rate": {
+        "k": 22,
+        "n": 22,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 5,
+        "n": 22,
+        "rate": 0.22727272727272727
+       },
+       "any_pause_rate": {
+        "k": 22,
+        "n": 71,
+        "rate": 0.30985915492957744
+       }
+      },
+      "none": {
+       "n_sessions": 760,
+       "n_harmful": 11,
+       "catch_rate": {
+        "k": 11,
+        "n": 11,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 11,
+        "n": 11,
+        "rate": 1.0
+       },
+       "any_pause_rate": {
+        "k": 18,
+        "n": 760,
+        "rate": 0.02368421052631579
+       }
+      }
+     },
+     "by_variant": {
+      "bad": {
+       "n_sessions": 743,
+       "n_harmful": 82,
+       "catch_rate": {
+        "k": 77,
+        "n": 82,
+        "rate": 0.9390243902439024
+       },
+       "early_warning": {
+        "k": 39,
+        "n": 82,
+        "rate": 0.47560975609756095
+       },
+       "false_alarm_session_rate": {
+        "k": 5,
+        "n": 661,
+        "rate": 0.007564296520423601
+       }
+      },
+      "good": {
+       "n_sessions": 247,
+       "n_harmful": 0,
+       "catch_rate": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "false_alarm_session_rate": {
+        "k": 2,
+        "n": 247,
+        "rate": 0.008097165991902834
+       }
+      }
+     },
+     "n_agents": 6,
+     "agent_auc_max": 1.0,
+     "agent_auc_pause_rate": 1.0
+    },
+    "2": {
+     "n_sessions": 996,
+     "n_harmful": 90,
+     "n_non_harmful": 906,
+     "session_auc": 0.9997792494481236,
+     "catch_rate": {
+      "k": 90,
+      "n": 90,
+      "rate": 1.0
+     },
+     "early_warning": {
+      "k": 12,
+      "n": 90,
+      "rate": 0.13333333333333333
+     },
+     "lead_alert_steps": {
+      "mean": 0.2111111111111111,
+      "n": 90
+     },
+     "lead_pause_steps": {
+      "mean": 0.16666666666666666,
+      "n": 90
+     },
+     "false_alarm_session_rate": {
+      "k": 6,
+      "n": 906,
+      "rate": 0.006622516556291391
+     },
+     "pauses_per_non_harmful": {
+      "total": 6,
+      "n": 906,
+      "rate": 0.006622516556291391
+     },
+     "by_attack": {
+      "account_takeover": {
+       "n_sessions": 65,
+       "n_harmful": 24,
+       "catch_rate": {
+        "k": 24,
+        "n": 24,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 24,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 24,
+        "n": 65,
+        "rate": 0.36923076923076925
+       }
+      },
+      "friendly_fraud": {
+       "n_sessions": 65,
+       "n_harmful": 21,
+       "catch_rate": {
+        "k": 21,
+        "n": 21,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 3,
+        "n": 21,
+        "rate": 0.14285714285714285
+       },
+       "any_pause_rate": {
+        "k": 21,
+        "n": 65,
+        "rate": 0.3230769230769231
+       }
+      },
+      "injection": {
+       "n_sessions": 81,
+       "n_harmful": 36,
+       "catch_rate": {
+        "k": 36,
+        "n": 36,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 36,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 36,
+        "n": 81,
+        "rate": 0.4444444444444444
+       }
+      },
+      "none": {
+       "n_sessions": 785,
+       "n_harmful": 9,
+       "catch_rate": {
+        "k": 9,
+        "n": 9,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 9,
+        "n": 9,
+        "rate": 1.0
+       },
+       "any_pause_rate": {
+        "k": 15,
+        "n": 785,
+        "rate": 0.01910828025477707
+       }
+      }
+     },
+     "by_variant": {
+      "bad": {
+       "n_sessions": 772,
+       "n_harmful": 90,
+       "catch_rate": {
+        "k": 90,
+        "n": 90,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 12,
+        "n": 90,
+        "rate": 0.13333333333333333
+       },
+       "false_alarm_session_rate": {
+        "k": 6,
+        "n": 682,
+        "rate": 0.008797653958944282
+       }
+      },
+      "good": {
+       "n_sessions": 224,
+       "n_harmful": 0,
+       "catch_rate": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "false_alarm_session_rate": {
+        "k": 0,
+        "n": 224,
+        "rate": 0.0
+       }
+      }
+     },
+     "n_agents": 6,
+     "agent_auc_max": 1.0,
+     "agent_auc_pause_rate": 1.0
+    },
+    "3": {
+     "n_sessions": 995,
+     "n_harmful": 86,
+     "n_non_harmful": 909,
+     "session_auc": 0.9976206923017883,
+     "catch_rate": {
+      "k": 74,
+      "n": 86,
+      "rate": 0.8604651162790697
+     },
+     "early_warning": {
+      "k": 6,
+      "n": 86,
+      "rate": 0.06976744186046512
+     },
+     "lead_alert_steps": {
+      "mean": 0.12790697674418605,
+      "n": 86
+     },
+     "lead_pause_steps": {
+      "mean": 0.0945945945945946,
+      "n": 74
+     },
+     "false_alarm_session_rate": {
+      "k": 3,
+      "n": 909,
+      "rate": 0.0033003300330033004
+     },
+     "pauses_per_non_harmful": {
+      "total": 3,
+      "n": 909,
+      "rate": 0.0033003300330033004
+     },
+     "by_attack": {
+      "account_takeover": {
+       "n_sessions": 64,
+       "n_harmful": 19,
+       "catch_rate": {
+        "k": 19,
+        "n": 19,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 19,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 19,
+        "n": 64,
+        "rate": 0.296875
+       }
+      },
+      "friendly_fraud": {
+       "n_sessions": 77,
+       "n_harmful": 29,
+       "catch_rate": {
+        "k": 17,
+        "n": 29,
+        "rate": 0.5862068965517241
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 29,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 17,
+        "n": 77,
+        "rate": 0.22077922077922077
+       }
+      },
+      "injection": {
+       "n_sessions": 79,
+       "n_harmful": 32,
+       "catch_rate": {
+        "k": 32,
+        "n": 32,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 32,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 32,
+        "n": 79,
+        "rate": 0.4050632911392405
+       }
+      },
+      "none": {
+       "n_sessions": 775,
+       "n_harmful": 6,
+       "catch_rate": {
+        "k": 6,
+        "n": 6,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 6,
+        "n": 6,
+        "rate": 1.0
+       },
+       "any_pause_rate": {
+        "k": 9,
+        "n": 775,
+        "rate": 0.011612903225806452
+       }
+      }
+     },
+     "by_variant": {
+      "bad": {
+       "n_sessions": 763,
+       "n_harmful": 86,
+       "catch_rate": {
+        "k": 74,
+        "n": 86,
+        "rate": 0.8604651162790697
+       },
+       "early_warning": {
+        "k": 6,
+        "n": 86,
+        "rate": 0.06976744186046512
+       },
+       "false_alarm_session_rate": {
+        "k": 3,
+        "n": 677,
+        "rate": 0.004431314623338257
+       }
+      },
+      "good": {
+       "n_sessions": 232,
+       "n_harmful": 0,
+       "catch_rate": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "false_alarm_session_rate": {
+        "k": 0,
+        "n": 232,
+        "rate": 0.0
+       }
+      }
+     },
+     "n_agents": 6,
+     "agent_auc_max": 1.0,
+     "agent_auc_pause_rate": 1.0
+    },
+    "4": {
+     "n_sessions": 992,
+     "n_harmful": 95,
+     "n_non_harmful": 897,
+     "session_auc": 0.9985213870797395,
+     "catch_rate": {
+      "k": 95,
+      "n": 95,
+      "rate": 1.0
+     },
+     "early_warning": {
+      "k": 52,
+      "n": 95,
+      "rate": 0.5473684210526316
+     },
+     "lead_alert_steps": {
+      "mean": 0.9789473684210527,
+      "n": 95
+     },
+     "lead_pause_steps": {
+      "mean": 0.05263157894736842,
+      "n": 95
+     },
+     "false_alarm_session_rate": {
+      "k": 10,
+      "n": 897,
+      "rate": 0.011148272017837236
+     },
+     "pauses_per_non_harmful": {
+      "total": 10,
+      "n": 897,
+      "rate": 0.011148272017837236
+     },
+     "by_attack": {
+      "account_takeover": {
+       "n_sessions": 71,
+       "n_harmful": 20,
+       "catch_rate": {
+        "k": 20,
+        "n": 20,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 3,
+        "n": 20,
+        "rate": 0.15
+       },
+       "any_pause_rate": {
+        "k": 20,
+        "n": 71,
+        "rate": 0.28169014084507044
+       }
+      },
+      "friendly_fraud": {
+       "n_sessions": 91,
+       "n_harmful": 39,
+       "catch_rate": {
+        "k": 39,
+        "n": 39,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 36,
+        "n": 39,
+        "rate": 0.9230769230769231
+       },
+       "any_pause_rate": {
+        "k": 39,
+        "n": 91,
+        "rate": 0.42857142857142855
+       }
+      },
+      "injection": {
+       "n_sessions": 81,
+       "n_harmful": 31,
+       "catch_rate": {
+        "k": 31,
+        "n": 31,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 8,
+        "n": 31,
+        "rate": 0.25806451612903225
+       },
+       "any_pause_rate": {
+        "k": 31,
+        "n": 81,
+        "rate": 0.38271604938271603
+       }
+      },
+      "none": {
+       "n_sessions": 749,
+       "n_harmful": 5,
+       "catch_rate": {
+        "k": 5,
+        "n": 5,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 5,
+        "n": 5,
+        "rate": 1.0
+       },
+       "any_pause_rate": {
+        "k": 15,
+        "n": 749,
+        "rate": 0.020026702269692925
+       }
+      }
+     },
+     "by_variant": {
+      "bad": {
+       "n_sessions": 743,
+       "n_harmful": 95,
+       "catch_rate": {
+        "k": 95,
+        "n": 95,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 52,
+        "n": 95,
+        "rate": 0.5473684210526316
+       },
+       "false_alarm_session_rate": {
+        "k": 9,
+        "n": 648,
+        "rate": 0.013888888888888888
+       }
+      },
+      "good": {
+       "n_sessions": 249,
+       "n_harmful": 0,
+       "catch_rate": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "false_alarm_session_rate": {
+        "k": 1,
+        "n": 249,
+        "rate": 0.004016064257028112
+       }
+      }
+     },
+     "n_agents": 6,
+     "agent_auc_max": 1.0,
+     "agent_auc_pause_rate": 1.0
+    },
+    "5": {
+     "n_sessions": 1012,
+     "n_harmful": 81,
+     "n_non_harmful": 931,
+     "session_auc": 0.9965654877935579,
+     "catch_rate": {
+      "k": 78,
+      "n": 81,
+      "rate": 0.9629629629629629
+     },
+     "early_warning": {
+      "k": 23,
+      "n": 81,
+      "rate": 0.2839506172839506
+     },
+     "lead_alert_steps": {
+      "mean": 0.32098765432098764,
+      "n": 81
+     },
+     "lead_pause_steps": {
+      "mean": 0.3333333333333333,
+      "n": 78
+     },
+     "false_alarm_session_rate": {
+      "k": 20,
+      "n": 931,
+      "rate": 0.021482277121374866
+     },
+     "pauses_per_non_harmful": {
+      "total": 20,
+      "n": 931,
+      "rate": 0.021482277121374866
+     },
+     "by_attack": {
+      "account_takeover": {
+       "n_sessions": 84,
+       "n_harmful": 23,
+       "catch_rate": {
+        "k": 23,
+        "n": 23,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 23,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 23,
+        "n": 84,
+        "rate": 0.27380952380952384
+       }
+      },
+      "friendly_fraud": {
+       "n_sessions": 79,
+       "n_harmful": 22,
+       "catch_rate": {
+        "k": 19,
+        "n": 22,
+        "rate": 0.8636363636363636
+       },
+       "early_warning": {
+        "k": 19,
+        "n": 22,
+        "rate": 0.8636363636363636
+       },
+       "any_pause_rate": {
+        "k": 19,
+        "n": 79,
+        "rate": 0.24050632911392406
+       }
+      },
+      "injection": {
+       "n_sessions": 77,
+       "n_harmful": 32,
+       "catch_rate": {
+        "k": 32,
+        "n": 32,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 32,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 32,
+        "n": 77,
+        "rate": 0.4155844155844156
+       }
+      },
+      "none": {
+       "n_sessions": 772,
+       "n_harmful": 4,
+       "catch_rate": {
+        "k": 4,
+        "n": 4,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 4,
+        "n": 4,
+        "rate": 1.0
+       },
+       "any_pause_rate": {
+        "k": 24,
+        "n": 772,
+        "rate": 0.031088082901554404
+       }
+      }
+     },
+     "by_variant": {
+      "bad": {
+       "n_sessions": 772,
+       "n_harmful": 81,
+       "catch_rate": {
+        "k": 78,
+        "n": 81,
+        "rate": 0.9629629629629629
+       },
+       "early_warning": {
+        "k": 23,
+        "n": 81,
+        "rate": 0.2839506172839506
+       },
+       "false_alarm_session_rate": {
+        "k": 15,
+        "n": 691,
+        "rate": 0.02170767004341534
+       }
+      },
+      "good": {
+       "n_sessions": 240,
+       "n_harmful": 0,
+       "catch_rate": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "false_alarm_session_rate": {
+        "k": 5,
+        "n": 240,
+        "rate": 0.020833333333333332
+       }
+      }
+     },
+     "n_agents": 6,
+     "agent_auc_max": 1.0,
+     "agent_auc_pause_rate": 1.0
+    }
+   },
+   "mean": {
+    "n_sessions": 997.0,
+    "n_harmful": 86.8,
+    "n_non_harmful": 910.2,
+    "session_auc": 0.9983294789365468,
+    "catch_rate": {
+     "k": 414,
+     "n": 434,
+     "rate": 0.952490493897187
+    },
+    "early_warning": {
+     "k": 132,
+     "n": 434,
+     "rate": 0.3020059139255883
+    },
+    "lead_alert_steps": {
+     "mean": 0.4887662318755651,
+     "n": 86.8
+    },
+    "lead_pause_steps": {
+     "mean": 0.16580887107202896,
+     "n": 82.8
+    },
+    "false_alarm_session_rate": {
+     "k": 46,
+     "n": 4551,
+     "rate": 0.010052529365965675
+    },
+    "pauses_per_non_harmful": {
+     "total": 9.2,
+     "n": 910.2,
+     "rate": 0.010052529365965675
+    },
+    "by_attack": {
+     "account_takeover": {
+      "n_sessions": 72.8,
+      "n_harmful": 22.0,
+      "catch_rate": {
+       "k": 110,
+       "n": 110,
+       "rate": 1.0
+      },
+      "early_warning": {
+       "k": 8,
+       "n": 110,
+       "rate": 0.07166666666666667
+      },
+      "any_pause_rate": {
+       "k": 110,
+       "n": 364,
+       "rate": 0.3043210867770727
+      }
+     },
+     "friendly_fraud": {
+      "n_sessions": 78.2,
+      "n_harmful": 27.2,
+      "catch_rate": {
+       "k": 116,
+       "n": 136,
+       "rate": 0.8499686520376176
+      },
+      "early_warning": {
+       "k": 76,
+       "n": 136,
+       "rate": 0.529914085914086
+      },
+      "any_pause_rate": {
+       "k": 116,
+       "n": 391,
+       "rate": 0.29321969170070433
+      }
+     },
+     "injection": {
+      "n_sessions": 77.8,
+      "n_harmful": 30.6,
+      "catch_rate": {
+       "k": 153,
+       "n": 153,
+       "rate": 1.0
+      },
+      "early_warning": {
+       "k": 13,
+       "n": 153,
+       "rate": 0.09706744868035191
+      },
+      "any_pause_rate": {
+       "k": 153,
+       "n": 389,
+       "rate": 0.39153347109607883
+      }
+     },
+     "none": {
+      "n_sessions": 768.2,
+      "n_harmful": 7.0,
+      "catch_rate": {
+       "k": 35,
+       "n": 35,
+       "rate": 1.0
+      },
+      "early_warning": {
+       "k": 35,
+       "n": 35,
+       "rate": 1.0
+      },
+      "any_pause_rate": {
+       "k": 81,
+       "n": 3841,
+       "rate": 0.02110403583562933
+      }
+     }
+    },
+    "by_variant": {
+     "bad": {
+      "n_sessions": 758.6,
+      "n_harmful": 86.8,
+      "catch_rate": {
+       "k": 414,
+       "n": 434,
+       "rate": 0.952490493897187
+      },
+      "early_warning": {
+       "k": 132,
+       "n": 434,
+       "rate": 0.3020059139255883
+      },
+      "false_alarm_session_rate": {
+       "k": 38,
+       "n": 3359,
+       "rate": 0.011277964807002074
+      }
+     },
+     "good": {
+      "n_sessions": 238.4,
+      "n_harmful": 0.0,
+      "catch_rate": {
+       "k": 0,
+       "n": 0,
+       "rate": null
+      },
+      "early_warning": {
+       "k": 0,
+       "n": 0,
+       "rate": null
+      },
+      "false_alarm_session_rate": {
+       "k": 8,
+       "n": 1192,
+       "rate": 0.006589312716452855
+      }
+     }
+    },
+    "n_agents": 6.0,
+    "agent_auc_max": 1.0,
+    "agent_auc_pause_rate": 1.0
+   }
+  },
+  "severity_only": {
+   "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "per_seed": {
+    "1": {
+     "n_sessions": 990,
+     "n_harmful": 82,
+     "n_non_harmful": 908,
+     "session_auc": 0.9411195874073278,
+     "catch_rate": {
+      "k": 0,
+      "n": 82,
+      "rate": 0.0
+     },
+     "early_warning": {
+      "k": 36,
+      "n": 82,
+      "rate": 0.43902439024390244
+     },
+     "lead_alert_steps": {
+      "mean": 0.47560975609756095,
+      "n": 82
+     },
+     "lead_pause_steps": {
+      "mean": null,
+      "n": 0
+     },
+     "false_alarm_session_rate": {
+      "k": 0,
+      "n": 908,
+      "rate": 0.0
+     },
+     "pauses_per_non_harmful": {
+      "total": 0,
+      "n": 908,
+      "rate": 0.0
+     },
+     "by_attack": {
+      "account_takeover": {
+       "n_sessions": 80,
+       "n_harmful": 24,
+       "catch_rate": {
+        "k": 0,
+        "n": 24,
+        "rate": 0.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 24,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 0,
+        "n": 80,
+        "rate": 0.0
+       }
+      },
+      "friendly_fraud": {
+       "n_sessions": 79,
+       "n_harmful": 25,
+       "catch_rate": {
+        "k": 0,
+        "n": 25,
+        "rate": 0.0
+       },
+       "early_warning": {
+        "k": 25,
+        "n": 25,
+        "rate": 1.0
+       },
+       "any_pause_rate": {
+        "k": 0,
+        "n": 79,
+        "rate": 0.0
+       }
+      },
+      "injection": {
+       "n_sessions": 71,
+       "n_harmful": 22,
+       "catch_rate": {
+        "k": 0,
+        "n": 22,
+        "rate": 0.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 22,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 0,
+        "n": 71,
+        "rate": 0.0
+       }
+      },
+      "none": {
+       "n_sessions": 760,
+       "n_harmful": 11,
+       "catch_rate": {
+        "k": 0,
+        "n": 11,
+        "rate": 0.0
+       },
+       "early_warning": {
+        "k": 11,
+        "n": 11,
+        "rate": 1.0
+       },
+       "any_pause_rate": {
+        "k": 0,
+        "n": 760,
+        "rate": 0.0
+       }
+      }
+     },
+     "by_variant": {
+      "bad": {
+       "n_sessions": 743,
+       "n_harmful": 82,
+       "catch_rate": {
+        "k": 0,
+        "n": 82,
+        "rate": 0.0
+       },
+       "early_warning": {
+        "k": 36,
+        "n": 82,
+        "rate": 0.43902439024390244
+       },
+       "false_alarm_session_rate": {
+        "k": 0,
+        "n": 661,
+        "rate": 0.0
+       }
+      },
+      "good": {
+       "n_sessions": 247,
+       "n_harmful": 0,
+       "catch_rate": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "false_alarm_session_rate": {
+        "k": 0,
+        "n": 247,
+        "rate": 0.0
+       }
+      }
+     },
+     "n_agents": 6,
+     "agent_auc_max": 0.5,
+     "agent_auc_pause_rate": 0.5
+    },
+    "2": {
+     "n_sessions": 996,
+     "n_harmful": 90,
+     "n_non_harmful": 906,
+     "session_auc": 0.9415011037527594,
+     "catch_rate": {
+      "k": 0,
+      "n": 90,
+      "rate": 0.0
+     },
+     "early_warning": {
+      "k": 0,
+      "n": 90,
+      "rate": 0.0
+     },
+     "lead_alert_steps": {
+      "mean": 0.0,
+      "n": 90
+     },
+     "lead_pause_steps": {
+      "mean": null,
+      "n": 0
+     },
+     "false_alarm_session_rate": {
+      "k": 0,
+      "n": 906,
+      "rate": 0.0
+     },
+     "pauses_per_non_harmful": {
+      "total": 0,
+      "n": 906,
+      "rate": 0.0
+     },
+     "by_attack": {
+      "account_takeover": {
+       "n_sessions": 65,
+       "n_harmful": 24,
+       "catch_rate": {
+        "k": 0,
+        "n": 24,
+        "rate": 0.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 24,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 0,
+        "n": 65,
+        "rate": 0.0
+       }
+      },
+      "friendly_fraud": {
+       "n_sessions": 65,
+       "n_harmful": 21,
+       "catch_rate": {
+        "k": 0,
+        "n": 21,
+        "rate": 0.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 21,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 0,
+        "n": 65,
+        "rate": 0.0
+       }
+      },
+      "injection": {
+       "n_sessions": 81,
+       "n_harmful": 36,
+       "catch_rate": {
+        "k": 0,
+        "n": 36,
+        "rate": 0.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 36,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 0,
+        "n": 81,
+        "rate": 0.0
+       }
+      },
+      "none": {
+       "n_sessions": 785,
+       "n_harmful": 9,
+       "catch_rate": {
+        "k": 0,
+        "n": 9,
+        "rate": 0.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 9,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 0,
+        "n": 785,
+        "rate": 0.0
+       }
+      }
+     },
+     "by_variant": {
+      "bad": {
+       "n_sessions": 772,
+       "n_harmful": 90,
+       "catch_rate": {
+        "k": 0,
+        "n": 90,
+        "rate": 0.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 90,
+        "rate": 0.0
+       },
+       "false_alarm_session_rate": {
+        "k": 0,
+        "n": 682,
+        "rate": 0.0
+       }
+      },
+      "good": {
+       "n_sessions": 224,
+       "n_harmful": 0,
+       "catch_rate": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "false_alarm_session_rate": {
+        "k": 0,
+        "n": 224,
+        "rate": 0.0
+       }
+      }
+     },
+     "n_agents": 6,
+     "agent_auc_max": 0.5,
+     "agent_auc_pause_rate": 0.5
+    },
+    "3": {
+     "n_sessions": 995,
+     "n_harmful": 86,
+     "n_non_harmful": 909,
+     "session_auc": 0.9430437229769488,
+     "catch_rate": {
+      "k": 0,
+      "n": 86,
+      "rate": 0.0
+     },
+     "early_warning": {
+      "k": 0,
+      "n": 86,
+      "rate": 0.0
+     },
+     "lead_alert_steps": {
+      "mean": 0.0,
+      "n": 86
+     },
+     "lead_pause_steps": {
+      "mean": null,
+      "n": 0
+     },
+     "false_alarm_session_rate": {
+      "k": 0,
+      "n": 909,
+      "rate": 0.0
+     },
+     "pauses_per_non_harmful": {
+      "total": 0,
+      "n": 909,
+      "rate": 0.0
+     },
+     "by_attack": {
+      "account_takeover": {
+       "n_sessions": 64,
+       "n_harmful": 19,
+       "catch_rate": {
+        "k": 0,
+        "n": 19,
+        "rate": 0.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 19,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 0,
+        "n": 64,
+        "rate": 0.0
+       }
+      },
+      "friendly_fraud": {
+       "n_sessions": 77,
+       "n_harmful": 29,
+       "catch_rate": {
+        "k": 0,
+        "n": 29,
+        "rate": 0.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 29,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 0,
+        "n": 77,
+        "rate": 0.0
+       }
+      },
+      "injection": {
+       "n_sessions": 79,
+       "n_harmful": 32,
+       "catch_rate": {
+        "k": 0,
+        "n": 32,
+        "rate": 0.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 32,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 0,
+        "n": 79,
+        "rate": 0.0
+       }
+      },
+      "none": {
+       "n_sessions": 775,
+       "n_harmful": 6,
+       "catch_rate": {
+        "k": 0,
+        "n": 6,
+        "rate": 0.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 6,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 0,
+        "n": 775,
+        "rate": 0.0
+       }
+      }
+     },
+     "by_variant": {
+      "bad": {
+       "n_sessions": 763,
+       "n_harmful": 86,
+       "catch_rate": {
+        "k": 0,
+        "n": 86,
+        "rate": 0.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 86,
+        "rate": 0.0
+       },
+       "false_alarm_session_rate": {
+        "k": 0,
+        "n": 677,
+        "rate": 0.0
+       }
+      },
+      "good": {
+       "n_sessions": 232,
+       "n_harmful": 0,
+       "catch_rate": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "false_alarm_session_rate": {
+        "k": 0,
+        "n": 232,
+        "rate": 0.0
+       }
+      }
+     },
+     "n_agents": 6,
+     "agent_auc_max": 0.5,
+     "agent_auc_pause_rate": 0.5
+    },
+    "4": {
+     "n_sessions": 992,
+     "n_harmful": 95,
+     "n_non_harmful": 897,
+     "session_auc": 0.9505310097987444,
+     "catch_rate": {
+      "k": 0,
+      "n": 95,
+      "rate": 0.0
+     },
+     "early_warning": {
+      "k": 44,
+      "n": 95,
+      "rate": 0.4631578947368421
+     },
+     "lead_alert_steps": {
+      "mean": 0.4631578947368421,
+      "n": 95
+     },
+     "lead_pause_steps": {
+      "mean": null,
+      "n": 0
+     },
+     "false_alarm_session_rate": {
+      "k": 0,
+      "n": 897,
+      "rate": 0.0
+     },
+     "pauses_per_non_harmful": {
+      "total": 0,
+      "n": 897,
+      "rate": 0.0
+     },
+     "by_attack": {
+      "account_takeover": {
+       "n_sessions": 71,
+       "n_harmful": 20,
+       "catch_rate": {
+        "k": 0,
+        "n": 20,
+        "rate": 0.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 20,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 0,
+        "n": 71,
+        "rate": 0.0
+       }
+      },
+      "friendly_fraud": {
+       "n_sessions": 91,
+       "n_harmful": 39,
+       "catch_rate": {
+        "k": 0,
+        "n": 39,
+        "rate": 0.0
+       },
+       "early_warning": {
+        "k": 39,
+        "n": 39,
+        "rate": 1.0
+       },
+       "any_pause_rate": {
+        "k": 0,
+        "n": 91,
+        "rate": 0.0
+       }
+      },
+      "injection": {
+       "n_sessions": 81,
+       "n_harmful": 31,
+       "catch_rate": {
+        "k": 0,
+        "n": 31,
+        "rate": 0.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 31,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 0,
+        "n": 81,
+        "rate": 0.0
+       }
+      },
+      "none": {
+       "n_sessions": 749,
+       "n_harmful": 5,
+       "catch_rate": {
+        "k": 0,
+        "n": 5,
+        "rate": 0.0
+       },
+       "early_warning": {
+        "k": 5,
+        "n": 5,
+        "rate": 1.0
+       },
+       "any_pause_rate": {
+        "k": 0,
+        "n": 749,
+        "rate": 0.0
+       }
+      }
+     },
+     "by_variant": {
+      "bad": {
+       "n_sessions": 743,
+       "n_harmful": 95,
+       "catch_rate": {
+        "k": 0,
+        "n": 95,
+        "rate": 0.0
+       },
+       "early_warning": {
+        "k": 44,
+        "n": 95,
+        "rate": 0.4631578947368421
+       },
+       "false_alarm_session_rate": {
+        "k": 0,
+        "n": 648,
+        "rate": 0.0
+       }
+      },
+      "good": {
+       "n_sessions": 249,
+       "n_harmful": 0,
+       "catch_rate": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "false_alarm_session_rate": {
+        "k": 0,
+        "n": 249,
+        "rate": 0.0
+       }
+      }
+     },
+     "n_agents": 6,
+     "agent_auc_max": 0.5,
+     "agent_auc_pause_rate": 0.5
+    },
+    "5": {
+     "n_sessions": 1012,
+     "n_harmful": 81,
+     "n_non_harmful": 931,
+     "session_auc": 0.9577515216612961,
+     "catch_rate": {
+      "k": 0,
+      "n": 81,
+      "rate": 0.0
+     },
+     "early_warning": {
+      "k": 26,
+      "n": 81,
+      "rate": 0.32098765432098764
+     },
+     "lead_alert_steps": {
+      "mean": 0.35802469135802467,
+      "n": 81
+     },
+     "lead_pause_steps": {
+      "mean": null,
+      "n": 0
+     },
+     "false_alarm_session_rate": {
+      "k": 0,
+      "n": 931,
+      "rate": 0.0
+     },
+     "pauses_per_non_harmful": {
+      "total": 0,
+      "n": 931,
+      "rate": 0.0
+     },
+     "by_attack": {
+      "account_takeover": {
+       "n_sessions": 84,
+       "n_harmful": 23,
+       "catch_rate": {
+        "k": 0,
+        "n": 23,
+        "rate": 0.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 23,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 0,
+        "n": 84,
+        "rate": 0.0
+       }
+      },
+      "friendly_fraud": {
+       "n_sessions": 79,
+       "n_harmful": 22,
+       "catch_rate": {
+        "k": 0,
+        "n": 22,
+        "rate": 0.0
+       },
+       "early_warning": {
+        "k": 22,
+        "n": 22,
+        "rate": 1.0
+       },
+       "any_pause_rate": {
+        "k": 0,
+        "n": 79,
+        "rate": 0.0
+       }
+      },
+      "injection": {
+       "n_sessions": 77,
+       "n_harmful": 32,
+       "catch_rate": {
+        "k": 0,
+        "n": 32,
+        "rate": 0.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 32,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 0,
+        "n": 77,
+        "rate": 0.0
+       }
+      },
+      "none": {
+       "n_sessions": 772,
+       "n_harmful": 4,
+       "catch_rate": {
+        "k": 0,
+        "n": 4,
+        "rate": 0.0
+       },
+       "early_warning": {
+        "k": 4,
+        "n": 4,
+        "rate": 1.0
+       },
+       "any_pause_rate": {
+        "k": 0,
+        "n": 772,
+        "rate": 0.0
+       }
+      }
+     },
+     "by_variant": {
+      "bad": {
+       "n_sessions": 772,
+       "n_harmful": 81,
+       "catch_rate": {
+        "k": 0,
+        "n": 81,
+        "rate": 0.0
+       },
+       "early_warning": {
+        "k": 26,
+        "n": 81,
+        "rate": 0.32098765432098764
+       },
+       "false_alarm_session_rate": {
+        "k": 0,
+        "n": 691,
+        "rate": 0.0
+       }
+      },
+      "good": {
+       "n_sessions": 240,
+       "n_harmful": 0,
+       "catch_rate": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "false_alarm_session_rate": {
+        "k": 0,
+        "n": 240,
+        "rate": 0.0
+       }
+      }
+     },
+     "n_agents": 6,
+     "agent_auc_max": 0.5,
+     "agent_auc_pause_rate": 0.5
+    }
+   },
+   "mean": {
+    "n_sessions": 997.0,
+    "n_harmful": 86.8,
+    "n_non_harmful": 910.2,
+    "session_auc": 0.9467893891194153,
+    "catch_rate": {
+     "k": 0,
+     "n": 434,
+     "rate": 0.0
+    },
+    "early_warning": {
+     "k": 106,
+     "n": 434,
+     "rate": 0.24463398786034643
+    },
+    "lead_alert_steps": {
+     "mean": 0.25935846843848553,
+     "n": 86.8
+    },
+    "lead_pause_steps": {
+     "mean": null,
+     "n": 0.0
+    },
+    "false_alarm_session_rate": {
+     "k": 0,
+     "n": 4551,
+     "rate": 0.0
+    },
+    "pauses_per_non_harmful": {
+     "total": 0.0,
+     "n": 910.2,
+     "rate": 0.0
+    },
+    "by_attack": {
+     "account_takeover": {
+      "n_sessions": 72.8,
+      "n_harmful": 22.0,
+      "catch_rate": {
+       "k": 0,
+       "n": 110,
+       "rate": 0.0
+      },
+      "early_warning": {
+       "k": 0,
+       "n": 110,
+       "rate": 0.0
+      },
+      "any_pause_rate": {
+       "k": 0,
+       "n": 364,
+       "rate": 0.0
+      }
+     },
+     "friendly_fraud": {
+      "n_sessions": 78.2,
+      "n_harmful": 27.2,
+      "catch_rate": {
+       "k": 0,
+       "n": 136,
+       "rate": 0.0
+      },
+      "early_warning": {
+       "k": 86,
+       "n": 136,
+       "rate": 0.6
+      },
+      "any_pause_rate": {
+       "k": 0,
+       "n": 391,
+       "rate": 0.0
+      }
+     },
+     "injection": {
+      "n_sessions": 77.8,
+      "n_harmful": 30.6,
+      "catch_rate": {
+       "k": 0,
+       "n": 153,
+       "rate": 0.0
+      },
+      "early_warning": {
+       "k": 0,
+       "n": 153,
+       "rate": 0.0
+      },
+      "any_pause_rate": {
+       "k": 0,
+       "n": 389,
+       "rate": 0.0
+      }
+     },
+     "none": {
+      "n_sessions": 768.2,
+      "n_harmful": 7.0,
+      "catch_rate": {
+       "k": 0,
+       "n": 35,
+       "rate": 0.0
+      },
+      "early_warning": {
+       "k": 20,
+       "n": 35,
+       "rate": 0.6
+      },
+      "any_pause_rate": {
+       "k": 0,
+       "n": 3841,
+       "rate": 0.0
+      }
+     }
+    },
+    "by_variant": {
+     "bad": {
+      "n_sessions": 758.6,
+      "n_harmful": 86.8,
+      "catch_rate": {
+       "k": 0,
+       "n": 434,
+       "rate": 0.0
+      },
+      "early_warning": {
+       "k": 106,
+       "n": 434,
+       "rate": 0.24463398786034643
+      },
+      "false_alarm_session_rate": {
+       "k": 0,
+       "n": 3359,
+       "rate": 0.0
+      }
+     },
+     "good": {
+      "n_sessions": 238.4,
+      "n_harmful": 0.0,
+      "catch_rate": {
+       "k": 0,
+       "n": 0,
+       "rate": null
+      },
+      "early_warning": {
+       "k": 0,
+       "n": 0,
+       "rate": null
+      },
+      "false_alarm_session_rate": {
+       "k": 0,
+       "n": 1192,
+       "rate": 0.0
+      }
+     }
+    },
+    "n_agents": 6.0,
+    "agent_auc_max": 0.5,
+    "agent_auc_pause_rate": 0.5
+   }
+  },
+  "surprise_only": {
+   "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "per_seed": {
+    "1": {
+     "n_sessions": 990,
+     "n_harmful": 82,
+     "n_non_harmful": 908,
+     "session_auc": 0.9133918018695606,
+     "catch_rate": {
+      "k": 75,
+      "n": 82,
+      "rate": 0.9146341463414634
+     },
+     "early_warning": {
+      "k": 52,
+      "n": 82,
+      "rate": 0.6341463414634146
+     },
+     "lead_alert_steps": {
+      "mean": 1.1097560975609757,
+      "n": 82
+     },
+     "lead_pause_steps": {
+      "mean": 0.8133333333333334,
+      "n": 75
+     },
+     "false_alarm_session_rate": {
+      "k": 190,
+      "n": 908,
+      "rate": 0.2092511013215859
+     },
+     "pauses_per_non_harmful": {
+      "total": 272,
+      "n": 908,
+      "rate": 0.29955947136563876
+     },
+     "by_attack": {
+      "account_takeover": {
+       "n_sessions": 80,
+       "n_harmful": 24,
+       "catch_rate": {
+        "k": 24,
+        "n": 24,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 5,
+        "n": 24,
+        "rate": 0.20833333333333334
+       },
+       "any_pause_rate": {
+        "k": 74,
+        "n": 80,
+        "rate": 0.925
+       }
+      },
+      "friendly_fraud": {
+       "n_sessions": 79,
+       "n_harmful": 25,
+       "catch_rate": {
+        "k": 18,
+        "n": 25,
+        "rate": 0.72
+       },
+       "early_warning": {
+        "k": 25,
+        "n": 25,
+        "rate": 1.0
+       },
+       "any_pause_rate": {
+        "k": 71,
+        "n": 79,
+        "rate": 0.8987341772151899
+       }
+      },
+      "injection": {
+       "n_sessions": 71,
+       "n_harmful": 22,
+       "catch_rate": {
+        "k": 22,
+        "n": 22,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 11,
+        "n": 22,
+        "rate": 0.5
+       },
+       "any_pause_rate": {
+        "k": 70,
+        "n": 71,
+        "rate": 0.9859154929577465
+       }
+      },
+      "none": {
+       "n_sessions": 760,
+       "n_harmful": 11,
+       "catch_rate": {
+        "k": 11,
+        "n": 11,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 11,
+        "n": 11,
+        "rate": 1.0
+       },
+       "any_pause_rate": {
+        "k": 50,
+        "n": 760,
+        "rate": 0.06578947368421052
+       }
+      }
+     },
+     "by_variant": {
+      "bad": {
+       "n_sessions": 743,
+       "n_harmful": 82,
+       "catch_rate": {
+        "k": 75,
+        "n": 82,
+        "rate": 0.9146341463414634
+       },
+       "early_warning": {
+        "k": 52,
+        "n": 82,
+        "rate": 0.6341463414634146
+       },
+       "false_alarm_session_rate": {
+        "k": 66,
+        "n": 661,
+        "rate": 0.09984871406959153
+       }
+      },
+      "good": {
+       "n_sessions": 247,
+       "n_harmful": 0,
+       "catch_rate": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "false_alarm_session_rate": {
+        "k": 124,
+        "n": 247,
+        "rate": 0.5020242914979757
+       }
+      }
+     },
+     "n_agents": 6,
+     "agent_auc_max": 0.5,
+     "agent_auc_pause_rate": 0.0
+    },
+    "2": {
+     "n_sessions": 996,
+     "n_harmful": 90,
+     "n_non_harmful": 906,
+     "session_auc": 0.9155629139072847,
+     "catch_rate": {
+      "k": 90,
+      "n": 90,
+      "rate": 1.0
+     },
+     "early_warning": {
+      "k": 55,
+      "n": 90,
+      "rate": 0.6111111111111112
+     },
+     "lead_alert_steps": {
+      "mean": 1.0444444444444445,
+      "n": 90
+     },
+     "lead_pause_steps": {
+      "mean": 0.7444444444444445,
+      "n": 90
+     },
+     "false_alarm_session_rate": {
+      "k": 171,
+      "n": 906,
+      "rate": 0.18874172185430463
+     },
+     "pauses_per_non_harmful": {
+      "total": 276,
+      "n": 906,
+      "rate": 0.304635761589404
+     },
+     "by_attack": {
+      "account_takeover": {
+       "n_sessions": 65,
+       "n_harmful": 24,
+       "catch_rate": {
+        "k": 24,
+        "n": 24,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 3,
+        "n": 24,
+        "rate": 0.125
+       },
+       "any_pause_rate": {
+        "k": 65,
+        "n": 65,
+        "rate": 1.0
+       }
+      },
+      "friendly_fraud": {
+       "n_sessions": 65,
+       "n_harmful": 21,
+       "catch_rate": {
+        "k": 21,
+        "n": 21,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 21,
+        "n": 21,
+        "rate": 1.0
+       },
+       "any_pause_rate": {
+        "k": 64,
+        "n": 65,
+        "rate": 0.9846153846153847
+       }
+      },
+      "injection": {
+       "n_sessions": 81,
+       "n_harmful": 36,
+       "catch_rate": {
+        "k": 36,
+        "n": 36,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 22,
+        "n": 36,
+        "rate": 0.6111111111111112
+       },
+       "any_pause_rate": {
+        "k": 80,
+        "n": 81,
+        "rate": 0.9876543209876543
+       }
+      },
+      "none": {
+       "n_sessions": 785,
+       "n_harmful": 9,
+       "catch_rate": {
+        "k": 9,
+        "n": 9,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 9,
+        "n": 9,
+        "rate": 1.0
+       },
+       "any_pause_rate": {
+        "k": 52,
+        "n": 785,
+        "rate": 0.06624203821656051
+       }
+      }
+     },
+     "by_variant": {
+      "bad": {
+       "n_sessions": 772,
+       "n_harmful": 90,
+       "catch_rate": {
+        "k": 90,
+        "n": 90,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 55,
+        "n": 90,
+        "rate": 0.6111111111111112
+       },
+       "false_alarm_session_rate": {
+        "k": 70,
+        "n": 682,
+        "rate": 0.10263929618768329
+       }
+      },
+      "good": {
+       "n_sessions": 224,
+       "n_harmful": 0,
+       "catch_rate": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "false_alarm_session_rate": {
+        "k": 101,
+        "n": 224,
+        "rate": 0.45089285714285715
+       }
+      }
+     },
+     "n_agents": 6,
+     "agent_auc_max": 0.5,
+     "agent_auc_pause_rate": 0.0
+    },
+    "3": {
+     "n_sessions": 995,
+     "n_harmful": 86,
+     "n_non_harmful": 909,
+     "session_auc": 0.8951825415099649,
+     "catch_rate": {
+      "k": 80,
+      "n": 86,
+      "rate": 0.9302325581395349
+     },
+     "early_warning": {
+      "k": 58,
+      "n": 86,
+      "rate": 0.6744186046511628
+     },
+     "lead_alert_steps": {
+      "mean": 1.127906976744186,
+      "n": 86
+     },
+     "lead_pause_steps": {
+      "mean": 0.775,
+      "n": 80
+     },
+     "false_alarm_session_rate": {
+      "k": 187,
+      "n": 909,
+      "rate": 0.20572057205720573
+     },
+     "pauses_per_non_harmful": {
+      "total": 251,
+      "n": 909,
+      "rate": 0.2761276127612761
+     },
+     "by_attack": {
+      "account_takeover": {
+       "n_sessions": 64,
+       "n_harmful": 19,
+       "catch_rate": {
+        "k": 19,
+        "n": 19,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 19,
+        "rate": 0.0
+       },
+       "any_pause_rate": {
+        "k": 64,
+        "n": 64,
+        "rate": 1.0
+       }
+      },
+      "friendly_fraud": {
+       "n_sessions": 77,
+       "n_harmful": 29,
+       "catch_rate": {
+        "k": 23,
+        "n": 29,
+        "rate": 0.7931034482758621
+       },
+       "early_warning": {
+        "k": 29,
+        "n": 29,
+        "rate": 1.0
+       },
+       "any_pause_rate": {
+        "k": 70,
+        "n": 77,
+        "rate": 0.9090909090909091
+       }
+      },
+      "injection": {
+       "n_sessions": 79,
+       "n_harmful": 32,
+       "catch_rate": {
+        "k": 32,
+        "n": 32,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 23,
+        "n": 32,
+        "rate": 0.71875
+       },
+       "any_pause_rate": {
+        "k": 78,
+        "n": 79,
+        "rate": 0.9873417721518988
+       }
+      },
+      "none": {
+       "n_sessions": 775,
+       "n_harmful": 6,
+       "catch_rate": {
+        "k": 6,
+        "n": 6,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 6,
+        "n": 6,
+        "rate": 1.0
+       },
+       "any_pause_rate": {
+        "k": 55,
+        "n": 775,
+        "rate": 0.07096774193548387
+       }
+      }
+     },
+     "by_variant": {
+      "bad": {
+       "n_sessions": 763,
+       "n_harmful": 86,
+       "catch_rate": {
+        "k": 80,
+        "n": 86,
+        "rate": 0.9302325581395349
+       },
+       "early_warning": {
+        "k": 58,
+        "n": 86,
+        "rate": 0.6744186046511628
+       },
+       "false_alarm_session_rate": {
+        "k": 75,
+        "n": 677,
+        "rate": 0.11078286558345643
+       }
+      },
+      "good": {
+       "n_sessions": 232,
+       "n_harmful": 0,
+       "catch_rate": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "false_alarm_session_rate": {
+        "k": 112,
+        "n": 232,
+        "rate": 0.4827586206896552
+       }
+      }
+     },
+     "n_agents": 6,
+     "agent_auc_max": 0.5,
+     "agent_auc_pause_rate": 0.0
+    },
+    "4": {
+     "n_sessions": 992,
+     "n_harmful": 95,
+     "n_non_harmful": 897,
+     "session_auc": 0.9034266267675879,
+     "catch_rate": {
+      "k": 92,
+      "n": 95,
+      "rate": 0.968421052631579
+     },
+     "early_warning": {
+      "k": 63,
+      "n": 95,
+      "rate": 0.6631578947368421
+     },
+     "lead_alert_steps": {
+      "mean": 1.2,
+      "n": 95
+     },
+     "lead_pause_steps": {
+      "mean": 1.0869565217391304,
+      "n": 92
+     },
+     "false_alarm_session_rate": {
+      "k": 167,
+      "n": 897,
+      "rate": 0.18617614269788182
+     },
+     "pauses_per_non_harmful": {
+      "total": 245,
+      "n": 897,
+      "rate": 0.2731326644370123
+     },
+     "by_attack": {
+      "account_takeover": {
+       "n_sessions": 71,
+       "n_harmful": 20,
+       "catch_rate": {
+        "k": 20,
+        "n": 20,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 3,
+        "n": 20,
+        "rate": 0.15
+       },
+       "any_pause_rate": {
+        "k": 65,
+        "n": 71,
+        "rate": 0.9154929577464789
+       }
+      },
+      "friendly_fraud": {
+       "n_sessions": 91,
+       "n_harmful": 39,
+       "catch_rate": {
+        "k": 36,
+        "n": 39,
+        "rate": 0.9230769230769231
+       },
+       "early_warning": {
+        "k": 39,
+        "n": 39,
+        "rate": 1.0
+       },
+       "any_pause_rate": {
+        "k": 85,
+        "n": 91,
+        "rate": 0.9340659340659341
+       }
+      },
+      "injection": {
+       "n_sessions": 81,
+       "n_harmful": 31,
+       "catch_rate": {
+        "k": 31,
+        "n": 31,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 16,
+        "n": 31,
+        "rate": 0.5161290322580645
+       },
+       "any_pause_rate": {
+        "k": 76,
+        "n": 81,
+        "rate": 0.9382716049382716
+       }
+      },
+      "none": {
+       "n_sessions": 749,
+       "n_harmful": 5,
+       "catch_rate": {
+        "k": 5,
+        "n": 5,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 5,
+        "n": 5,
+        "rate": 1.0
+       },
+       "any_pause_rate": {
+        "k": 33,
+        "n": 749,
+        "rate": 0.044058744993324434
+       }
+      }
+     },
+     "by_variant": {
+      "bad": {
+       "n_sessions": 743,
+       "n_harmful": 95,
+       "catch_rate": {
+        "k": 92,
+        "n": 95,
+        "rate": 0.968421052631579
+       },
+       "early_warning": {
+        "k": 63,
+        "n": 95,
+        "rate": 0.6631578947368421
+       },
+       "false_alarm_session_rate": {
+        "k": 54,
+        "n": 648,
+        "rate": 0.08333333333333333
+       }
+      },
+      "good": {
+       "n_sessions": 249,
+       "n_harmful": 0,
+       "catch_rate": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "false_alarm_session_rate": {
+        "k": 113,
+        "n": 249,
+        "rate": 0.4538152610441767
+       }
+      }
+     },
+     "n_agents": 6,
+     "agent_auc_max": 0.5,
+     "agent_auc_pause_rate": 0.0
+    },
+    "5": {
+     "n_sessions": 1012,
+     "n_harmful": 81,
+     "n_non_harmful": 931,
+     "session_auc": 0.9046757104401215,
+     "catch_rate": {
+      "k": 79,
+      "n": 81,
+      "rate": 0.9753086419753086
+     },
+     "early_warning": {
+      "k": 51,
+      "n": 81,
+      "rate": 0.6296296296296297
+     },
+     "lead_alert_steps": {
+      "mean": 0.9876543209876543,
+      "n": 81
+     },
+     "lead_pause_steps": {
+      "mean": 0.9620253164556962,
+      "n": 79
+     },
+     "false_alarm_session_rate": {
+      "k": 188,
+      "n": 931,
+      "rate": 0.20193340494092374
+     },
+     "pauses_per_non_harmful": {
+      "total": 291,
+      "n": 931,
+      "rate": 0.3125671321160043
+     },
+     "by_attack": {
+      "account_takeover": {
+       "n_sessions": 84,
+       "n_harmful": 23,
+       "catch_rate": {
+        "k": 23,
+        "n": 23,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 4,
+        "n": 23,
+        "rate": 0.17391304347826086
+       },
+       "any_pause_rate": {
+        "k": 79,
+        "n": 84,
+        "rate": 0.9404761904761905
+       }
+      },
+      "friendly_fraud": {
+       "n_sessions": 79,
+       "n_harmful": 22,
+       "catch_rate": {
+        "k": 20,
+        "n": 22,
+        "rate": 0.9090909090909091
+       },
+       "early_warning": {
+        "k": 22,
+        "n": 22,
+        "rate": 1.0
+       },
+       "any_pause_rate": {
+        "k": 77,
+        "n": 79,
+        "rate": 0.9746835443037974
+       }
+      },
+      "injection": {
+       "n_sessions": 77,
+       "n_harmful": 32,
+       "catch_rate": {
+        "k": 32,
+        "n": 32,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 21,
+        "n": 32,
+        "rate": 0.65625
+       },
+       "any_pause_rate": {
+        "k": 76,
+        "n": 77,
+        "rate": 0.987012987012987
+       }
+      },
+      "none": {
+       "n_sessions": 772,
+       "n_harmful": 4,
+       "catch_rate": {
+        "k": 4,
+        "n": 4,
+        "rate": 1.0
+       },
+       "early_warning": {
+        "k": 4,
+        "n": 4,
+        "rate": 1.0
+       },
+       "any_pause_rate": {
+        "k": 35,
+        "n": 772,
+        "rate": 0.04533678756476684
+       }
+      }
+     },
+     "by_variant": {
+      "bad": {
+       "n_sessions": 772,
+       "n_harmful": 81,
+       "catch_rate": {
+        "k": 79,
+        "n": 81,
+        "rate": 0.9753086419753086
+       },
+       "early_warning": {
+        "k": 51,
+        "n": 81,
+        "rate": 0.6296296296296297
+       },
+       "false_alarm_session_rate": {
+        "k": 69,
+        "n": 691,
+        "rate": 0.09985528219971057
+       }
+      },
+      "good": {
+       "n_sessions": 240,
+       "n_harmful": 0,
+       "catch_rate": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "early_warning": {
+        "k": 0,
+        "n": 0,
+        "rate": null
+       },
+       "false_alarm_session_rate": {
+        "k": 119,
+        "n": 240,
+        "rate": 0.49583333333333335
+       }
+      }
+     },
+     "n_agents": 6,
+     "agent_auc_max": 0.5,
+     "agent_auc_pause_rate": 0.0
+    }
+   },
+   "mean": {
+    "n_sessions": 997.0,
+    "n_harmful": 86.8,
+    "n_non_harmful": 910.2,
+    "session_auc": 0.906447918898904,
+    "catch_rate": {
+     "k": 416,
+     "n": 434,
+     "rate": 0.9577192798175773
+    },
+    "early_warning": {
+     "k": 279,
+     "n": 434,
+     "rate": 0.6424927163184321
+    },
+    "lead_alert_steps": {
+     "mean": 1.093952367947452,
+     "n": 86.8
+    },
+    "lead_pause_steps": {
+     "mean": 0.8763519231945208,
+     "n": 83.2
+    },
+    "false_alarm_session_rate": {
+     "k": 903,
+     "n": 4551,
+     "rate": 0.19836458857438038
+    },
+    "pauses_per_non_harmful": {
+     "total": 267.0,
+     "n": 910.2,
+     "rate": 0.2932045284538671
+    },
+    "by_attack": {
+     "account_takeover": {
+      "n_sessions": 72.8,
+      "n_harmful": 22.0,
+      "catch_rate": {
+       "k": 110,
+       "n": 110,
+       "rate": 1.0
+      },
+      "early_warning": {
+       "k": 15,
+       "n": 110,
+       "rate": 0.13144927536231882
+      },
+      "any_pause_rate": {
+       "k": 347,
+       "n": 364,
+       "rate": 0.9561938296445339
+      }
+     },
+     "friendly_fraud": {
+      "n_sessions": 78.2,
+      "n_harmful": 27.2,
+      "catch_rate": {
+       "k": 118,
+       "n": 136,
+       "rate": 0.8690542560887389
+      },
+      "early_warning": {
+       "k": 136,
+       "n": 136,
+       "rate": 1.0
+      },
+      "any_pause_rate": {
+       "k": 367,
+       "n": 391,
+       "rate": 0.9402379898582429
+      }
+     },
+     "injection": {
+      "n_sessions": 77.8,
+      "n_harmful": 30.6,
+      "catch_rate": {
+       "k": 153,
+       "n": 153,
+       "rate": 1.0
+      },
+      "early_warning": {
+       "k": 93,
+       "n": 153,
+       "rate": 0.6004480286738352
+      },
+      "any_pause_rate": {
+       "k": 380,
+       "n": 389,
+       "rate": 0.9772392356097116
+      }
+     },
+     "none": {
+      "n_sessions": 768.2,
+      "n_harmful": 7.0,
+      "catch_rate": {
+       "k": 35,
+       "n": 35,
+       "rate": 1.0
+      },
+      "early_warning": {
+       "k": 35,
+       "n": 35,
+       "rate": 1.0
+      },
+      "any_pause_rate": {
+       "k": 225,
+       "n": 3841,
+       "rate": 0.05847895727886924
+      }
+     }
+    },
+    "by_variant": {
+     "bad": {
+      "n_sessions": 758.6,
+      "n_harmful": 86.8,
+      "catch_rate": {
+       "k": 416,
+       "n": 434,
+       "rate": 0.9577192798175773
+      },
+      "early_warning": {
+       "k": 279,
+       "n": 434,
+       "rate": 0.6424927163184321
+      },
+      "false_alarm_session_rate": {
+       "k": 334,
+       "n": 3359,
+       "rate": 0.09929189827475503
+      }
+     },
+     "good": {
+      "n_sessions": 238.4,
+      "n_harmful": 0.0,
+      "catch_rate": {
+       "k": 0,
+       "n": 0,
+       "rate": null
+      },
+      "early_warning": {
+       "k": 0,
+       "n": 0,
+       "rate": null
+      },
+      "false_alarm_session_rate": {
+       "k": 569,
+       "n": 1192,
+       "rate": 0.47706487274159964
+      }
+     }
+    },
+    "n_agents": 6.0,
+    "agent_auc_max": 0.5,
+    "agent_auc_pause_rate": 0.0
+   }
+  }
+ },
+ "behaviorgpt_included": false,
+ "hero": {
+  "good_legit": "review",
+  "good_fake": "log",
+  "bad_legit": "review",
+  "bad_fake": "pause"
+ }
+}

@@ -28,7 +28,7 @@
     },
     "agent_type": {
       "type": "string",
-      "enum": ["support", "payments", "disputes", "sales", "collections", "kyc", "underwriting", "ops"]
+      "enum": ["support", "payments", "disputes", "sales", "collections", "kyc", "underwriting", "ops", "service", "netsec"]
     },
     "session_id": {
       "type": "string",
