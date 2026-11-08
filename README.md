@@ -57,7 +57,7 @@ The picture below is an illustrative run of the same idea, where the pressure is
 
 ## Agents 9 and 10, and the fleet view (Wilson Wu)
 
-Two more agents on the same contract, each with its own risk check, plus one view across the whole fleet. Everything here is synthetic. There is a page to click through: [`docs/index.html`](docs/index.html), served by GitHub Pages from `docs/`, and its [presenter script](docs/demo/how-to-demo.md).
+Two more agents on the same contract, each with its own risk check, plus one view across the whole fleet. Everything here is synthetic. There is a page to click through, live at **https://wilsonwu-ai.github.io/Sundai-hack/** (source [`docs/index.html`](docs/index.html), served by GitHub Pages from `docs/`), and its [presenter script](docs/demo/how-to-demo.md).
 
 - **Agent 9, `service`** ([contract](docs/customer-service-agent.md)): the bank's customer service agent, in a good and a weaker variant. It answers real customer requests from BANKING77 (CC-BY-4.0), with prompt injections from deepset/prompt-injections (Apache-2.0) mixed in. The use case is two customers asking to cancel the same large Amazon charge: one is telling the truth, the other hides an instruction in the message. A separate risk agent ([`risk/wilson_cs/`](risk/wilson_cs/)) reads only the logged actions and scores each step before it runs.
 - **Agent 10, `netsec`** ([contract](docs/network-agent.md)): watches the bank's API traffic for unusual requests. Every asset carries a dollar value, so a scraper hammering a low-value exporter is contained without paging the IT team, while a stolen token raising a transfer limit pages them before the money moves.
@@ -79,6 +79,27 @@ Stripping the evidence about the charge costs 10 points of catch rate; the cheap
 python3 -m bank.agents.customer_service.run --sessions 300 --seed 1 --out bank/agents/customer_service/out --hero
 python3 -m risk.wilson_cs.eval --seeds 1 2 3 4 5 --sessions 1500
 python3 docs/demo/build_data.py && python3 -m http.server 8765 --directory docs
+```
+
+**Agent 10: is an access log enough to spot an attack?** From 5 seeds of 1,500 synthetic sessions each, 20% of them attacks (means; full tables in [`risk/wilson_net/results/eval.md`](risk/wilson_net/results/eval.md)):
+
+| What the network check sees | AUC | Attack sessions contained or paged at or before the harmful request | Normal sessions with a false alarm |
+|---|---|---|---|
+| N0: method and route, in order | 0.967 | 92% | 4% |
+| N1: + status class and response size | 0.984 | 92% | 4% |
+| N2: + gateway context (client type, token age, MFA, device, region, object owner, amount, payee age, limit change) | 0.983 | 99% | 7% |
+| N3: + fan-out over a sliding window and payload flags | 0.990 | 99% | 7% |
+| Signature rules only, like a basic WAF | 0.517 | 7% | 0.3% |
+| Severity alone, no sequence model | 0.722 | 22% | 0% |
+
+False alarms are calibrated to 5% on validation sessions; the test split lands between 4% and 7%. Then the dollars decide who gets woken up. Every asset carries a value ([`bank/agents/netsec/assets.json`](bank/agents/netsec/assets.json), $868 million fronted by the API), and IT is paged only when money moves, customer data leaves, the internal network or admin is touched, or the exposure passes $250,000. Anything else risky is contained: throttled, token revoked, a ticket for the fraud team. With N3 that is 171 IT pages per 1,000 sessions instead of 257 if every alert paged (33% fewer), while $31.5 million of exposure was stopped and $2,358 got through. Agent 10 itself is checked too: every harmful step of its weaker variant was paused (221 of 221 across the 5 seeds).
+
+**Fleet: what share of our agents is risky?** 12 of 68 agents (18%) across all ten categories, one seed, 120 sessions per agent. The worst is `kyc-17`, a stand-in KYC agent: paused in 24 of 120 sessions (20%) against a 5% budget, with the policy check skipped on 78 steps, and every one of its 106 paused steps a dismissed alert. After scoring we opened the sealed answers: all 12 flagged agents really were the weaker variant, and 12 of the 15 weaker agents were caught. One of the three missed is agent 10's weaker variant, which acted harmfully in only 5 of its 108 sessions, too few to stand out against a 5% budget at the agent level. The team's eight categories run on a stand-in simulator until their logs land (`--logs DIR`); full table in [`risk/fleet/results/fleet.md`](risk/fleet/results/fleet.md).
+
+```bash
+python3 -m bank.agents.netsec.run --sessions 300 --seed 1 --out bank/agents/netsec/out --hero
+python3 -m risk.wilson_net.eval --seeds 1 2 3 4 5 --sessions 1500
+python3 -m risk.fleet.scorecard --seed 1 --sessions-per-agent 120
 ```
 
 ## The repo
@@ -167,6 +188,7 @@ This is a hack-day experiment, not a compliance control and not legal advice.
 - [Product requirements (PRD)](docs/PRD.md): goals, the two teams, the contract, the answer-sealing protocol, the evaluation plan and the timeline.
 - [Research note](docs/research/markov-anomaly-detection.md): Markov and n-gram detectors from system calls to agent traces, scoring before the money moves, and OpenTelemetry for agents, with every quote checked against its source.
 - Build contracts for [agent 9](docs/customer-service-agent.md), [agent 10](docs/network-agent.md) and the [fleet view](docs/fleet-risk.md).
+- [BANKING77: the best use cases for the customer service agent](docs/banking77-use-cases.md).
 - [Five-picture explainer](docs/explainer/how-it-works.html)
 - Diagrams: [two teams](docs/diagrams/two-teams.svg) and [payments run](docs/diagrams/payments-run.svg)
 - Motion: [payments gate](docs/motion/payments-gate.mp4), illustrative. It was drawn before the eight agent types were fixed; an updated cut is next.

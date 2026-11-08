@@ -40,14 +40,14 @@ ROUTE_ASSET = {
     "GET /v1/transactions/{txn_id}": "reads",
 }
 
-# Routes whose request moves money or puts a balance at risk: transfers, credits,
-# limit changes, and a customer-record patch (an account takeover puts the
-# average balance at risk). Payee creation does not move money by itself.
+# Routes whose request moves money: transfers, credits and limit changes. A
+# customer-record patch (an email change after a takeover) is an identity risk:
+# it is contained and goes to the fraud team, IT is not paged
+# (docs/network-agent.md). Payee creation does not move money by itself.
 MONEY_ROUTES = {
     "POST /v1/transfers",
     "POST /v1/credits",
     "PATCH /v1/accounts/{account_id}/limits",
-    "PATCH /v1/customers/{customer_id}",
 }
 
 # A fixture copy of the contract's table, in the shape the loader understands.

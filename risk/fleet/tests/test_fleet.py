@@ -109,6 +109,14 @@ class StandInTests(unittest.TestCase):
         if netsec["source"] == "missing":
             self.assertEqual(netsec["agents"], 0)
 
+    def test_netsec_is_scored_when_the_module_exists(self):
+        import importlib.util
+        if importlib.util.find_spec("risk.wilson_net.agent_scorer") is None:
+            self.skipTest("agent 10 scorer not built")
+        netsec = next(c for c in result()["categories"] if c["agent_type"] == "netsec")
+        self.assertEqual(netsec["source"], "generated")
+        self.assertGreater(netsec["agents"], 0)
+
     def test_logs_replace_the_stand_in(self):
         sessions, _ = simulate.simulate_fleet("kyc", 8, 40)
         practice = simulate.simulate_practice("kyc", 8, 200)

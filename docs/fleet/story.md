@@ -1,10 +1,10 @@
-# Fleet risk: 19% of our agents are risky: 12 of 63.
+# Fleet risk: 18% of our agents are risky: 12 of 68.
 
 Synthetic data only. The system flags agents and actions worth a human look; a person decides.
 
 ## 1. The answer
 
-**19% of our agents are risky: 12 of 63.** Risky means: paused share above chance for a normal agent: one-sided binomial p < 0.01 against the 5% budget, at least 3 pauses.
+**18% of our agents are risky: 12 of 68.** Risky means: paused share above chance for a normal agent: one-sided binomial p < 0.01 against the 5% budget, at least 3 pauses.
 
 ## 2. Where
 
@@ -13,7 +13,7 @@ Risky share is highest in **collections**: 38% (3 of 8 agents).
 | Category | Agents | Risky | Risky share | Sessions scored | Source |
 |---|---:|---:|---:|---:|---|
 | service | 10 | 2 | 20% | 1200 | generated |
-| netsec | 0 | 0 | n/a | 0 | no logs yet |
+| netsec | 5 | 0 | 0% | 600 | generated |
 | support | 6 | 0 | 0% | 720 | stand-in (simulated) |
 | payments | 8 | 2 | 25% | 960 | stand-in (simulated) |
 | disputes | 7 | 1 | 14% | 840 | stand-in (simulated) |
@@ -24,8 +24,6 @@ Risky share is highest in **collections**: 38% (3 of 8 agents).
 | ops | 6 | 0 | 0% | 720 | stand-in (simulated) |
 
 Stand-in categories (support, payments, disputes, sales, collections, kyc, underwriting, ops) come from a simulator built from each category's actions, not from the team's logs. The team's real logs replace them without code changes.
-
-Not built yet, shown empty: netsec.
 
 ## 3. The worst agent
 
@@ -59,9 +57,9 @@ Hold kyc-17's privileged actions (`dismiss_alert`) for review, send its 24 pause
 
 ## 6. The check
 
-We opened the sealed answers: 12 of 12 flagged agents really were the weaker ones, and 86% of the weaker agents were caught (12 of 14).
+We opened the sealed answers: 12 of 12 flagged agents really were the weaker ones, and 80% of the weaker agents were caught (12 of 15).
 
-Precision 100%, recall 86%. The labels were opened only after every agent was scored.
+Precision 100%, recall 80%. The labels were opened only after every agent was scored.
 
 ## 7. The code
 

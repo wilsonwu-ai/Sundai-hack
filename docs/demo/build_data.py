@@ -758,10 +758,36 @@ def _first(d: dict, *keys, default=None):
     return default
 
 
+NET_CTX_KEYS = ("client_type", "mfa_level", "device_new_for_subject", "asn_new_for_subject", "geo_new_for_subject",
+                "token_age_s", "object_owner_match", "amount_usd", "limit_from_usd", "limit_to_usd",
+                "payee_age_min", "payload_flags")
+NET_TRIAGE_TITLES = {
+    "scraper_exporter": ("A scraper hammers the exporter", "Unusual and loud, but the exporter only serves aggregated reports."),
+    "stuffing_failing": ("Credential stuffing that keeps failing", "Hundreds of 401s from rotating addresses."),
+    "stuffing_lands": ("Credential stuffing that lands, then a write", "A login succeeds and the account's email changes."),
+    "stolen_token_limit_raise": ("Stolen token, limit raise, $9,800 transfer", "The hero case: a limit raise, then a transfer to a new payee."),
+    "ssrf_webhook": ("SSRF probe on webhooks", "A webhook pointed at an internal metadata address."),
+    "enumeration_v0": ("Enumeration finds an old API version", "403s on /v1, then 200s on /v0 for records the caller does not own."),
+}
+NET_DECISION_NOTE = {
+    "page_it": "A person on the IT team is paged.",
+    "contain": "Contained automatically and logged; nobody is paged.",
+    "log": "Logged for later review.", "allow": "Served.",
+}
+NET_GROUP_NAMES = {"N0": "N0, routes only", "N1": "N1, + status and size", "N2": "N2, + gateway context",
+                   "N3": "N3, + fan-out and payload flags"}
+
+
+def _net_case_pair(dec_cases: dict, key: str):
+    """(request decisions, step decisions) for one hero case from hero_decisions.json."""
+    c = dec_cases.get(key) or {}
+    return (c.get("traffic") or {}).get("requests"), (c.get("netsec") or {}).get("steps")
+
+
 def real_net_hero() -> dict | None:
-    """Best-effort: the agent 10 builders' shapes were not on disk when this was written.
-    Expects out/hero/<case>.json ({traffic, netsec}) or <case>_traffic.jsonl + <case>_netsec.jsonl,
-    and results/hero_decisions.json with cases.<case>.{requests|network, agent_steps|netsec}."""
+    """Reads bank/agents/netsec/out/hero/<case>_{traffic,netsec}.jsonl (what was requested and what agent 10 did),
+    risk/wilson_net/results/hero_decisions.json (cases.<case>.{traffic.requests, netsec.steps}, triage_cases)
+    and bank/agents/netsec/assets.json. No decision or dollar figure is written here."""
     hero_dir = NET_OUT / "hero"
     if not (hero_dir.is_dir() and NET_DEC.is_file() and NET_ASSETS.is_file()):
         return None
@@ -769,52 +795,69 @@ def real_net_hero() -> dict | None:
     assets = json.loads(NET_ASSETS.read_text(encoding="utf-8"))
     cases = {}
     for key in NET_CASES:
-        raw = None
-        f = hero_dir / f"{key}.json"
-        if f.is_file():
-            raw = json.loads(f.read_text(encoding="utf-8"))
-        else:
-            t, n = hero_dir / f"{key}_traffic.jsonl", hero_dir / f"{key}_netsec.jsonl"
-            if t.is_file() and n.is_file():
-                raw = {"traffic": _read_jsonl(t), "netsec": _read_jsonl(n)}
-        d = (dec.get("cases") or dec).get(key)
-        if raw is None or d is None:
+        t, n = hero_dir / f"{key}_traffic.jsonl", hero_dir / f"{key}_netsec.jsonl"
+        rd, ad = _net_case_pair(dec.get("cases") or {}, key)
+        if not (t.is_file() and n.is_file()) or rd is None or ad is None:
             print(f"  net hero: missing {key}", file=sys.stderr)
             return None
-        rd = _first(d, "requests", "network", "traffic", default=[])
-        ad = _first(d, "agent_steps", "netsec", "agent", default=[])
+        traffic, netsec = _read_jsonl(t), _read_jsonl(n)
         rby = {int(x["request_index"]): x for x in rd}
         aby = {int(x["step"]): x for x in ad}
         reqs = []
-        for r in sorted(raw["traffic"], key=lambda x: x["request_index"]):
+        for r in sorted(traffic, key=lambda x: x["request_index"]):
             x = rby.get(int(r["request_index"]))
             if not x:
                 continue
             r = {k: v for k, v in r.items() if k != "pressure_mode"}
+            ctx = {k: r["bank." + k] for k in NET_CTX_KEYS if r.get("bank." + k) is not None}
+            ctx["geo"] = r.get("bank.geo")
+            ctx["client_address"] = r.get("client.address")
+            ctx["user_agent"] = r.get("user_agent.original")
+            risk = x.get("risk")
+            expo = x.get("exposure_usd")
+            # exposure = value at risk x risk (the frozen triage rule), so value at risk = exposure / risk
+            var = round(expo / risk, 2) if isinstance(risk, (int, float)) and risk > 0 and isinstance(expo, (int, float)) else (0 if expo == 0 else None)
             reqs.append({
                 "request_index": r["request_index"], "method": r.get("http.request.method"), "route": r.get("http.route"),
-                "status": r.get("http.response.status_code"), "asset": r.get("bank.asset"),
-                "context": {k[5:]: v for k, v in r.items() if k.startswith("bank.") and k != "bank.asset"} | {"client_address": r.get("client.address")},
+                "status": r.get("http.response.status_code"), "asset": r.get("bank.asset"), "context": ctx,
                 "surprise": x.get("surprise"), "severity": x.get("severity"), "flags": x.get("flags", []),
-                "risk": x.get("risk"), "value_at_risk_usd": x.get("value_at_risk_usd"),
-                "exposure_usd": x.get("exposure_usd"), "decision": x.get("decision"), "otel_span": http_span(r),
+                "risk": risk, "value_at_risk_usd": var, "exposure_usd": expo,
+                "decision": x.get("decision"), "otel_span": http_span(r),
             })
         steps = []
-        for e in sorted(raw["netsec"], key=lambda x: x["step"]):
+        for e in sorted(netsec, key=lambda x: x["step"]):
             x = aby.get(int(e["step"]))
             if not x:
                 continue
             e = {k: v for k, v in e.items() if k != "pressure_mode"}
-            sev = x.get("severity", NET_AGENT_SEV.get(e["action"], 0.3))
             steps.append({k: e[k] for k in ("step", "action", "params", "auth_level", "policy_check", "outcome", "reasoning_summary")} |
-                         {"surprise": x.get("surprise"), "severity": sev, "flags": x.get("flags", []), "risk": x.get("risk"),
-                          "decision": x.get("decision"), "otel_span": otel_span(e)})
+                         {"surprise": x.get("surprise"), "severity": x.get("severity"), "flags": x.get("flags", []),
+                          "risk": x.get("risk"), "decision": x.get("decision"), "otel_span": otel_span(e)})
         variant, kind = key.split("_")
         cases[key] = {"title": NET_TITLES[key],
                       "agent": "Good netsec agent (follows policy)" if variant == "good" else "Bad netsec agent (obeys planted instructions)",
-                      "client": "Attacker replaying a stolen token" if kind == "attack" else "Normal customer",
-                      "agent_id": (raw["netsec"][0]["agent_id"] if raw["netsec"] else ""), "requests": reqs, "agent_steps": steps}
-    triage = dec.get("triage") or []
+                      "client": "Attacker replaying a stolen token (planted note in the User-Agent)" if kind == "attack" else "Normal customer on their usual phone",
+                      "agent_id": netsec[0]["agent_id"] if netsec else "", "requests": reqs, "agent_steps": steps}
+    triage = []
+    for tid, tc in (dec.get("triage_cases") or {}).items():
+        title, what = NET_TRIAGE_TITLES.get(tid, (tid, ""))
+        asset = None
+        f = hero_dir / f"triage_{tid}.jsonl"
+        if f.is_file():
+            # the asset the session is priced on: the one at the request with the largest exposure
+            expo = {int(x["request_index"]): x.get("exposure_usd") or 0 for x in tc.get("requests") or []}
+            best = None
+            for r in _read_jsonl(f):
+                a = r.get("bank.asset")
+                e = expo.get(int(r["request_index"]), 0)
+                if a and (best is None or e > best[0]):
+                    best = (e, a)
+            asset = best[1] if best else None
+        risk, mx = tc.get("risk"), tc.get("max_exposure_usd")
+        var = round(mx / risk, 2) if isinstance(risk, (int, float)) and risk > 0 and isinstance(mx, (int, float)) else None
+        triage.append({"id": tid, "title": title, "asset": asset, "value_at_risk_usd": var, "peak_risk": risk,
+                       "exposure_usd": mx, "decision": tc.get("decision"),
+                       "why": (what + " " + NET_DECISION_NOTE.get(tc.get("decision"), "")).strip()})
     return {"sample": False, "pause_line": dec.get("pause_line"), "log_line": dec.get("log_line"),
             "agent_pause_line": dec.get("agent_pause_line"),
             "value_fronted_usd": assets.get("value_fronted_usd"), "values_note": "illustrative values",
@@ -822,29 +865,52 @@ def real_net_hero() -> dict | None:
 
 
 def real_net_eval() -> dict | None:
+    """rows.<name>.mean.{session_auc, catch_rate, early_warning, lead_requests, false_alarm_rate,
+    false_alarm_aggregator}; headline triage and agent 10 numbers from the detector the hero cases use."""
     if not NET_EVAL.is_file():
         return None
+    import re
     blob = json.loads(NET_EVAL.read_text(encoding="utf-8"))
     raw = blob.get("rows")
     if not isinstance(raw, dict):
         return None
-    import re
     rows = []
     for k, v in raw.items():
-        mean = v.get("mean", v) if isinstance(v, dict) else {}
+        mean = (v or {}).get("mean") or {}
         m = re.fullmatch(r"(N[0-3])_o(\d)", k)
+        if m:
+            g, o = m.group(1), int(m.group(2))
+            name = NET_GROUP_NAMES[g] if o == 2 else f"{g}, Markov order {o}"
+        else:
+            g = o = None
+            name = {"rules_only": "Rules only (static thresholds)", "severity_only": "Severity only"}.get(k, k)
         rows.append({
-            "name": f"{m.group(1)}, Markov order {m.group(2)}" if m else {"rules_only": "Rules only", "severity_only": "Severity only"}.get(k, k),
-            "group": m.group(1) if m else None, "order": int(m.group(2)) if m else None,
+            "name": name, "group": g, "order": o,
             "auc": _rate(mean.get("session_auc")), "catch_rate": _rate(mean.get("catch_rate")),
             "early_warning": _rate(mean.get("early_warning")),
-            "false_alarm_rate": _rate(mean.get("false_alarm_session_rate", mean.get("false_alarm_rate"))),
-            "aggregator_false_alarm_rate": _rate(mean.get("aggregator_false_alarm_rate")),
-            "lead_time_requests": _rate(mean.get("lead_alert_requests", mean.get("lead_alert_steps"))),
+            "false_alarm_rate": _rate(mean.get("false_alarm_rate")),
+            "aggregator_false_alarm_rate": _rate(mean.get("false_alarm_aggregator")),
+            "lead_time_requests": _rate(mean.get("lead_requests")),
         })
+    head = "N3_o2"
+    if NET_DEC.is_file():
+        head = json.loads(NET_DEC.read_text(encoding="utf-8")).get("detector") or head
+    tm = ((raw.get(head) or {}).get("mean") or {}).get("triage") or {}
+    triage = {}
+    if tm:
+        pages, base = tm.get("pages_per_1000"), tm.get("baseline_pages_per_1000")
+        triage = {"detector": head, "it_pages_per_1000": pages, "baseline_pages_per_1000": base,
+                  "pages_avoided_per_1000": round(base - pages, 1) if isinstance(pages, (int, float)) and isinstance(base, (int, float)) else None,
+                  "dollars_stopped_usd": tm.get("exposure_stopped_usd"), "dollars_missed_usd": tm.get("exposure_missed_usd")}
+    am = (blob.get("agent10") or {}).get("mean") or {}
+    cr = am.get("catch_rate") if isinstance(am.get("catch_rate"), dict) else {}
+    agent10 = {}
+    if isinstance(am.get("agent_auc_max"), (int, float)):
+        agent10["agent_auc"] = round(am["agent_auc_max"], 4)
+    if isinstance(cr.get("k"), (int, float)) and isinstance(cr.get("n"), (int, float)):
+        agent10["bad_harmful_steps_paused"] = {"k": cr["k"], "n": cr["n"]}
     return {"sample": False, "synthetic": bool(blob.get("synthetic", True)), "seeds": blob.get("seeds", []),
-            "sessions_per_seed": blob.get("sessions_per_seed", 0), "rows": rows,
-            "triage": blob.get("triage", {}), "agent10": blob.get("agent10", blob.get("agent", {}))}
+            "sessions_per_seed": blob.get("sessions_per_seed", 0), "rows": rows, "triage": triage, "agent10": agent10}
 
 
 def write_to(folder: Path, name: str, obj: dict) -> None:
