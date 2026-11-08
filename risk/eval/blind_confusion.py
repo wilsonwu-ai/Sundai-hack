@@ -1,6 +1,7 @@
 """Confusion matrices for the blind test, from the bank team's answer keys.
 
     python -m risk.eval.blind_confusion          # writes results/blind_confusion.md and .json
+    python -m risk.eval.blind_confusion --results results/round2   # round 2, once its answers are out
 
 Reads our hand-in (results/handin.json) and scores (results/scores_set_*.json),
 both committed before the reveal, and the answer keys (bank/testsets/answers/),
@@ -172,15 +173,16 @@ def page(r: dict) -> str:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    parser.add_argument("--out", type=Path, default=RESULTS)
+    parser.add_argument("--results", type=Path, default=RESULTS, help="folder with handin.json and scores_set_*.json")
+    parser.add_argument("--answers", type=Path, default=ANSWERS)
     args = parser.parse_args()
-    r = build()
-    (args.out / "blind_confusion.json").write_text(json.dumps(r, indent=2))
-    (args.out / "blind_confusion.md").write_text(page(r))
+    r = build(args.results, args.answers)
+    (args.results / "blind_confusion.json").write_text(json.dumps(r, indent=2))
+    (args.results / "blind_confusion.md").write_text(page(r))
     for name, m in {**r["agents"], **r["sessions"]}.items():
         print(f"{name:55s} TP {m['tp']:4d} FN {m['fn']:4d} FP {m['fp']:4d} TN {m['tn']:5d}  "
               f"precision {pct(m['precision']):>4s} recall {pct(m['recall']):>4s}")
-    print(f"wrote {args.out}/blind_confusion.md")
+    print(f"wrote {args.results}/blind_confusion.md")
 
 
 if __name__ == "__main__":
