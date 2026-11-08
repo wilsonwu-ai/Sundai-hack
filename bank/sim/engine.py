@@ -75,8 +75,13 @@ def choose_drifters(cfg: SimConfig) -> list[dict]:
     return out
 
 
-def session_id_for(agent_type: str, idx: int) -> str:
-    return f"s_{agent_type}_{idx + 1:03d}"
+def run_tag(run_id: str) -> str:
+    """Short per-run tag, so session ids from different runs never collide in the risk monitor's store."""
+    return hashlib.sha256(run_id.encode()).hexdigest()[:6]
+
+
+def session_id_for(tag: str, agent_type: str, idx: int) -> str:
+    return f"s_{tag}_{agent_type}_{idx + 1:03d}"
 
 
 class Active:
@@ -111,6 +116,7 @@ class Simulation:
     def __init__(self, cfg: SimConfig):
         self.cfg = cfg
         self.run_id = cfg.resolved_run_id()
+        self.tag = run_tag(self.run_id)
         self.dir = Path(cfg.out) / self.run_id
         self.drifters = choose_drifters(cfg)
         self.drift = {d["agent_type"]: d for d in self.drifters}
@@ -135,7 +141,7 @@ class Simulation:
         for t in AGENT_TYPES:
             start = self.drift[t]["drift_start_session"] if t in self.drift else None
             for i in range(n):
-                session_labels[session_id_for(t, i)] = start is not None and i >= start
+                session_labels[session_id_for(self.tag, t, i)] = start is not None and i >= start
         return {"run_id": self.run_id, "seed": self.cfg.seed, "drifters": self.drifters,
                 "session_labels": session_labels}
 
@@ -172,11 +178,11 @@ class Simulation:
         if interactive_request is None:
             idx = self.idx[t]
             self.idx[t] += 1
-            sid, tag = session_id_for(t, idx), f"{agent.agent_id}:{idx}"
+            sid, tag = session_id_for(self.tag, t, idx), f"{agent.agent_id}:{idx}"
         else:
             self.interactive_n[t] += 1
             idx = self.idx[t]                     # the agent's drift state as of now
-            sid, tag = f"h_{t}_{self.interactive_n[t]:03d}", f"{agent.agent_id}:h{self.interactive_n[t]}"
+            sid, tag = f"h_{self.tag}_{t}_{self.interactive_n[t]:03d}", f"{agent.agent_id}:h{self.interactive_n[t]}"
         drifting, level = self._drifting(t, idx)
         with self.bank.lock:
             task_rng = random.Random(f"{seed}:{tag}:task")
@@ -203,8 +209,11 @@ class Simulation:
         events = self.events[first:]
         mine = [e for e in events if e["session_id"] == s.session_id]
         self._record_interactive(s)
+        gate = None
+        if s.blocked and active.result is not None:
+            gate = {"decision": active.result.decision, "reason": active.result.reason}
         return {"session_id": s.session_id, "agent_id": s.agent_id, "agent_type": t, "task": active.task.text,
-                "blocked": s.blocked, "events": mine}
+                "blocked": s.blocked, "gate": gate, "events": mine}
 
     def _record_interactive(self, s: Session) -> None:
         path = self.dir / "interactive_labels.json"
@@ -225,7 +234,7 @@ class Simulation:
             self.state, self.error = "failed", f"{type(exc).__name__}: {exc}"
             raise
         finally:
-            self.runtime.telemetry.shutdown()
+            self.runtime.telemetry.flush(force=True)      # stays open: the API keeps serving customer requests
 
     def _eligible(self, t: str, rng: random.Random) -> bool:
         drifting, level = self._drifting(t, self.idx[t])
@@ -310,12 +319,12 @@ class Simulation:
 
 
 def format_sanity(rows: list[dict]) -> str:
-    head = (f"{'agent':<15}{'role':<9}{'drift@':>7}{'level':>7} | {'events':>13} | {'skipped+failed':>15} | {'per 100 events':>16}\n"
-            f"{'':<15}{'':<9}{'':>7}{'':>7} | {'before/after':>13} | {'before/after':>15} | {'before/after':>16}")
+    head = (f"{'agent':<16}{'role':<9}{'drift@':>7}{'level':>7} | {'events':>13} | {'skipped+failed':>15} | {'per 100 events':>16}\n"
+            f"{'':<16}{'':<9}{'':>7}{'':>7} | {'before/after':>13} | {'before/after':>15} | {'before/after':>16}")
     lines = [head, "-" * len(head.splitlines()[0])]
     for r in rows:
         lines.append(
-            f"{r['agent']:<15}{r['role']:<9}{r['split']:>7}{(f'{r['level']:.2f}' if r['level'] is not None else '-'):>7} | "
+            f"{r['agent']:<16}{r['role']:<9}{r['split']:>7}{(f'{r['level']:.2f}' if r['level'] is not None else '-'):>7} | "
             f"{r['events_before']:>6}/{r['events_after']:<6} | {r['viol_before']:>7}/{r['viol_after']:<7} | "
             f"{r['rate_before']:>7.1f}/{r['rate_after']:<7.1f}")
     return "\n".join(lines)

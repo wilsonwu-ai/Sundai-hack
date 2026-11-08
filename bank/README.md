@@ -110,8 +110,8 @@ same style for aligned and drifting agents.
 - Customer-facing work feeds internal queues: payments create `aml_alerts` for KYC (any send of $10,000 or more,
   or to a new payee), and sales loan applications go to underwriting.
 - Collections only starts sessions in hours (08:00-21:00), except a drifting agent, which sometimes works at night.
-- Session ids are `s_<agent_type>_<nnn>`, assigned up front, so the whole answer key (and its seal) exists
-  before the first event.
+- Session ids are `s_<run tag>_<agent_type>_<nnn>` (the tag is a hash of the run id, so two runs never collide in
+  the risk monitor's store), assigned up front, so the whole answer key and its seal exist before the first event.
 
 ### Sessions, sample sanity table
 
@@ -153,6 +153,63 @@ monitor has seen steps 1..n-1 of the session; the call times out after 2 seconds
 or unknown `decision` is treated as "run" with a warning. With the endpoint missing (today), a
 `GATE_ENABLED=1` run logs `risk gate unavailable ... HTTP Error 404 ... failing open` and carries on.
 
+## API and web (Phase 2)
+
+Three terminals, from the repo root:
+
+```sh
+.venv/bin/uvicorn risk.api.server:app --port 4318        # optional: the risk monitor (spans arrive here)
+.venv/bin/uvicorn bank.api.server:app --port 8000        # this team's API
+cd web && npm install && npm run dev                      # http://localhost:5173
+```
+
+Open <http://localhost:5173>. **Customer site** (`#customer`): pick a seeded customer, see accounts, transactions,
+payees, cards and inbox, and use *Send money*, *Dispute a charge*, *Get help* and *Open an account*; each runs the
+matching agent (Payments, Disputes, Support, Sales) and shows the steps it took. If the risk gate stops a step,
+the page says **Paused by risk check**. **Staff console** (`#staff`): start a run (seed, live, forced drifters, gate,
+OpenTelemetry) or press *Run demo*; the 8 agents as cards; a live feed polling `/logs` every 2 seconds, colour-coded
+by `policy_check`, with blocked steps struck through in red; the seal shown at the start; and *Reveal answer key*,
+which fetches the sealed bytes, hashes them in the browser and checks them against the seal.
+
+Before any run there is a `sandbox` bank (seed 42, nobody drifts) so the customer site works immediately. Starting
+a run makes it the current one; customer requests then use that run's bank and its drift state.
+
+| Endpoint | |
+|---|---|
+| `POST /sim/start` `{seed, sessions_per_agent, live, force_drifters?, drifters?, gate?, otel?, demo?}` | starts a run in the background, returns `{run_id, seal}` |
+| `POST /sim/demo` | the demo preset (below) |
+| `GET /sim/{run_id}/status` | state, sessions done, events, sim time, gate calls, blocked |
+| `POST /sim/{run_id}/stop` | stop a running run |
+| `GET /sim/{run_id}/seal` | `{sha256}` only |
+| `GET /sim/{run_id}/labels` | the answer key, as the exact sealed bytes (header `X-Seal-Sha256`). Used only by *Reveal* |
+| `GET /logs?run_id=&since=` | events after `since` (an event count; pass back `next`), blocked ones included; `tail=N` for the last N. Never contains `pressure_mode` |
+| `GET /agents` | the 8 agents with `type` and `view` (customer / internal), event and blocked counts. No drift state |
+| `POST /customer/{customer_id}/request` `{agent_type, task}` | runs the agent for a human-triggered task (`task` is a sentence or `{kind, ...}`), respecting the current run's drift state and the gate; returns the actions taken, `paused_by_risk` and the gate's reason |
+| `GET /customers`, `GET /customers/{id}`, `GET /products`, `GET /runs` | read helpers for the web |
+
+Human-triggered sessions get ids `h_<tag>_<agent_type>_<nnn>`, are appended to the same `events.jsonl`, and are
+labelled in `interactive_labels.json` (not part of the sealed `labels.json`).
+
+### Demo preset
+
+```sh
+.venv/bin/uvicorn risk.api.server:app --port 4318        # so spans arrive and the gate has somewhere to call
+bank/sim/demo.sh                                          # live, seed 154, payments + kyc drift, OTEL_ENABLED=1, GATE_ENABLED=1
+```
+
+or the *Run demo* button. The preset passes `--demo`, which makes half of the new-payee payment tasks the $9,800
+invoice from the pitch (aligned and drifting agents alike; an aligned one confirms 2FA first). Seed 154 was picked
+because both drifters start early (session 9 and 8 of 40) and drift hard (0.86 and 0.87), so the first minutes
+already show it. Until the risk team's `/gate/check` exists, the gate fails open; to rehearse the pause now, run a
+stand-in that pauses any high-impact step with a skipped or failed policy check:
+
+```sh
+.venv/bin/python -m bank.sim.mock_gate --port 4319
+RISK_API_URL=http://localhost:4319 bank/sim/demo.sh
+```
+
+(For the API: start `uvicorn` with `RISK_API_URL=http://localhost:4319` in its environment.)
+
 ## Layout
 
 ```
@@ -161,8 +218,10 @@ bank/
   tools/    one module per agent type (real DB functions), policy.py, runtime.py (the wrapper),
             gate.py, telemetry.py, validate.py
   agents/   one class per agent: task generator + policy(task, rng, drifting, drift_level)
-  sim/      engine.py, run_sim.py
+  sim/      engine.py, run_sim.py, demo.sh, mock_gate.py
+  api/      app.py (FastAPI), server.py (uvicorn entry)
   tests/    pytest
+web/        React + Vite + TypeScript: customer site and staff console
 ```
 
 ## Progress
@@ -173,4 +232,10 @@ Update this after each phase so a fresh session can resume.
   (schema validity, byte-identical reruns, drift raises violations, aligned look-alikes, risk loader reads the
   output, offline run, gate fail-open and gate pause against a fake monitor). Checked live against the risk
   monitor: spans arrive over OTLP; the gate falls back to fail-open because `/gate/check` does not exist yet.
-- [ ] Phase 2: FastAPI (`bank/api`), React/Vite web (`web/`), `bank/sim/demo.sh`.
+- [x] **Phase 2: API, web, demo.** FastAPI in `bank/api`, React/Vite/TS in `web/` (`npm run build` is clean),
+  `bank/sim/demo.sh` and the *Run demo* button, plus `bank/sim/mock_gate.py` for rehearsing the pause. Checked in
+  the browser: live feed streams, a customer request runs the agent, a gated step shows *Paused by risk check*,
+  and *Reveal* verifies the labels against the seal. Run ids and session ids now carry a per-run tag.
+- Open: the risk team's `POST /gate/check` (contract above). Nothing else is blocking.
+
+To resume: `git checkout bank/vivek-sim`, `.venv/bin/pytest bank`, then the three commands under "API and web".

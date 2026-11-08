@@ -108,9 +108,9 @@ class Telemetry:
             s.span.end(end_time=to_ns(s.last_ts) + MS)
             s.span = None
 
-    def flush(self) -> None:
+    def flush(self, force: bool = False) -> None:
         """Push pending spans out now (the gate wants the monitor to have seen the session so far)."""
-        if self._provider and self.failures == 0:
+        if self._provider and (force or self.failures == 0):
             self._provider.force_flush(timeout_millis=2000)
 
     def shutdown(self) -> None:
