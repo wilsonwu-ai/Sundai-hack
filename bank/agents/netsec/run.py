@@ -18,6 +18,19 @@ def _write_jsonl(path, rows):
             fh.write(json.dumps(row) + "\n")
 
 
+def write_toolcall_hero(hero_dir):
+    """Write the seven tool-call cases (masked) as toolcall_<key>.jsonl."""
+    from .toolcalls import toolcall_hero_cases
+    hero_dir = Path(hero_dir)
+    hero_dir.mkdir(parents=True, exist_ok=True)
+    paths = []
+    for key, calls in toolcall_hero_cases().items():
+        p = hero_dir / f"toolcall_{key}.jsonl"
+        _write_jsonl(p, calls)
+        paths.append(str(p))
+    return paths
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description="Generate bank API traffic and agent 10 (netsec) actions.")
     ap.add_argument("--sessions", type=int, default=400)
@@ -25,6 +38,8 @@ def main(argv=None):
     ap.add_argument("--out", default=str(DEFAULT_OUT))
     ap.add_argument("--otlp", default=None, help="POST traffic and agent 10 events as OTLP/JSON to this endpoint")
     ap.add_argument("--hero", action="store_true", help="also write the hero cases and the triage cases")
+    ap.add_argument("--toolcalls", type=int, default=0,
+                    help="also generate N tool-call sessions (third layer): toolcalls.jsonl (masked) and toolcalls_labels.json")
     args = ap.parse_args(argv)
 
     out = Path(args.out)
@@ -53,6 +68,17 @@ def main(argv=None):
             _write_jsonl(p, reqs)
             hero_paths.append(str(p))
         (hero_dir / "labels.json").write_text(json.dumps(hero_labels, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+    if args.toolcalls:
+        from .toolcalls import generate_toolcalls
+        tc_sessions, tc_labels = generate_toolcalls(args.toolcalls, args.seed)
+        _write_jsonl(out / "toolcalls.jsonl", (c for s in tc_sessions for c in s))
+        tc_bytes = (json.dumps(tc_labels, indent=2, sort_keys=True) + "\n").encode("utf-8")
+        (out / "toolcalls_labels.json").write_bytes(tc_bytes)  # sealed: the guard never reads this file
+        print(f"toolcall_sessions={len(tc_sessions)} toolcalls={sum(len(s) for s in tc_sessions)}")
+        print("toolcalls_labels.json sha256", hashlib.sha256(tc_bytes).hexdigest())
+        if args.hero:
+            write_toolcall_hero(out / "hero")
 
     if args.otlp:
         print("otlp traffic status", post_otlp(traffic_to_otlp_json(g["traffic"]), args.otlp))

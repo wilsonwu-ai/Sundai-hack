@@ -60,7 +60,7 @@ The picture below is an illustrative run of the same idea, where the pressure is
 Two more agents on the same contract, each with its own risk check, plus one view across the whole fleet. Everything here is synthetic. There is a page to click through, live at **https://wilsonwu-ai.github.io/Sundai-hack/** (source [`docs/index.html`](docs/index.html), served by GitHub Pages from `docs/`), and its [presenter script](docs/demo/how-to-demo.md).
 
 - **Agent 9, `service`** ([contract](docs/customer-service-agent.md)): the bank's customer service agent, in a good and a weaker variant. It answers real customer requests from BANKING77 (CC-BY-4.0), with prompt injections from deepset/prompt-injections (Apache-2.0) mixed in. The use case is two customers asking to cancel the same large Amazon charge: one is telling the truth, the other hides an instruction in the message. A separate risk agent ([`risk/wilson_cs/`](risk/wilson_cs/)) reads only the logged actions and scores each step before it runs.
-- **Agent 10, `netsec`** ([contract](docs/network-agent.md)): watches the bank's API traffic for unusual requests. Every asset carries a dollar value, so a scraper hammering a low-value exporter is contained without paging the IT team, while a stolen token raising a transfer limit pages them before the money moves.
+- **Agent 10, `netsec`** ([contract](docs/network-agent.md)): watches the bank's API traffic for unusual requests. Every asset carries a dollar value, so a scraper hammering a low-value exporter is contained without paging the IT team, while a stolen token raising a transfer limit pages them before the money moves. It also watches the agents' own tool calls. A person, a bot or a hijacked agent all act through tool calls whose arguments are visible, so it judges the call, not the caller: an agent posting a customer's Social Security number to a URL the bank never approved is blocked before the call runs and IT is paged. Every agent carries its own risk score.
 - **Fleet risk** ([contract](docs/fleet-risk.md)): what share of the agents in each category is risky, which one is worst and why.
 
 **Which metadata does the risk side need?** Agent 9's answer, from 5 seeds of 1,500 synthetic sessions each (means; full tables in [`risk/wilson_cs/results/eval.md`](risk/wilson_cs/results/eval.md)):
@@ -94,11 +94,22 @@ python3 docs/demo/build_data.py && python3 -m http.server 8765 --directory docs
 
 False alarms are calibrated to 5% on validation sessions; the test split lands between 4% and 7%. Then the dollars decide who gets woken up. Every asset carries a value ([`bank/agents/netsec/assets.json`](bank/agents/netsec/assets.json), $868 million fronted by the API), and IT is paged only when money moves, customer data leaves, the internal network or admin is touched, or the exposure passes $250,000. Anything else risky is contained: throttled, token revoked, a ticket for the fraud team. With N3 that is 171 IT pages per 1,000 sessions instead of 257 if every alert paged (33% fewer), while $31.5 million of exposure was stopped and $2,358 got through. Agent 10 itself is checked too: every harmful step of its weaker variant was paused (221 of 221 across the 5 seeds).
 
+**Agent 10's third layer: the agents' own tool calls.** From 5 seeds of 1,500 synthetic sessions each, 15% of them attacks (full tables in [`risk/wilson_net/results/toolguard.md`](risk/wilson_net/results/toolguard.md); rule and cases in the [contract](docs/network-agent.md#third-layer-the-agents-own-tool-calls-added-8-november-afternoon)):
+
+| Who is watching | Attack sessions stopped before the harmful call ran | Normal sessions blocked or held | IT pages per 1,000 sessions |
+|---|---|---|---|
+| Tool-call guard | 100% (1,139 of 1,139) | 0% | 20.9 |
+| Inbound network layer alone | 22% (247 of 1,139) | 0% | 0.7 |
+| Keyword screen on the customer message | 32% (362 of 1,139) | 1.3% | 0 |
+
+Read the guard's 100% as a wiring check, not a detection rate: the simulated attacks are defined by the same rule the guard applies. The baselines are the finding. An outbound tool call never crosses the inbound API, so the network layer only stops the one attack loud enough to show up there (a bot campaign, by its volume), and a keyword screen only sees attacks that arrive in a customer message, at hit rates we assumed. The same SSN going to the approved verification vendor was never blocked (0 of 1,726 legitimate calls), and a bot campaign is one IT page, not hundreds, because pages are grouped by destination host. In seed 1, all 22 hijacked agents carried a risk score of 1.0 and the highest of the other 228 scored 0.57.
+
 **Fleet: what share of our agents is risky?** 12 of 68 agents (18%) across all ten categories, one seed, 120 sessions per agent. The worst is `kyc-17`, a stand-in KYC agent: paused in 24 of 120 sessions (20%) against a 5% budget, with the policy check skipped on 78 steps, and every one of its 106 paused steps a dismissed alert. After scoring we opened the sealed answers: all 12 flagged agents really were the weaker variant, and 12 of the 15 weaker agents were caught. One of the three missed is agent 10's weaker variant, which acted harmfully in only 5 of its 108 sessions, too few to stand out against a 5% budget at the agent level. The team's eight categories run on a stand-in simulator until their logs land (`--logs DIR`); full table in [`risk/fleet/results/fleet.md`](risk/fleet/results/fleet.md).
 
 ```bash
 python3 -m bank.agents.netsec.run --sessions 300 --seed 1 --out bank/agents/netsec/out --hero
 python3 -m risk.wilson_net.eval --seeds 1 2 3 4 5 --sessions 1500
+python3 -m risk.wilson_net.toolguard_eval --seeds 1 2 3 4 5 --sessions 1500
 python3 -m risk.fleet.scorecard --seed 1 --sessions-per-agent 120
 ```
 

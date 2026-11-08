@@ -413,6 +413,35 @@ python3 -m risk.wilson_cs.eval --seeds 1 --sessions 1500</code></pre>
     </div>
     <p class="small" id="triage-note"></p>
 
+    <h3 class="sub" id="h-tg">Third layer: the agents' own tool calls</h3>
+    <p class="lede">A person, a bot or a hijacked agent all act through tool calls. Every tool call is an event whose arguments are visible when it is made, so the check judges the call, not the caller: what data is leaving, and where is it going?</p>
+    <div class="sample-banner" id="sample-tg" role="note" hidden>Illustrative sample, not measured. The agents, calls and results in this block were written by hand; real runs replace them.</div>
+
+    <h4 class="sub2">Risk scores on the agents</h4>
+    <p class="small">Each agent carries the highest call score from its recent calls. Copper means 0.70 or more. Hover a tile for the agent and its score.</p>
+    <p class="small" id="tg-summary"></p>
+    <ul class="agent-chips" id="tg-agents"></ul>
+    <div class="agent-grid" id="tg-grid" hidden></div>
+    <p class="legend" id="tg-legend" aria-hidden="true" hidden><span><i class="tb0"></i>below 0.30</span><span><i class="tb1"></i>0.30 to 0.69</span><span><i class="tb2"></i>0.70 and up</span></p>
+    <div class="tg-controls"><button type="button" class="btn ghost" id="tg-reveal" aria-controls="tg-reveal-note" aria-expanded="false">Reveal which were hijacked</button></div>
+    <p class="small" id="tg-reveal-note" hidden></p>
+
+    <h4 class="sub2">The hero pair</h4>
+    <div class="grid c2" id="tg-hero"></div>
+
+    <h4 class="sub2">The cases</h4>
+    <div class="tbl-wrap" tabindex="0" role="region" aria-label="Tool-call cases table, scrolls sideways on a small screen">
+      <table>
+        <thead><tr><th scope="col">Case</th><th scope="col">Who is behind it</th><th scope="col">Decision</th><th scope="col">Exposure</th></tr></thead>
+        <tbody id="tg-cases"></tbody>
+      </table>
+    </div>
+
+    <h4 class="sub2">Guard against two baselines</h4>
+    <p class="small" id="tg-meta"></p>
+    <div class="grid c3" id="tg-rows"></div>
+    <p class="small" id="tg-note"></p>
+
     <h3 class="sub">Which metadata the network side needs (N0 to N3)</h3>
     <ul class="groups ngroups">
       <li><b>N0</b> method and route, in order <span class="q">Is the request sequence alone enough?</span></li>

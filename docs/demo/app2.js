@@ -1,5 +1,5 @@
 /* Sundai Bank demo, part 2: agent 10 (network watch) and fleet risk.
-   Reads demo/data/{net-hero,net-eval,fleet}.json, falling back to demo/data/samples/ when a real file is not there.
+   Reads demo/data/{net-hero,net-eval,toolguard,fleet}.json, falling back to demo/data/samples/ when a real file is not there.
    All text goes in with textContent. */
 (function () {
   'use strict';
@@ -593,11 +593,207 @@
     initFleetMedia(!!f.sample);
   }
 
+  /* ================= third layer: tool-call guard ================= */
+  var TG_CASE_TITLES = {
+    hero_legit: 'Hero, legitimate: the KYC agent verifies a new customer',
+    hero_attack: 'Hero, attack: a customer message carries a planted instruction and the service agent posts that SSN outside',
+    bot_campaign: 'A bot runs the same planted instruction across many sessions',
+    spoofed_agent: 'A bot posing as the KYC agent',
+    key_exfil: 'An agent reads a deploy key and posts it out',
+    slow_drip_lookalike: 'Slow drip to a lookalike host',
+    email_not_on_file: 'An agent emails a statement to an address not on file'
+  };
+  var TG_ACTOR = { person: 'A person', bot: 'A bot', none: 'Nobody hostile' };
+  function tgChip(d) {
+    if (d === 'block_page') return 'pause';
+    if (d === 'hold') return 'review';
+    if (d === 'watch') return 'log';
+    return 'run';
+  }
+  function tgRate(o) {
+    if (!o || !isNum(o.rate)) return 'n/a';
+    return pct(o.rate) + (isNum(o.k) && isNum(o.n) ? ' (' + o.k + ' of ' + o.n + ')' : '');
+  }
+
+  function renderTgAgents(tg) {
+    var agents = tg.agents || [];
+    var ul = $('tg-agents');
+    var grid = $('tg-grid');
+    clear(ul); clear(grid);
+    var big = agents.length > 24;
+    ul.hidden = big; grid.hidden = !big; $('tg-legend').hidden = !big;
+    var hi = agents.filter(function (a) { return isNum(a.score) && a.score >= 0.7; });
+    var restMax = agents.reduce(function (m, a) { return isNum(a.score) && a.score < 0.7 && a.score > m ? a.score : m; }, 0);
+    $('tg-summary').textContent = agents.length + ' agents, each carrying its own risk score; ' + hi.length +
+      ' at 0.70 or more; the highest of the rest scored ' + fmt(restMax, 2) + '.';
+    var marks = [];
+    if (big) {
+      var types = [];
+      agents.forEach(function (a) { if (types.indexOf(a.agent_type) < 0) types.push(a.agent_type); });
+      types.forEach(function (t) {
+        var row = el('div', 'arow');
+        var list = agents.filter(function (a) { return a.agent_type === t; });
+        row.appendChild(el('span', 'atype', t + ' (' + list.length + ')'));
+        var tiles = el('div', 'tiles');
+        list.forEach(function (a) {
+          var s = a.score;
+          var tile = el('span', 'tile ' + (!isNum(s) || s < 0.3 ? 'b0' : s < 0.7 ? 'b1' : 'b2'));
+          tile.setAttribute('title', a.agent_id + ': ' + fmt(s, 2));
+          marks.push([tile, a.hijacked]);
+          tiles.appendChild(tile);
+        });
+        row.appendChild(tiles);
+        grid.appendChild(row);
+      });
+    } else {
+      agents.forEach(function (a) {
+        var li = el('li', isNum(a.score) && a.score >= 0.7 ? 'hi' : '');
+        li.appendChild(el('span', 'aid', a.agent_id));
+        li.appendChild(el('span', 'asc', fmt(a.score, 2)));
+        marks.push([li, a.hijacked]);
+        ul.appendChild(li);
+      });
+    }
+    var btn = $('tg-reveal');
+    var note = $('tg-reveal-note');
+    btn.addEventListener('click', function () {
+      var open = btn.getAttribute('aria-expanded') !== 'true';
+      btn.setAttribute('aria-expanded', String(open));
+      btn.textContent = open ? 'Hide the answer' : 'Reveal which were hijacked';
+      marks.forEach(function (m) {
+        m[0].classList.toggle('hijacked', open && !!m[1]);
+        var old = m[0].querySelector('.atag');
+        if (old) m[0].removeChild(old);
+        if (open && m[1] && !big) m[0].appendChild(el('span', 'atag', 'hijacked'));
+      });
+      var h = agents.filter(function (a) { return a.hijacked; });
+      var hHi = h.filter(function (a) { return a.score >= 0.7; }).length;
+      note.hidden = !open;
+      note.textContent = open ? hHi + ' of the ' + hi.length + ' high-scoring agents were hijacked; ' + (h.length - hHi) + ' hijacked agents scored below 0.70.' : '';
+    });
+  }
+
+  function tgCard(title, calls) {
+    var c = el('div', 'card');
+    c.appendChild(el('h3', null, title));
+    var firstBlock = -1;
+    calls.forEach(function (x, i) { if (firstBlock < 0 && x.decision === 'block_page') firstBlock = i; });
+    calls.forEach(function (x, i) {
+      var never = firstBlock >= 0 && i > firstBlock;
+      var d = el('div', 'tg-call' + (i === firstBlock ? ' blocked' : '') + (never ? ' never' : ''));
+      var top = el('div', 'top');
+      top.appendChild(el('span', 'tool', 'Call ' + ((isNum(x.call_index) ? x.call_index : i) + 1) + ': ' + x.tool));
+      var r = el('span');
+      r.appendChild(el('span', 'score', 'score ' + fmt(x.score, 2) + ' '));
+      if (never) r.appendChild(el('span', 'badge log', 'never ran'));
+      else r.appendChild(el('span', 'badge ' + tgChip(x.decision), words(x.decision)));
+      top.appendChild(r);
+      d.appendChild(top);
+      d.appendChild(el('div', 'meta', 'Agent ' + show(x.agent_id) + '. Destination: ' + (x.dest_host ? x.dest_host : 'none (internal tool)') +
+        '. Classes: ' + show(x.classes) + '.'));
+      var args = el('pre', 'args');
+      args.textContent = JSON.stringify(x.masked_args || {}, null, 2);
+      d.appendChild(args);
+      if (never) d.appendChild(el('div', 'stop', 'Never ran: the session token was revoked when the call above was blocked.'));
+      else if (x.reasons && x.reasons.length) d.appendChild(el('div', 'meta', 'Why: ' + x.reasons.join('; ')));
+      if (i === firstBlock) d.appendChild(el('div', 'stop', 'Blocked before it ran, IT paged.'));
+      c.appendChild(d);
+    });
+    return c;
+  }
+
+  function renderTgHero(tg) {
+    var host = $('tg-hero');
+    clear(host);
+    var h = tg.hero || {};
+    host.appendChild(tgCard('Legitimate: the vendor is approved for this data', h.hero_legit || []));
+    host.appendChild(tgCard('Attack: the same data, headed to an unapproved host', h.hero_attack || []));
+  }
+
+  function renderTgCases(tg) {
+    var tb = $('tg-cases');
+    clear(tb);
+    var cases = tg.cases || {};
+    Object.keys(cases).forEach(function (k) {
+      var c = cases[k];
+      var tr = el('tr');
+      tr.appendChild(el('td', null, TG_CASE_TITLES[k] || words(k)));
+      tr.appendChild(el('td', null, TG_ACTOR[c.actor] || show(c.actor)));
+      var td = el('td');
+      td.appendChild(el('span', 'badge ' + tgChip(c.decision), words(c.decision)));
+      tr.appendChild(td);
+      tr.appendChild(el('td', null, usd(c.exposure_usd)));
+      tb.appendChild(tr);
+    });
+  }
+
+  function renderTgRows(tg) {
+    var host = $('tg-rows');
+    clear(host);
+    var rows = tg.rows || {};
+    var order = [['guard', 'Tool-call guard', 'g-N2'], ['http_layer_only', 'Network layer alone', 'g-base'], ['keyword_screen', 'Keyword screen', 'g-base']];
+    var measures = [
+      ['Blocked before the call ran', function (r) { return r.blocked_before_run; }, true, 'Higher is better. Share of attack sessions whose first harmful call never executed.'],
+      ['False blocks', function (r) { return r.false_blocks; }, true, 'Lower is better. Share of normal sessions with any block or hold.'],
+      ['IT pages per 1,000 sessions', function (r) { return { rate: r.pages_per_1000 }; }, false, 'Pages are deduplicated by destination host.']
+    ];
+    measures.forEach(function (m) {
+      var c = el('div', 'card');
+      c.appendChild(el('h3', null, m[0]));
+      c.appendChild(el('p', 'small', m[3]));
+      var ol = el('ol', 'bars mini');
+      var vals = order.map(function (o) { return rows[o[0]] ? m[1](rows[o[0]]).rate : null; });
+      var max = Math.max.apply(null, vals.map(function (v) { return isNum(v) ? v : 0; }).concat([0.0001]));
+      order.forEach(function (o, i) {
+        var r = rows[o[0]];
+        if (!r) return;
+        var v = vals[i];
+        var li = el('li', o[2]);
+        var top = el('div', 'row-top');
+        top.appendChild(el('span', null, o[1]));
+        top.appendChild(el('span', null, m[2] ? tgRate(m[1](r)) : fmt(v, 1)));
+        var bt = el('div', 'bt');
+        var bf = el('div', 'bf');
+        bf.style.width = Math.round((m[2] ? (isNum(v) ? Math.min(1, v) : 0) : (isNum(v) ? v / max : 0)) * 100) + '%';
+        bt.appendChild(bf);
+        li.appendChild(top);
+        li.appendChild(bt);
+        ol.appendChild(li);
+      });
+      c.appendChild(ol);
+      host.appendChild(c);
+    });
+    var g = rows.guard || {};
+    var note = [];
+    if (isNum(g.exposure_stopped_usd) || isNum(g.exposure_missed_usd)) note.push('The guard stopped ' + usd(g.exposure_stopped_usd) + ' of exposure before it left and missed ' + usd(g.exposure_missed_usd) + '.');
+    if (g.legit_sensitive_blocked && isNum(g.legit_sensitive_blocked.k)) note.push('Legitimate sensitive calls blocked: ' + tgRate(g.legit_sensitive_blocked) + '.');
+    note.push('The network layer alone never sees an outbound tool call: it only stops the bot campaign, by its inbound volume. The keyword screen only reads the customer message.');
+    if (tg.sample) note.push('Illustrative sample, not measured.');
+    else {
+      var gr = (rows.guard || {}).blocked_before_run, hr = (rows.http_layer_only || {}).blocked_before_run, kr = (rows.keyword_screen || {}).blocked_before_run;
+      var w = function (o) { return o && isNum(o.rate) ? Math.round(o.rate * 100) + '%' : 'n/a'; };
+      note.push('The guard\'s ' + w(gr) + ' is true by construction: the simulated attacks are defined by the rule it applies, so read it as a wiring check. The baselines are the finding: the inbound network layer alone stops ' + w(hr) +
+        ' of these attacks before the harmful call, and a keyword screen on the customer message ' + w(kr) + ', at hit rates we assumed.');
+    }
+    $('tg-note').textContent = note.join(' ');
+    $('tg-meta').textContent = tg.sample ? '' : (tg.seeds || []).length + ' seeds, ' + tg.sessions_per_seed + ' sessions per seed, synthetic data. Rates are means over seeds.';
+  }
+
+  function initToolguard(tg) {
+    $('sample-tg').hidden = !tg.sample;
+    renderTgAgents(tg);
+    renderTgHero(tg);
+    renderTgCases(tg);
+    renderTgRows(tg);
+  }
+
   /* ================= boot ================= */
   loadFB('net-hero.json').then(function (d) { net = d; initNet(); })
     .catch(function () { loadError($('nplayer'), 'net-hero.json'); });
   loadFB('net-eval.json').then(function (d) { neval = d; initNeval(); })
     .catch(function () { loadError($('nbars'), 'net-eval.json'); });
+  loadFB('toolguard.json').then(initToolguard)
+    .catch(function () { loadError($('tg-agents'), 'toolguard.json'); });
   loadFB('fleet.json').then(initFleet)
     .catch(function () { loadError($('fleet-cats'), 'fleet.json'); });
 })();
